@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.272 2014/09/08 13:51:29 okan Exp $
+ * $OpenBSD: calmwm.h,v 1.275 2014/09/10 20:30:38 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -143,9 +143,8 @@ TAILQ_HEAD(winname_q, winname);
 TAILQ_HEAD(ignore_q, winname);
 
 struct client_ctx {
-	TAILQ_ENTRY(client_ctx) entry;
-	TAILQ_ENTRY(client_ctx) group_entry;
-	TAILQ_ENTRY(client_ctx) mru_entry;
+	TAILQ_ENTRY(client_ctx)	 entry;
+	TAILQ_ENTRY(client_ctx)	 group_entry;
 	struct screen_ctx	*sc;
 	Window			 win;
 	Colormap		 colormap;
@@ -181,12 +180,12 @@ struct client_ctx {
 #define CLIENT_URGENCY			0x0400
 #define CLIENT_FULLSCREEN		0x0800
 #define CLIENT_STICKY			0x1000
+#define CLIENT_ACTIVE			0x2000
 
 #define CLIENT_HIGHLIGHT		(CLIENT_GROUP | CLIENT_UNGROUP)
 #define CLIENT_MAXFLAGS			(CLIENT_VMAXIMIZED | CLIENT_HMAXIMIZED)
 #define CLIENT_MAXIMIZED		(CLIENT_VMAXIMIZED | CLIENT_HMAXIMIZED)
 	int			 flags;
-	int			 active;
 	int			 stackingorder;
 	struct winname_q	 nameq;
 #define CLIENT_MAXNAMEQLEN		5
@@ -199,12 +198,11 @@ struct client_ctx {
 	XWMHints		*wmh;
 };
 TAILQ_HEAD(client_ctx_q, client_ctx);
-TAILQ_HEAD(cycle_entry_q, client_ctx);
 
 struct group_ctx {
 	TAILQ_ENTRY(group_ctx)	 entry;
 	struct screen_ctx	*sc;
-	struct client_ctx_q	 clients;
+	struct client_ctx_q	 clientq;
 	char			*name;
 	int			 num;
 };
@@ -235,7 +233,7 @@ struct screen_ctx {
 	struct geom		 view; /* viewable area */
 	struct geom		 work; /* workable area, gap-applied */
 	struct gap		 gap;
-	struct cycle_entry_q	 mruq;
+	struct client_ctx_q	 clientq;
 	struct region_ctx_q	 regionq;
 	XftColor		 xftcolor[CWM_COLOR_NITEMS];
 	XftDraw			*xftdraw;
@@ -315,7 +313,6 @@ struct mwm_hints {
 extern Display				*X_Dpy;
 extern Time				 Last_Event_Time;
 extern struct screen_ctx_q		 Screenq;
-extern struct client_ctx_q		 Clientq;
 extern struct conf			 Conf;
 extern const char			*homedir;
 extern int				 HasRandr, Randr_ev;
