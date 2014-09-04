@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.266 2014/09/01 18:04:58 okan Exp $
+ * $OpenBSD: calmwm.h,v 1.272 2014/09/08 13:51:29 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -203,7 +203,9 @@ TAILQ_HEAD(cycle_entry_q, client_ctx);
 
 struct group_ctx {
 	TAILQ_ENTRY(group_ctx)	 entry;
+	struct screen_ctx	*sc;
 	struct client_ctx_q	 clients;
+	char			*name;
 	int			 num;
 };
 TAILQ_HEAD(group_ctx_q, group_ctx);
@@ -239,12 +241,9 @@ struct screen_ctx {
 	XftDraw			*xftdraw;
 	XftFont			*xftfont;
 #define CALMWM_NGROUPS		 10
-	struct group_ctx	 groups[CALMWM_NGROUPS];
 	struct group_ctx_q	 groupq;
 	int			 group_hideall;
-	int			 group_nonames;
 	struct group_ctx	*group_active;
-	char 			**group_names;
 };
 TAILQ_HEAD(screen_ctx_q, screen_ctx);
 
@@ -295,8 +294,6 @@ struct conf {
 	int			 snapdist;
 	struct gap		 gap;
 	char			*color[CWM_COLOR_NITEMS];
-	char			 termpath[MAXPATHLEN];
-	char			 lockpath[MAXPATHLEN];
 	char			 known_hosts[MAXPATHLEN];
 #define	CONF_FONT			"sans-serif:pixelsize=14:bold"
 	char			*font;
@@ -411,12 +408,12 @@ void			 group_alltoggle(struct screen_ctx *);
 void			 group_autogroup(struct client_ctx *);
 void			 group_cycle(struct screen_ctx *, int);
 int			 group_hidden_state(struct group_ctx *);
-void			 group_hide(struct screen_ctx *, struct group_ctx *);
+void			 group_hide(struct group_ctx *);
 void			 group_hidetoggle(struct screen_ctx *, int);
 void			 group_init(struct screen_ctx *);
 void			 group_movetogroup(struct client_ctx *, int);
 void			 group_only(struct screen_ctx *, int);
-void			 group_show(struct screen_ctx *, struct group_ctx *);
+void			 group_show(struct group_ctx *);
 void			 group_sticky(struct client_ctx *);
 void			 group_sticky_toggle_enter(struct client_ctx *);
 void			 group_sticky_toggle_exit(struct client_ctx *);
@@ -434,9 +431,9 @@ void			 search_match_text(struct menu_q *, struct menu_q *,
 			     char *);
 void			 search_print_client(struct menu *, int);
 
+struct screen_ctx	*screen_find(Window);
 struct geom		 screen_find_xinerama(struct screen_ctx *,
     			     int, int, int);
-struct screen_ctx	*screen_fromroot(Window);
 void			 screen_init(int);
 void			 screen_update_geometry(struct screen_ctx *);
 void			 screen_updatestackingorder(struct screen_ctx *);

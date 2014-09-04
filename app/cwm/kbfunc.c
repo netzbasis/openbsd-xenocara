@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: kbfunc.c,v 1.97 2014/09/01 18:17:32 okan Exp $
+ * $OpenBSD: kbfunc.c,v 1.99 2014/09/06 18:50:43 okan Exp $
  */
 
 #include <sys/param.h>
@@ -213,13 +213,23 @@ kbfunc_cmdexec(struct client_ctx *cc, union arg *arg)
 void
 kbfunc_term(struct client_ctx *cc, union arg *arg)
 {
-	u_spawn(Conf.termpath);
+	struct cmd *cmd;
+
+	TAILQ_FOREACH(cmd, &Conf.cmdq, entry) {
+		if (strcmp(cmd->name, "term") == 0)
+			u_spawn(cmd->path);
+	}
 }
 
 void
 kbfunc_lock(struct client_ctx *cc, union arg *arg)
 {
-	u_spawn(Conf.lockpath);
+	struct cmd *cmd;
+
+	TAILQ_FOREACH(cmd, &Conf.cmdq, entry) {
+		if (strcmp(cmd->name, "lock") == 0)
+			u_spawn(cmd->path);
+	}
 }
 
 void
@@ -309,18 +319,24 @@ void
 kbfunc_ssh(struct client_ctx *cc, union arg *arg)
 {
 	struct screen_ctx	*sc = cc->sc;
+	struct cmd		*cmd;
 	struct menu		*mi;
 	struct menu_q		 menuq;
 	FILE			*fp;
 	char			*buf, *lbuf, *p;
 	char			 hostbuf[MAXHOSTNAMELEN];
-	char			 cmd[256];
+	char			 path[MAXPATHLEN];
 	int			 l;
 	size_t			 len;
 
 	if ((fp = fopen(Conf.known_hosts, "r")) == NULL) {
 		warn("kbfunc_ssh: %s", Conf.known_hosts);
 		return;
+	}
+
+	TAILQ_FOREACH(cmd, &Conf.cmdq, entry) {
+		if (strcmp(cmd->name, "term") == 0)
+			break;
 	}
 
 	TAILQ_INIT(&menuq);
@@ -355,10 +371,10 @@ kbfunc_ssh(struct client_ctx *cc, union arg *arg)
 	    search_match_exec, NULL)) != NULL) {
 		if (mi->text[0] == '\0')
 			goto out;
-		l = snprintf(cmd, sizeof(cmd), "%s -T '[ssh] %s' -e ssh %s",
-		    Conf.termpath, mi->text, mi->text);
-		if (l != -1 && l < sizeof(cmd))
-			u_spawn(cmd);
+		l = snprintf(path, sizeof(path), "%s -T '[ssh] %s' -e ssh %s",
+		    cmd->path, mi->text, mi->text);
+		if (l != -1 && l < sizeof(path))
+			u_spawn(path);
 	}
 out:
 	if (mi != NULL && mi->dummy)
