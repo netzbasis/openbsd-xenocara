@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: client.c,v 1.183 2014/09/15 13:00:49 okan Exp $
+ * $OpenBSD: client.c,v 1.187 2014/09/17 18:41:44 okan Exp $
  */
 
 #include <sys/param.h>
@@ -231,7 +231,7 @@ client_current(void)
 }
 
 void
-client_freeze(struct client_ctx *cc)
+client_toggle_freeze(struct client_ctx *cc)
 {
 	if (cc->flags & CLIENT_FREEZE)
 		cc->flags &= ~CLIENT_FREEZE;
@@ -240,7 +240,18 @@ client_freeze(struct client_ctx *cc)
 }
 
 void
-client_sticky(struct client_ctx *cc)
+client_toggle_hidden(struct client_ctx *cc)
+{
+	if (cc->flags & CLIENT_HIDDEN)
+		cc->flags &= ~CLIENT_HIDDEN;
+	else
+		cc->flags |= CLIENT_HIDDEN;
+
+	xu_ewmh_set_net_wm_state(cc);
+}
+
+void
+client_toggle_sticky(struct client_ctx *cc)
 {
 	if (cc->flags & CLIENT_STICKY)
 		cc->flags &= ~CLIENT_STICKY;
@@ -251,7 +262,7 @@ client_sticky(struct client_ctx *cc)
 }
 
 void
-client_fullscreen(struct client_ctx *cc)
+client_toggle_fullscreen(struct client_ctx *cc)
 {
 	struct screen_ctx	*sc = cc->sc;
 	struct geom		 xine;
@@ -283,12 +294,12 @@ resize:
 }
 
 void
-client_maximize(struct client_ctx *cc)
+client_toggle_maximize(struct client_ctx *cc)
 {
 	struct screen_ctx	*sc = cc->sc;
 	struct geom		 xine;
 
-	if (cc->flags & CLIENT_FREEZE)
+	if (cc->flags & (CLIENT_FREEZE|CLIENT_STICKY))
 		return;
 
 	if ((cc->flags & CLIENT_MAXFLAGS) == CLIENT_MAXIMIZED) {
@@ -328,12 +339,12 @@ resize:
 }
 
 void
-client_vmaximize(struct client_ctx *cc)
+client_toggle_vmaximize(struct client_ctx *cc)
 {
 	struct screen_ctx	*sc = cc->sc;
 	struct geom		 xine;
 
-	if (cc->flags & CLIENT_FREEZE)
+	if (cc->flags & (CLIENT_FREEZE|CLIENT_STICKY))
 		return;
 
 	if (cc->flags & CLIENT_VMAXIMIZED) {
@@ -360,12 +371,12 @@ resize:
 }
 
 void
-client_hmaximize(struct client_ctx *cc)
+client_toggle_hmaximize(struct client_ctx *cc)
 {
 	struct screen_ctx	*sc = cc->sc;
 	struct geom		 xine;
 
-	if (cc->flags & CLIENT_FREEZE)
+	if (cc->flags & (CLIENT_FREEZE|CLIENT_STICKY))
 		return;
 
 	if (cc->flags & CLIENT_HMAXIMIZED) {
