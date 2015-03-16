@@ -1,4 +1,4 @@
-! $Xorg: Xresources,v 1.3 2000/08/17 19:54:17 cpqbld Exp $
+! $OpenBSD: Xresources.cpp,v 1.12 2015/03/15 18:43:18 matthieu Exp $
 !
 !
 !
@@ -45,7 +45,7 @@ xlogin*failFace:        Luxi Sans-12:bold:dpi=75
 XHASHendif
 
 XHASHif !(defined(bpp1) || defined(bpp4) || defined(bpp8) || defined(bpp15))
-XHASH if PLANES < 4 || defined(Hp300Architecture)
+XHASH if PLANES < 4
 XHASH  ifndef bpp1
 XHASH   define bpp1
 XHASH  endif
@@ -83,8 +83,8 @@ xlogin*shdColor: #384c70
 xlogin*greetColor: #000000
 XHASHif defined(bpp4) || defined(bpp8) || defined(bpp15)
 ! flood fill
-!xlogin*background: #2559a5
 xlogin*background: #5272b6
+xlogin*inpColor: #5272b6
 XHASHendif
 xlogin*failColor: red
 
@@ -109,25 +109,18 @@ XHASHendif
 XHASHifdef bpp1
 xlogin*logoFileName: BITMAPDIR/**//OpenBSD_1bpp.xpm
 XHASHendif
-#if ! defined(SparcArchitecture)
-XHASHif defined(bpp4) || defined(bpp8)
-xlogin*logoFileName: BITMAPDIR/**//OpenBSD_4bpp.xpm
-XHASHendif
-#else /* sparc */
 XHASHifdef bpp4
 xlogin*logoFileName: BITMAPDIR/**//OpenBSD_4bpp.xpm
 XHASHendif
 XHASHifdef bpp8
 xlogin*logoFileName: BITMAPDIR/**//OpenBSD_8bpp.xpm
 XHASHendif
-#endif
 XHASHifdef bpp15
 xlogin*logoFileName: BITMAPDIR/**//OpenBSD_15bpp.xpm
 XHASHendif
-#if ! defined(Hp300Architecture)
+
 xlogin*useShape: true
 xlogin*logoPadding: 10
-#endif /* Hp300Architecture */
 
 ! uncomment to disable logins
 ! xlogin.Login.allowRootLogin:	false
