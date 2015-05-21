@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.287 2015/05/17 04:34:01 kspillner Exp $
+ * $OpenBSD: calmwm.h,v 1.289 2015/05/21 00:37:04 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -304,11 +304,27 @@ struct mwm_hints {
 	unsigned long	functions;
 	unsigned long	decorations;
 };
-#define MWM_NUMHINTS		3
-#define	PROP_MWM_HINTS_ELEMENTS	3
-#define	MWM_HINTS_DECORATIONS	(1<<1)
+#define MWM_HINTS_ELEMENTS	3L
+
+#define MWM_FLAGS_FUNCTIONS	(1<<0)
+#define MWM_FLAGS_DECORATIONS	(1<<1)
+#define MWM_FLAGS_INPUT_MODE	(1<<2)
+#define MWM_FLAGS_STATUS	(1<<3)
+
+#define MWM_FUNCS_ALL		(1<<0)
+#define MWM_FUNCS_RESIZE	(1<<1)
+#define MWM_FUNCS_MOVE		(1<<2)
+#define MWM_FUNCS_MINIMIZE	(1<<3)
+#define MWM_FUNCS_MAXIMIZE	(1<<4)
+#define MWM_FUNCS_CLOSE		(1<<5)
+
 #define	MWM_DECOR_ALL		(1<<0)
 #define	MWM_DECOR_BORDER	(1<<1)
+#define MWM_DECOR_RESIZE_HANDLE	(1<<2)
+#define MWM_DECOR_TITLEBAR	(1<<3)
+#define MWM_DECOR_MENU		(1<<4)
+#define MWM_DECOR_MINIMIZE	(1<<5)
+#define MWM_DECOR_MAXIMIZE	(1<<6)
 
 extern Display				*X_Dpy;
 extern Time				 Last_Event_Time;
@@ -479,8 +495,6 @@ void			 kbfunc_ssh(struct client_ctx *, union arg *);
 void			 kbfunc_term(struct client_ctx *, union arg *);
 void 			 kbfunc_tile(struct client_ctx *, union arg *);
 
-void			 mousefunc_client_grouptoggle(struct client_ctx *,
-			    union arg *);
 void			 mousefunc_client_move(struct client_ctx *,
     			    union arg *);
 void			 mousefunc_client_resize(struct client_ctx *,
