@@ -312,12 +312,11 @@ Mach64PciProbe(
     pScrn->FreeScreen    = ATIFreeScreen;
     pScrn->ValidMode     = ATIValidMode;
 
-    if (!ATIGetRec(pScrn))
+    if (!Mach64GetRec(pScrn))
 	return FALSE;
 
     pATI = ATIPTR(pScrn);
     pATI->Chip = matchData;
-
     return TRUE;
 }
 

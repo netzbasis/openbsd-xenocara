@@ -60,7 +60,7 @@
  * FreeScreen handles the clean-up.
  */
 Bool
-ATIGetRec(ScrnInfoPtr pScrn)
+Mach64GetRec(ScrnInfoPtr pScrn)
 {
     if (!pScrn->driverPrivate) {
         pScrn->driverPrivate = xnfcalloc(sizeof(ATIRec), 1);
@@ -543,7 +543,7 @@ ATIPreInit
         return FALSE;
     }
 
-    if (!ATIGetRec(pScreenInfo))
+    if (!Mach64GetRec(pScreenInfo))
         return FALSE;
 
     pATI = ATIPTR(pScreenInfo);
@@ -700,7 +700,6 @@ ATIPreInit
 #else
     pATI->pVBE = pVBE;
     pVBE = NULL;
-    pInt10Info = NULL;
 #endif /* TV_OUT */
 
     if (ConfiguredMonitor && !(flags & PROBE_DETECT))
