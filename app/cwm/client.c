@@ -15,13 +15,12 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: client.c,v 1.194 2015/06/26 17:17:46 okan Exp $
+ * $OpenBSD: client.c,v 1.196 2015/06/28 19:54:37 okan Exp $
  */
 
 #include <sys/types.h>
 #include <sys/queue.h>
 
-#include <assert.h>
 #include <err.h>
 #include <errno.h>
 #include <limits.h>
@@ -42,21 +41,6 @@ static void			 client_mwm_hints(struct client_ctx *);
 static int			 client_inbound(struct client_ctx *, int, int);
 
 struct client_ctx	*curcc = NULL;
-
-struct client_ctx *
-client_find(Window win)
-{
-	struct screen_ctx	*sc;
-	struct client_ctx	*cc;
-
-	TAILQ_FOREACH(sc, &Screenq, entry) {
-		TAILQ_FOREACH(cc, &sc->clientq, entry) {
-			if (cc->win == win)
-				return(cc);
-		}
-	}
-	return(NULL);
-}
 
 struct client_ctx *
 client_init(Window win, struct screen_ctx *sc)
@@ -141,6 +125,21 @@ client_init(Window win, struct screen_ctx *sc)
 	XUngrabServer(X_Dpy);
 
 	return(cc);
+}
+
+struct client_ctx *
+client_find(Window win)
+{
+	struct screen_ctx	*sc;
+	struct client_ctx	*cc;
+
+	TAILQ_FOREACH(sc, &Screenq, entry) {
+		TAILQ_FOREACH(cc, &sc->clientq, entry) {
+			if (cc->win == win)
+				return(cc);
+		}
+	}
+	return(NULL);
 }
 
 void
@@ -635,8 +634,8 @@ match:
 
 	/* Now, do some garbage collection. */
 	if (cc->nameqlen > CLIENT_MAXNAMEQLEN) {
-		wn = TAILQ_FIRST(&cc->nameq);
-		assert(wn != NULL);
+		if ((wn = TAILQ_FIRST(&cc->nameq)) == NULL)
+			errx(1, "client_setname: window name queue empty");
 		TAILQ_REMOVE(&cc->nameq, wn, entry);
 		free(wn->name);
 		free(wn);
