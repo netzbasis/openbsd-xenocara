@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: client.c,v 1.198 2015/07/01 14:36:42 okan Exp $
+ * $OpenBSD: client.c,v 1.202 2015/08/21 16:52:37 okan Exp $
  */
 
 #include <sys/types.h>
@@ -237,6 +237,8 @@ client_toggle_freeze(struct client_ctx *cc)
 		cc->flags &= ~CLIENT_FREEZE;
 	else
 		cc->flags |= CLIENT_FREEZE;
+
+	xu_ewmh_set_net_wm_state(cc);
 }
 
 void
@@ -299,7 +301,7 @@ client_toggle_maximize(struct client_ctx *cc)
 	struct screen_ctx	*sc = cc->sc;
 	struct geom		 area;
 
-	if (cc->flags & (CLIENT_FREEZE|CLIENT_STICKY))
+	if (cc->flags & CLIENT_FREEZE)
 		return;
 
 	if ((cc->flags & CLIENT_MAXFLAGS) == CLIENT_MAXIMIZED) {
@@ -344,7 +346,7 @@ client_toggle_vmaximize(struct client_ctx *cc)
 	struct screen_ctx	*sc = cc->sc;
 	struct geom		 area;
 
-	if (cc->flags & (CLIENT_FREEZE|CLIENT_STICKY))
+	if (cc->flags & CLIENT_FREEZE)
 		return;
 
 	if (cc->flags & CLIENT_VMAXIMIZED) {
@@ -376,7 +378,7 @@ client_toggle_hmaximize(struct client_ctx *cc)
 	struct screen_ctx	*sc = cc->sc;
 	struct geom		 area;
 
-	if (cc->flags & (CLIENT_FREEZE|CLIENT_STICKY))
+	if (cc->flags & CLIENT_FREEZE)
 		return;
 
 	if (cc->flags & CLIENT_HMAXIMIZED) {
@@ -647,7 +649,7 @@ match:
 void
 client_cycle(struct screen_ctx *sc, int flags)
 {
-	struct client_ctx	*oldcc, *newcc;
+	struct client_ctx	*newcc, *oldcc;
 	int			 again = 1;
 
 	if (TAILQ_EMPTY(&sc->clientq))
@@ -655,19 +657,19 @@ client_cycle(struct screen_ctx *sc, int flags)
 
 	oldcc = client_current();
 	if (oldcc == NULL)
-		oldcc = ((flags & CWM_RCYCLE) ?
+		oldcc = (flags & CWM_RCYCLE) ?
 		    TAILQ_LAST(&sc->clientq, client_ctx_q) :
-		    TAILQ_FIRST(&sc->clientq));
+		    TAILQ_FIRST(&sc->clientq);
 
 	newcc = oldcc;
 	while (again) {
 		again = 0;
 
-		newcc = ((flags & CWM_RCYCLE) ? client_prev(newcc) :
-		    client_next(newcc));
+		newcc = (flags & CWM_RCYCLE) ? client_prev(newcc) :
+		    client_next(newcc);
 
 		/* Only cycle visible and non-ignored windows. */
-		if ((newcc->flags & (CLIENT_HIDDEN|CLIENT_IGNORE))
+		if ((newcc->flags & (CLIENT_HIDDEN | CLIENT_IGNORE))
 		    || ((flags & CWM_INGROUP) &&
 			(newcc->group != oldcc->group)))
 			again = 1;
@@ -705,20 +707,20 @@ static struct client_ctx *
 client_next(struct client_ctx *cc)
 {
 	struct screen_ctx	*sc = cc->sc;
-	struct client_ctx	*ccc;
+	struct client_ctx	*newcc;
 
-	return(((ccc = TAILQ_NEXT(cc, entry)) != NULL) ?
-	    ccc : TAILQ_FIRST(&sc->clientq));
+	return(((newcc = TAILQ_NEXT(cc, entry)) != NULL) ?
+	    newcc : TAILQ_FIRST(&sc->clientq));
 }
 
 static struct client_ctx *
 client_prev(struct client_ctx *cc)
 {
 	struct screen_ctx	*sc = cc->sc;
-	struct client_ctx	*ccc;
+	struct client_ctx	*newcc;
 
-	return(((ccc = TAILQ_PREV(cc, client_ctx_q, entry)) != NULL) ?
-	    ccc : TAILQ_LAST(&sc->clientq, client_ctx_q));
+	return(((newcc = TAILQ_PREV(cc, client_ctx_q, entry)) != NULL) ?
+	    newcc : TAILQ_LAST(&sc->clientq, client_ctx_q));
 }
 
 static void
@@ -727,7 +729,7 @@ client_placecalc(struct client_ctx *cc)
 	struct screen_ctx	*sc = cc->sc;
 	int			 xslack, yslack;
 
-	if (cc->hint.flags & (USPosition|PPosition)) {
+	if (cc->hint.flags & (USPosition | PPosition)) {
 		/*
 		 * Ignore XINERAMA screens, just make sure it's somewhere
 		 * in the virtual desktop. else it stops people putting xterms
