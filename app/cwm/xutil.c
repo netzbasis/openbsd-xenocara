@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: xutil.c,v 1.100 2015/08/21 16:30:02 okan Exp $
+ * $OpenBSD: xutil.c,v 1.102 2015/08/24 15:42:57 okan Exp $
  */
 
 #include <sys/types.h>
@@ -229,6 +229,27 @@ xu_ewmh_net_client_list(struct screen_ctx *sc)
 }
 
 void
+xu_ewmh_net_client_list_stacking(struct screen_ctx *sc)
+{
+	struct client_ctx	*cc;
+	Window			*winlist;
+	int			 i = 0, j;
+
+	TAILQ_FOREACH(cc, &sc->clientq, entry)
+		i++;
+	if (i == 0)
+		return;
+
+	j = i;
+	winlist = xreallocarray(NULL, i, sizeof(*winlist));
+	TAILQ_FOREACH(cc, &sc->clientq, entry)
+		winlist[--j] = cc->win;
+	XChangeProperty(X_Dpy, sc->rootwin, ewmh[_NET_CLIENT_LIST_STACKING],
+	    XA_WINDOW, 32, PropModeReplace, (unsigned char *)winlist, i);
+	free(winlist);
+}
+
+void
 xu_ewmh_net_active_window(struct screen_ctx *sc, Window w)
 {
 	XChangeProperty(X_Dpy, sc->rootwin, ewmh[_NET_ACTIVE_WINDOW],
@@ -374,9 +395,6 @@ xu_ewmh_handle_net_wm_state_msg(struct client_ctx *cc, int action,
 		int property;
 		void (*toggle)(struct client_ctx *);
 	} handlers[] = {
-		{ _CWM_WM_STATE_FREEZE,
-			CLIENT_FREEZE,
-			client_toggle_freeze },
 		{ _NET_WM_STATE_STICKY,
 			CLIENT_STICKY,
 			client_toggle_sticky },
@@ -395,6 +413,9 @@ xu_ewmh_handle_net_wm_state_msg(struct client_ctx *cc, int action,
 		{ _NET_WM_STATE_DEMANDS_ATTENTION,
 			CLIENT_URGENCY,
 			client_urgency },
+		{ _CWM_WM_STATE_FREEZE,
+			CLIENT_FREEZE,
+			client_toggle_freeze },
 	};
 
 	for (i = 0; i < nitems(handlers); i++) {
@@ -424,20 +445,20 @@ xu_ewmh_restore_net_wm_state(struct client_ctx *cc)
 
 	atoms = xu_ewmh_get_net_wm_state(cc, &n);
 	for (i = 0; i < n; i++) {
-		if (atoms[i] == ewmh[_CWM_WM_STATE_FREEZE])
-			client_toggle_freeze(cc);
 		if (atoms[i] == ewmh[_NET_WM_STATE_STICKY])
 			client_toggle_sticky(cc);
-		if (atoms[i] == ewmh[_NET_WM_STATE_MAXIMIZED_HORZ])
-			client_toggle_hmaximize(cc);
 		if (atoms[i] == ewmh[_NET_WM_STATE_MAXIMIZED_VERT])
 			client_toggle_vmaximize(cc);
+		if (atoms[i] == ewmh[_NET_WM_STATE_MAXIMIZED_HORZ])
+			client_toggle_hmaximize(cc);
 		if (atoms[i] == ewmh[_NET_WM_STATE_HIDDEN])
 			client_toggle_hidden(cc);
 		if (atoms[i] == ewmh[_NET_WM_STATE_FULLSCREEN])
 			client_toggle_fullscreen(cc);
 		if (atoms[i] == ewmh[_NET_WM_STATE_DEMANDS_ATTENTION])
 			client_urgency(cc);
+		if (atoms[i] == ewmh[_CWM_WM_STATE_FREEZE])
+			client_toggle_freeze(cc);
 	}
 	free(atoms);
 }
@@ -451,18 +472,16 @@ xu_ewmh_set_net_wm_state(struct client_ctx *cc)
 	oatoms = xu_ewmh_get_net_wm_state(cc, &n);
 	atoms = xreallocarray(NULL, (n + _NET_WM_STATES_NITEMS), sizeof(Atom));
 	for (i = j = 0; i < n; i++) {
-		if (oatoms[i] != ewmh[_CWM_WM_STATE_FREEZE] &&
-		    oatoms[i] != ewmh[_NET_WM_STATE_STICKY] &&
-		    oatoms[i] != ewmh[_NET_WM_STATE_MAXIMIZED_HORZ] &&
+		if (oatoms[i] != ewmh[_NET_WM_STATE_STICKY] &&
 		    oatoms[i] != ewmh[_NET_WM_STATE_MAXIMIZED_VERT] &&
+		    oatoms[i] != ewmh[_NET_WM_STATE_MAXIMIZED_HORZ] &&
 		    oatoms[i] != ewmh[_NET_WM_STATE_HIDDEN] &&
 		    oatoms[i] != ewmh[_NET_WM_STATE_FULLSCREEN] &&
-		    oatoms[i] != ewmh[_NET_WM_STATE_DEMANDS_ATTENTION])
+		    oatoms[i] != ewmh[_NET_WM_STATE_DEMANDS_ATTENTION] &&
+		    oatoms[i] != ewmh[_CWM_WM_STATE_FREEZE])
 			atoms[j++] = oatoms[i];
 	}
 	free(oatoms);
-	if (cc->flags & CLIENT_FREEZE)
-		atoms[j++] = ewmh[_CWM_WM_STATE_FREEZE];
 	if (cc->flags & CLIENT_STICKY)
 		atoms[j++] = ewmh[_NET_WM_STATE_STICKY];
 	if (cc->flags & CLIENT_HIDDEN)
@@ -470,13 +489,15 @@ xu_ewmh_set_net_wm_state(struct client_ctx *cc)
 	if (cc->flags & CLIENT_FULLSCREEN)
 		atoms[j++] = ewmh[_NET_WM_STATE_FULLSCREEN];
 	else {
-		if (cc->flags & CLIENT_HMAXIMIZED)
-			atoms[j++] = ewmh[_NET_WM_STATE_MAXIMIZED_HORZ];
 		if (cc->flags & CLIENT_VMAXIMIZED)
 			atoms[j++] = ewmh[_NET_WM_STATE_MAXIMIZED_VERT];
+		if (cc->flags & CLIENT_HMAXIMIZED)
+			atoms[j++] = ewmh[_NET_WM_STATE_MAXIMIZED_HORZ];
 	}
 	if (cc->flags & CLIENT_URGENCY)
 		atoms[j++] = ewmh[_NET_WM_STATE_DEMANDS_ATTENTION];
+	if (cc->flags & CLIENT_FREEZE)
+		atoms[j++] = ewmh[_CWM_WM_STATE_FREEZE];
 	if (j > 0)
 		XChangeProperty(X_Dpy, cc->win, ewmh[_NET_WM_STATE],
 		    XA_ATOM, 32, PropModeReplace, (unsigned char *)atoms, j);

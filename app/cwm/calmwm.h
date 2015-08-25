@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.300 2015/08/21 16:53:48 okan Exp $
+ * $OpenBSD: calmwm.h,v 1.302 2015/08/24 15:42:57 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -352,6 +352,7 @@ enum {
 	_NET_SUPPORTING_WM_CHECK,
 	_NET_ACTIVE_WINDOW,
 	_NET_CLIENT_LIST,
+	_NET_CLIENT_LIST_STACKING,
 	_NET_NUMBER_OF_DESKTOPS,
 	_NET_CURRENT_DESKTOP,
 	_NET_DESKTOP_VIEWPORT,
@@ -365,13 +366,13 @@ enum {
 	_NET_CLOSE_WINDOW,
 	_NET_WM_STATE,
 #define	_NET_WM_STATES_NITEMS	7
-	_CWM_WM_STATE_FREEZE,
 	_NET_WM_STATE_STICKY,
 	_NET_WM_STATE_MAXIMIZED_VERT,
 	_NET_WM_STATE_MAXIMIZED_HORZ,
 	_NET_WM_STATE_HIDDEN,
 	_NET_WM_STATE_FULLSCREEN,
 	_NET_WM_STATE_DEMANDS_ATTENTION,
+	_CWM_WM_STATE_FREEZE,
 	EWMH_NITEMS
 };
 enum {
@@ -562,6 +563,7 @@ void			 xu_ewmh_net_supported_wm_check(struct screen_ctx *);
 void			 xu_ewmh_net_desktop_geometry(struct screen_ctx *);
 void			 xu_ewmh_net_workarea(struct screen_ctx *);
 void			 xu_ewmh_net_client_list(struct screen_ctx *);
+void			 xu_ewmh_net_client_list_stacking(struct screen_ctx *);
 void			 xu_ewmh_net_active_window(struct screen_ctx *, Window);
 void			 xu_ewmh_net_wm_desktop_viewport(struct screen_ctx *);
 void			 xu_ewmh_net_wm_number_of_desktops(struct screen_ctx *);
