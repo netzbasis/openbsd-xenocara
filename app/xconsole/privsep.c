@@ -1,4 +1,4 @@
-/* $OpenBSD: privsep.c,v 1.4 2008/03/24 21:24:52 matthieu Exp $ */
+/* $OpenBSD: privsep.c,v 1.6 2015/11/11 21:20:12 matthieu Exp $ */
 /*
  * Copyright 2001 Niels Provos <provos@citi.umich.edu>
  * All rights reserved.
@@ -30,6 +30,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <sys/ioctl.h>
 #include <sys/param.h>
 #include <sys/uio.h>
@@ -44,12 +49,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#ifdef HAS_UTIL_H
+#ifdef HAVE_UTIL_H
 #include <util.h>
 #endif
-#ifdef HAS_PTY_H
+#ifdef HAVE_PTY_H
 #inlude <pty.h>
 #endif
+
+#include "xconsole.h"
 
 enum cmd_types {
 	PRIV_OPEN_PTY,
@@ -60,7 +67,7 @@ enum cmd_types {
 static int priv_fd = -1;
 
 static void
-send_fd(int socket, int fd)
+send_fd(int s, int fd)
 {
 	struct msghdr msg;
 	union {
@@ -91,15 +98,15 @@ send_fd(int socket, int fd)
 	msg.msg_iov = &vec;
 	msg.msg_iovlen = 1;
 	
-	if ((n = sendmsg(socket, &msg, 0)) == -1)
-		warn("%s: sendmsg(%d)", __func__, socket);
+	if ((n = sendmsg(s, &msg, 0)) == -1)
+		warn("%s: sendmsg(%d)", __func__, s);
 	if (n != sizeof(int))
 		warnx("%s: sendmsg: expected sent 1 got %ld",
 		    __func__, (long)n);
 }
 
 static int
-receive_fd(int socket)
+receive_fd(int s)
 {
 	struct msghdr msg;
 	union {
@@ -120,7 +127,7 @@ receive_fd(int socket)
 	msg.msg_control = &cmsgbuf.buf;
 	msg.msg_controllen = sizeof(cmsgbuf.buf);
 
-	if ((n = recvmsg(socket, &msg, 0)) == -1)
+	if ((n = recvmsg(s, &msg, 0)) == -1)
 		warn("%s: recvmsg", __func__);
 	if (n != sizeof(int))
 		warnx("%s: recvmsg: expected received 1 got %ld",
@@ -172,7 +179,7 @@ priv_init(uid_t uid, gid_t gid)
 	/* son */
 	for (i = 1; i <= _NSIG; i++) 
 		signal(i, SIG_DFL);
-#ifdef HAS_SETPROCTILE
+#ifdef HAVE_SETPROCTILE
 	setproctitle("[priv]");
 #endif
 	close(socks[1]);

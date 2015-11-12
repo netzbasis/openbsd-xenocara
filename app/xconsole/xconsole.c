@@ -65,7 +65,7 @@ extern char *_XawTextGetSTRING(TextWidget ctx, XawTextPosition left,
 #include <X11/Shell.h>
 #include <ctype.h>
 #include <stdlib.h>
-#ifdef HAS_OPENPTY
+#ifdef HAVE_OPENPTY
 # ifdef HAVE_UTIL_H
 #  include <util.h>
 # endif
@@ -79,9 +79,7 @@ extern char *_XawTextGetSTRING(TextWidget ctx, XawTextPosition left,
 
 #ifdef USE_PRIVSEP
 #include <pwd.h>
-extern int priv_init(uid_t, gid_t);
-extern int priv_openpty(int *, int *);
-extern int priv_set_console(int);
+#include "xconsole.h"
 #endif
 
 static void inputReady(XtPointer w, int *source, XtInputId *id);
@@ -175,7 +173,7 @@ static XrmOptionDescRec options[] = {
 # endif
 # if defined (SVR4) || defined (USE_PTS)
 #  include <termios.h>
-#  ifndef HAS_OPENPTY
+#  ifndef HAVE_OPENPTY
 #  include <sys/stropts.h>		/* for I_PUSH */
 #  endif
 #  ifdef sun
@@ -827,7 +825,7 @@ get_pty(int *pty, int *tty, char *ttydev, char *ptydev)
 		return 1;
 	}
 	return 0;
-#elif HAS_OPENPTY
+#elif HAVE_OPENPTY
 	if (openpty(pty, tty, NULL, NULL, NULL) == -1) {
 		return 1;
 	}
