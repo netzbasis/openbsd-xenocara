@@ -93,8 +93,6 @@ AC_ARG_ENABLE(exa, AS_HELP_STRING([--disable-exa],
 				  [Disable EXA support [[default=enabled]]]),
               [EXA="$enableval"],
               [EXA=yes])
-SAVE_CPPFLAGS="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS $XORG_CFLAGS"
 # Properly handle EXA.
 AC_MSG_CHECKING([whether to enable EXA support])
 if test "x$EXA" = xyes; then
@@ -103,7 +101,8 @@ if test "x$EXA" = xyes; then
         SAVE_CPPFLAGS="$CPPFLAGS"
         CPPFLAGS="$CPPFLAGS $XORG_CFLAGS"
         AC_CHECK_HEADER(exa.h,
-                       [have_exa_h="yes"], [have_exa_h="no"])
+                       [have_exa_h="yes"], [have_exa_h="no"],
+		       [#include "xorg-server.h"])
         CPPFLAGS="$SAVE_CPPFLAGS"
 else
         AC_MSG_RESULT(no)
@@ -114,6 +113,7 @@ CPPFLAGS="$CPPFLAGS $XORG_CFLAGS"
 if test "x$have_exa_h" = xyes; then
         AC_MSG_CHECKING([whether EXA version is at least 2.0.0])
         AC_PREPROC_IFELSE([AC_LANG_PROGRAM([[
+#include <xorg-server.h>
 #include "exa.h"
 #if EXA_VERSION_MAJOR < 2
 #error OLD EXA!
@@ -127,6 +127,8 @@ if test "x$have_exa_h" = xyes; then
                 AC_DEFINE(USE_EXA, 1, [Build support for Exa])
         fi
 fi
+CPPFLAGS="$SAVE_CPPFLAGS"
+
 AM_CONDITIONAL(USE_EXA, test "x$USE_EXA" = xyes)
 
 if test "x$XSERVER_LIBPCIACCESS" = xyes; then

@@ -18004,8 +18004,6 @@ else
   EXA=yes
 fi
 
-SAVE_CPPFLAGS="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS $XORG_CFLAGS"
 # Properly handle EXA.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable EXA support" >&5
 $as_echo_n "checking whether to enable EXA support... " >&6; }
@@ -18015,7 +18013,8 @@ $as_echo "yes" >&6; }
 
         SAVE_CPPFLAGS="$CPPFLAGS"
         CPPFLAGS="$CPPFLAGS $XORG_CFLAGS"
-        ac_fn_c_check_header_mongrel "$LINENO" "exa.h" "ac_cv_header_exa_h" "$ac_includes_default"
+        ac_fn_c_check_header_compile "$LINENO" "exa.h" "ac_cv_header_exa_h" "#include \"xorg-server.h\"
+"
 if test "x$ac_cv_header_exa_h" = xyes; then :
   have_exa_h="yes"
 else
@@ -18037,6 +18036,7 @@ $as_echo_n "checking whether EXA version is at least 2.0.0... " >&6; }
         cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
+#include <xorg-server.h>
 #include "exa.h"
 #if EXA_VERSION_MAJOR < 2
 #error OLD EXA!
@@ -18065,6 +18065,8 @@ $as_echo "#define USE_EXA 1" >>confdefs.h
 
         fi
 fi
+CPPFLAGS="$SAVE_CPPFLAGS"
+
  if test "x$USE_EXA" = xyes; then
   USE_EXA_TRUE=
   USE_EXA_FALSE='#'
