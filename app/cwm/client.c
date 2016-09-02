@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: client.c,v 1.214 2015/11/12 18:33:30 okan Exp $
+ * $OpenBSD: client.c,v 1.216 2016/09/01 18:38:52 okan Exp $
  */
 
 #include <sys/types.h>
@@ -297,7 +297,8 @@ client_toggle_fullscreen(struct client_ctx *cc)
 		return;
 
 	if (cc->flags & CLIENT_FULLSCREEN) {
-		cc->bwidth = Conf.bwidth;
+		if (!(cc->flags & CLIENT_IGNORE))
+			cc->bwidth = Conf.bwidth;
 		cc->geom = cc->fullgeom;
 		cc->flags &= ~(CLIENT_FULLSCREEN | CLIENT_FREEZE);
 		goto resize;
@@ -897,9 +898,6 @@ client_applysizehints(struct client_ctx *cc)
 		cc->geom.w = MIN(cc->geom.w, cc->hint.maxw);
 	if (cc->hint.maxh)
 		cc->geom.h = MIN(cc->geom.h, cc->hint.maxh);
-
-	cc->geom.w = MAX(cc->geom.w, 1);
-	cc->geom.h = MAX(cc->geom.h, 1);
 
 	cc->dim.w = (cc->geom.w - cc->hint.basew) / cc->hint.incw;
 	cc->dim.h = (cc->geom.h - cc->hint.baseh) / cc->hint.inch;
