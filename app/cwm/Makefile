@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.21 2015/06/26 15:21:58 okan Exp $
+# $OpenBSD: Makefile,v 1.23 2016/09/20 18:23:12 okan Exp $
 
 .include <bsd.xconf.mk>
 
