@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.314 2016/09/22 14:36:03 okan Exp $
+ * $OpenBSD: calmwm.h,v 1.316 2016/09/29 00:21:55 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -228,7 +228,6 @@ struct screen_ctx {
 	TAILQ_ENTRY(screen_ctx)	 entry;
 	int			 which;
 	Window			 rootwin;
-	Window			 menuwin;
 	int			 cycling;
 	int			 hideall;
 	int			 snapdist;
@@ -240,8 +239,11 @@ struct screen_ctx {
 #define CALMWM_NGROUPS		 10
 	struct group_ctx_q	 groupq;
 	struct group_ctx	*group_active;
+	struct {
+		Window		 win;
+		XftDraw		*xftdraw;
+	} menu;
 	XftColor		 xftcolor[CWM_COLOR_NITEMS];
-	XftDraw			*xftdraw;
 	XftFont			*xftfont;
 };
 TAILQ_HEAD(screen_ctx_q, screen_ctx);
@@ -549,9 +551,6 @@ int			 xu_ptr_grab(Window, unsigned int, Cursor);
 int			 xu_ptr_regrab(unsigned int, Cursor);
 void			 xu_ptr_setpos(Window, int, int);
 void			 xu_ptr_ungrab(void);
-void			 xu_xft_draw(struct screen_ctx *, const char *,
-			     int, int, int);
-int			 xu_xft_width(XftFont *, const char *, int);
 void 			 xu_xorcolor(XftColor, XftColor, XftColor *);
 
 void			 xu_ewmh_net_supported(struct screen_ctx *);

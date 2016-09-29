@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: mousefunc.c,v 1.105 2016/09/22 14:36:03 okan Exp $
+ * $OpenBSD: mousefunc.c,v 1.108 2016/09/29 00:21:55 okan Exp $
  */
 
 #include <sys/types.h>
@@ -39,16 +39,22 @@ mousefunc_sweep_draw(struct client_ctx *cc)
 {
 	struct screen_ctx	*sc = cc->sc;
 	char			 s[14]; /* fits " nnnn x nnnn \0" */
+	XGlyphInfo		 extents;
 
 	(void)snprintf(s, sizeof(s), " %4d x %-4d ", cc->dim.w, cc->dim.h);
 
-	XReparentWindow(X_Dpy, sc->menuwin, cc->win, 0, 0);
-	XMoveResizeWindow(X_Dpy, sc->menuwin, 0, 0,
-	    xu_xft_width(sc->xftfont, s, strlen(s)), sc->xftfont->height);
-	XMapWindow(X_Dpy, sc->menuwin);
-	XClearWindow(X_Dpy, sc->menuwin);
+	XftTextExtentsUtf8(X_Dpy, sc->xftfont, (const FcChar8*)s,
+	    strlen(s), &extents);
 
-	xu_xft_draw(sc, s, CWM_COLOR_MENU_FONT, 0, sc->xftfont->ascent + 1);
+	XReparentWindow(X_Dpy, sc->menu.win, cc->win, 0, 0);
+	XMoveResizeWindow(X_Dpy, sc->menu.win, 0, 0,
+	    extents.xOff, sc->xftfont->height);
+	XMapWindow(X_Dpy, sc->menu.win);
+	XClearWindow(X_Dpy, sc->menu.win);
+
+	XftDrawStringUtf8(sc->menu.xftdraw, &sc->xftcolor[CWM_COLOR_MENU_FONT],
+	    sc->xftfont, 0, sc->xftfont->ascent + 1,
+	    (const FcChar8*)s, strlen(s));
 }
 
 void
@@ -68,7 +74,6 @@ mousefunc_client_resize(struct client_ctx *cc, union arg *arg)
 		return;
 
 	xu_ptr_setpos(cc->win, cc->geom.w, cc->geom.h);
-	mousefunc_sweep_draw(cc);
 
 	for (;;) {
 		XMaskEvent(X_Dpy, MOUSEMASK, &ev);
@@ -88,8 +93,8 @@ mousefunc_client_resize(struct client_ctx *cc, union arg *arg)
 			break;
 		case ButtonRelease:
 			client_resize(cc, 1);
-			XUnmapWindow(X_Dpy, sc->menuwin);
-			XReparentWindow(X_Dpy, sc->menuwin, sc->rootwin, 0, 0);
+			XUnmapWindow(X_Dpy, sc->menu.win);
+			XReparentWindow(X_Dpy, sc->menu.win, sc->rootwin, 0, 0);
 			xu_ptr_ungrab();
 
 			/* Make sure the pointer stays within the window. */
