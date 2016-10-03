@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: kbfunc.c,v 1.127 2016/09/22 14:36:03 okan Exp $
+ * $OpenBSD: kbfunc.c,v 1.129 2016/10/03 13:52:17 okan Exp $
  */
 
 #include <sys/types.h>
@@ -95,11 +95,23 @@ kbfunc_client_move(struct client_ctx *cc, union arg *arg)
 {
 	struct screen_ctx	*sc = cc->sc;
 	struct geom		 area;
-	int			 x, y;
+	int			 x, y, px, py;
 	unsigned int		 mx = 0, my = 0;
 
 	if (cc->flags & CLIENT_FREEZE)
 		return;
+
+	xu_ptr_getpos(cc->win, &px, &py);
+	if (px < 0)
+		px = 0;
+	else if (px > cc->geom.w)
+		px = cc->geom.w;
+	if (py < 0)
+		py = 0;
+	else if (py > cc->geom.h)
+		py = cc->geom.h;
+
+	xu_ptr_setpos(cc->win, px, py);
 
 	kbfunc_amount(arg->i, Conf.mamount, &mx, &my);
 
@@ -187,6 +199,8 @@ kbfunc_menu_client(struct client_ctx *cc, union arg *arg)
 		cc = (struct client_ctx *)mi->ctx;
 		if (cc->flags & CLIENT_HIDDEN)
 			client_unhide(cc);
+		else
+			client_raise(cc);
 		if (old_cc)
 			client_ptrsave(old_cc);
 		client_ptrwarp(cc);

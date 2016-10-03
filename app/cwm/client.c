@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: client.c,v 1.225 2016/09/30 20:55:54 okan Exp $
+ * $OpenBSD: client.c,v 1.227 2016/10/03 14:42:34 okan Exp $
  */
 
 #include <sys/types.h>
@@ -133,7 +133,7 @@ client_init(Window win, struct screen_ctx *sc, int active)
 			goto out;
 		if (group_autogroup(cc))
 			goto out;
-		if (Conf.flags & CONF_STICKY_GROUPS)
+		if (Conf.stickygroups)
 			group_assign(sc->group_active, cc);
 		else
 			group_assign(NULL, cc);
@@ -469,11 +469,6 @@ client_config(struct client_ctx *cc)
 void
 client_ptrwarp(struct client_ctx *cc)
 {
-	if (cc->flags & CLIENT_HIDDEN)
-		client_unhide(cc);
-	else
-		client_raise(cc);
-
 	xu_ptr_setpos(cc->win, cc->ptr.x, cc->ptr.y);
 }
 
@@ -686,6 +681,7 @@ client_cycle(struct screen_ctx *sc, int flags)
 	/* reset when cycling mod is released. XXX I hate this hack */
 	sc->cycling = 1;
 	client_ptrsave(oldcc);
+	client_raise(newcc);
 	client_ptrwarp(newcc);
 }
 

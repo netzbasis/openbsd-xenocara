@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: conf.c,v 1.208 2016/09/30 18:28:06 okan Exp $
+ * $OpenBSD: conf.c,v 1.210 2016/10/03 18:43:49 okan Exp $
  */
 
 #include <sys/types.h>
@@ -254,9 +254,10 @@ conf_init(struct conf *c)
 {
 	unsigned int	i;
 
-	c->bwidth = CONF_BWIDTH;
-	c->mamount = CONF_MAMOUNT;
-	c->snapdist = CONF_SNAPDIST;
+	c->stickygroups = 0;
+	c->bwidth = 1;
+	c->mamount = 1;
+	c->snapdist = 0;
 
 	TAILQ_INIT(&c->ignoreq);
 	TAILQ_INIT(&c->cmdq);
@@ -279,7 +280,7 @@ conf_init(struct conf *c)
 	(void)snprintf(c->known_hosts, sizeof(c->known_hosts), "%s/%s",
 	    homedir, ".ssh/known_hosts");
 
-	c->font = xstrdup(CONF_FONT);
+	c->font = xstrdup("sans-serif:pixelsize=14:bold");
 }
 
 void
@@ -639,11 +640,10 @@ conf_unbind_mouse(struct conf *c, struct binding *unbind)
 }
 
 static int cursor_binds[] = {
-	XC_X_cursor,		/* CF_DEFAULT */
-	XC_fleur,		/* CF_MOVE */
 	XC_left_ptr,		/* CF_NORMAL */
-	XC_question_arrow,	/* CF_QUESTION */
+	XC_fleur,		/* CF_MOVE */
 	XC_bottom_right_corner,	/* CF_RESIZE */
+	XC_question_arrow,	/* CF_QUESTION */
 };
 
 void
