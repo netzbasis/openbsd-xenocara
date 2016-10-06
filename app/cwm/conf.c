@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: conf.c,v 1.212 2016/10/04 15:52:32 okan Exp $
+ * $OpenBSD: conf.c,v 1.214 2016/10/05 13:35:17 okan Exp $
  */
 
 #include <sys/types.h>
@@ -192,6 +192,7 @@ static const struct {
 	{ "MS-Tab",	"rcycle" },
 	{ "CM-n",	"label" },
 	{ "CM-x",	"delete" },
+	{ "CM-a",	"nogroup" },
 	{ "CM-0",	"nogroup" },
 	{ "CM-1",	"group1" },
 	{ "CM-2",	"group2" },
@@ -283,6 +284,7 @@ conf_init(struct conf *c)
 	    homedir, ".ssh/known_hosts");
 
 	c->font = xstrdup("sans-serif:pixelsize=14:bold");
+	c->wmname = xstrdup("CWM");
 }
 
 void
@@ -327,6 +329,7 @@ conf_clear(struct conf *c)
 		free(c->color[i]);
 
 	free(c->font);
+	free(c->wmname);
 }
 
 void
