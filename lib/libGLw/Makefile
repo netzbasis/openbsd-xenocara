@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2012/08/17 15:16:44 mpi Exp $
+# $OpenBSD: Makefile,v 1.17 2016/10/08 19:29:18 matthieu Exp $
 
 DEBUG?=
 
@@ -35,17 +35,14 @@ includes:
 
 beforeinstall: includes
 
-afterinstall: glw.pc
-	$(INSTALL) -c -m 644 -o root -g wheel glw.pc \
-		${DESTDIR}${LIBDIR}/pkgconfig
-
-glw.pc: glw.pc.in
-	sed -e 's,@INSTALL_DIR@,$(X11BASE),' \
-	    -e 's,@LIB_DIR@,lib,' \
-	    -e 's,@VERSION@,$(MESA_MAJOR).$(MESA_MINOR).$(MESA_TINY),' \
-	< ${.CURDIR}/glw.pc.in > glw.pc
-
 NOPROFILE=
+
+PKGCONFIG=	glw.pc
+PACKAGE_VERSION=$(MESA_MAJOR).$(MESA_MINOR).$(MESA_TINY)
+EXTRA_PKGCONFIG_SUBST= \
+	-e 's,@INSTALL_DIR@,$(X11BASE),' \
+	-e 's,@LIB_DIR@,lib,' \
+	-e 's,@VERSION@,$(PACKAGE_VERSION),' \
 
 .include <bsd.lib.mk>
 .include <bsd.xorg.mk>
