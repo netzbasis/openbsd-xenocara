@@ -86,6 +86,7 @@
 ./usr/X11R6/include/libdrm/tegra_drm.h
 ./usr/X11R6/include/libdrm/vc4_drm.h
 ./usr/X11R6/include/libdrm/via_drm.h
+./usr/X11R6/include/libdrm/virtgpu_drm.h
 ./usr/X11R6/include/libdrm/vmwgfx_drm.h
 ./usr/X11R6/include/txc_dxtn.h
 ./usr/X11R6/include/xf86drm.h
@@ -270,11 +271,11 @@
 ./usr/X11R6/lib/libOSMesa.so.10.0
 ./usr/X11R6/lib/libXvMCr600.so.1.0
 ./usr/X11R6/lib/libdrm.la
-./usr/X11R6/lib/libdrm.so.7.1
+./usr/X11R6/lib/libdrm.so.7.2
 ./usr/X11R6/lib/libdrm_amdgpu.la
 ./usr/X11R6/lib/libdrm_amdgpu.so.1.1
 ./usr/X11R6/lib/libdrm_intel.la
-./usr/X11R6/lib/libdrm_intel.so.5.1
+./usr/X11R6/lib/libdrm_intel.so.5.2
 ./usr/X11R6/lib/libdrm_nouveau.la
 ./usr/X11R6/lib/libdrm_nouveau.so.3.0
 ./usr/X11R6/lib/libdrm_radeon.la
