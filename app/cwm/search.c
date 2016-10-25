@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: search.c,v 1.54 2016/10/22 19:16:43 okan Exp $
+ * $OpenBSD: search.c,v 1.57 2016/10/24 18:57:12 okan Exp $
  */
 
 #include <sys/types.h>
@@ -57,26 +57,21 @@ search_match_client(struct menu_q *menuq, struct menu_q *resultq, char *search)
 		struct client_ctx *cc = (struct client_ctx *)mi->ctx;
 
 		/* Match on label. */
-		if ((cc->label) && strsubmatch(search, cc->label, 0)) {
-			cc->matchname = cc->label;
+		if (strsubmatch(search, cc->label, 0))
 			tier = 0;
-		}
 
 		/* Match on window name history, from present to past. */
 		if (tier < 0) {
 			TAILQ_FOREACH_REVERSE(wn, &cc->nameq, name_q, entry)
 				if (strsubmatch(search, wn->name, 0)) {
-					cc->matchname = wn->name;
 					tier = 2;
 					break;
 				}
 		}
 
-		/* Match on window class name. */
-		if ((tier < 0) && strsubmatch(search, cc->ch.res_class, 0)) {
-			cc->matchname = cc->ch.res_class;
+		/* Match on window resource class. */
+		if ((tier < 0) && strsubmatch(search, cc->ch.res_class, 0))
 			tier = 3;
-		}
 
 		if (tier < 0)
 			continue;
@@ -90,7 +85,7 @@ search_match_client(struct menu_q *menuq, struct menu_q *resultq, char *search)
 			tier--;
 
 		if (tier >= nitems(tierp))
-			errx(1, "search_match_client: invalid tier");
+			errx(1, "%s: invalid tier", __func__);
 
 		/*
 		 * If you have a tierp, insert after it, and make it
@@ -140,12 +135,9 @@ search_print_client(struct menu *mi, int list)
 	else if (cc->flags & CLIENT_HIDDEN)
 		flag = '&';
 
-	if ((list) || (cc->matchname == cc->label))
-		cc->matchname = cc->name;
-
 	(void)snprintf(mi->print, sizeof(mi->print), "(%d) %c[%s] %s",
 	    (cc->gc) ? cc->gc->num : 0, flag,
-	    (cc->label) ? cc->label : "", cc->matchname);
+	    (cc->label) ? cc->label : "", cc->name);
 }
 
 static void

@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: conf.c,v 1.217 2016/10/18 17:03:30 okan Exp $
+ * $OpenBSD: conf.c,v 1.219 2016/10/24 20:44:08 okan Exp $
  */
 
 #include <sys/types.h>
@@ -138,7 +138,7 @@ conf_screen(struct screen_ctx *sc)
 	if (sc->xftfont == NULL) {
 		sc->xftfont = XftFontOpenName(X_Dpy, sc->which, Conf.font);
 		if (sc->xftfont == NULL)
-			errx(1, "XftFontOpenName: %s", Conf.font);
+			errx(1, "%s: XftFontOpenName: %s", __func__, Conf.font);
 	}
 
 	for (i = 0; i < nitems(color_binds); i++) {
@@ -169,7 +169,7 @@ conf_screen(struct screen_ctx *sc)
 
 	sc->menu.xftdraw = XftDrawCreate(X_Dpy, sc->menu.win, visual, colormap);
 	if (sc->menu.xftdraw == NULL)
-		errx(1, "XftDrawCreate");
+		errx(1, "%s: XftDrawCreate", __func__);
 
 	conf_grab_kbd(sc->rootwin);
 }
@@ -362,9 +362,9 @@ static const struct {
 	{ "groupsearch", kbfunc_menu_group, CWM_CONTEXT_SC, {0} },
 	{ "hide", kbfunc_client_hide, CWM_CONTEXT_CC, {0} },
 	{ "cycle", kbfunc_client_cycle, CWM_CONTEXT_SC,
-	    {.i = CWM_CYCLE_FORWARD} },
+	    {.i = (CWM_CYCLE_FORWARD)} },
 	{ "rcycle", kbfunc_client_cycle, CWM_CONTEXT_SC,
-	    {.i = CWM_CYCLE_REVERSE} },
+	    {.i = (CWM_CYCLE_REVERSE)} },
 	{ "label", kbfunc_menu_client_label, CWM_CONTEXT_CC, {0} },
 	{ "delete", kbfunc_client_delete, CWM_CONTEXT_CC, {0} },
 	{ "group1", kbfunc_group_toggle, CWM_CONTEXT_SC, {.i = 1} },
@@ -396,9 +396,9 @@ static const struct {
 	{ "movetogroup9", kbfunc_client_movetogroup, CWM_CONTEXT_CC, {.i = 9} },
 	{ "nogroup", kbfunc_group_alltoggle, CWM_CONTEXT_SC, {0} },
 	{ "cyclegroup", kbfunc_group_cycle, CWM_CONTEXT_SC,
-	    {.i = CWM_CYCLE_FORWARD} },
+	    {.i = (CWM_CYCLE_FORWARD)} },
 	{ "rcyclegroup", kbfunc_group_cycle, CWM_CONTEXT_SC,
-	    {.i = CWM_CYCLE_REVERSE} },
+	    {.i = (CWM_CYCLE_REVERSE)} },
 	{ "cycleingroup", kbfunc_client_cycle, CWM_CONTEXT_SC,
 	    {.i = (CWM_CYCLE_FORWARD | CWM_CYCLE_INGROUP)} },
 	{ "rcycleingroup", kbfunc_client_cycle, CWM_CONTEXT_SC,

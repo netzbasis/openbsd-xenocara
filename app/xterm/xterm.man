@@ -7292,7 +7292,8 @@ Stephen P. Wall,
 David Wexelblat, and
 Thomas Dickey (invisible-island.net).
 .SH OPENBSD SPECIFICS
-On OpenBSD, the following resources have different default values: 
+On OpenBSD, the Tektronix 4014 emulation is disabled and the following
+resources have different default values: 
 .TP 8
 .B allowFontOps: false
 .TP 8
@@ -7315,3 +7316,5 @@ Moreover, on OpenBSD the
 entry for xterm defines the 
 .I kb 
 capability as \fB^?\fP
+.PP
+The u\*n and koi8r\*n shell scripts are not provided by OpenBSD.
