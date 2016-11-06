@@ -61,16 +61,12 @@ struct AuthProtocol {
     const char	    *name;
     void	    (*InitAuth)(unsigned short len, char *name);
     Xauth	    *(*GetAuth)(unsigned short len, char *name);
-    void	    (*GetXdmcpAuth)(
-			struct protoDisplay	*pdpy,
-			unsigned short	authorizationNameLen,
-			char		*authorizationName);
     int		    inited;
 };
 
 static struct AuthProtocol AuthProtocols[] = {
 { (unsigned short) 18,	"MIT-MAGIC-COOKIE-1",
-    MitInitAuth, MitGetAuth, NULL
+    MitInitAuth, MitGetAuth,
 },
 };
 
@@ -867,27 +863,8 @@ SetUserAuthorization (struct display *d, struct verify_info *verify)
 		!strncmp (auths[i]->name, "MIT-MAGIC-COOKIE-1", 18))
 	    {
 		magicCookie = i;
-		if (d->displayType.location == Local)
-		    writeLocalAuth (new, auths[i], d->name);
+		writeLocalAuth (new, auths[i], d->name);
 		break;
-	    }
-	}
-	/* now write other authorizations */
-	/* XXX This is a no-op on xenodm */
-	for (i = 0; i < d->authNum; i++)
-	{
-	    if (i != magicCookie)
-	    {
-		data_len = auths[i]->data_length;
-		/* client will just use default Kerberos cache, so don't
-		 * even write cache info into the authority file.
-		 */
-		if (auths[i]->name_length == 14 &&
-		    !strncmp (auths[i]->name, "MIT-KERBEROS-5", 14))
-		    auths[i]->data_length = 0;
-		if (d->displayType.location == Local)
-		    writeLocalAuth (new, auths[i], d->name);
-		auths[i]->data_length = data_len;
 	    }
 	}
 	if (old) {
@@ -966,10 +943,7 @@ RemoveUserAuthorization (struct display *d, struct verify_info *verify)
 	initAddrs ();
 	doWrite = 0;
 	for (i = 0; i < d->authNum; i++)
-	{
-	    if (d->displayType.location == Local)
-		writeLocalAuth (new, auths[i], d->name);
-	}
+	    writeLocalAuth (new, auths[i], d->name);
 	doWrite = 1;
 	if (old) {
 	    if (fstat (fileno (old), &statb) != -1)

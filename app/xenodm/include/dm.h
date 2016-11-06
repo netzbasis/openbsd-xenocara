@@ -49,22 +49,15 @@ from The Open Group.
 # include <X11/Xauth.h>
 # include <X11/Intrinsic.h>
 
-# include <setjmp.h>
 # include <limits.h>
 # include <time.h>
 # define Time_t time_t
+# include <stdlib.h>
 
 
-#  include <X11/Xdmcp.h>
+# include <X11/Xdmcp.h>
 
-
-# ifdef _POSIX_SOURCE
-#  include <sys/wait.h>
-# else
-#  define _POSIX_SOURCE
-#  include <sys/wait.h>
-#  undef _POSIX_SOURCE
-# endif
+# include <sys/wait.h>
 # define waitCode(w)	(WIFEXITED(w) ? WEXITSTATUS(w) : 0)
 # define waitSig(w)	(WIFSIGNALED(w) ? WTERMSIG(w) : 0)
 # define waitCore(w)    0	/* not in POSIX.  so what? */
@@ -80,33 +73,6 @@ typedef int		waitType;
 
 typedef enum displayStatus { running, notRunning, zombie, phoenix } DisplayStatus;
 
-
-/*
- * local     - server runs on local host
- * foreign   - server runs on remote host -- unsupported in xenodm
- * permanent - session restarted when it exits
- * transient - session not restarted when it exits
- * fromFile  - started via entry in servers file
- * fromXDMCP - started with XDMCP
- */
-
-typedef struct displayType {
-	unsigned int	location:1;
-	unsigned int	lifetime:1;
-	unsigned int	origin:1;
-} DisplayType;
-
-# define Local		1
-# define Foreign	0
-
-# define Permanent	1
-# define Transient	0
-
-# define FromFile	1
-# define FromXDMCP	0 	/* unsupported in xenodm */
-
-extern DisplayType parseDisplayType (char *string, int *usedDefault);
-
 typedef enum fileState { NewEntry, OldEntry, MissingEntry } FileState;
 
 struct display {
@@ -114,7 +80,6 @@ struct display {
 	/* Xservers file / XDMCP information */
 	char		*name;		/* DISPLAY name */
 	char		*class;		/* display class (may be NULL) */
-	DisplayType	displayType;	/* method to handle with */
 	char		**argv;		/* program name and arguments */
 
 	/* display state */
@@ -170,27 +135,15 @@ struct display {
 
 	Display		*dpy;		/* Display */
 	char		*windowPath;	/* path to server "window" */
+
+	/* autologin */
+	char		*autoLogin;	/* user to auto-login */
 };
 
 
 #  define PROTO_TIMEOUT	(30 * 60)   /* 30 minutes should be long enough */
 #  define XDM_BROKEN_INTERVAL (120)   /* server crashing more than once within */
                                     /* two minutes is assumed to be broken!  */
-struct protoDisplay {
-	struct protoDisplay	*next;
-	XdmcpNetaddr		address;   /* UDP address */
-	int			addrlen;    /* UDP address length */
-	unsigned long		date;	    /* creation date */
-	CARD16			displayNumber;
-	CARD16			connectionType;
-	ARRAY8			connectionAddress;
-	CARD32			sessionID;
-	Xauth			*fileAuthorization;
-	Xauth			*xdmcpAuthorization;
-	ARRAY8			authenticationName;
-	ARRAY8			authenticationData;
-	XdmAuthKeyRec		key;
-};
 
 struct greet_info {
 	char		*name;		/* user name */
@@ -220,13 +173,7 @@ struct verify_info {
 # define RESERVER_DISPLAY	3	/* force server termination */
 # define OPENFAILED_DISPLAY	4	/* XOpenDisplay failed, retry */
 
-# ifndef TRUE
-#  define TRUE	1
-#  define FALSE	0
-# endif
-
 extern char	*config;
-
 extern char	*servers;
 extern int	request_port;
 extern int	debugLevel;
@@ -239,23 +186,9 @@ extern char	*keyFile;
 extern char	**exportList;
 
 extern struct display	*FindDisplayByName (char *name),
-			*FindDisplayBySessionID (CARD32 sessionID),
-			*FindDisplayByAddress (XdmcpNetaddr addr, int addrlen, CARD16 displayNumber),
 			*FindDisplayByPid (pid_t pid),
 			*FindDisplayByServerPid (pid_t serverPid),
 			*NewDisplay (char *name, char *class);
-
-extern struct protoDisplay	*FindProtoDisplay (
-					XdmcpNetaddr address,
-					int          addrlen,
-					CARD16       displayNumber);
-extern struct protoDisplay	*NewProtoDisplay (
-					XdmcpNetaddr address,
-					int	     addrlen,
-					CARD16	     displayNumber,
-					CARD16	     connectionType,
-					ARRAY8Ptr    connectionAddress,
-					CARD32	     sessionID);
 
 /* in Login.c */
 extern void DrawFail (Widget ctx);
@@ -264,9 +197,6 @@ extern void DrawFail (Widget ctx);
 extern void CloseOnFork (void);
 extern void RegisterCloseOnFork (int fd);
 extern void StartDisplay (struct display *d);
-# ifndef HAVE_SETPROCTITLE
-extern void SetTitle (char *name, ...);
-# endif
 
 /* in dpylist.c */
 extern int AnyDisplaysLeft (void);
@@ -274,7 +204,7 @@ extern void ForEachDisplay (void (*f)(struct display *));
 extern void RemoveDisplay (struct display *old);
 
 /* in file.c */
-extern void ParseDisplay (char *source, DisplayType *acceptableTypes, int numAcceptable);
+extern void ParseDisplay (char *source);
 
 /* in netaddr.c */
 extern char *NetaddrAddress(XdmcpNetaddr netaddrp, int *lenp);
@@ -282,10 +212,6 @@ extern char *NetaddrPort(XdmcpNetaddr netaddrp, int *lenp);
 extern int ConvertAddr (XdmcpNetaddr saddr, int *len, char **addr);
 extern int NetaddrFamily (XdmcpNetaddr netaddrp);
 extern int addressEqual (XdmcpNetaddr a1, int len1, XdmcpNetaddr a2, int len2);
-
-
-/* in protodpy.c */
-extern void DisposeProtoDisplay(struct protoDisplay *pdpy);
 
 /* in reset.c */
 extern void pseudoReset (Display *dpy);
@@ -331,6 +257,7 @@ extern void printEnv (char **e);
 
 /* in verify.c */
 extern int Verify (struct display *d, struct greet_info *greet, struct verify_info *verify);
+extern int autoLoginEnv(struct display *d, struct verify_info *verify, struct greet_info *greet);
 
 /* in dm.c */
 extern void StopDisplay (struct display *d);
@@ -342,15 +269,5 @@ extern void WaitForChild (void);
 
 # define CLOSE_ALWAYS	    0
 # define LEAVE_FOR_DISPLAY  1
-
-# include <stdlib.h>
-
-#  define Setjmp(e)   sigsetjmp(e,1)
-#  define Longjmp(e,v)	siglongjmp(e,v)
-#  define Jmp_buf		sigjmp_buf
-
-
-typedef void (*SIGFUNC)(int);
-
 
 #endif /* _DM_H_ */

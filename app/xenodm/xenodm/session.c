@@ -147,7 +147,6 @@ __dead void
 ManageSession (struct display *d)
 {
     pid_t	pid = 0;
-    Display		*dpy;
     greet_user_rtn	greet_stat;
 
     Debug ("ManageSession %s\n", d->name);
@@ -155,12 +154,13 @@ ManageSession (struct display *d)
     (void)XSetErrorHandler(ErrorHandler);
     setproctitle("%s", d->name);
 
-    /*
-     * Load system default Resources
-     */
-    LoadXloginResources (d);
 
-    greet_stat = GreetUser(d, &dpy, &verify, &greet);
+    if (d->autoLogin == NULL || d->autoLogin[0] == '\0') {
+        /* Load system default Resources */
+        LoadXloginResources (d);
+        greet_stat = GreetUser(d, &verify, &greet);
+    } else
+        greet_stat = AutoLogin(d, &verify, &greet);
 
     if (greet_stat == Greet_Success) {
 	clientPid = 0;
@@ -338,7 +338,6 @@ StartClient (
 			  name, _SysErrorMsg (errno));
 		return (0);
 	    }
-	    endpwent();
 	} else {
 	    LogError ("getpwnam for \"%s\" failed: %s\n",
 		      name, _SysErrorMsg (errno));

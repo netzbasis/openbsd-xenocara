@@ -46,6 +46,8 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE([foreign tar-ustar dist-xz subdir-objects])
 
+AM_MAINTAINER_MODE
+
 dnl We only support native Windows builds (MinGW/MSVC) through SCons.
 case "$host_os" in
 mingw*)
@@ -544,18 +546,6 @@ AC_LINK_IFELSE(
     [AC_MSG_RESULT([no])
         GC_SECTIONS="";])
 LDFLAGS=$save_LDFLAGS
-
-dnl
-dnl --gc-sections causes ld 2.17 to segfault on ppc
-dnl
-case "$host_os" in
-openbsd*)
-    case "$host_cpu" in
-    powerpc*)
-        GC_SECTIONS="" ;;
-    esac
-    ;;
-esac
 
 AC_SUBST([GC_SECTIONS])
 

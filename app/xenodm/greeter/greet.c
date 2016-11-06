@@ -125,8 +125,8 @@ GreetDone (
 	break;
     }
     if (done) {
-	bzero (data->name, NAME_LEN);
-	bzero (data->passwd, PASSWORD_LEN);
+	explicit_bzero (data->name, NAME_LEN);
+	explicit_bzero (data->passwd, PASSWORD_LEN);
     }
 }
 
@@ -295,21 +295,21 @@ FailedLogin (struct display *d, const char *username)
 _X_EXPORT
 greet_user_rtn GreetUser(
     struct display          *d,
-    Display                 ** dpy,
     struct verify_info      *verify,
     struct greet_info       *greet)
 {
     int i;
     Arg		arglist[2];
+    Display    *dpy;
 
-    *dpy = InitGreet (d);
+    dpy = InitGreet (d);
     /*
      * Run the setup script - note this usually will not work when
      * the server is grabbed, so we don't even bother trying.
      */
     if (!d->grabServer)
 	SetupDisplay (d);
-    if (!*dpy) {
+    if (!dpy) {
 	LogError ("Cannot reopen display %s for greet window\n", d->name);
 	exit (RESERVER_DISPLAY);
     }
@@ -338,13 +338,38 @@ greet_user_rtn GreetUser(
 	else
 	{
 	    FailedLogin (d, greet->name);
-	    bzero (greet->name, strlen(greet->name));
-	    bzero (greet->password, strlen(greet->password));
+	    explicit_bzero (greet->name, strlen(greet->name));
+	    explicit_bzero (greet->password, strlen(greet->password));
 	}
     }
-    DeleteXloginResources (d, *dpy);
+    DeleteXloginResources (d, dpy);
     CloseGreet (d);
     Debug ("Greet loop finished %d\n", getpid());
+    /*
+     * Run system-wide initialization file
+     */
+    if (source (verify->systemEnviron, d->startup) != 0)
+    {
+	Debug ("Startup program %s exited with non-zero status\n",
+		d->startup);
+	SessionExit (d, OBEYSESS_DISPLAY, FALSE);
+    }
+    return Greet_Success;
+}
+
+_X_EXPORT
+greet_user_rtn AutoLogin(
+    struct display          *d,
+    struct verify_info      *verify,
+    struct greet_info       *greet)
+{
+    int i;
+
+    if (!autoLoginEnv(d, verify, greet)) {
+        LogError("Autologin %s failed\n", d->autoLogin);
+        SessionExit(d, UNMANAGE_DISPLAY, TRUE);
+    }
+    
     /*
      * Run system-wide initialization file
      */
