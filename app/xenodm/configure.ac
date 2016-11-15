@@ -45,12 +45,6 @@ XORG_DEFAULT_OPTIONS
 XORG_PROG_RAWCPP
 XORG_WITH_LINT
 
-# Checks for programs.
-# Check for mktemp to prevent security issue noted in Xorg bug #5898
-# See https://bugs.freedesktop.org/show_bug.cgi?id=5898 for details.
-AC_PATH_PROG(MKTEMP_COMMAND, mktemp)
-AM_CONDITIONAL(HAVE_MKTEMP_COMMAND, test x$MKTEMP_COMMAND != x)
-
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIGNAL
 
@@ -67,30 +61,6 @@ GREETER_CFLAGS="$GREETER_CFLAGS"
 
 # Find needed libraries for TCP sockets (pre-pended in $LIBS)
 XTRANS_CONNECTION_FLAGS
-
-# FIXME: Find better test for which OS'es use su -m  - for now, just try to
-# mirror the Imakefile setting of:
-# if  defined(OpenBSDArchitecture) || defined(NetBSDArchitecture) || defined(FreeBSDArchitecture) || defined(DarwinArchitecture)
-
-
-case $host_os in
-    linux*|gnu*|*-gnu)
-	SU="su"
-        ;;
-    darwin*)
-	SU="su -m"
-        ;;
-    *bsd*|dragonfly*)
-	SU="su -m"
-        ;;
-    solaris*|sysv4*)
-	SU="su"
-	;;
-    *)
-	SU="su"
-        ;;
-esac
-AC_SUBST(SU)
 
 # Figure out where everything goes in the filesystem
 
@@ -123,12 +93,6 @@ AC_ARG_WITH(default-vt,
 	  [specify default vt to start xenodm on (default=none)]),
 	[DEFAULTVT="$withval"], [[DEFAULTVT=""]])
 AC_SUBST(DEFAULTVT)
-
-AC_ARG_WITH(config-type,
-	AS_HELP_STRING([--with-config-type={ws|fs}],
-	 [default config file type to use - workstation (ws) or fileserver (fs) (default=ws)]),
-	[SERVERSTYPE="$withval"], [SERVERSTYPE="ws"])
-AC_SUBST(SERVERSTYPE)
 
 # Ideally we'd just pull out UTMP_FILE & WTMP_FILE from <utmp.h>
 # but that's not easy to do in autoconf

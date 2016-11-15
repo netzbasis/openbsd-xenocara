@@ -25,34 +25,25 @@ pixmapdir = $(XENODM_PIXMAPDIR)
 dist_pixmap_DATA = OpenBSD_15bpp.xpm OpenBSD_1bpp.xpm \
 		OpenBSD_4bpp.xpm OpenBSD_8bpp.xpm
 
-BUILT_SOURCES = Xservers.ws xenodm-config Xreset Xresources Xsession Xstartup
+BUILT_SOURCES = Xservers xenodm-config Xreset Xresources Xsession Xstartup
 
 CLEANFILES = $(BUILT_SOURCES) Xservers
 
-EXTRA_DIST = Xservers.ws.cpp Xservers.fs \
+EXTRA_DIST = Xservers.cpp \
 	xenodm-config.cpp Xreset.cpp Xresources.cpp Xsession.cpp Xstartup.cpp
-
-Xservers: Xservers.$(SERVERSTYPE)
-	ln -s Xservers.$(SERVERSTYPE) Xservers
 
 # Defines used when cpp'ing config files to replace settings in the files
 
-#if USE_XPM
 XPMDEFINES = -DXPM -DBITMAPDIR=$(XENODM_PIXMAPDIR) -DXENODM_PIXMAP=$(XENODM_PIXMAP) \
         -DXENODM_BWPIXMAP=$(XENODM_BWPIXMAP)
-#endif
-
-#if HAVE_MKTEMP_COMMAND
-MKTEMP_DEFINES = -DMKTEMP_COMMAND=$(MKTEMP_COMMAND)
-#endif
 
 CPP_FILES_FLAGS = -DBINDIR="$(bindir)" -DDEFAULTVT="$(DEFAULTVT)" \
     -DUTMP_FILE="$(UTMP_FILE)" -DWTMP_FILE="$(WTMP_FILE)" \
     -DXENODMDIR="$(XENODMLIBDIR)" -DXENODMLOGDIR="$(XENODMLOGDIR)" \
     -DXENODMXAUTHDIR="$(XENODMXAUTHDIR)" \
     -DXENODMCONFIGDIR="$(XENODMCONFIGDIR)" \
-    -DXENODMSCRIPTDIR="$(XENODMSCRIPTDIR)" -DSU="$(SU)" \
-    $(XPMDEFINES) -DSHELL_CMD="$(SHELL_CMD)" $(MKTEMP_DEFINES)
+    -DXENODMSCRIPTDIR="$(XENODMSCRIPTDIR)" \
+    $(XPMDEFINES) -DSHELL_CMD="$(SHELL_CMD)"
 
-Xservers.ws: $(srcdir)/Xservers.ws.cpp
-	$(AM_V_GEN)$(RAWCPP) $(RAWCPPFLAGS) $(CPP_FILES_FLAGS) < $(srcdir)/Xservers.ws.cpp | $(CPP_SED_MAGIC) > $@
+Xservers: $(srcdir)/Xservers.cpp
+	$(AM_V_GEN)$(RAWCPP) $(RAWCPPFLAGS) $(CPP_FILES_FLAGS) < $(srcdir)/Xservers.cpp | $(CPP_SED_MAGIC) > $@
