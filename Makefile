@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.75 2016/10/14 10:14:00 natano Exp $
+# $OpenBSD: Makefile,v 1.77 2016/11/19 14:22:05 tb Exp $
 .include <bsd.own.mk>
 .include <bsd.xconf.mk>
 
@@ -23,7 +23,10 @@ build:
 	@echo "Cannot run ${MAKE} build with DESTDIR set"
 	@exit 2
 .else
-build: 
+build:
+	umask ${WOBJUMASK}; exec ${MAKE} do-build
+
+do-build: 
 	@if [[ `id -u` -ne 0 ]]; then \
 		echo $@ must be called by root >&2; \
 		false; \
@@ -57,11 +60,13 @@ afterinstall afterbuild:
 	exec ${MAKE} fix-appd
 	/usr/sbin/makewhatis -Qv ${DESTDIR}/usr/X11R6/man
 	chown root:wheel ${DESTDIR}/usr/X11R6/man/mandoc.db
+	chmod 644 ${DESTDIR}/usr/X11R6/man/mandoc.db
 	touch ${DESTDIR}/var/sysmerge/xetcsum
 	cd ${DESTDIR}/ && \
 		sort ${.CURDIR}/distrib/sets/lists/xetc/{mi,md.${MACHINE}} | \
 		xargs sha256 -h ${DESTDIR}/var/sysmerge/xetcsum || true
 	chown root:wheel ${DESTDIR}/var/sysmerge/xetcsum
+	chmod 644 ${DESTDIR}/var/sysmerge/xetcsum
 	cd distrib/sets && exec ${MAKE}
 
 install-mk:
