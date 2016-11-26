@@ -103,7 +103,23 @@
 #endif
 
 #ifdef __OpenBSD__
+
 #define X_PRIVSEP
+
+struct drm_pciinfo {
+	uint16_t	domain;
+	uint8_t		bus;
+	uint8_t		dev;
+	uint8_t		func;
+	uint16_t	vendor_id;
+	uint16_t	device_id;
+	uint16_t	subvendor_id;
+	uint16_t	subdevice_id;
+	uint8_t		revision_id;
+};
+
+#define DRM_IOCTL_GET_PCIINFO	DRM_IOR(0x15, struct drm_pciinfo)
+
 #endif
 
 #define DRM_MSG_VERBOSITY 3
@@ -2851,7 +2867,25 @@ static char *drmGetMinorNameForFD(int fd, int type)
 out_close_dir:
     closedir(sysdir);
 #else
-#warning "Missing implementation of drmGetMinorNameForFD"
+    struct stat sbuf;
+    unsigned int maj, min;
+    char buf[PATH_MAX + 1];
+    int n;
+
+    if (fstat(fd, &sbuf))
+        return NULL;
+
+    maj = major(sbuf.st_rdev);
+    min = minor(sbuf.st_rdev);
+
+    if (maj != DRM_MAJOR || !S_ISCHR(sbuf.st_mode))
+        return NULL;
+
+    n = snprintf(buf, sizeof(buf), DRM_DEV_NAME, DRM_DIR_NAME, min);
+    if (n == -1 || n >= sizeof(buf))
+        return NULL;
+
+    return strdup(buf);
 #endif
     return NULL;
 }
@@ -2887,6 +2921,8 @@ static int drmParseSubsystemType(int maj, int min)
         return DRM_BUS_PCI;
 
     return -EINVAL;
+#elif defined(__OpenBSD__)
+	return DRM_BUS_PCI;
 #else
 #warning "Missing implementation of drmParseSubsystemType"
     return -EINVAL;
@@ -2927,6 +2963,26 @@ static int drmParsePciBusInfo(int maj, int min, drmPciBusInfoPtr info)
     info->bus = bus;
     info->dev = dev;
     info->func = func;
+
+    return 0;
+#elif defined(__OpenBSD__)
+    struct drm_pciinfo pinfo;
+    int fd;
+
+    fd = drmOpenMinor(min, 0, DRM_NODE_PRIMARY);
+    if (fd < 0)
+        return -errno;
+
+    if (drmIoctl(fd, DRM_IOCTL_GET_PCIINFO, &pinfo)) {
+        close(fd);
+        return -errno;
+    }
+    close(fd);
+
+    info->domain = pinfo.domain;
+    info->bus = pinfo.bus;
+    info->dev = pinfo.dev;
+    info->func = pinfo.func;
 
     return 0;
 #else
@@ -3002,6 +3058,37 @@ static int drmParsePciDeviceInfo(const char *d_name,
     device->revision_id = config[8];
     device->subvendor_id = config[44] | (config[45] << 8);
     device->subdevice_id = config[46] | (config[47] << 8);
+
+    return 0;
+#elif defined(__OpenBSD__)
+    struct drm_pciinfo pinfo;
+    char buf[PATH_MAX + 1];
+    int fd, n;
+
+    n = snprintf(buf, sizeof(buf), "%s/%s", DRM_DIR_NAME, d_name);
+    if (n == -1 || n >= sizeof(buf))
+        return -errno;
+
+#ifndef X_PRIVSEP
+    fd = open(buf, O_RDWR, 0);
+#else
+    fd = priv_open_device(buf);
+#endif
+
+    if (fd < 0)
+        return -errno;
+
+    if (drmIoctl(fd, DRM_IOCTL_GET_PCIINFO, &pinfo)) {
+        close(fd);
+        return -errno;
+    }
+    close(fd);
+
+    device->vendor_id = pinfo.vendor_id;
+    device->device_id = pinfo.device_id;
+    device->revision_id = pinfo.revision_id;
+    device->subvendor_id = pinfo.subvendor_id;
+    device->subdevice_id = pinfo.subdevice_id;
 
     return 0;
 #else
@@ -3117,6 +3204,46 @@ static void drmFoldDuplicatedDevices(drmDevicePtr local_devices[], int count)
  */
 int drmGetDevice(int fd, drmDevicePtr *device)
 {
+#ifdef __OpenBSD__
+    drmDevicePtr d;
+    struct stat sbuf;
+    char node[PATH_MAX + 1];
+    char d_name[PATH_MAX + 1];
+    int maj, min, n;
+    int ret;
+    int max_count = 1;
+
+    if (fd == -1 || device == NULL)
+        return -EINVAL;
+
+    if (fstat(fd, &sbuf))
+        return -errno;
+
+    maj = major(sbuf.st_rdev);
+    min = minor(sbuf.st_rdev);
+
+    if (maj != DRM_MAJOR || !S_ISCHR(sbuf.st_mode))
+        return -EINVAL;
+
+    n = snprintf(d_name, PATH_MAX, "drm%d", min);
+    if (n == -1 || n >= PATH_MAX)
+      return -errno;
+
+    n = snprintf(node, PATH_MAX, DRM_DEV_NAME, DRM_DIR_NAME, min);
+    if (n == -1 || n >= PATH_MAX)
+      return -errno;
+    if (stat(node, &sbuf))
+        return -EINVAL;
+
+    ret = drmProcessPciDevice(&d, d_name, node, DRM_NODE_PRIMARY,
+			      maj, min, true);
+    if (ret)
+        return ret;
+
+    *device = d;
+
+    return 0;
+#else
     drmDevicePtr *local_devices;
     drmDevicePtr d;
     DIR *sysdir;
@@ -3224,6 +3351,7 @@ free_devices:
 free_locals:
     free(local_devices);
     return ret;
+#endif
 }
 
 /**
