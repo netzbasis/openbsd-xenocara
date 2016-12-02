@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: kbfunc.c,v 1.137 2016/11/15 18:43:09 okan Exp $
+ * $OpenBSD: kbfunc.c,v 1.140 2016/12/01 20:28:19 okan Exp $
  */
 
 #include <sys/types.h>
@@ -298,12 +298,13 @@ kbfunc_menu_client(void *ctx, union arg *arg, enum xev xev)
 	struct menu		*mi;
 	struct menu_q		 menuq;
 	int			 m = (xev == CWM_XEV_BTN);
+	int			 all = (arg->i & CWM_MENU_WINDOW_ALL);
 
 	old_cc = client_current();
 
 	TAILQ_INIT(&menuq);
 	TAILQ_FOREACH(cc, &sc->clientq, entry) {
-		if (m) {
+		if (!all) {
 			if (cc->flags & CLIENT_HIDDEN)
 				menuq_add(&menuq, cc, NULL);
 		} else
@@ -450,7 +451,7 @@ kbfunc_menu_exec(void *ctx, union arg *arg, enum xev xev)
 
 	if ((mi = menu_filter(sc, &menuq, label, NULL,
 	    (CWM_MENU_DUMMY | CWM_MENU_FILE),
-	    search_match_exec_path, NULL)) != NULL) {
+	    search_match_exec, NULL)) != NULL) {
 		if (mi->text[0] == '\0')
 			goto out;
 		switch (cmd) {
@@ -525,7 +526,7 @@ kbfunc_menu_ssh(void *ctx, union arg *arg, enum xev xev)
 	(void)fclose(fp);
 menu:
 	if ((mi = menu_filter(sc, &menuq, "ssh", NULL, (CWM_MENU_DUMMY),
-	    search_match_exec, NULL)) != NULL) {
+	    search_match_text, NULL)) != NULL) {
 		if (mi->text[0] == '\0')
 			goto out;
 		l = snprintf(path, sizeof(path), "%s -T '[ssh] %s' -e ssh %s",
