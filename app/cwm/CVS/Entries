@@ -1,0 +1,19 @@
+/Makefile/1.23/Tue Sep 20 18:23:12 2016//
+/calmwm.c/1.99/Tue Oct 18 17:03:30 2016//
+/calmwm.h/1.339/Tue May  9 13:40:18 2017//
+/client.c/1.240/Fri May  5 14:14:19 2017//
+/conf.c/1.231/Tue May  9 13:40:18 2017//
+/cwm.1/1.57/Thu Dec  1 18:17:52 2016//
+/cwmrc.5/1.67/Mon Apr 24 12:18:04 2017//
+/group.c/1.126/Fri Feb 10 15:00:54 2017//
+/kbfunc.c/1.145/Tue May  9 13:40:18 2017//
+/menu.c/1.102/Tue Apr 25 12:08:05 2017//
+/mousefunc.c/1.117/Tue May  9 13:40:18 2017//
+/parse.y/1.68/Wed Apr 26 21:10:54 2017//
+/screen.c/1.84/Mon Oct 24 17:39:38 2016//
+/search.c/1.62/Tue Apr 25 13:40:33 2017//
+/util.c/1.18/Wed Sep 16 17:58:25 2015//
+/xevents.c/1.128/Tue May  9 18:43:40 2017//
+/xmalloc.c/1.15/Sat Mar 28 23:12:47 2015//
+/xutil.c/1.108/Wed Oct  5 13:10:59 2016//
+D

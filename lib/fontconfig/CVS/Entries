@@ -1,0 +1,20 @@
+/Makefile/1.4/Sun Apr  5 16:05:34 2015//
+/Makefile.inc/1.3/Sun Mar 13 20:23:35 2016//
+D/common////
+D/conf.d////
+D/doc////
+D/fc-arch////
+D/fc-cache////
+D/fc-case////
+D/fc-cat////
+D/fc-glyphname////
+D/fc-lang////
+D/fc-list////
+D/fc-match////
+D/fc-pattern////
+D/fc-query////
+D/fc-scan////
+D/fc-validate////
+D/fontconfig////
+D/pc////
+D/src////

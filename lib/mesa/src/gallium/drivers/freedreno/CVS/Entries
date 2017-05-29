@@ -1,0 +1,43 @@
+/Automake.inc/1.1.1.1/Sun Nov 22 02:45:13 2015//
+/Makefile.am/1.1.1.4/Sun Feb 26 12:10:25 2017//
+/Makefile.in/1.8/Sat Mar 25 00:29:28 2017//
+/Makefile.sources/1.1.1.3/Sun Dec 11 08:29:50 2016//
+/adreno_common.xml.h/1.1.1.3/Sun Dec 11 08:29:50 2016//
+/adreno_pm4.xml.h/1.1.1.3/Sun Dec 11 08:29:52 2016//
+/disasm.h/1.1.1.1/Sun Nov 22 02:45:14 2015//
+/freedreno_batch.c/1.1.1.2/Sun Feb 26 12:10:26 2017/-ko/
+/freedreno_batch.h/1.1.1.1/Sun Dec 11 08:29:50 2016/-ko/
+/freedreno_batch_cache.c/1.1.1.2/Sun Feb 26 12:10:24 2017/-ko/
+/freedreno_batch_cache.h/1.1.1.2/Sun Feb 26 12:10:23 2017/-ko/
+/freedreno_context.c/1.1.1.4/Sun Feb 26 12:10:24 2017//
+/freedreno_context.h/1.1.1.4/Sun Feb 26 12:10:26 2017//
+/freedreno_draw.c/1.1.1.3/Sun Dec 11 08:29:51 2016//
+/freedreno_draw.h/1.1.1.2/Sun Dec 11 08:29:51 2016//
+/freedreno_fence.c/1.1.1.3/Sun Feb 26 12:10:26 2017//
+/freedreno_fence.h/1.1.1.3/Sun Feb 26 12:10:23 2017//
+/freedreno_gmem.c/1.1.1.4/Sun Feb 26 12:10:26 2017//
+/freedreno_gmem.h/1.1.1.2/Sun Dec 11 08:29:51 2016//
+/freedreno_program.c/1.1.1.2/Sun Dec 11 08:29:51 2016//
+/freedreno_program.h/1.1.1.1/Sun Nov 22 02:45:14 2015//
+/freedreno_query.c/1.1.1.3/Sun Dec 11 08:29:51 2016//
+/freedreno_query.h/1.1.1.2/Sun May 29 10:20:54 2016//
+/freedreno_query_hw.c/1.1.1.3/Sun Dec 11 08:29:50 2016//
+/freedreno_query_hw.h/1.1.1.3/Sun Dec 11 08:29:50 2016//
+/freedreno_query_sw.c/1.1.1.2/Sun Dec 11 08:29:52 2016//
+/freedreno_query_sw.h/1.1.1.1/Sun Nov 22 02:45:14 2015//
+/freedreno_resource.c/1.1.1.3/Sun Dec 11 08:29:51 2016//
+/freedreno_resource.h/1.1.1.3/Sun Dec 11 08:29:51 2016//
+/freedreno_screen.c/1.1.1.4/Sun Feb 26 12:10:26 2017//
+/freedreno_screen.h/1.1.1.3/Sun Dec 11 08:29:52 2016//
+/freedreno_state.c/1.1.1.3/Sun Dec 11 08:29:52 2016//
+/freedreno_state.h/1.1.1.1/Sun Nov 22 02:45:14 2015//
+/freedreno_surface.c/1.1.1.2/Sun May 29 10:20:55 2016//
+/freedreno_surface.h/1.1.1.1/Sun Nov 22 02:45:14 2015//
+/freedreno_texture.c/1.1.1.3/Sun Dec 11 08:29:52 2016//
+/freedreno_texture.h/1.1.1.3/Sun Dec 11 08:29:53 2016//
+/freedreno_util.c/1.1.1.2/Sun May 29 10:20:52 2016//
+/freedreno_util.h/1.1.1.3/Sun Dec 11 08:29:53 2016//
+D/a2xx////
+D/a3xx////
+D/a4xx////
+D/ir3////

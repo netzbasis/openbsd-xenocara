@@ -1,0 +1,25 @@
+/Makefile.am/1.11/Wed Sep 16 19:10:21 2015//
+/Makefile.in/1.34/Tue Oct 11 22:15:54 2016//
+/README/1.1.1.1/Sun Nov 26 18:21:50 2006//
+/ephyr.c/1.14/Sun May 29 12:02:36 2016//
+/ephyr.h/1.8/Wed Sep 16 19:10:21 2015//
+/ephyr_draw.c/1.7/Sun Jun 10 13:21:23 2012//
+/ephyr_glamor_glx.c/1.3/Sun May 29 12:02:36 2016//
+/ephyr_glamor_glx.h/1.1/Sat Sep 27 17:53:01 2014//
+/ephyr_glamor_xv.c/1.1/Wed Sep 16 19:10:21 2015//
+/ephyrcursor.c/1.2/Sun May 29 12:02:36 2016//
+/ephyrdri.c/1.5/Wed Sep 16 19:10:21 2015//
+/ephyrdri.h/1.5/Wed Sep 16 19:10:21 2015//
+/ephyrdriext.c/1.12/Sun May 29 12:02:36 2016//
+/ephyrdriext.h/1.3/Wed Sep 16 19:10:21 2015//
+/ephyrglxext.c/1.9/Sun May 29 12:02:36 2016//
+/ephyrglxext.h/1.3/Wed Sep 16 19:10:21 2015//
+/ephyrhostglx.c/1.7/Wed Sep 16 19:10:21 2015//
+/ephyrhostglx.h/1.5/Wed Sep 16 19:10:21 2015//
+/ephyrinit.c/1.12/Sun May 29 12:02:36 2016//
+/ephyrlog.h/1.4/Wed Sep 16 19:10:21 2015//
+/ephyrvideo.c/1.9/Wed Sep 16 19:10:21 2015//
+/hostx.c/1.14/Sun May 29 12:02:36 2016//
+/hostx.h/1.11/Sun May 29 12:02:36 2016//
+/os.c/1.6/Wed Sep 16 19:10:21 2015//
+D/man////

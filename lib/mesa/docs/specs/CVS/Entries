@@ -1,0 +1,26 @@
+/EGL_MESA_platform_surfaceless.txt/1.1.1.1/Sun Dec 11 08:25:46 2016/-ko/
+/EXT_shader_integer_mix.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/EXT_shader_samples_identical.txt/1.1.1.1/Sun May 29 10:12:42 2016/-ko/
+/MESA_agp_offset.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_configless_context.spec/1.1.1.2/Sun Dec 11 08:25:47 2016//
+/MESA_copy_sub_buffer.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_drm_image.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_image_dma_buf_export.txt/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_multithread_makecurrent.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_pack_invert.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_pixmap_colormap.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_query_renderer.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_release_buffers.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_set_3dfx_mode.spec/1.1.1.1/Sun Nov 22 02:37:34 2015//
+/MESA_shader_debug.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_shader_integer_functions.txt/1.1.1.1/Sun Dec 11 08:25:47 2016/-ko/
+/MESA_swap_control.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_swap_frame_usage.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_texture_array.spec/1.1.1.1/Sun Nov 22 02:37:34 2015//
+/MESA_texture_signed_rgba.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_window_pos.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/MESA_ycbcr_texture.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/WL_bind_wayland_display.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/WL_create_wayland_buffer_from_image.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
+/enums.txt/1.1.1.2/Sun Dec 11 08:25:46 2016//
+D/OLD////
