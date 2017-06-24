@@ -1,13 +1,13 @@
-/Jamfile/1.5/Sun May 29 11:57:13 2016//
-/ftmisc.h/1.8/Sun May 29 11:57:13 2016//
-/ftraster.c/1.22/Fri Jan 13 11:20:00 2017//
-/ftraster.h/1.3/Sun May 29 11:57:14 2016//
-/ftrend1.c/1.9/Fri Jan 13 11:20:00 2017//
-/ftrend1.h/1.5/Sun May 29 11:57:14 2016//
-/module.mk/1.4/Sun May 29 11:57:14 2016//
-/raster.c/1.4/Sun May 29 11:57:14 2016//
-/rasterrs.h/1.4/Sun May 29 11:57:14 2016//
-/rastpic.c/1.8/Sun May 29 11:57:14 2016//
-/rastpic.h/1.6/Sun May 29 11:57:14 2016//
-/rules.mk/1.6/Sun May 29 11:57:14 2016//
+/Jamfile/1.6/Fri Jun 23 16:15:19 2017//
+/ftmisc.h/1.9/Fri Jun 23 16:15:19 2017//
+/ftraster.c/1.23/Fri Jun 23 16:15:19 2017//
+/ftraster.h/1.4/Fri Jun 23 16:15:19 2017//
+/ftrend1.c/1.10/Fri Jun 23 16:15:19 2017//
+/ftrend1.h/1.6/Fri Jun 23 16:15:19 2017//
+/module.mk/1.5/Fri Jun 23 16:15:19 2017//
+/raster.c/1.5/Fri Jun 23 16:15:19 2017//
+/rasterrs.h/1.5/Fri Jun 23 16:15:19 2017//
+/rastpic.c/1.9/Fri Jun 23 16:15:19 2017//
+/rastpic.h/1.7/Fri Jun 23 16:15:19 2017//
+/rules.mk/1.7/Fri Jun 23 16:15:19 2017//
 D
