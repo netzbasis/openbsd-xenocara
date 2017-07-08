@@ -15,7 +15,7 @@
 /enterleave.c/1.8/Tue Aug  9 18:59:51 2016//
 /enterleave.h/1.5/Sun May 29 12:02:35 2016//
 /eventconvert.c/1.7/Sat Aug 24 19:44:30 2013//
-/events.c/1.16/Sun May 29 12:02:35 2016//
+/events.c/1.17/Fri Jul  7 06:22:19 2017//
 /extension.c/1.14/Sun May 29 12:02:35 2016//
 /ffs.c/1.3/Sun Jun 10 13:21:21 2012//
 /gc.c/1.10/Wed Sep 16 19:10:20 2015//
@@ -37,7 +37,7 @@
 /selection.c/1.7/Wed Sep 16 19:10:20 2015//
 /stubmain.c/1.1/Fri May  2 19:27:47 2014//
 /swaprep.c/1.7/Wed Sep 16 19:10:20 2015//
-/swapreq.c/1.6/Wed Sep 16 19:10:20 2015//
+/swapreq.c/1.7/Fri Jul  7 06:22:20 2017//
 /tables.c/1.7/Wed Sep 16 19:10:20 2015//
 /touch.c/1.7/Sun May 29 12:02:35 2016//
 /window.c/1.16/Sun May 29 12:02:35 2016//
