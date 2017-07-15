@@ -47,7 +47,7 @@
 /xf86fbman.c/1.11/Sun May 29 12:02:37 2016//
 /xf86fbman.h/1.4/Sat Sep 27 17:53:01 2014//
 /xf86noBus.c/1.3/Sun Jun 10 13:21:24 2012//
-/xf86pciBus.c/1.12/Sun May 29 12:02:37 2016//
+/xf86pciBus.c/1.13/Fri Jul 14 11:38:05 2017//
 /xf86pciBus.h/1.9/Sat Sep 27 17:53:01 2014//
 /xf86platformBus.c/1.7/Sun May 29 12:02:37 2016//
 /xf86platformBus.h/1.4/Wed Sep 16 19:10:22 2015//
