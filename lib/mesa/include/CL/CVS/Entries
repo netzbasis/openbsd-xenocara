@@ -1,12 +1,12 @@
 /cl.h/1.1.1.1/Sun Nov 22 02:37:01 2015//
 /cl.hpp/1.1.1.1/Sun Nov 22 02:37:00 2015//
-/cl_d3d10.h/1.6/Sat Mar 25 00:29:27 2017//
-/cl_d3d11.h/1.6/Sat Mar 25 00:29:27 2017//
-/cl_dx9_media_sharing.h/1.6/Sat Mar 25 00:29:27 2017//
+/cl_d3d10.h/1.7/Mon Aug 14 09:57:57 2017//
+/cl_d3d11.h/1.7/Mon Aug 14 09:57:57 2017//
+/cl_dx9_media_sharing.h/1.7/Mon Aug 14 09:57:57 2017//
 /cl_egl.h/1.1.1.1/Sun Nov 22 02:37:00 2015//
-/cl_ext.h/1.6/Sat Mar 25 00:29:27 2017//
+/cl_ext.h/1.7/Mon Aug 14 09:57:57 2017//
 /cl_gl.h/1.1.1.1/Sun Nov 22 02:36:59 2015//
-/cl_gl_ext.h/1.6/Sat Mar 25 00:29:27 2017//
-/cl_platform.h/1.6/Sat Mar 25 00:29:27 2017//
-/opencl.h/1.6/Sat Mar 25 00:29:27 2017//
+/cl_gl_ext.h/1.7/Mon Aug 14 09:57:57 2017//
+/cl_platform.h/1.7/Mon Aug 14 09:57:57 2017//
+/opencl.h/1.7/Mon Aug 14 09:57:57 2017//
 D

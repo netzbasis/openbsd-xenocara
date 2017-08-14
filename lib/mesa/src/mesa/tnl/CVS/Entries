@@ -1,7 +1,7 @@
 /NOTES/1.1.1.1/Sun Nov 22 02:38:31 2015//
-/t_context.c/1.1.1.1/Sun Nov 22 02:38:30 2015//
+/t_context.c/1.1.1.2/Mon Aug 14 09:43:40 2017//
 /t_context.h/1.1.1.1/Sun Nov 22 02:38:31 2015//
-/t_draw.c/1.1.1.2/Sun May 29 10:13:42 2016//
+/t_draw.c/1.1.1.3/Mon Aug 14 09:43:38 2017//
 /t_pipeline.c/1.1.1.1/Sun Nov 22 02:38:32 2015//
 /t_pipeline.h/1.1.1.1/Sun Nov 22 02:38:32 2015//
 /t_vb_cliptmp.h/1.1.1.2/Sun Dec 11 08:38:13 2016//
@@ -10,7 +10,7 @@
 /t_vb_lighttmp.h/1.1.1.2/Sun Dec 11 08:38:15 2016//
 /t_vb_normals.c/1.1.1.1/Sun Nov 22 02:38:31 2015//
 /t_vb_points.c/1.1.1.1/Sun Nov 22 02:38:32 2015//
-/t_vb_program.c/1.1.1.2/Sun Dec 11 08:38:13 2016//
+/t_vb_program.c/1.1.1.3/Mon Aug 14 09:43:38 2017//
 /t_vb_render.c/1.1.1.2/Sun Dec 11 08:38:14 2016//
 /t_vb_rendertmp.h/1.1.1.2/Sun May 29 10:13:40 2016//
 /t_vb_texgen.c/1.1.1.1/Sun Nov 22 02:38:32 2015//
@@ -18,9 +18,9 @@
 /t_vb_vertex.c/1.1.1.2/Sun Dec 11 08:38:14 2016//
 /t_vertex.c/1.1.1.1/Sun Nov 22 02:38:32 2015//
 /t_vertex.h/1.1.1.1/Sun Nov 22 02:38:31 2015//
-/t_vertex_generic.c/1.1.1.1/Sun Nov 22 02:38:32 2015//
-/t_vertex_sse.c/1.1.1.1/Sun Nov 22 02:38:31 2015//
-/t_vp_build.c/1.1.1.1/Sun Nov 22 02:38:32 2015//
+/t_vertex_generic.c/1.1.1.2/Mon Aug 14 09:43:38 2017//
+/t_vertex_sse.c/1.1.1.2/Mon Aug 14 09:43:40 2017//
+/t_vp_build.c/1.1.1.2/Mon Aug 14 09:43:38 2017//
 /t_vp_build.h/1.1.1.1/Sun Nov 22 02:38:31 2015//
-/tnl.h/1.1.1.1/Sun Nov 22 02:38:30 2015//
+/tnl.h/1.1.1.2/Mon Aug 14 09:43:39 2017//
 D
