@@ -1,13 +1,13 @@
 /font.c/1.1.1.3/Sun Dec 11 08:31:46 2016//
 /font.h/1.1.1.1/Sun Nov 22 02:42:28 2015//
-/hud_context.c/1.1.1.4/Mon Aug 14 09:36:25 2017//
+/hud_context.c/1.2/Sat Aug 26 16:59:22 2017//
 /hud_context.h/1.1.1.1/Sun Nov 22 02:42:28 2015//
-/hud_cpu.c/1.1.1.3/Mon Aug 14 09:36:25 2017//
-/hud_cpufreq.c/1.1.1.3/Mon Aug 14 09:36:24 2017/-ko/
-/hud_diskstat.c/1.1.1.2/Mon Aug 14 09:36:25 2017/-ko/
-/hud_driver_query.c/1.1.1.4/Mon Aug 14 09:36:25 2017//
+/hud_cpu.c/1.2/Sat Aug 26 16:59:22 2017//
+/hud_cpufreq.c/1.2/Sat Aug 26 16:59:22 2017/-ko/
+/hud_diskstat.c/1.2/Sat Aug 26 16:59:22 2017/-ko/
+/hud_driver_query.c/1.2/Sat Aug 26 16:59:22 2017//
 /hud_fps.c/1.1.1.1/Sun Nov 22 02:42:29 2015//
-/hud_nic.c/1.1.1.2/Mon Aug 14 09:36:24 2017/-ko/
-/hud_private.h/1.1.1.4/Mon Aug 14 09:36:25 2017//
-/hud_sensors_temp.c/1.1.1.2/Mon Aug 14 09:36:25 2017/-ko/
+/hud_nic.c/1.2/Sat Aug 26 16:59:22 2017/-ko/
+/hud_private.h/1.2/Sat Aug 26 16:59:22 2017//
+/hud_sensors_temp.c/1.2/Sat Aug 26 16:59:22 2017/-ko/
 D

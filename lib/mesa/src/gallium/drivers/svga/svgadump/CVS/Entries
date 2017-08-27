@@ -1,8 +1,8 @@
 /svga_dump.c/1.1.1.3/Sun Dec 11 08:29:46 2016//
 /svga_dump.h/1.1.1.1/Sun Nov 22 02:45:34 2015//
-/svga_dump.py/1.1.1.2/Mon Aug 14 09:34:15 2017//
+/svga_dump.py/1.2/Sat Aug 26 16:59:27 2017//
 /svga_shader.h/1.1.1.1/Sun Nov 22 02:45:34 2015//
-/svga_shader_dump.c/1.1.1.2/Mon Aug 14 09:34:15 2017//
+/svga_shader_dump.c/1.2/Sat Aug 26 16:59:27 2017//
 /svga_shader_dump.h/1.1.1.1/Sun Nov 22 02:45:34 2015//
 /svga_shader_op.c/1.1.1.2/Sun May 29 10:21:24 2016//
 /svga_shader_op.h/1.1.1.1/Sun Nov 22 02:45:34 2015//

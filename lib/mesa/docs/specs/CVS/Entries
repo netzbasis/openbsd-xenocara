@@ -1,4 +1,3 @@
-/EGL_MESA_drm_image_formats.txt/1.1.1.1/Mon Aug 14 09:30:23 2017/-ko/
 /EGL_MESA_platform_surfaceless.txt/1.1.1.1/Sun Dec 11 08:25:46 2016/-ko/
 /EXT_shader_integer_mix.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
 /EXT_shader_samples_identical.txt/1.1.1.1/Sun May 29 10:12:42 2016/-ko/
@@ -14,14 +13,14 @@
 /MESA_release_buffers.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
 /MESA_set_3dfx_mode.spec/1.1.1.1/Sun Nov 22 02:37:34 2015//
 /MESA_shader_debug.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
-/MESA_shader_integer_functions.txt/1.1.1.2/Mon Aug 14 09:30:24 2017/-ko/
+/MESA_shader_integer_functions.txt/1.2/Sat Aug 26 16:59:18 2017/-ko/
 /MESA_swap_control.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
 /MESA_swap_frame_usage.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
-/MESA_texture_array.spec/1.1.1.2/Mon Aug 14 09:30:24 2017//
+/MESA_texture_array.spec/1.2/Sat Aug 26 16:59:18 2017//
 /MESA_texture_signed_rgba.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
 /MESA_window_pos.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
 /MESA_ycbcr_texture.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
-/WL_bind_wayland_display.spec/1.1.1.2/Mon Aug 14 09:30:23 2017//
+/WL_bind_wayland_display.spec/1.2/Sat Aug 26 16:59:18 2017//
 /WL_create_wayland_buffer_from_image.spec/1.1.1.1/Sun Nov 22 02:37:33 2015//
-/enums.txt/1.1.1.3/Mon Aug 14 09:30:23 2017//
+/enums.txt/1.2/Sat Aug 26 16:59:18 2017//
 D/OLD////

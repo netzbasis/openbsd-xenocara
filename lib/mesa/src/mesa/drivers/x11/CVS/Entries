@@ -1,18 +1,18 @@
-/Makefile.am/1.1.1.2/Mon Aug 14 09:43:07 2017//
-/Makefile.in/1.8/Mon Aug 14 09:58:01 2017//
+/Makefile.am/1.2/Sat Aug 26 16:59:38 2017//
+/Makefile.in/1.9/Sat Aug 26 16:59:38 2017//
 /SConscript/1.1.1.3/Sun Dec 11 08:37:40 2016//
-/fakeglx.c/1.1.1.3/Mon Aug 14 09:43:06 2017//
-/glxapi.c/1.1.1.3/Mon Aug 14 09:43:07 2017//
-/glxapi.h/1.1.1.3/Mon Aug 14 09:43:05 2017//
+/fakeglx.c/1.2/Sat Aug 26 16:59:38 2017//
+/glxapi.c/1.2/Sat Aug 26 16:59:38 2017//
+/glxapi.h/1.2/Sat Aug 26 16:59:38 2017//
 /glxheader.h/1.1.1.1/Sun Nov 22 02:39:42 2015//
 /xfonts.c/1.1.1.1/Sun Nov 22 02:39:41 2015//
 /xfonts.h/1.1.1.1/Sun Nov 22 02:39:41 2015//
-/xm_api.c/1.1.1.3/Mon Aug 14 09:43:04 2017//
+/xm_api.c/1.2/Sat Aug 26 16:59:38 2017//
 /xm_buffer.c/1.1.1.2/Sun Dec 11 08:37:38 2016//
 /xm_dd.c/1.1.1.1/Sun Nov 22 02:39:41 2015//
 /xm_line.c/1.1.1.1/Sun Nov 22 02:39:40 2015//
 /xm_tri.c/1.1.1.1/Sun Nov 22 02:39:42 2015//
-/xmesa.h/1.1.1.3/Mon Aug 14 09:43:07 2017//
+/xmesa.h/1.2/Sat Aug 26 16:59:38 2017//
 /xmesaP.h/1.1.1.2/Sun Dec 11 08:37:41 2016//
 /xmesa_x.h/1.1.1.1/Sun Nov 22 02:39:41 2015//
 D
