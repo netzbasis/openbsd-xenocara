@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.341 2017/07/14 17:23:38 okan Exp $
+ * $OpenBSD: calmwm.h,v 1.344 2017/12/07 16:25:33 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -293,6 +293,7 @@ struct conf {
 	Cursor			 cursor[CF_NITEMS];
 	int			 xrandr;
 	int			 xrandr_event_base;
+	char			*homedir;
 	char			*wm_argv;
 };
 
@@ -374,7 +375,6 @@ extern Atom				 cwmh[CWMH_NITEMS];
 extern Atom				 ewmh[EWMH_NITEMS];
 extern struct screen_q			 Screenq;
 extern struct conf			 Conf;
-extern const char			*homedir;
 
 __dead void		 usage(void);
 
@@ -444,6 +444,10 @@ void			 search_match_path(struct menu_q *, struct menu_q *,
 			     char *);
 void			 search_match_text(struct menu_q *, struct menu_q *,
 			     char *);
+void			 search_match_cmd(struct menu_q *, struct menu_q *,
+			     char *);
+void			 search_match_group(struct menu_q *, struct menu_q *,
+			     char *);
 void			 search_print_client(struct menu *, int);
 void			 search_print_cmd(struct menu *, int);
 void			 search_print_group(struct menu *, int);
@@ -461,6 +465,7 @@ void			 screen_assert_clients_within(struct screen_ctx *);
 
 void			 kbfunc_cwm_status(void *, struct cargs *);
 void			 kbfunc_ptrmove(void *, struct cargs *);
+void			 kbfunc_client_snap(void *, struct cargs *);
 void			 kbfunc_client_move(void *, struct cargs *);
 void			 kbfunc_client_resize(void *, struct cargs *);
 void			 kbfunc_client_delete(void *, struct cargs *);
