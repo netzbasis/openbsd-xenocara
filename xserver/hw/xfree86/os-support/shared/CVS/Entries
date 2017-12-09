@@ -1,12 +1,12 @@
 /VTsw_noop.c/1.4/Sun Jun 10 13:21:25 2012//
-/VTsw_usl.c/1.5/Sun Jun 10 13:21:25 2012//
+/VTsw_usl.c/1.6/Fri Dec  8 15:02:01 2017//
 /agp_noop.c/1.4/Fri Jun  7 17:28:52 2013//
 /ioperm_noop.c/1.5/Wed Sep 16 19:10:23 2015//
 /kmod_noop.c/1.3/Sun Jun 10 13:21:25 2012//
 /platform_noop.c/1.1/Fri Jun  7 17:28:52 2013//
 /pm_noop.c/1.2/Sun Jun 10 13:21:25 2012//
-/posix_tty.c/1.11/Sat Sep 27 17:53:02 2014//
-/sigio.c/1.10/Sat Nov  7 16:48:53 2015//
-/sigiostubs.c/1.3/Sun Jun 10 13:21:25 2012//
+/posix_tty.c/1.12/Fri Dec  8 15:02:01 2017//
+/sigio.c/1.11/Fri Dec  8 15:02:01 2017//
+/sigiostubs.c/1.4/Fri Dec  8 15:02:01 2017//
 /vidmem.c/1.8/Wed Sep 16 19:10:23 2015//
 D

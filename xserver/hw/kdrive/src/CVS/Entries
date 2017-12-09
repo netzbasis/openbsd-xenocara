@@ -1,11 +1,11 @@
-/Makefile.am/1.6/Sat Sep 27 17:53:01 2014//
-/Makefile.in/1.33/Tue Oct 11 22:15:54 2016//
+/Makefile.am/1.7/Fri Dec  8 15:02:00 2017//
+/Makefile.in/1.34/Fri Dec  8 15:02:00 2017//
 /fourcc.h/1.2/Sun Jun 10 13:21:23 2012//
 /kcmap.c/1.6/Sat Sep 27 17:53:01 2014//
-/kdrive.c/1.13/Sun May 29 12:02:37 2016//
-/kdrive.h/1.14/Wed Sep 16 19:10:22 2015//
-/kinfo.c/1.6/Sun Jun 10 13:21:23 2012//
-/kinput.c/1.15/Sun May 29 12:02:37 2016//
+/kdrive.c/1.14/Fri Dec  8 15:02:00 2017//
+/kdrive.h/1.15/Fri Dec  8 15:02:00 2017//
+/kinfo.c/1.7/Fri Dec  8 15:02:00 2017//
+/kinput.c/1.16/Fri Dec  8 15:02:00 2017//
 /kmode.c/1.3/Sun Jun 10 13:21:23 2012//
 /kshadow.c/1.6/Sun May 29 12:02:37 2016//
 /kxv.c/1.12/Sun May 29 12:02:37 2016//

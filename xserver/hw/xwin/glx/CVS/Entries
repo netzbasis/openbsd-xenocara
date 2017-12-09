@@ -1,12 +1,15 @@
-/Makefile.am/1.4/Fri May  2 19:27:50 2014//
-/Makefile.in/1.17/Tue Oct 11 22:15:57 2016//
+/Makefile.am/1.5/Fri Dec  8 15:02:01 2017//
+/Makefile.in/1.18/Fri Dec  8 15:02:01 2017//
+/dri_helpers.c/1.1/Fri Dec  8 15:02:01 2017//
+/dri_helpers.h/1.1/Fri Dec  8 15:02:01 2017//
 /gen_gl_wrappers.py/1.6/Wed Sep 16 19:10:24 2015//
 /glshim.c/1.2/Wed Sep 16 19:10:24 2015//
 /glthunk.c/1.1/Fri May  2 19:27:50 2014//
 /glwindows.h/1.5/Wed Sep 16 19:10:24 2015//
-/indirect.c/1.9/Sun May 29 12:02:39 2016//
+/indirect.c/1.10/Fri Dec  8 15:02:01 2017//
+/indirect.h/1.1/Fri Dec  8 15:02:01 2017//
 /wgl_ext_api.c/1.2/Sat Nov  5 13:32:56 2011//
 /wgl_ext_api.h/1.3/Sun Jun 10 13:21:30 2012//
-/winpriv.c/1.5/Sun May 29 12:02:39 2016//
-/winpriv.h/1.1/Sun Dec  5 15:36:10 2010//
+/winpriv.c/1.6/Fri Dec  8 15:02:01 2017//
+/winpriv.h/1.2/Fri Dec  8 15:02:01 2017//
 D
