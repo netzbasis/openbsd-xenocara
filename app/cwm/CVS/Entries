@@ -1,13 +1,13 @@
 /Makefile/1.25/Fri Jul 14 17:23:38 2017//
 /calmwm.c/1.100/Thu Dec  7 15:47:14 2017//
-/calmwm.h/1.344/Thu Dec  7 16:25:33 2017//
+/calmwm.h/1.345/Mon Dec 11 20:58:18 2017//
 /client.c/1.240/Fri May  5 14:14:19 2017//
 /conf.c/1.235/Thu Dec  7 16:25:33 2017//
 /cwm.1/1.58/Fri Jul 21 15:55:37 2017//
 /cwmrc.5/1.69/Thu Dec  7 16:25:33 2017//
 /group.c/1.126/Fri Feb 10 15:00:54 2017//
-/kbfunc.c/1.153/Thu Dec  7 16:25:33 2017//
-/menu.c/1.102/Tue Apr 25 12:08:05 2017//
+/kbfunc.c/1.154/Mon Dec 11 20:58:18 2017//
+/menu.c/1.103/Mon Dec 11 20:58:18 2017//
 /parse.y/1.68/Wed Apr 26 21:10:54 2017//
 /screen.c/1.84/Mon Oct 24 17:39:38 2016//
 /search.c/1.65/Thu Dec  7 16:03:10 2017//
