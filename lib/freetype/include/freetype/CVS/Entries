@@ -1,8 +1,8 @@
 /Makefile/1.11/Fri Jun 23 16:15:18 2017//
 /Makefile.inc/1.5/Mon Oct 19 07:51:36 2015//
-/freetype.h/1.26/Fri Jun 23 16:15:18 2017//
+/freetype.h/1.27/Fri Dec 15 19:29:12 2017//
 /ftadvanc.h/1.6/Fri Jun 23 16:15:18 2017//
-/ftautoh.h/1.10/Fri Jun 23 16:15:18 2017//
+/ftautoh.h/1.11/Fri Dec 15 19:29:12 2017//
 /ftbbox.h/1.8/Fri Jun 23 16:15:18 2017//
 /ftbdf.h/1.7/Fri Jun 23 16:15:18 2017//
 /ftbitmap.h/1.8/Fri Jun 23 16:15:18 2017//
@@ -11,24 +11,24 @@
 /ftcffdrv.h/1.9/Fri Jun 23 16:15:18 2017//
 /ftchapters.h/1.10/Fri Jun 23 16:15:18 2017//
 /ftcid.h/1.8/Fri Jun 23 16:15:18 2017//
-/fterrdef.h/1.12/Fri Jun 23 16:15:18 2017//
-/fterrors.h/1.7/Fri Jun 23 16:15:18 2017//
+/fterrdef.h/1.13/Fri Dec 15 19:29:12 2017//
+/fterrors.h/1.8/Fri Dec 15 19:29:12 2017//
 /ftfntfmt.h/1.3/Fri Jun 23 16:15:18 2017//
 /ftgasp.h/1.10/Fri Jun 23 16:15:18 2017//
-/ftglyph.h/1.12/Fri Jun 23 16:15:18 2017//
+/ftglyph.h/1.13/Fri Dec 15 19:29:12 2017//
 /ftgxval.h/1.6/Fri Jun 23 16:15:18 2017//
 /ftgzip.h/1.7/Fri Jun 23 16:15:18 2017//
-/ftimage.h/1.15/Fri Jun 23 16:15:18 2017//
+/ftimage.h/1.16/Fri Dec 15 19:29:12 2017//
 /ftincrem.h/1.8/Fri Jun 23 16:15:18 2017//
-/ftlcdfil.h/1.11/Fri Jun 23 16:15:18 2017//
+/ftlcdfil.h/1.12/Fri Dec 15 19:29:12 2017//
 /ftlist.h/1.7/Fri Jun 23 16:15:18 2017//
 /ftlzw.h/1.6/Fri Jun 23 16:15:18 2017//
-/ftmac.h/1.7/Fri Jun 23 16:15:18 2017//
-/ftmm.h/1.10/Fri Jun 23 16:15:18 2017//
+/ftmac.h/1.8/Fri Dec 15 19:29:12 2017//
+/ftmm.h/1.11/Fri Dec 15 19:29:12 2017//
 /ftmodapi.h/1.13/Fri Jun 23 16:15:18 2017//
 /ftmoderr.h/1.7/Fri Jun 23 16:15:18 2017//
 /ftotval.h/1.8/Fri Jun 23 16:15:18 2017//
-/ftoutln.h/1.14/Fri Jun 23 16:15:18 2017//
+/ftoutln.h/1.15/Fri Dec 15 19:29:12 2017//
 /ftpcfdrv.h/1.1/Fri Jun 23 16:15:18 2017//
 /ftpfr.h/1.8/Fri Jun 23 16:15:18 2017//
 /ftrender.h/1.10/Fri Jun 23 16:15:18 2017//
@@ -44,7 +44,7 @@
 /t1tables.h/1.11/Fri Jun 23 16:15:18 2017//
 /ttnameid.h/1.10/Fri Jun 23 16:15:18 2017//
 /tttables.h/1.13/Fri Jun 23 16:15:18 2017//
-/tttags.h/1.9/Fri Jun 23 16:15:18 2017//
+/tttags.h/1.10/Fri Dec 15 19:29:12 2017//
 /ttunpat.h/1.5/Fri Jun 23 16:15:18 2017//
 D/config////
 D/internal////
