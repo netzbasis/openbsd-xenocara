@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.c,v 1.100 2017/12/07 15:47:14 okan Exp $
+ * $OpenBSD: calmwm.c,v 1.103 2017/12/22 21:30:01 okan Exp $
  */
 
 #include <sys/types.h>
@@ -46,7 +46,7 @@ volatile sig_atomic_t	 cwm_status;
 
 static void	sighdlr(int);
 static int	x_errorhandler(Display *, XErrorEvent *);
-static void	x_init(const char *);
+static int	x_init(const char *);
 static void	x_teardown(void);
 static int	x_wmerrorhandler(Display *, XErrorEvent *);
 
@@ -55,7 +55,7 @@ main(int argc, char **argv)
 {
 	const char	*conf_file = NULL;
 	char		*conf_path, *display_name = NULL;
-	int		 ch;
+	int		 ch, xfd;
 	struct passwd	*pw;
 
 	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
@@ -81,7 +81,8 @@ main(int argc, char **argv)
 	if (signal(SIGCHLD, sighdlr) == SIG_ERR)
 		err(1, "signal");
 
-	if ((Conf.homedir = getenv("HOME")) == NULL || Conf.homedir[0] == '\0') {
+	Conf.homedir = getenv("HOME");
+	if ((Conf.homedir == NULL) || (Conf.homedir[0] == '\0')) {
 		pw = getpwuid(getuid());
 		if (pw != NULL && pw->pw_dir != NULL && *pw->pw_dir != '\0')
 			Conf.homedir = pw->pw_dir;
@@ -107,7 +108,7 @@ main(int argc, char **argv)
 		warnx("config file %s has errors", conf_path);
 	free(conf_path);
 
-	x_init(display_name);
+	xfd = x_init(display_name);
 	cwm_status = CWM_RUNNING;
 
 	if (pledge("stdio rpath proc exec", NULL) == -1)
@@ -122,7 +123,7 @@ main(int argc, char **argv)
 	return(0);
 }
 
-static void
+static int
 x_init(const char *dpyname)
 {
 	int	i;
@@ -142,6 +143,8 @@ x_init(const char *dpyname)
 
 	for (i = 0; i < ScreenCount(X_Dpy); i++)
 		screen_init(i);
+
+	return ConnectionNumber(X_Dpy);
 }
 
 static void
