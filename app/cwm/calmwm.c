@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.c,v 1.103 2017/12/22 21:30:01 okan Exp $
+ * $OpenBSD: calmwm.c,v 1.105 2017/12/27 18:46:18 okan Exp $
  */
 
 #include <sys/types.h>
@@ -27,6 +27,7 @@
 #include <getopt.h>
 #include <limits.h>
 #include <locale.h>
+#include <poll.h>
 #include <pwd.h>
 #include <signal.h>
 #include <stdio.h>
@@ -56,6 +57,7 @@ main(int argc, char **argv)
 	const char	*conf_file = NULL;
 	char		*conf_path, *display_name = NULL;
 	int		 ch, xfd;
+	struct pollfd	 pfd[1];
 	struct passwd	*pw;
 
 	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
@@ -79,6 +81,8 @@ main(int argc, char **argv)
 	argv += optind;
 
 	if (signal(SIGCHLD, sighdlr) == SIG_ERR)
+		err(1, "signal");
+	if (signal(SIGHUP, sighdlr) == SIG_ERR)
 		err(1, "signal");
 
 	Conf.homedir = getenv("HOME");
@@ -114,8 +118,16 @@ main(int argc, char **argv)
 	if (pledge("stdio rpath proc exec", NULL) == -1)
 		err(1, "pledge");
 
-	while (cwm_status == CWM_RUNNING)
+	memset(&pfd, 0, sizeof(pfd));
+	pfd[0].fd = xfd;
+	pfd[0].events = POLLIN;
+	while (cwm_status == CWM_RUNNING) {
 		xev_process();
+		if (poll(pfd, 1, INFTIM) == -1) {
+			if (errno != EINTR)
+				warn("poll");
+		}
+	}
 	x_teardown();
 	if (cwm_status == CWM_EXEC_WM)
 		u_exec(Conf.wm_argv);
@@ -210,6 +222,9 @@ sighdlr(int sig)
 		while ((pid = waitpid(WAIT_ANY, &status, WNOHANG)) > 0 ||
 		    (pid < 0 && errno == EINTR))
 			;
+		break;
+	case SIGHUP:
+		cwm_status = CWM_EXEC_WM;
 		break;
 	}
 
