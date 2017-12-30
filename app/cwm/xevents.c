@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: xevents.c,v 1.129 2017/12/27 17:04:35 okan Exp $
+ * $OpenBSD: xevents.c,v 1.132 2017/12/29 18:50:43 okan Exp $
  */
 
 /*
@@ -260,8 +260,10 @@ xev_handle_buttonrelease(XEvent *ee)
 	struct client_ctx	*cc;
 
 	if ((cc = client_find(e->window)) != NULL) {
-		if (cc->flags & CLIENT_ACTIVE)
-			group_toggle_membership_leave(cc);
+		if (cc->flags & (CLIENT_ACTIVE | CLIENT_HIGHLIGHT)) {
+			cc->flags &= ~CLIENT_HIGHLIGHT;
+			client_draw_border(cc);
+		}
 	}
 }
 
@@ -322,6 +324,7 @@ xev_handle_keyrelease(XEvent *ee)
 {
 	XKeyEvent		*e = &ee->xkey;
 	struct screen_ctx	*sc;
+	struct client_ctx	*cc;
 	KeySym			 keysym;
 	unsigned int		 i;
 
@@ -331,7 +334,17 @@ xev_handle_keyrelease(XEvent *ee)
 	keysym = XkbKeycodeToKeysym(X_Dpy, e->keycode, 0, 0);
 	for (i = 0; i < nitems(modkeys); i++) {
 		if (keysym == modkeys[i]) {
-			client_cycle_leave(sc);
+			if ((cc = client_current()) != NULL) {
+				if (sc->cycling) {
+					sc->cycling = 0;
+					client_mtf(cc);
+				}
+				if (cc->flags & CLIENT_HIGHLIGHT) {
+					cc->flags &= ~CLIENT_HIGHLIGHT;
+					client_draw_border(cc);
+				}
+			}
+			XUngrabKeyboard(X_Dpy, CurrentTime);
 			break;
 		}
 	}
@@ -357,10 +370,7 @@ xev_handle_clientmessage(XEvent *ee)
 		if ((cc = client_find(e->window)) != NULL) {
 			if ((old_cc = client_current()) != NULL)
 				client_ptrsave(old_cc);
-			if (cc->flags & CLIENT_HIDDEN)
-				client_unhide(cc);
-			else
-				client_raise(cc);
+			client_show(cc);
 			client_ptrwarp(cc);
 		}
 	} else if (e->message_type == ewmh[_NET_WM_DESKTOP]) {

@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.347 2017/12/19 14:30:53 okan Exp $
+ * $OpenBSD: calmwm.h,v 1.351 2017/12/29 20:03:46 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -255,11 +255,8 @@ struct cmd_ctx {
 	char			 path[PATH_MAX];
 };
 TAILQ_HEAD(cmd_q, cmd_ctx);
+TAILQ_HEAD(wm_q, cmd_ctx);
 
-enum menu_exec {
-	CWM_MENU_EXEC_EXEC,
-	CWM_MENU_EXEC_WM
-};
 #define CWM_MENU_DUMMY		0x0001
 #define CWM_MENU_FILE		0x0002
 #define CWM_MENU_LIST		0x0004
@@ -284,6 +281,7 @@ struct conf {
 	struct autogroup_q	 autogroupq;
 	struct ignore_q		 ignoreq;
 	struct cmd_q		 cmdq;
+	struct wm_q		 wmq;
 	int			 ngroups;
 	int			 stickygroups;
 	int			 nameqlen;
@@ -389,7 +387,6 @@ void			 client_applysizehints(struct client_ctx *);
 void			 client_config(struct client_ctx *);
 struct client_ctx	*client_current(void);
 void			 client_cycle(struct screen_ctx *, int);
-void			 client_cycle_leave(struct screen_ctx *);
 void			 client_delete(struct client_ctx *);
 void			 client_draw_border(struct client_ctx *);
 struct client_ctx	*client_find(Window);
@@ -401,6 +398,7 @@ void			 client_lower(struct client_ctx *);
 void			 client_map(struct client_ctx *);
 void			 client_msg(struct client_ctx *, Atom, Time);
 void			 client_move(struct client_ctx *);
+void			 client_mtf(struct client_ctx *);
 int			 client_inbound(struct client_ctx *, int, int);
 struct client_ctx	*client_init(Window, struct screen_ctx *, int);
 void			 client_ptr_inbound(struct client_ctx *, int);
@@ -412,6 +410,7 @@ void			 client_send_delete(struct client_ctx *);
 void			 client_set_wm_state(struct client_ctx *, long);
 void			 client_setactive(struct client_ctx *);
 void			 client_setname(struct client_ctx *);
+void			 client_show(struct client_ctx *);
 int			 client_snapcalc(int, int, int, int, int);
 void			 client_toggle_freeze(struct client_ctx *);
 void			 client_toggle_fullscreen(struct client_ctx *);
@@ -441,8 +440,7 @@ void			 group_movetogroup(struct client_ctx *, int);
 void			 group_only(struct screen_ctx *, int);
 int			 group_restore(struct client_ctx *);
 void			 group_show(struct group_ctx *);
-void			 group_toggle_membership_enter(struct client_ctx *);
-void			 group_toggle_membership_leave(struct client_ctx *);
+void			 group_toggle_membership(struct client_ctx *);
 void			 group_update_names(struct screen_ctx *);
 
 void			 search_match_client(struct menu_q *, struct menu_q *,
@@ -457,10 +455,13 @@ void			 search_match_cmd(struct menu_q *, struct menu_q *,
 			     char *);
 void			 search_match_group(struct menu_q *, struct menu_q *,
 			     char *);
+void			 search_match_wm(struct menu_q *, struct menu_q *,
+			     char *);
 void			 search_print_client(struct menu *, int);
 void			 search_print_cmd(struct menu *, int);
 void			 search_print_group(struct menu *, int);
 void			 search_print_text(struct menu *, int);
+void			 search_print_wm(struct menu *, int);
 
 struct region_ctx	*region_find(struct screen_ctx *, int, int);
 struct geom		 screen_apply_gap(struct screen_ctx *, struct geom);
@@ -500,6 +501,7 @@ void			 kbfunc_group_alltoggle(void *, struct cargs *);
 void			 kbfunc_menu_client(void *, struct cargs *);
 void			 kbfunc_menu_cmd(void *, struct cargs *);
 void			 kbfunc_menu_group(void *, struct cargs *);
+void			 kbfunc_menu_wm(void *, struct cargs *);
 void			 kbfunc_menu_exec(void *, struct cargs *);
 void			 kbfunc_menu_ssh(void *, struct cargs *);
 void			 kbfunc_client_menu_label(void *, struct cargs *);
@@ -528,6 +530,8 @@ int			 conf_bind_mouse(struct conf *, const char *,
 void			 conf_clear(struct conf *);
 void			 conf_client(struct client_ctx *);
 int			 conf_cmd_add(struct conf *, const char *,
+			     const char *);
+int			 conf_wm_add(struct conf *, const char *,
 			     const char *);
 void			 conf_cursor(struct conf *);
 void			 conf_grab_kbd(Window);

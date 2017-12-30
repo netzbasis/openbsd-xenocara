@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: kbfunc.c,v 1.155 2017/12/19 19:38:43 okan Exp $
+ * $OpenBSD: kbfunc.c,v 1.159 2017/12/29 20:03:46 okan Exp $
  */
 
 #include <sys/types.h>
@@ -398,7 +398,14 @@ kbfunc_client_vtile(void *ctx, struct cargs *cargs)
 void
 kbfunc_client_cycle(void *ctx, struct cargs *cargs)
 {
-	client_cycle(ctx, cargs->flag);
+	struct screen_ctx	*sc = ctx;
+
+	/* For X apps that ignore/steal events. */
+	if (cargs->xev == CWM_XEV_KEY)
+		XGrabKeyboard(X_Dpy, sc->rootwin, True,
+		    GrabModeAsync, GrabModeAsync, CurrentTime);
+
+	client_cycle(sc, cargs->flag);
 }
 
 void
@@ -406,12 +413,12 @@ kbfunc_client_toggle_group(void *ctx, struct cargs *cargs)
 {
 	struct client_ctx	*cc = ctx;
 
-	/* For X apps that steal events. */
+	/* For X apps that ignore/steal events. */
 	if (cargs->xev == CWM_XEV_KEY)
 		XGrabKeyboard(X_Dpy, cc->win, True,
 		    GrabModeAsync, GrabModeAsync, CurrentTime);
 
-	group_toggle_membership_enter(cc);
+	group_toggle_membership(cc);
 }
 
 void
@@ -471,10 +478,7 @@ kbfunc_menu_client(void *ctx, struct cargs *cargs)
 	if ((mi = menu_filter(sc, &menuq, "window", NULL, mflags,
 	    search_match_client, search_print_client)) != NULL) {
 		cc = (struct client_ctx *)mi->ctx;
-		if (cc->flags & CLIENT_HIDDEN)
-			client_unhide(cc);
-		else
-			client_raise(cc);
+		client_show(cc);
 		if (old_cc)
 			client_ptrsave(old_cc);
 		client_ptrwarp(cc);
@@ -542,6 +546,33 @@ kbfunc_menu_group(void *ctx, struct cargs *cargs)
 }
 
 void
+kbfunc_menu_wm(void *ctx, struct cargs *cargs)
+{
+	struct screen_ctx	*sc = ctx;
+	struct cmd_ctx		*wm;
+	struct menu		*mi;
+	struct menu_q		 menuq;
+	int			 mflags = 0;
+
+	if (cargs->xev == CWM_XEV_BTN)
+		mflags |= CWM_MENU_LIST;
+
+	TAILQ_INIT(&menuq);
+	TAILQ_FOREACH(wm, &Conf.wmq, entry)
+		menuq_add(&menuq, wm, NULL);
+
+	if ((mi = menu_filter(sc, &menuq, "wm", NULL, mflags,
+	    search_match_wm, search_print_wm)) != NULL) {
+		wm = (struct cmd_ctx *)mi->ctx;
+		free(Conf.wm_argv);
+		Conf.wm_argv = xstrdup(wm->path);
+		cwm_status = CWM_EXEC_WM;
+	}
+
+	menuq_clear(&menuq);
+}
+
+void
 kbfunc_menu_exec(void *ctx, struct cargs *cargs)
 {
 #define NPATHS 256
@@ -549,25 +580,12 @@ kbfunc_menu_exec(void *ctx, struct cargs *cargs)
 	char			**ap, *paths[NPATHS], *path, *pathcpy;
 	char			 tpath[PATH_MAX];
 	struct stat		 sb;
-	const char		*label;
 	DIR			*dirp;
 	struct dirent		*dp;
 	struct menu		*mi;
 	struct menu_q		 menuq;
-	int			 l, i, cmd = cargs->flag;
+	int			 l, i;
 	int			 mflags = (CWM_MENU_DUMMY | CWM_MENU_FILE);
-
-	switch (cmd) {
-	case CWM_MENU_EXEC_EXEC:
-		label = "exec";
-		break;
-	case CWM_MENU_EXEC_WM:
-		label = "wm";
-		break;
-	default:
-		errx(1, "%s: invalid cmd %d", __func__, cmd);
-		/* NOTREACHED */
-	}
 
 	TAILQ_INIT(&menuq);
 
@@ -607,23 +625,11 @@ kbfunc_menu_exec(void *ctx, struct cargs *cargs)
 	}
 	free(path);
 
-	if ((mi = menu_filter(sc, &menuq, label, NULL, mflags,
+	if ((mi = menu_filter(sc, &menuq, "exec", NULL, mflags,
 	    search_match_exec, search_print_text)) != NULL) {
 		if (mi->text[0] == '\0')
 			goto out;
-		switch (cmd) {
-		case CWM_MENU_EXEC_EXEC:
-			u_spawn(mi->text);
-			break;
-		case CWM_MENU_EXEC_WM:
-			cwm_status = CWM_EXEC_WM;
-			free(Conf.wm_argv);
-			Conf.wm_argv = xstrdup(mi->text);
-			break;
-		default:
-			errx(1, "%s: egad, cmd changed value!", __func__);
-			/* NOTREACHED */
-		}
+		u_spawn(mi->text);
 	}
 out:
 	if (mi != NULL && mi->dummy)
