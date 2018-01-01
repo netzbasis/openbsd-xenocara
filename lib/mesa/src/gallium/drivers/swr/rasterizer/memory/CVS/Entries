@@ -1,12 +1,12 @@
-/ClearTile.cpp/1.2/Sat Aug 26 16:59:28 2017/-ko/
-/Convert.h/1.2/Sat Aug 26 16:59:28 2017/-ko/
-/LoadTile.cpp/1.2/Sat Aug 26 16:59:28 2017/-ko/
-/LoadTile.h/1.2/Sat Aug 26 16:59:28 2017/-ko/
+/ClearTile.cpp/1.3/Sun Dec 31 07:12:18 2017/-ko/
+/Convert.h/1.3/Sun Dec 31 07:12:18 2017/-ko/
+/LoadTile.cpp/1.3/Sun Dec 31 07:12:18 2017/-ko/
+/LoadTile.h/1.3/Sun Dec 31 07:12:18 2017/-ko/
 /LoadTile_Linear.cpp/1.1.1.1/Sun Dec 11 08:29:24 2016/-ko/
 /LoadTile_TileX.cpp/1.1.1.1/Sun Dec 11 08:29:24 2016/-ko/
 /LoadTile_TileY.cpp/1.1.1.1/Sun Dec 11 08:29:24 2016/-ko/
-/StoreTile.cpp/1.2/Sat Aug 26 16:59:28 2017/-ko/
-/StoreTile.h/1.2/Sat Aug 26 16:59:28 2017/-ko/
+/StoreTile.cpp/1.3/Sun Dec 31 07:12:18 2017/-ko/
+/StoreTile.h/1.3/Sun Dec 31 07:12:18 2017/-ko/
 /StoreTile_Linear.cpp/1.1.1.1/Sun Dec 11 08:29:24 2016/-ko/
 /StoreTile_Linear2.cpp/1.1.1.1/Sun Dec 11 08:29:24 2016/-ko/
 /StoreTile_TileW.cpp/1.1.1.1/Sun Dec 11 08:29:24 2016/-ko/
@@ -14,6 +14,6 @@
 /StoreTile_TileX2.cpp/1.1.1.1/Sun Dec 11 08:29:24 2016/-ko/
 /StoreTile_TileY.cpp/1.1.1.1/Sun Dec 11 08:29:24 2016/-ko/
 /StoreTile_TileY2.cpp/1.1.1.1/Sun Dec 11 08:29:24 2016/-ko/
-/TilingFunctions.h/1.2/Sat Aug 26 16:59:28 2017/-ko/
-/tilingtraits.h/1.2/Sat Aug 26 16:59:28 2017/-ko/
+/TilingFunctions.h/1.3/Sun Dec 31 07:12:18 2017/-ko/
+/tilingtraits.h/1.3/Sun Dec 31 07:12:18 2017/-ko/
 D

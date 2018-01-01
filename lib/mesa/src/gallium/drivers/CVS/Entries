@@ -1,10 +1,12 @@
 D/ddebug////
+D/etnaviv////
 D/freedreno////
 D/i915////
-D/ilo////
+D/imx////
 D/llvmpipe////
 D/noop////
 D/nouveau////
+D/pl111////
 D/r300////
 D/r600////
 D/radeon////
