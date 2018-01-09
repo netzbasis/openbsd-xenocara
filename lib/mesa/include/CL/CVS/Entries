@@ -1,12 +1,12 @@
 /cl.h/1.1.1.1/Sun Nov 22 02:37:01 2015//
 /cl.hpp/1.1.1.1/Sun Nov 22 02:37:00 2015//
-/cl_d3d10.h/1.9/Sun Dec 31 07:12:12 2017//
-/cl_d3d11.h/1.9/Sun Dec 31 07:12:12 2017//
-/cl_dx9_media_sharing.h/1.9/Sun Dec 31 07:12:12 2017//
+/cl_d3d10.h/1.10/Mon Jan  8 05:41:21 2018//
+/cl_d3d11.h/1.10/Mon Jan  8 05:41:21 2018//
+/cl_dx9_media_sharing.h/1.10/Mon Jan  8 05:41:21 2018//
 /cl_egl.h/1.1.1.1/Sun Nov 22 02:37:00 2015//
-/cl_ext.h/1.9/Sun Dec 31 07:12:12 2017//
+/cl_ext.h/1.10/Mon Jan  8 05:41:21 2018//
 /cl_gl.h/1.1.1.1/Sun Nov 22 02:36:59 2015//
-/cl_gl_ext.h/1.9/Sun Dec 31 07:12:12 2017//
-/cl_platform.h/1.9/Sun Dec 31 07:12:12 2017//
-/opencl.h/1.9/Sun Dec 31 07:12:12 2017//
+/cl_gl_ext.h/1.10/Mon Jan  8 05:41:21 2018//
+/cl_platform.h/1.10/Mon Jan  8 05:41:21 2018//
+/opencl.h/1.10/Mon Jan  8 05:41:21 2018//
 D

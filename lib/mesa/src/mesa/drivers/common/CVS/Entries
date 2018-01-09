@@ -1,8 +1,9 @@
-/driverfuncs.c/1.3/Sun Dec 31 07:12:23 2017//
+/driverfuncs.c/1.4/Mon Jan  8 05:41:35 2018//
 /driverfuncs.h/1.1.1.1/Sun Nov 22 02:40:50 2015//
-/meta.c/1.3/Sun Dec 31 07:12:23 2017//
-/meta.h/1.3/Sun Dec 31 07:12:23 2017//
-/meta_blit.c/1.1.1.5/Sun Dec 31 06:21:31 2017//
+/meta.c/1.4/Mon Jan  8 05:41:35 2018//
+/meta.h/1.4/Mon Jan  8 05:41:35 2018//
+/meta_blit.c/1.2/Mon Jan  8 05:41:35 2018//
+/meta_copy_image.c/1.5/Mon Jan  8 05:41:35 2018//
 /meta_generate_mipmap.c/1.1.1.5/Sun Feb 26 12:18:08 2017//
-/meta_tex_subimage.c/1.3/Sun Dec 31 07:12:23 2017//
+/meta_tex_subimage.c/1.4/Mon Jan  8 05:41:35 2018//
 D

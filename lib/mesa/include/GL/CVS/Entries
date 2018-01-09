@@ -1,11 +1,11 @@
 /gl.h/1.1.1.1/Sun Nov 22 02:37:08 2015//
 /gl_mangle.h/1.1.1.1/Sun Nov 22 02:37:07 2015//
-/glcorearb.h/1.9/Sun Dec 31 07:12:12 2017//
-/glext.h/1.9/Sun Dec 31 07:12:12 2017//
+/glcorearb.h/1.10/Mon Jan  8 05:41:21 2018//
+/glext.h/1.10/Mon Jan  8 05:41:21 2018//
 /glx.h/1.1.1.1/Sun Nov 22 02:37:15 2015//
 /glx_mangle.h/1.1.1.1/Sun Nov 22 02:37:07 2015//
-/glxext.h/1.9/Sun Dec 31 07:12:12 2017//
+/glxext.h/1.10/Mon Jan  8 05:41:21 2018//
 /mesa_glinterop.h/1.1.1.1/Sun Dec 11 08:39:36 2016/-ko/
 /osmesa.h/1.1.1.2/Sun May 29 10:12:14 2016//
-/wglext.h/1.9/Sun Dec 31 07:12:12 2017//
+/wglext.h/1.10/Mon Jan  8 05:41:21 2018//
 D/internal////

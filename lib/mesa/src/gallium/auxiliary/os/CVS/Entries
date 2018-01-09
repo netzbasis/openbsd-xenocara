@@ -4,10 +4,10 @@
 /os_memory_stdc.h/1.1.1.1/Sun Nov 22 02:42:28 2015//
 /os_misc.c/1.1.1.3/Sun Dec 11 08:31:35 2016//
 /os_misc.h/1.1.1.1/Sun Nov 22 02:42:28 2015//
-/os_mman.h/1.1.1.2/Sun Dec 31 06:32:47 2017//
-/os_process.c/1.1.1.4/Sun Dec 31 06:32:47 2017//
+/os_mman.h/1.2/Mon Jan  8 05:41:24 2018//
+/os_process.c/1.2/Mon Jan  8 05:41:24 2018//
 /os_process.h/1.1.1.2/Sun Dec 11 08:31:35 2016//
-/os_thread.h/1.3/Sun Dec 31 07:12:15 2017//
-/os_time.c/1.1.1.3/Sun Dec 31 06:32:47 2017//
+/os_thread.h/1.4/Mon Jan  8 05:41:24 2018//
+/os_time.c/1.2/Mon Jan  8 05:41:24 2018//
 /os_time.h/1.1.1.2/Sun Dec 11 08:31:35 2016//
 D
