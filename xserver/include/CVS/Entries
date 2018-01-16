@@ -14,7 +14,7 @@
 /dbus-core.h/1.2/Wed Sep 16 19:10:25 2015//
 /displaymode.h/1.1/Sun May 29 12:02:39 2016//
 /dix-config-apple-verbatim.h/1.1/Sun Sep  6 19:44:36 2009//
-/dix-config.h.in/1.23/Fri Dec  8 15:02:01 2017//
+/dix-config.h.in/1.24/Mon Jan 15 15:30:36 2018//
 /dix.h/1.15/Fri Dec  8 15:02:01 2017//
 /dixaccess.h/1.3/Sun Jun 10 13:21:30 2012//
 /dixevents.h/1.6/Fri Jun  7 17:28:54 2013//
@@ -22,7 +22,7 @@
 /dixfontstr.h/1.4/Fri Dec  8 15:02:01 2017//
 /dixgrabs.h/1.9/Wed Sep 16 19:10:25 2015//
 /dixstruct.h/1.14/Fri Dec  8 15:02:01 2017//
-/do-not-use-config.h.in/1.31/Fri Dec  8 15:02:01 2017//
+/do-not-use-config.h.in/1.32/Mon Jan 15 15:30:36 2018//
 /eventconvert.h/1.4/Fri Jun  7 17:28:54 2013//
 /events.h/1.3/Fri Jun  7 17:28:54 2013//
 /eventstr.h/1.9/Fri Dec  8 15:02:01 2017//
