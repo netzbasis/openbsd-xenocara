@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.353 2018/02/01 15:17:51 okan Exp $
+ * $OpenBSD: calmwm.h,v 1.355 2018/02/02 13:40:55 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -30,6 +30,13 @@
 #include <X11/cursorfont.h>
 #include <X11/extensions/Xrandr.h>
 #include <X11/keysym.h>
+
+/* #define DEBUG */
+#ifdef DEBUG
+#define DPRINTF(...)	log_debug(__func__, __VA_ARGS__)
+#else
+#define DPRINTF(...)	do {} while (0)
+#endif /* DEBUG */
 
 #undef MIN
 #undef MAX
@@ -260,7 +267,7 @@ TAILQ_HEAD(mousebind_q, bind_ctx);
 struct cmd_ctx {
 	TAILQ_ENTRY(cmd_ctx)	 entry;
 	char			*name;
-	char			 path[PATH_MAX];
+	char			*path;
 };
 TAILQ_HEAD(cmd_q, cmd_ctx);
 TAILQ_HEAD(wm_q, cmd_ctx);
@@ -298,13 +305,13 @@ struct conf {
 	int			 snapdist;
 	struct gap		 gap;
 	char			*color[CWM_COLOR_NITEMS];
-	char			 known_hosts[PATH_MAX];
 	char			*font;
 	char			*wmname;
 	Cursor			 cursor[CF_NITEMS];
 	int			 xrandr;
 	int			 xrandr_event_base;
 	char			*homedir;
+	char			*known_hosts;
 	char			*wm_argv;
 };
 
@@ -540,9 +547,9 @@ int			 conf_bind_mouse(struct conf *, const char *,
     			     const char *);
 void			 conf_clear(struct conf *);
 void			 conf_client(struct client_ctx *);
-int			 conf_cmd_add(struct conf *, const char *,
+void			 conf_cmd_add(struct conf *, const char *,
 			     const char *);
-int			 conf_wm_add(struct conf *, const char *,
+void			 conf_wm_add(struct conf *, const char *,
 			     const char *);
 void			 conf_cursor(struct conf *);
 void			 conf_grab_kbd(Window);
@@ -584,6 +591,9 @@ void 			 xu_ewmh_restore_net_wm_state(struct client_ctx *);
 char			*u_argv(char * const *);
 void			 u_exec(char *);
 void			 u_spawn(char *);
+void			 log_debug(const char *, const char *, ...)
+			    __attribute__((__format__ (printf, 2, 3)))
+			    __attribute__((__nonnull__ (2)));
 
 void			*xcalloc(size_t, size_t);
 void			*xmalloc(size_t);
