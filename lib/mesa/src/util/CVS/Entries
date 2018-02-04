@@ -40,7 +40,7 @@
 /strtod.c/1.2/Mon Jan  8 05:41:40 2018//
 /strtod.h/1.1.1.1/Sun Nov 22 02:41:34 2015//
 /texcompress_rgtc_tmp.h/1.1.1.1/Sun Nov 22 02:41:35 2015//
-/u_atomic.h/1.12/Mon Jan  8 05:41:40 2018//
+/u_atomic.h/1.13/Sun Feb  4 00:36:24 2018//
 /u_atomic_test.c/1.1.1.2/Sun May 29 10:16:15 2016//
 /u_endian.h/1.2/Mon Jan  8 05:41:40 2018/-ko/
 /u_vector.c/1.2/Mon Jan  8 05:41:40 2018/-ko/
