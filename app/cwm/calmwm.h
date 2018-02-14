@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.358 2018/02/09 20:08:07 okan Exp $
+ * $OpenBSD: calmwm.h,v 1.360 2018/02/13 15:43:15 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -204,7 +204,6 @@ TAILQ_HEAD(autogroup_q, autogroup);
 struct region_ctx {
 	TAILQ_ENTRY(region_ctx)	 entry;
 	int			 num;
-	struct geom		 area;
 	struct geom		 view; /* viewable area */
 	struct geom		 work; /* workable area, gap-applied */
 };
@@ -224,6 +223,8 @@ struct screen_ctx {
 	struct region_q		 regionq;
 	struct group_q		 groupq;
 	struct group_ctx	*group_active;
+	Colormap		 colormap;
+	Visual			*visual;
 	struct {
 		Window		 win;
 		XftDraw		*xftdraw;
