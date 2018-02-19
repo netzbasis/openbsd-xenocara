@@ -10,7 +10,7 @@
 /ddxCtrls.c/1.6/Wed Sep 16 19:10:26 2015//
 /ddxKillSrv.c/1.4/Wed Sep 16 19:10:26 2015//
 /ddxLEDs.c/1.4/Wed Sep 16 19:10:26 2015//
-/ddxLoad.c/1.11/Wed Sep 16 19:10:26 2015//
+/ddxLoad.c/1.12/Sun Feb 18 17:16:38 2018//
 /ddxPrivate.c/1.3/Sun Jun 10 13:21:31 2012//
 /ddxVT.c/1.4/Wed Sep 16 19:10:26 2015//
 /maprules.c/1.12/Fri Dec  8 15:02:02 2017//
@@ -24,7 +24,7 @@
 /xkbLEDs.c/1.10/Tue Aug  9 18:59:55 2016//
 /xkbPrKeyEv.c/1.7/Wed Sep 16 19:10:26 2015//
 /xkbSwap.c/1.6/Wed Sep 16 19:10:26 2015//
-/xkbUtils.c/1.12/Sun May 29 12:02:40 2016//
+/xkbUtils.c/1.13/Sun Feb 18 17:16:38 2018//
 /xkbfmisc.c/1.7/Wed Sep 16 19:10:26 2015//
 /xkbgeom.h/1.6/Wed Sep 16 19:10:26 2015//
 /xkbout.c/1.7/Wed Sep 16 19:10:26 2015//

@@ -13,7 +13,7 @@
 /xf86Cursor.c/1.14/Fri Dec  8 15:02:01 2017//
 /xf86Cursor.h/1.6/Fri Dec  8 15:02:01 2017//
 /xf86CursorPriv.h/1.8/Fri Dec  8 15:02:01 2017//
-/xf86HWCurs.c/1.10/Fri Dec  8 15:02:01 2017//
+/xf86HWCurs.c/1.11/Sun Feb 18 17:16:37 2018//
 /xf86RamDac.c/1.4/Sun Jun 10 13:21:26 2012//
 /xf86RamDac.h/1.4/Wed Sep 16 19:10:23 2015//
 /xf86RamDacCmap.c/1.5/Wed Sep 16 19:10:23 2015//

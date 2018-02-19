@@ -4,10 +4,10 @@
 /ddxstubs.c/1.3/Fri Dec  8 15:02:02 2017//
 /fixes.c/1.3/Fri Jun  7 17:28:55 2013//
 /hashtabletest.c/1.3/Sat Sep 27 17:53:05 2014//
-/input.c/1.10/Sun May 29 12:02:40 2016//
+/input.c/1.11/Sun Feb 18 17:16:38 2018//
 /list.c/1.4/Wed Sep 16 19:10:26 2015//
 /misc.c/1.3/Tue Dec  9 17:58:53 2014//
-/signal-logging.c/1.6/Fri Dec  8 15:02:02 2017//
+/signal-logging.c/1.7/Sun Feb 18 17:16:38 2018//
 /simple-xinit.c/1.1/Fri Dec  8 15:02:02 2017//
 /string.c/1.1/Sun Jun 10 13:21:31 2012//
 /touch.c/1.4/Fri Dec  8 15:02:02 2017//

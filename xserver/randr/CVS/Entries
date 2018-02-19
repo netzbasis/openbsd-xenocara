@@ -7,12 +7,12 @@
 /rrinfo.c/1.7/Sun May 29 12:02:40 2016//
 /rrmode.c/1.10/Sun May 29 12:02:40 2016//
 /rrmonitor.c/1.2/Fri Dec  8 15:02:02 2017//
-/rroutput.c/1.14/Fri Dec  8 15:02:02 2017//
+/rroutput.c/1.15/Sun Feb 18 17:16:37 2018//
 /rrpointer.c/1.5/Wed Sep 16 19:10:25 2015//
 /rrproperty.c/1.11/Sun May 29 12:02:40 2016//
 /rrprovider.c/1.6/Fri Dec  8 15:02:02 2017//
 /rrproviderproperty.c/1.3/Sun May 29 12:02:40 2016//
-/rrscreen.c/1.14/Fri Dec  8 15:02:02 2017//
+/rrscreen.c/1.15/Sun Feb 18 17:16:37 2018//
 /rrsdispatch.c/1.8/Sun May 29 12:02:40 2016//
 /rrtransform.c/1.6/Sun May 29 12:02:40 2016//
 /rrtransform.h/1.5/Wed Sep 16 19:10:25 2015//
