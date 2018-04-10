@@ -1,4 +1,4 @@
-/*	$OpenBSD: video.c,v 1.23 2016/11/26 11:49:15 czarkoff Exp $	*/
+/*	$OpenBSD: video.c,v 1.25 2018/04/09 18:16:44 cheloha Exp $	*/
 /*
  * Copyright (c) 2010 Jacob Meuser <jakemsr@openbsd.org>
  *
@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 #include <X11/Xlib.h>
@@ -1635,7 +1636,7 @@ int
 stream(struct video *vid)
 {
 	struct xdsp *x = &vid->xdsp;
-	struct timeval tp_start, tp_now, tp_run;
+	struct timespec tp_start, tp_now, tp_run;
 	struct itimerval frit;
 	double run_time;
 	uint8_t *src;
@@ -1643,7 +1644,7 @@ stream(struct video *vid)
 	int sequence = 20, ret, err, todo, done;
 
 	/* Guard against uninitialized variable in case no frame is grabbed. */
-	gettimeofday(&tp_start, NULL);
+	clock_gettime(CLOCK_UPTIME, &tp_start);
 
 	if (vid->fps && !vid->nofps) {
 		fus = 1000000 / vid->fps;
@@ -1759,21 +1760,21 @@ stream(struct video *vid)
 			frames_played++;
 
 		if (frames_played == 0)
-			gettimeofday(&tp_start, NULL);
+			clock_gettime(CLOCK_UPTIME, &tp_start);
 
 		if (vid->verbose > 1 && frames_played > 0 &&
 		    (frames_played) % sequence == 0) {
-			gettimeofday(&tp_now, NULL);
-			timersub(&tp_now, &tp_start, &tp_run);
+			clock_gettime(CLOCK_UPTIME, &tp_now);
+			timespecsub(&tp_now, &tp_start, &tp_run);
 			run_time = tp_run.tv_sec +
-			    (double)tp_run.tv_usec / 1000000;
+			    tp_run.tv_nsec / 1000000000.0;
 			fprintf(stderr, "frames: %08ld, seconds: "
 			    "%09.2f, fps: %08.5f\r", frames_played,
 			    run_time, ((double)frames_played) / run_time);
 			fflush(stderr);
 		}
 	}
-	gettimeofday(&tp_now, NULL);
+	clock_gettime(CLOCK_UPTIME, &tp_now);
 
 	if (vid->fps) {
 		timerclear(&frit.it_value);
@@ -1793,8 +1794,8 @@ stream(struct video *vid)
 		fprintf(stderr, "\n");
 
 	if (vid->verbose > 0) {
-		timersub(&tp_now, &tp_start, &tp_run);
-		run_time = tp_run.tv_sec + (double)tp_run.tv_usec / 1000000;
+		timespecsub(&tp_now, &tp_start, &tp_run);
+		run_time = tp_run.tv_sec + tp_run.tv_nsec / 1000000000.0;
 		fprintf(stderr, "run time: %f seconds\n", run_time);
 		fprintf(stderr, "frames grabbed: %ld\n", frames_grabbed);
 		fprintf(stderr, "frames played: %ld\n", frames_played + 1);
@@ -1852,6 +1853,7 @@ main(int argc, char *argv[])
 	struct dev *d = &vid.dev;
 	struct xdsp *x = &vid.xdsp;
 	const char *errstr;
+	size_t len;
 	int ch, err = 0;
 
 	bzero(&vid, sizeof(struct video));
@@ -1881,7 +1883,11 @@ main(int argc, char *argv[])
 			}
 			break;
 		case 'f':
-			snprintf(d->path, sizeof(d->path), optarg);
+			len = strlcpy(d->path, optarg, sizeof(d->path));
+			if (len >= sizeof(d->path)) {
+				warnx("file path is too long: %s", optarg);
+				err++;
+			}
 			break;
 		case 'g':
 			vid.mmap_on = 0;
@@ -1893,8 +1899,13 @@ main(int argc, char *argv[])
 			} else {
 				vid.mode = (vid.mode & ~M_IN_DEV) | M_IN_FILE;
 				vid.mmap_on = 0; /* mmap mode does not work for files */
-				snprintf(vid.iofile, sizeof(vid.iofile),
-				    optarg);
+				len = strlcpy(vid.iofile, optarg,
+				    sizeof(vid.iofile));
+				if (len >= sizeof(vid.iofile)) {
+					warnx("input path is too long: %s",
+					    optarg);
+					err++;
+				}
 			}
 			break;
 		case 'o':
@@ -1906,8 +1917,13 @@ main(int argc, char *argv[])
 				vid.mode |= M_OUT_FILE;
 				if (ch != 'O')
 					vid.mode &= ~M_OUT_XV;
-				snprintf(vid.iofile, sizeof(vid.iofile),
-				    optarg);
+				len = strlcpy(vid.iofile, optarg,
+				    sizeof(vid.iofile));
+				if (len >= sizeof(vid.iofile)) {
+					warnx("output path is too long: %s",
+					    optarg);
+					err++;
+				}
 			}
 			break;
 		case 'q':
