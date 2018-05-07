@@ -348,6 +348,7 @@ SaveServerAuthorizations (
 	     * to the auth file so xrdb and setup programs don't fail.
 	     */
 	    if (auths[i]->data_length > 0)
+	    {
 		if (!XauWriteAuth (auth_file, auths[i]))
 		{
 		    Debug ("XauWriteAuth() failed\n");
@@ -358,6 +359,7 @@ SaveServerAuthorizations (
 		    err = errno;
 		    ret = FALSE;
 		}
+	    }
 	}
 	/*
 	 * XXX: This is not elegant, but stdio has no truncation function.
@@ -767,7 +769,6 @@ SetUserAuthorization (struct display *d, struct verify_info *verify)
     struct stat	statb;
     int		i;
     int		magicCookie;
-    int		data_len;
     int		fd;
 
     Debug ("SetUserAuthorization\n");
