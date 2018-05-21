@@ -24,13 +24,13 @@
 /VTparse.def/1.11/Fri May  9 19:56:40 2014//
 /VTparse.h/1.14/Thu Nov  3 14:25:06 2016//
 /XTerm-col.ad/1.3/Thu Mar 25 22:03:51 2010//
-/XTerm.ad/1.19/Wed Dec 13 17:45:49 2017//
+/XTerm.ad/1.20/Sun May 20 09:28:40 2018//
 /aclocal.m4/1.5/Sat Sep  5 14:11:45 2015//
 /button.c/1.37/Thu Mar 29 20:22:05 2018//
 /cachedGCs.c/1.14/Sat Jul 15 19:20:51 2017//
 /charclass.c/1.5/Sat Jul 15 19:20:51 2017//
 /charclass.h/1.2/Sat Jul 15 19:20:51 2017//
-/charproc.c/1.40/Thu Mar 29 20:22:05 2018//
+/charproc.c/1.42/Sun May 20 09:25:38 2018//
 /charsets.c/1.6/Thu Mar 29 20:22:05 2018//
 /config.guess/1.2/Sat Sep  5 14:11:45 2015//
 /config.sub/1.2/Sat Sep  5 14:11:45 2015//
@@ -65,7 +65,7 @@
 /main.c/1.43/Thu Mar 29 20:22:05 2018//
 /main.h/1.13/Sat Jul 15 19:20:51 2017//
 /make.com/1.1.1.1/Sun Nov 26 11:11:36 2006//
-/menu.c/1.26/Thu Mar 29 20:22:05 2018//
+/menu.c/1.27/Sun May 20 09:28:40 2018//
 /menu.h/1.16/Sat Jul 15 19:20:51 2017//
 /minstall.in/1.8/Sat Jul 15 19:20:51 2017//
 /misc.c/1.38/Thu Mar 29 20:22:05 2018//
@@ -74,7 +74,7 @@
 /precompose.h/1.1.1.1/Sun Nov 26 11:11:40 2006//
 /print.c/1.20/Thu Mar 29 20:22:05 2018//
 /ptydata.c/1.15/Sat Jul 15 19:20:51 2017//
-/ptyx.h/1.43/Thu Mar 29 20:22:05 2018//
+/ptyx.h/1.44/Sun May 20 09:25:38 2018//
 /resize.c/1.13/Sat Jul 15 19:20:51 2017//
 /resize.man/1.8/Thu Mar 29 20:22:05 2018//
 /run-tic.sh/1.2/Thu Mar 25 22:03:51 2010//
@@ -107,7 +107,7 @@
 /xterm.desktop/1.6/Sun Aug  7 21:27:36 2016//
 /xterm.h/1.43/Thu Mar 29 20:22:05 2018//
 /xterm.log.html/1.44/Thu Mar 29 20:22:05 2018//
-/xterm.man/1.47/Thu Mar 29 20:22:05 2018//
+/xterm.man/1.48/Sun May 20 09:22:18 2018//
 /xterm_axp.opt/1.1.1.1/Sun Nov 26 11:11:52 2006//
 /xterm_io.h/1.8/Sat Jul 15 19:20:51 2017//
 /xtermcap.c/1.13/Sun Aug  7 21:27:36 2016//
