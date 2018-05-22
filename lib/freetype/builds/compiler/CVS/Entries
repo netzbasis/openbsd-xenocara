@@ -1,13 +1,13 @@
-/ansi-cc.mk/1.4/Fri Jun 23 16:15:17 2017//
-/bcc-dev.mk/1.6/Fri Jun 23 16:15:17 2017//
-/bcc.mk/1.5/Fri Jun 23 16:15:17 2017//
-/emx.mk/1.4/Fri Jun 23 16:15:17 2017//
-/gcc-dev.mk/1.4/Fri Jun 23 16:15:17 2017//
-/gcc.mk/1.5/Fri Jun 23 16:15:17 2017//
-/intelc.mk/1.4/Fri Jun 23 16:15:17 2017//
-/unix-lcc.mk/1.4/Fri Jun 23 16:15:17 2017//
-/visualage.mk/1.4/Fri Jun 23 16:15:17 2017//
-/visualc.mk/1.5/Fri Jun 23 16:15:17 2017//
-/watcom.mk/1.4/Fri Jun 23 16:15:17 2017//
-/win-lcc.mk/1.4/Fri Jun 23 16:15:17 2017//
+/ansi-cc.mk/1.5/Mon May 21 11:52:24 2018//
+/bcc-dev.mk/1.7/Mon May 21 11:52:24 2018//
+/bcc.mk/1.6/Mon May 21 11:52:24 2018//
+/emx.mk/1.5/Mon May 21 11:52:24 2018//
+/gcc-dev.mk/1.5/Mon May 21 11:52:24 2018//
+/gcc.mk/1.6/Mon May 21 11:52:24 2018//
+/intelc.mk/1.5/Mon May 21 11:52:24 2018//
+/unix-lcc.mk/1.5/Mon May 21 11:52:24 2018//
+/visualage.mk/1.5/Mon May 21 11:52:24 2018//
+/visualc.mk/1.6/Mon May 21 11:52:24 2018//
+/watcom.mk/1.5/Mon May 21 11:52:24 2018//
+/win-lcc.mk/1.5/Mon May 21 11:52:24 2018//
 D

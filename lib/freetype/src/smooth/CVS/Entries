@@ -1,12 +1,12 @@
-/Jamfile/1.6/Fri Jun 23 16:15:19 2017//
-/ftgrays.c/1.29/Fri Dec 15 19:29:12 2017//
-/ftgrays.h/1.5/Fri Jun 23 16:15:19 2017//
-/ftsmerrs.h/1.5/Fri Jun 23 16:15:19 2017//
-/ftsmooth.c/1.18/Fri Dec 15 19:29:12 2017//
-/ftsmooth.h/1.5/Fri Jun 23 16:15:19 2017//
-/ftspic.c/1.8/Fri Jun 23 16:15:19 2017//
-/ftspic.h/1.7/Fri Jun 23 16:15:19 2017//
-/module.mk/1.5/Fri Jun 23 16:15:19 2017//
-/rules.mk/1.5/Fri Jun 23 16:15:19 2017//
-/smooth.c/1.5/Fri Jun 23 16:15:19 2017//
+/Jamfile/1.7/Mon May 21 11:52:27 2018//
+/ftgrays.c/1.30/Mon May 21 11:52:27 2018//
+/ftgrays.h/1.6/Mon May 21 11:52:27 2018//
+/ftsmerrs.h/1.6/Mon May 21 11:52:27 2018//
+/ftsmooth.c/1.19/Mon May 21 11:52:27 2018//
+/ftsmooth.h/1.6/Mon May 21 11:52:27 2018//
+/ftspic.c/1.9/Mon May 21 11:52:27 2018//
+/ftspic.h/1.8/Mon May 21 11:52:27 2018//
+/module.mk/1.6/Mon May 21 11:52:27 2018//
+/rules.mk/1.6/Mon May 21 11:52:27 2018//
+/smooth.c/1.6/Mon May 21 11:52:27 2018//
 D
