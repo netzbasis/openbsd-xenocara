@@ -136,7 +136,7 @@ putEnv(const char *string, char **env)
 	return NULL;
     }
 
-    strncpy(n, string,nl + 1);
+    strlcpy(n, string, nl + 1);
     n[nl] = 0;
 
     env = setEnv(env,n,v);
@@ -232,16 +232,3 @@ CleanUpChild (void)
 	CloseOnFork ();
 }
 
-static char localHostbuf[256];
-static int  gotLocalHostname;
-
-char *
-localHostname (void)
-{
-    if (!gotLocalHostname)
-    {
-	XmuGetHostname (localHostbuf, sizeof (localHostbuf) - 1);
-	gotLocalHostname = 1;
-    }
-    return localHostbuf;
-}
