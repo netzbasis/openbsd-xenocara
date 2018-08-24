@@ -1,13 +1,13 @@
 /Makefile.am/1.4/Mon May 30 19:19:38 2011//
 /Makefile.in/1.17/Tue Oct 11 22:15:22 2016//
 /XKB.c/1.6/Mon Apr  6 20:57:59 2015//
-/XKBAlloc.c/1.7/Mon Apr  6 20:57:59 2015//
+/XKBAlloc.c/1.8/Thu Aug 23 19:38:12 2018//
 /XKBBell.c/1.5/Sat Sep 28 17:03:21 2013//
 /XKBBind.c/1.7/Mon Apr  6 20:57:59 2015//
 /XKBCompat.c/1.5/Sat Sep 28 17:03:21 2013//
 /XKBCtrls.c/1.5/Sat Sep 28 17:03:21 2013//
 /XKBCvt.c/1.5/Sat Sep 28 17:03:21 2013//
-/XKBExtDev.c/1.7/Mon Apr  6 20:57:59 2015//
+/XKBExtDev.c/1.8/Thu Aug 23 19:38:12 2018//
 /XKBGAlloc.c/1.8/Mon Apr  6 20:57:59 2015//
 /XKBGeom.c/1.8/Mon Apr  6 20:57:59 2015//
 /XKBGetByName.c/1.6/Thu Nov  3 10:21:31 2016//
