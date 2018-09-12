@@ -1,4 +1,4 @@
-/Makefile/1.4/Mon Apr 14 19:20:17 2014//
+/Makefile/1.5/Tue Sep 11 19:34:56 2018//
 /Makefile.inc/1.8/Wed Nov  7 15:50:22 2012//
 D/libxcb////
 D/libxcb-composite////
@@ -16,12 +16,11 @@ D/libxcb-screensaver////
 D/libxcb-shape////
 D/libxcb-shm////
 D/libxcb-sync////
-D/libxcb-xevie////
 D/libxcb-xf86dri////
 D/libxcb-xfixes////
 D/libxcb-xinerama////
+D/libxcb-xinput////
 D/libxcb-xkb////
-D/libxcb-xprint////
 D/libxcb-xtest////
 D/libxcb-xv////
 D/libxcb-xvmc////
