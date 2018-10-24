@@ -1,6 +1,6 @@
 /rtasm_cpu.c/1.1.1.1/Sun Nov 22 02:43:24 2015//
 /rtasm_cpu.h/1.1.1.1/Sun Nov 22 02:43:24 2015//
-/rtasm_execmem.c/1.6/Mon Jan  8 05:41:24 2018//
+/rtasm_execmem.c/1.7/Tue Oct 23 06:35:38 2018//
 /rtasm_execmem.h/1.1.1.1/Sun Nov 22 02:43:24 2015//
 /rtasm_x86sse.c/1.1.1.2/Sun Dec 11 08:31:34 2016//
 /rtasm_x86sse.h/1.1.1.1/Sun Nov 22 02:43:24 2015//

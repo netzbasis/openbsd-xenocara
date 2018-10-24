@@ -1,15 +1,15 @@
 /context.cpp/1.1.1.2/Sun May 29 10:17:27 2016//
-/device.cpp/1.4/Mon Jan  8 05:41:29 2018//
-/dispatch.cpp/1.4/Mon Jan  8 05:41:29 2018//
-/dispatch.hpp/1.4/Mon Jan  8 05:41:29 2018//
-/event.cpp/1.1.1.1/Sun Nov 22 02:41:59 2015//
+/device.cpp/1.5/Tue Oct 23 06:35:45 2018//
+/dispatch.cpp/1.5/Tue Oct 23 06:35:45 2018//
+/dispatch.hpp/1.5/Tue Oct 23 06:35:45 2018//
+/event.cpp/1.1.1.2/Tue Oct 23 05:42:59 2018//
 /interop.cpp/1.1.1.1/Sun Nov 22 02:41:59 2015//
-/kernel.cpp/1.4/Mon Jan  8 05:41:29 2018//
+/kernel.cpp/1.5/Tue Oct 23 06:35:45 2018//
 /memory.cpp/1.1.1.2/Sun May 29 10:17:28 2016//
-/platform.cpp/1.4/Mon Jan  8 05:41:29 2018//
-/program.cpp/1.4/Mon Jan  8 05:41:29 2018//
+/platform.cpp/1.5/Tue Oct 23 06:35:45 2018//
+/program.cpp/1.5/Tue Oct 23 06:35:45 2018//
 /queue.cpp/1.1.1.1/Sun Nov 22 02:41:59 2015//
 /sampler.cpp/1.1.1.1/Sun Nov 22 02:41:59 2015//
-/transfer.cpp/1.1.1.1/Sun Nov 22 02:41:59 2015//
+/transfer.cpp/1.1.1.2/Tue Oct 23 05:42:58 2018//
 /util.hpp/1.1.1.2/Sun Dec 11 08:30:56 2016//
 D

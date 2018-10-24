@@ -5,6 +5,8 @@
 /general_ir_test.Po/1.1.1.1/Sun May 29 10:17:03 2016/-ko/
 /glsl_tests_cache_test-cache_test.Po/1.1.1.1/Thu Jan 19 05:41:11 2017/-ko/
 /invalidate_locations_test.Po/1.1.1.1/Sun May 29 10:17:03 2016/-ko/
+/lower_int64_test.Po/1.5/Tue Oct 23 06:35:35 2018/-ko/
+/opt_add_neg_to_sub_test.Po/1.5/Tue Oct 23 06:35:35 2018/-ko/
 /sampler_types_test.Po/1.1.1.1/Sun May 29 10:17:03 2016/-ko/
 /set_uniform_initializer_tests.Po/1.1.1.1/Sun May 29 10:17:03 2016/-ko/
 /uniform_initializer_utils.Po/1.1.1.1/Sun May 29 10:17:03 2016/-ko/

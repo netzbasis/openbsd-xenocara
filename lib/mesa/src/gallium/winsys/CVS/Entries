@@ -1,10 +1,13 @@
 D/amdgpu////
+D/etnaviv////
 D/freedreno////
 D/i915////
-D/intel////
+D/imx////
 D/nouveau////
+D/pl111////
 D/radeon////
 D/svga////
 D/sw////
 D/vc4////
+D/vc5////
 D/virgl////

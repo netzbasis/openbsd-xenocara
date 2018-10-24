@@ -162,8 +162,8 @@
 /080-if-without-expression.c.expected/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /081-elif-without-expression.c/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /081-elif-without-expression.c.expected/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
-/082-invalid-paste.c/1.4/Mon Jan  8 05:41:23 2018/-ko/
-/082-invalid-paste.c.expected/1.4/Mon Jan  8 05:41:23 2018/-ko/
+/082-invalid-paste.c/1.5/Tue Oct 23 06:35:35 2018/-ko/
+/082-invalid-paste.c.expected/1.5/Tue Oct 23 06:35:35 2018/-ko/
 /083-unterminated-if.c/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /083-unterminated-if.c.expected/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /084-unbalanced-parentheses.c/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
@@ -224,10 +224,10 @@
 /111-no-space-operator-after-hash-if.c.expected/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /112-no-space-operator-after-hash-elif.c/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /112-no-space-operator-after-hash-elif.c.expected/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
-/113-line-and-file-macros.c/1.4/Mon Jan  8 05:41:23 2018/-ko/
-/113-line-and-file-macros.c.expected/1.4/Mon Jan  8 05:41:23 2018/-ko/
-/114-paste-integer-tokens.c/1.4/Mon Jan  8 05:41:23 2018/-ko/
-/114-paste-integer-tokens.c.expected/1.4/Mon Jan  8 05:41:23 2018/-ko/
+/113-line-and-file-macros.c/1.5/Tue Oct 23 06:35:35 2018/-ko/
+/113-line-and-file-macros.c.expected/1.5/Tue Oct 23 06:35:35 2018/-ko/
+/114-paste-integer-tokens.c/1.5/Tue Oct 23 06:35:35 2018/-ko/
+/114-paste-integer-tokens.c.expected/1.5/Tue Oct 23 06:35:35 2018/-ko/
 /115-line-continuations.c/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /115-line-continuations.c.expected/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /116-disable-line-continuations.c/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
@@ -239,7 +239,7 @@
 /119-elif-after-else.c/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /119-elif-after-else.c.expected/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /120-undef-builtin.c/1.1.1.2/Sun Dec 11 08:33:33 2016/-ko/
-/120-undef-builtin.c.expected/1.2/Mon Jan  8 05:41:23 2018/-ko/
+/120-undef-builtin.c.expected/1.3/Tue Oct 23 06:35:35 2018/-ko/
 /121-comment-bug-72686.c/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /121-comment-bug-72686.c.expected/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
 /122-redefine-whitespace.c/1.1.1.1/Sun May 29 10:17:02 2016/-ko/
@@ -292,8 +292,12 @@
 /145-version-first.c.expected/1.1.1.1/Sun Dec 11 08:33:33 2016/-ko/
 /146-version-first-hash.c/1.1.1.1/Sun Dec 11 08:33:33 2016/-ko/
 /146-version-first-hash.c.expected/1.1.1.1/Sun Dec 11 08:33:33 2016/-ko/
+/147-define-macro-no-space.c/1.5/Tue Oct 23 06:35:35 2018/-ko/
+/147-define-macro-no-space.c.expected/1.5/Tue Oct 23 06:35:35 2018/-ko/
 /147-undef-builtin-allowed.c/1.1.1.1/Sun Dec 11 08:33:33 2016/-ko/
-/147-undef-builtin-allowed.c.expected/1.2/Mon Jan  8 05:41:23 2018/-ko/
-/glcpp-test/1.5/Mon Jan  8 05:41:23 2018/-ko/
-/glcpp-test-cr-lf/1.5/Mon Jan  8 05:41:23 2018/-ko/
+/147-undef-builtin-allowed.c.expected/1.3/Tue Oct 23 06:35:35 2018/-ko/
+/148-legal-characters.c/1.5/Tue Oct 23 06:35:35 2018/-ko/
+/148-legal-characters.c.expected/1.5/Tue Oct 23 06:35:35 2018/-ko/
+/glcpp-test-cr-lf.sh/1.5/Tue Oct 23 06:35:35 2018/-ko/
+/glcpp-test.sh/1.5/Tue Oct 23 06:35:35 2018/-ko/
 D
