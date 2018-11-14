@@ -10,7 +10,8 @@ env.MSVC2013Compat()
 
 env.Prepend(CPPPATH = [
     '#include',
-    '#srcÖúÀ   '#src/mapi',
+    '#src',
+    '#src/mapi',
     '#src/mesa',
     '#src/gallium/include',
     '#src/gallium/auxiliary',
