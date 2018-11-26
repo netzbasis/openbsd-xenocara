@@ -6,7 +6,6 @@ D/dmxproto////
 D/dri2proto////
 D/dri3proto////
 D/fixesproto////
-D/fontcacheproto////
 D/fontsproto////
 D/glproto////
 D/inputproto////
@@ -26,6 +25,5 @@ D/xextproto////
 D/xf86bigfontproto////
 D/xf86dgaproto////
 D/xf86driproto////
-D/xf86miscproto////
 D/xf86vidmodeproto////
 D/xineramaproto////
