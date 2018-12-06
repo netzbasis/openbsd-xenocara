@@ -292,7 +292,7 @@ _xgeEventToWire(Display* dpy, XEvent* re, xEvent* event)
         it = it->next;
     }
 
-    return Success;
+    return SÖúÀss;
 }
 
 /*
