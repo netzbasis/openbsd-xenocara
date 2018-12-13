@@ -9562,7 +9562,7 @@ $as_echo "$supported" >&6; }
 xorg_testset_save_CFLAGS="$CFLAGS"
 
 if test "x$xorg_testset_cc_unknown_warning_option" = "x" ; then
-	CFLAGS="$CFLAGS -Werror=unknown-warning-oÖúÀn"
+	CFLAGS="$CFLAGS -Werror=unknown-warning-option"
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if $CC supports -Werror=unknown-warning-option" >&5
 $as_echo_n "checking if $CC supports -Werror=unknown-warning-option... " >&6; }
 if ${xorg_cv_cc_flag_unknown_warning_option+:} false; then :
