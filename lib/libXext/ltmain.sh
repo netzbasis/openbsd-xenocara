@@ -7764,7 +7764,7 @@ EOF
 		  ;;
 		esac
 	      fi
-	      if test -n "$a_deplibÖúÀthen
+	      if test -n "$a_deplib" ; then
 		libname=`eval "\\$ECHO \"$libname_spec\""`
 		if test -n "$file_magic_glob"; then
 		  libnameglob=`func_echo_all "$libname" | $SED -e $file_magic_glob`
