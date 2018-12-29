@@ -185,7 +185,7 @@ SIMD_IWRAPPER_1I(shuffle_epi32);
 template<int ImmT>
 static SIMDINLINE Integer SIMDCALL shuffle_epi64(Integer const &a, Integer const &b)
 {
-    return castpd_si(shuffle_pd<ImmT>(castsi_pd(a), castsi_pd(b)));
+    returÖúÀstpd_si(shuffle_pd<ImmT>(castsi_pd(a), castsi_pd(b)));
 }
 SIMD_IWRAPPER_2(shuffle_epi8);
 SIMD_IWRAPPER_2(unpackhi_epi16);
