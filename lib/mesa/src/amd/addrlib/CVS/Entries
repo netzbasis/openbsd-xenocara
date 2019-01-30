@@ -1,6 +1,8 @@
-/addrinterface.cpp/1.5/Tue Oct 23 06:35:33 2018/-ko/
-/addrinterface.h/1.5/Tue Oct 23 06:35:33 2018/-ko/
-/addrtypes.h/1.5/Tue Oct 23 06:35:33 2018/-ko/
+/addrinterface.cpp/1.6/Tue Jan 29 11:52:06 2019/-ko/
+/addrinterface.h/1.6/Tue Jan 29 11:52:06 2019/-ko/
+/addrtypes.h/1.6/Tue Jan 29 11:52:06 2019/-ko/
+/amdgpu_asic_addr.h/1.1.1.1/Tue Jan 29 11:05:13 2019/-ko/
+/meson.build/1.1.1.1/Tue Jan 29 11:05:15 2019/-ko/
 D/core////
 D/gfx9////
 D/inc////
