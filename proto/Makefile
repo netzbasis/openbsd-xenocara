@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.15 2018/06/26 06:51:17 kettenis Exp $
+# $OpenBSD: Makefile,v 1.17 2019/02/10 23:07:47 matthieu Exp $
 
 .include <bsd.xconf.mk>
 
