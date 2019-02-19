@@ -89,7 +89,7 @@
 /st_draw.c/1.6/Tue Jan 29 11:52:30 2019//
 /st_draw.h/1.6/Tue Jan 29 11:52:30 2019//
 /st_draw_feedback.c/1.6/Tue Jan 29 11:52:30 2019//
-/st_extensions.c/1.6/Tue Jan 29 11:52:30 2019//
+/st_extensions.c/1.7/Tue Feb 19 04:24:01 2019//
 /st_extensions.h/1.1.1.3/Tue Jan 29 10:53:53 2019//
 /st_format.c/1.6/Tue Jan 29 11:52:30 2019//
 /st_format.h/1.6/Tue Jan 29 11:52:30 2019//
@@ -107,7 +107,7 @@
 /st_glsl_to_tgsi_temprename.h/1.1.1.2/Tue Jan 29 10:53:45 2019/-ko/
 /st_glsl_types.cpp/1.6/Tue Jan 29 11:52:31 2019/-ko/
 /st_glsl_types.h/1.1.1.3/Tue Jan 29 10:53:46 2019/-ko/
-/st_manager.c/1.6/Tue Jan 29 11:52:31 2019//
+/st_manager.c/1.7/Tue Feb 19 04:24:01 2019//
 /st_manager.h/1.6/Tue Jan 29 11:52:31 2019//
 /st_mesa_to_tgsi.c/1.6/Tue Jan 29 11:52:31 2019//
 /st_mesa_to_tgsi.h/1.6/Tue Jan 29 11:52:31 2019//
