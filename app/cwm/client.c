@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: client.c,v 1.247 2018/11/13 17:37:13 okan Exp $
+ * $OpenBSD: client.c,v 1.250 2019/02/22 20:52:13 okan Exp $
  */
 
 #include <sys/types.h>
@@ -170,7 +170,7 @@ client_find(Window win)
 }
 
 void
-client_delete(struct client_ctx *cc)
+client_remove(struct client_ctx *cc)
 {
 	struct screen_ctx	*sc = cc->sc;
 	struct winname		*wn;
@@ -636,7 +636,7 @@ client_msg(struct client_ctx *cc, Atom proto, Time ts)
 }
 
 void
-client_send_delete(struct client_ctx *cc)
+client_close(struct client_ctx *cc)
 {
 	if (cc->flags & CLIENT_WM_DELETE_WINDOW)
 		client_msg(cc, cwmh[WM_DELETE_WINDOW], CurrentTime);
@@ -986,18 +986,22 @@ client_htile(struct client_ctx *cc)
 		return;
 	i = n = 0;
 
+	area = screen_area(sc,
+	    cc->geom.x + cc->geom.w / 2,
+	    cc->geom.y + cc->geom.h / 2, CWM_GAP);
+
 	TAILQ_FOREACH(ci, &gc->clientq, group_entry) {
 		if (ci->flags & CLIENT_HIDDEN ||
-		    ci->flags & CLIENT_IGNORE || (ci == cc))
+		    ci->flags & CLIENT_IGNORE || (ci == cc) ||
+		    ci->geom.x < area.x ||
+		    ci->geom.x > (area.x + area.w) ||
+		    ci->geom.y < area.y ||
+		    ci->geom.y > (area.y + area.h))
 			continue;
 		n++;
 	}
 	if (n == 0)
 		return;
-
-	area = screen_area(sc,
-	    cc->geom.x + cc->geom.w / 2,
-	    cc->geom.y + cc->geom.h / 2, CWM_GAP);
 
 	if (cc->flags & CLIENT_VMAXIMIZED ||
 	    cc->geom.h + (cc->bwidth * 2) >= area.h)
@@ -1017,7 +1021,11 @@ client_htile(struct client_ctx *cc)
 	h = area.h - mh;
 	TAILQ_FOREACH(ci, &gc->clientq, group_entry) {
 		if (ci->flags & CLIENT_HIDDEN ||
-		    ci->flags & CLIENT_IGNORE || (ci == cc))
+		    ci->flags & CLIENT_IGNORE || (ci == cc) ||
+		    ci->geom.x < area.x ||
+		    ci->geom.x > (area.x + area.w) ||
+		    ci->geom.y < area.y ||
+		    ci->geom.y > (area.y + area.h))
 			continue;
 		ci->bwidth = Conf.bwidth;
 		ci->geom.x = x;
@@ -1046,18 +1054,22 @@ client_vtile(struct client_ctx *cc)
 		return;
 	i = n = 0;
 
+	area = screen_area(sc,
+	    cc->geom.x + cc->geom.w / 2,
+	    cc->geom.y + cc->geom.h / 2, CWM_GAP);
+
 	TAILQ_FOREACH(ci, &gc->clientq, group_entry) {
 		if (ci->flags & CLIENT_HIDDEN ||
-		    ci->flags & CLIENT_IGNORE || (ci == cc))
+		    ci->flags & CLIENT_IGNORE || (ci == cc) ||
+		    ci->geom.x < area.x ||
+		    ci->geom.x > (area.x + area.w) ||
+		    ci->geom.y < area.y ||
+		    ci->geom.y > (area.y + area.h))
 			continue;
 		n++;
 	}
 	if (n == 0)
 		return;
-
-	area = screen_area(sc,
-	    cc->geom.x + cc->geom.w / 2,
-	    cc->geom.y + cc->geom.h / 2, CWM_GAP);
 
 	if (cc->flags & CLIENT_HMAXIMIZED ||
 	    cc->geom.w + (cc->bwidth * 2) >= area.w)
@@ -1077,7 +1089,11 @@ client_vtile(struct client_ctx *cc)
 	w = area.w - mw;
 	TAILQ_FOREACH(ci, &gc->clientq, group_entry) {
 		if (ci->flags & CLIENT_HIDDEN ||
-		    ci->flags & CLIENT_IGNORE || (ci == cc))
+		    ci->flags & CLIENT_IGNORE || (ci == cc) ||
+		    ci->geom.x < area.x ||
+		    ci->geom.x > (area.x + area.w) ||
+		    ci->geom.y < area.y ||
+		    ci->geom.y > (area.y + area.h))
 			continue;
 		ci->bwidth = Conf.bwidth;
 		ci->geom.x = area.x + mw;
