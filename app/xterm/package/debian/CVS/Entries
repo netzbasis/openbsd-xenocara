@@ -1,13 +1,14 @@
-/changelog/1.28/Thu Mar 29 20:22:05 2018//
+/changelog/1.29/Sun Feb 24 11:41:43 2019//
 /color.sed/1.1/Mon Nov 29 20:10:09 2010//
 /compat/1.1/Mon Nov 29 20:10:09 2010//
-/control/1.4/Sat Jul 15 19:20:51 2017//
-/copyright/1.8/Thu Mar 29 20:19:16 2018//
+/control/1.5/Sun Feb 24 11:41:43 2019//
+/copyright/1.9/Sun Feb 24 11:41:43 2019//
 /postinst/1.1/Thu Dec 18 20:16:55 2014//
 /prerm/1.1/Thu Dec 18 20:16:55 2014//
-/rules/1.11/Thu Mar 29 20:19:16 2018//
+/rules/1.12/Sun Feb 24 11:41:43 2019//
 /watch/1.2/Thu Mar 29 20:19:16 2018//
 /xterm-dev.docs/1.2/Sat Jul 15 19:20:51 2017//
+/xterm-dev.lintian-overrides/1.1/Sun Feb 24 11:41:43 2019//
 /xterm-dev.menu/1.2/Sat Jul 15 19:20:51 2017//
 /xterm-xres.sed/1.2/Fri Jan  4 16:40:18 2013//
 D/source////
