@@ -16,7 +16,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: group.c,v 1.129 2019/02/25 16:40:49 okan Exp $
+ * $OpenBSD: group.c,v 1.132 2019/02/28 23:26:12 okan Exp $
  */
 
 #include <sys/types.h>
@@ -67,7 +67,8 @@ group_hide(struct group_ctx *gc)
 	screen_updatestackingorder(gc->sc);
 
 	TAILQ_FOREACH(cc, &gc->clientq, group_entry) {
-		if (!(cc->flags & CLIENT_STICKY))
+		if (!(cc->flags & CLIENT_STICKY) &&
+		    !(cc->flags & CLIENT_HIDDEN))
 			client_hide(cc);
 	}
 }
@@ -78,8 +79,9 @@ group_show(struct group_ctx *gc)
 	struct client_ctx	*cc;
 
 	TAILQ_FOREACH(cc, &gc->clientq, group_entry) {
-		if (!(cc->flags & CLIENT_STICKY))
-			client_unhide(cc);
+		if (!(cc->flags & CLIENT_STICKY) &&
+		     (cc->flags & CLIENT_HIDDEN))
+			client_show(cc);
 	}
 
 	group_restack(gc);
@@ -154,19 +156,15 @@ group_movetogroup(struct client_ctx *cc, int idx)
 	struct screen_ctx	*sc = cc->sc;
 	struct group_ctx	*gc;
 
-	if (idx < 0 || idx >= Conf.ngroups)
-		return;
-
 	TAILQ_FOREACH(gc, &sc->groupq, entry) {
-		if (gc->num == idx)
-			break;
+		if (gc->num == idx) {
+			if (cc->gc == gc)
+				return;
+			if (gc->num != 0 && group_holds_only_hidden(gc))
+				client_hide(cc);
+			group_assign(gc, cc);
+		}
 	}
-
-	if (cc->gc == gc)
-		return;
-	if (gc->num != 0 && group_holds_only_hidden(gc))
-		client_hide(cc);
-	group_assign(gc, cc);
 }
 
 void
@@ -215,21 +213,17 @@ group_hidetoggle(struct screen_ctx *sc, int idx)
 {
 	struct group_ctx	*gc;
 
-	if (idx < 0 || idx >= Conf.ngroups)
-		return;
-
 	TAILQ_FOREACH(gc, &sc->groupq, entry) {
-		if (gc->num == idx)
-			break;
-	}
-
-	if (group_holds_only_hidden(gc))
-		group_show(gc);
-	else {
-		group_hide(gc);
-		/* make clients stick to empty group */
-		if (TAILQ_EMPTY(&gc->clientq))
-			group_setactive(gc);
+		if (gc->num == idx) {
+			if (group_holds_only_hidden(gc))
+				group_show(gc);
+			else {
+				group_hide(gc);
+				/* make clients stick to empty group */
+				if (TAILQ_EMPTY(&gc->clientq))
+					group_setactive(gc);
+			}
+		}
 	}
 }
 
@@ -237,9 +231,6 @@ void
 group_only(struct screen_ctx *sc, int idx)
 {
 	struct group_ctx	*gc;
-
-	if (idx < 0 || idx >= Conf.ngroups)
-		return;
 
 	TAILQ_FOREACH(gc, &sc->groupq, entry) {
 		if (gc->num == idx)
@@ -254,9 +245,6 @@ group_close(struct screen_ctx *sc, int idx)
 {
 	struct group_ctx	*gc;
 	struct client_ctx	*cc;
-
-	if (idx < 0 || idx >= Conf.ngroups)
-		return;
 
 	TAILQ_FOREACH(gc, &sc->groupq, entry) {
 		if (gc->num == idx) {
