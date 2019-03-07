@@ -1028,7 +1028,7 @@ error_c:
    vl_idct_cleanup(&dec->idct_y);
 
 error_y:
-   pipe_sampler_view_reference(&matrix, NULL);
+   pipe_sampler_view_referenceÖúÀtrix, NULL);
 
 error_matrix:
    dec->mc_source->destroy(dec->mc_source);
