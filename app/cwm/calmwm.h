@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: calmwm.h,v 1.368 2019/03/04 19:28:17 okan Exp $
+ * $OpenBSD: calmwm.h,v 1.371 2019/03/07 14:28:17 okan Exp $
  */
 
 #ifndef _CALMWM_H_
@@ -121,7 +121,6 @@ TAILQ_HEAD(ignore_q, winname);
 
 struct client_ctx {
 	TAILQ_ENTRY(client_ctx)	 entry;
-	TAILQ_ENTRY(client_ctx)	 group_entry;
 	struct screen_ctx	*sc;
 	struct group_ctx	*gc;
 	Window			 win;
@@ -187,7 +186,6 @@ struct group_ctx {
 	struct screen_ctx	*sc;
 	char			*name;
 	int			 num;
-	struct client_q		 clientq;
 };
 TAILQ_HEAD(group_q, group_ctx);
 
@@ -396,7 +394,7 @@ __dead void		 usage(void);
 
 void			 client_applysizehints(struct client_ctx *);
 void			 client_config(struct client_ctx *);
-struct client_ctx	*client_current(void);
+struct client_ctx	*client_current(struct screen_ctx *);
 void			 client_cycle(struct screen_ctx *, int);
 void			 client_remove(struct client_ctx *);
 void			 client_draw_border(struct client_ctx *);
@@ -436,12 +434,10 @@ void			 client_urgency(struct client_ctx *);
 void 			 client_vtile(struct client_ctx *);
 void			 client_wm_hints(struct client_ctx *);
 
-void			 group_alltoggle(struct screen_ctx *);
 void			 group_assign(struct group_ctx *, struct client_ctx *);
 int			 group_autogroup(struct client_ctx *);
 void			 group_cycle(struct screen_ctx *, int);
 void			 group_hide(struct group_ctx *);
-void			 group_hidetoggle(struct screen_ctx *, int);
 int			 group_holds_only_hidden(struct group_ctx *);
 int			 group_holds_only_sticky(struct group_ctx *);
 void			 group_init(struct screen_ctx *, int, const char *);
@@ -450,6 +446,8 @@ void			 group_only(struct screen_ctx *, int);
 void			 group_close(struct screen_ctx *, int);
 int			 group_restore(struct client_ctx *);
 void			 group_show(struct group_ctx *);
+void			 group_toggle(struct screen_ctx *, int);
+void			 group_toggle_all(struct screen_ctx *);
 void			 group_toggle_membership(struct client_ctx *);
 void			 group_update_names(struct screen_ctx *);
 
@@ -513,7 +511,7 @@ void			 kbfunc_group_toggle(void *, struct cargs *);
 void			 kbfunc_group_only(void *, struct cargs *);
 void			 kbfunc_group_close(void *, struct cargs *);
 void			 kbfunc_group_cycle(void *, struct cargs *);
-void			 kbfunc_group_alltoggle(void *, struct cargs *);
+void			 kbfunc_group_toggle_all(void *, struct cargs *);
 void			 kbfunc_menu_client(void *, struct cargs *);
 void			 kbfunc_menu_cmd(void *, struct cargs *);
 void			 kbfunc_menu_group(void *, struct cargs *);

@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: kbfunc.c,v 1.163 2019/03/04 19:28:18 okan Exp $
+ * $OpenBSD: kbfunc.c,v 1.165 2019/03/07 14:28:17 okan Exp $
  */
 
 #include <sys/types.h>
@@ -428,15 +428,21 @@ kbfunc_client_movetogroup(void *ctx, struct cargs *cargs)
 }
 
 void
-kbfunc_group_toggle(void *ctx, struct cargs *cargs)
-{
-	group_hidetoggle(ctx, cargs->flag);
-}
-
-void
 kbfunc_group_only(void *ctx, struct cargs *cargs)
 {
 	group_only(ctx, cargs->flag);
+}
+
+void
+kbfunc_group_toggle(void *ctx, struct cargs *cargs)
+{
+	group_toggle(ctx, cargs->flag);
+}
+
+void
+kbfunc_group_toggle_all(void *ctx, struct cargs *cargs)
+{
+	group_toggle_all(ctx);
 }
 
 void
@@ -452,12 +458,6 @@ kbfunc_group_cycle(void *ctx, struct cargs *cargs)
 }
 
 void
-kbfunc_group_alltoggle(void *ctx, struct cargs *cargs)
-{
-	group_alltoggle(ctx);
-}
-
-void
 kbfunc_menu_client(void *ctx, struct cargs *cargs)
 {
 	struct screen_ctx	*sc = ctx;
@@ -470,7 +470,7 @@ kbfunc_menu_client(void *ctx, struct cargs *cargs)
 	if (cargs->xev == CWM_XEV_BTN)
 		mflags |= CWM_MENU_LIST;
 
-	old_cc = client_current();
+	old_cc = client_current(sc);
 
 	TAILQ_INIT(&menuq);
 	TAILQ_FOREACH(cc, &sc->clientq, entry) {
