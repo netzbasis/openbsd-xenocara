@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: xevents.c,v 1.139 2019/03/07 14:28:17 okan Exp $
+ * $OpenBSD: xevents.c,v 1.143 2019/03/08 17:40:43 okan Exp $
  */
 
 /*
@@ -234,7 +234,11 @@ xev_handle_buttonpress(XEvent *ee)
 	struct screen_ctx	*sc;
 	struct bind_ctx		*mb;
 
-	LOG_DEBUG3("window: 0x%lx", e->window);
+	LOG_DEBUG3("root: 0x%lx window: 0x%lx subwindow: 0x%lx",
+	    e->root, e->window, e->subwindow);
+
+	if ((sc = screen_find(e->root)) == NULL)
+		return;
 
 	e->state &= ~IGNOREMODMASK;
 
@@ -242,22 +246,17 @@ xev_handle_buttonpress(XEvent *ee)
 		if (e->button == mb->press.button && e->state == mb->modmask)
 			break;
 	}
-
 	if (mb == NULL)
 		return;
 	mb->cargs->xev = CWM_XEV_BTN;
 	switch (mb->context) {
 	case CWM_CONTEXT_CC:
 		if (((cc = client_find(e->window)) == NULL) &&
-		    (cc = client_current(NULL)) == NULL)
+		    ((cc = client_current(sc)) == NULL))
 			return;
 		(*mb->callback)(cc, mb->cargs);
 		break;
 	case CWM_CONTEXT_SC:
-		if (e->window != e->root)
-			return;
-		if ((sc = screen_find(e->window)) == NULL)
-			return;
 		(*mb->callback)(sc, mb->cargs);
 		break;
 	case CWM_CONTEXT_NONE:
@@ -272,7 +271,8 @@ xev_handle_buttonrelease(XEvent *ee)
 	XButtonEvent		*e = &ee->xbutton;
 	struct client_ctx	*cc;
 
-	LOG_DEBUG3("window: 0x%lx", ee->xbutton.window);
+	LOG_DEBUG3("root: 0x%lx window: 0x%lx subwindow: 0x%lx",
+	    e->root, e->window, e->subwindow);
 
 	if ((cc = client_find(e->window)) != NULL) {
 		if (cc->flags & (CLIENT_ACTIVE | CLIENT_HIGHLIGHT)) {
@@ -292,7 +292,11 @@ xev_handle_keypress(XEvent *ee)
 	KeySym			 keysym, skeysym;
 	unsigned int		 modshift;
 
-	LOG_DEBUG3("window: 0x%lx", e->window);
+	LOG_DEBUG3("root: 0x%lx window: 0x%lx subwindow: 0x%lx",
+	    e->root, e->window, e->subwindow);
+
+	if ((sc = screen_find(e->root)) == NULL)
+		return;
 
 	keysym = XkbKeycodeToKeysym(X_Dpy, e->keycode, 0, 0);
 	skeysym = XkbKeycodeToKeysym(X_Dpy, e->keycode, 0, 1);
@@ -311,20 +315,17 @@ xev_handle_keypress(XEvent *ee)
 		if (kb->press.keysym == ((modshift == 0) ? keysym : skeysym))
 			break;
 	}
-
 	if (kb == NULL)
 		return;
 	kb->cargs->xev = CWM_XEV_KEY;
 	switch (kb->context) {
 	case CWM_CONTEXT_CC:
-		if (((cc = client_find(e->window)) == NULL) &&
-		    (cc = client_current(NULL)) == NULL)
+		if (((cc = client_find(e->subwindow)) == NULL) &&
+		    ((cc = client_current(sc)) == NULL))
 			return;
 		(*kb->callback)(cc, kb->cargs);
 		break;
 	case CWM_CONTEXT_SC:
-		if ((sc = screen_find(e->window)) == NULL)
-			return;
 		(*kb->callback)(sc, kb->cargs);
 		break;
 	case CWM_CONTEXT_NONE:
@@ -345,7 +346,8 @@ xev_handle_keyrelease(XEvent *ee)
 	KeySym			 keysym;
 	unsigned int		 i;
 
-	LOG_DEBUG3("window: 0x%lx", e->window);
+	LOG_DEBUG3("root: 0x%lx window: 0x%lx subwindow: 0x%lx",
+	    e->root, e->window, e->subwindow);
 
 	if ((sc = screen_find(e->root)) == NULL)
 		return;
@@ -479,9 +481,9 @@ xev_process(void)
 
 	while (XPending(X_Dpy)) {
 		XNextEvent(X_Dpy, &e);
-		if (e.type - Conf.xrandr_event_base == RRScreenChangeNotify)
+		if ((e.type - Conf.xrandr_event_base) == RRScreenChangeNotify)
 			xev_handle_randr(&e);
-		else if (e.type < LASTEvent && xev_handlers[e.type] != NULL)
+		else if ((e.type < LASTEvent) && (xev_handlers[e.type] != NULL))
 			(*xev_handlers[e.type])(&e);
 	}
 }

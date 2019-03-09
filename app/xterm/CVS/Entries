@@ -91,7 +91,7 @@
 /testxmc.c/1.8/Mon Jul 14 08:30:11 2014//
 /trace.c/1.29/Sun Feb 24 11:41:42 2019//
 /trace.h/1.24/Sun Feb 24 11:41:43 2019//
-/util.c/1.34/Sun Feb 24 11:41:43 2019//
+/util.c/1.35/Fri Mar  8 21:25:40 2019//
 /uxterm/1.4/Thu Mar 25 22:03:51 2010//
 /uxterm.desktop/1.7/Sun Feb 24 11:41:43 2019//
 /uxterm.man/1.5/Sun Feb 24 11:41:43 2019//
@@ -109,7 +109,7 @@
 /xterm.desktop/1.6/Sun Aug  7 21:27:36 2016//
 /xterm.h/1.44/Sun Feb 24 11:41:43 2019//
 /xterm.log.html/1.45/Sun Feb 24 11:41:43 2019//
-/xterm.man/1.49/Sun Feb 24 11:41:43 2019//
+/xterm.man/1.50/Fri Mar  8 12:54:30 2019//
 /xterm_axp.opt/1.1.1.1/Sun Nov 26 11:11:52 2006//
 /xterm_io.h/1.9/Sun Feb 24 11:41:43 2019//
 /xtermcap.c/1.14/Sun Feb 24 11:41:43 2019//
