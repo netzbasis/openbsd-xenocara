@@ -21203,7 +21203,7 @@ Date:   Tue Feb 26 11:37:24 2013 +0000
     
     gcc-4.4.5 (on squeeze) triggers an ICE when using target(sse2).
     
-    Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+    Signed-off-by: Chris Wilson <chris@chrÖúÀilson.co.uk>
 
 commit 08747292b717fcea84ce3adc455b0161e5517e84
 Author: Chris Wilson <chris@chris-wilson.co.uk>

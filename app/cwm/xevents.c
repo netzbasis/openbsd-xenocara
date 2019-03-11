@@ -15,7 +15,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * $OpenBSD: xevents.c,v 1.143 2019/03/08 17:40:43 okan Exp $
+ * $OpenBSD: xevents.c,v 1.145 2019/03/10 22:53:11 okan Exp $
  */
 
 /*
@@ -75,11 +75,15 @@ static void
 xev_handle_maprequest(XEvent *ee)
 {
 	XMapRequestEvent	*e = &ee->xmaprequest;
-	struct client_ctx	*cc = NULL, *old_cc;
+	struct screen_ctx	*sc;
+	struct client_ctx	*cc, *old_cc;
 
-	LOG_DEBUG3("window: 0x%lx", e->window);
+	LOG_DEBUG3("parent: 0x%lx window: 0x%lx", e->parent, e->window);
 
-	if ((old_cc = client_current(NULL)) != NULL)
+	if ((sc = screen_find(e->parent)) == NULL)
+		return;
+
+	if ((old_cc = client_current(sc)) != NULL)
 		client_ptrsave(old_cc);
 
 	if ((cc = client_find(e->window)) == NULL)
@@ -355,7 +359,7 @@ xev_handle_keyrelease(XEvent *ee)
 	keysym = XkbKeycodeToKeysym(X_Dpy, e->keycode, 0, 0);
 	for (i = 0; i < nitems(modkeys); i++) {
 		if (keysym == modkeys[i]) {
-			if ((cc = client_current(NULL)) != NULL) {
+			if ((cc = client_current(sc)) != NULL) {
 				if (sc->cycling) {
 					sc->cycling = 0;
 					client_mtf(cc);
@@ -427,20 +431,17 @@ xev_handle_clientmessage(XEvent *ee)
 static void
 xev_handle_randr(XEvent *ee)
 {
-	XRRScreenChangeNotifyEvent	*rev = (XRRScreenChangeNotifyEvent *)ee;
+	XRRScreenChangeNotifyEvent	*e = (XRRScreenChangeNotifyEvent *)ee;
 	struct screen_ctx		*sc;
-	int				 i;
 
-	LOG_DEBUG3("new size: %d/%d", rev->width, rev->height);
+	LOG_DEBUG3("size: %d/%d", e->width, e->height);
 
-	i = XRRRootToScreen(X_Dpy, rev->root);
-	TAILQ_FOREACH(sc, &Screenq, entry) {
-		if (sc->which == i) {
-			XRRUpdateConfiguration(ee);
-			screen_update_geometry(sc);
-			screen_assert_clients_within(sc);
-		}
-	}
+	if ((sc = screen_find(e->root)) == NULL)
+		return;
+
+	XRRUpdateConfiguration(ee);
+	screen_update_geometry(sc);
+	screen_assert_clients_within(sc);
 }
 
 /*
