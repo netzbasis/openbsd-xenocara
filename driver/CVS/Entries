@@ -1,4 +1,4 @@
-/Makefile/1.72/Sat Feb  9 00:31:06 2019//
+/Makefile/1.73/Tue Apr 16 02:06:30 2019//
 /Makefile.inc/1.1/Wed Nov 29 14:39:25 2006//
 D/xf86-input-acecad////
 D/xf86-input-elographics////
@@ -14,6 +14,7 @@ D/xf86-input-usbtablet////
 D/xf86-input-vmmouse////
 D/xf86-input-void////
 D/xf86-input-ws////
+D/xf86-video-amdgpu////
 D/xf86-video-apm////
 D/xf86-video-ark////
 D/xf86-video-ast////
