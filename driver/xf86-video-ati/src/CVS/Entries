@@ -51,7 +51,7 @@
 /radeon_exa_render.c/1.13/Sun Jan 13 07:16:48 2019//
 /radeon_exa_shared.c/1.7/Sun Jan 13 07:16:48 2019//
 /radeon_exa_shared.h/1.6/Sun Jan 13 07:16:48 2019//
-/radeon_glamor.c/1.11/Wed Mar 20 07:33:19 2019//
+/radeon_glamor.c/1.12/Sun May 12 11:37:14 2019//
 /radeon_glamor.h/1.6/Sun Jan 13 07:16:48 2019//
 /radeon_glamor_wrappers.c/1.4/Sun Jan 13 07:16:48 2019//
 /radeon_kms.c/1.19/Fri Mar  8 21:59:57 2019//
