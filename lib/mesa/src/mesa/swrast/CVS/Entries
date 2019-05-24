@@ -44,9 +44,9 @@
 /s_stencil.h/1.1.1.1/Sun Nov 22 02:38:33 2015//
 /s_texcombine.c/1.1.1.2/Tue Jan 29 10:48:30 2019//
 /s_texcombine.h/1.1.1.1/Sun Nov 22 02:38:38 2015//
-/s_texfetch.c/1.1.1.5/Tue Jan 29 10:48:26 2019//
+/s_texfetch.c/1.1.1.6/Thu May 23 04:36:56 2019//
 /s_texfetch.h/1.1.1.1/Sun Nov 22 02:38:37 2015//
-/s_texfetch_tmp.h/1.1.1.1/Sun Nov 22 02:38:38 2015//
+/s_texfetch_tmp.h/1.1.1.2/Thu May 23 04:36:56 2019//
 /s_texfilter.c/1.1.1.1/Sun Nov 22 02:38:35 2015//
 /s_texfilter.h/1.1.1.1/Sun Nov 22 02:38:33 2015//
 /s_texrender.c/1.1.1.1/Sun Nov 22 02:38:35 2015//
