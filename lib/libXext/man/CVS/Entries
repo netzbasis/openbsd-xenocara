@@ -1,4 +1,4 @@
-/DBE.man/1.3/Sat Mar 10 14:01:58 2012//
+/DBE.man/1.4/Wed Jun 19 19:33:29 2019//
 /DPMSCapable.man/1.5/Sat Mar 10 14:01:58 2012//
 /DPMSDisable.man/1.5/Sat Mar 10 14:01:58 2012//
 /DPMSEnable.man/1.5/Sat Mar 10 14:01:58 2012//
@@ -7,9 +7,9 @@
 /DPMSGetVersion.man/1.5/Sat Mar 10 14:01:58 2012//
 /DPMSInfo.man/1.5/Sat Mar 10 14:01:58 2012//
 /DPMSQueryExtension.man/1.5/Sat Mar 10 14:01:58 2012//
-/DPMSSetTimeouts.man/1.5/Sat Mar 10 14:01:58 2012//
+/DPMSSetTimeouts.man/1.6/Wed Jun 19 19:33:29 2019//
 /Makefile.am/1.3/Thu Nov 11 10:17:24 2010//
-/Makefile.in/1.13/Sun Sep 28 17:18:23 2014//
+/Makefile.in/1.14/Wed Jun 19 19:33:29 2019//
 /XShape.man/1.5/Fri May 31 22:17:43 2013//
 /XShapeCombineMask.man/1.1/Thu Nov 11 10:17:24 2010//
 /XShapeCombineRectangles.man/1.1/Thu Nov 11 10:17:24 2010//
