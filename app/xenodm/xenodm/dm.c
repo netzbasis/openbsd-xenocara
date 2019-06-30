@@ -91,7 +91,7 @@ main (int argc, char **argv)
 	exit (1);
     }
     if (debugLevel == 0 && daemonMode) {
-      if (daemon (0, 0) < 0) {
+      if (daemon (0, 0) == -1) {
 	/* error */
 	LogError("daemon() failed, %s\n", _SysErrorMsg (errno));
 	exit(1);
@@ -502,7 +502,7 @@ SetWindowPath(struct display *d)
 	unsigned long bytes_after;
 	unsigned char *buf;
 	const char *windowpath;
-	char *newwindowpath;
+	char *newwindowpath = NULL;
 	unsigned long num;
 
 	prop = XInternAtom(d->dpy, "XFree86_VT", False);
@@ -549,9 +549,11 @@ SetWindowPath(struct display *d)
 	XFree(buf);
 	windowpath = getenv("WINDOWPATH");
 	if (!windowpath) {
-		asprintf(&newwindowpath, "ttyC%lu", num - 1);
+		if (asprintf(&newwindowpath, "ttyC%lu", num - 1) == -1)
+			return;
 	} else {
-		asprintf(&newwindowpath, "%s:%lu", windowpath, num); /* XXX */
+		if (asprintf(&newwindowpath, "%s:%lu", windowpath, num) == -1)
+			return;
 	}
 	free(d->windowPath);
 	d->windowPath = newwindowpath;
