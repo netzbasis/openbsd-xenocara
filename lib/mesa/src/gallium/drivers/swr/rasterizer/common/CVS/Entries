@@ -9,7 +9,7 @@
 /rdtsc_buckets_shared.h/1.1.1.2/Tue Jan 29 11:02:24 2019/-ko/
 /simd16intrin.h/1.6/Tue Jan 29 11:52:16 2019/-ko/
 /simdintrin.h/1.6/Tue Jan 29 11:52:16 2019/-ko/
-/simdlib.hpp/1.4/Tue Jan 29 11:52:16 2019/-ko/
+/simdlib.hpp/1.5/Mon Jul  1 08:36:47 2019/-ko/
 /simdlib_128_avx.inl/1.4/Tue Jan 29 11:52:16 2019/-ko/
 /simdlib_128_avx2.inl/1.4/Tue Jan 29 11:52:16 2019/-ko/
 /simdlib_128_avx512.inl/1.4/Tue Jan 29 11:52:16 2019/-ko/

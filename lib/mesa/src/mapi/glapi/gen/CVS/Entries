@@ -122,7 +122,7 @@
 /gl_API.dtd/1.5/Tue Oct 23 06:35:52 2018//
 /gl_API.xml/1.7/Thu May 23 05:33:31 2019//
 /gl_SPARC_asm.py/1.6/Tue Jan 29 11:52:25 2019//
-/gl_XML.py/1.7/Thu May 23 05:33:31 2019//
+/gl_XML.py/1.8/Mon Jul  1 08:36:48 2019//
 /gl_and_es_API.xml/1.1.1.1/Sun Nov 22 02:46:23 2015//
 /gl_and_glX_API.xml/1.1.1.1/Sun Nov 22 02:46:24 2015//
 /gl_apitemp.py/1.6/Tue Jan 29 11:52:25 2019//
@@ -139,6 +139,6 @@
 /marshal_XML.py/1.5/Tue Oct 23 06:35:52 2018/-ko/
 /meson.build/1.1.1.2/Thu May 23 04:25:55 2019/-ko/
 /remap_helper.py/1.6/Tue Jan 29 11:52:25 2019//
-/static_data.py/1.6/Thu May 23 05:33:31 2019//
+/static_data.py/1.7/Mon Jul  1 08:36:48 2019//
 /typeexpr.py/1.6/Tue Jan 29 11:52:25 2019//
 D
