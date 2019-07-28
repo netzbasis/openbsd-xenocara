@@ -1,15 +1,15 @@
 /Makefile.am/1.5/Wed Sep 16 19:10:23 2015//
-/Makefile.in/1.27/Fri Dec  8 15:02:01 2017//
-/xf86Crtc.c/1.20/Fri Dec  8 15:02:01 2017//
-/xf86Crtc.h/1.12/Fri Dec  8 15:02:01 2017//
-/xf86Cursors.c/1.15/Fri Dec  8 15:02:01 2017//
-/xf86DiDGA.c/1.7/Sun May 29 12:02:38 2016//
-/xf86EdidModes.c/1.17/Sun Feb 18 17:16:37 2018//
-/xf86Modes.c/1.10/Sat Sep 27 17:53:02 2014//
+/Makefile.in/1.28/Sat Jul 27 07:57:17 2019//
+/xf86Crtc.c/1.21/Sat Jul 27 07:57:17 2019//
+/xf86Crtc.h/1.13/Sat Jul 27 07:57:17 2019//
+/xf86Cursors.c/1.16/Sat Jul 27 07:57:17 2019//
+/xf86DiDGA.c/1.8/Sat Jul 27 07:57:17 2019//
+/xf86EdidModes.c/1.18/Sat Jul 27 07:57:17 2019//
+/xf86Modes.c/1.11/Sat Jul 27 07:57:17 2019//
 /xf86Modes.h/1.7/Fri May  2 19:27:49 2014//
-/xf86RandR12.c/1.19/Fri Dec  8 15:02:01 2017//
+/xf86RandR12.c/1.20/Sat Jul 27 07:57:17 2019//
 /xf86RandR12.h/1.7/Fri Dec  8 15:02:01 2017//
-/xf86Rotate.c/1.16/Fri Dec  8 15:02:01 2017//
-/xf86cvt.c/1.7/Wed Sep 16 19:10:23 2015//
-/xf86gtf.c/1.6/Wed Sep 16 19:10:23 2015//
+/xf86Rotate.c/1.17/Sat Jul 27 07:57:17 2019//
+/xf86cvt.c/1.8/Sat Jul 27 07:57:17 2019//
+/xf86gtf.c/1.7/Sat Jul 27 07:57:17 2019//
 D

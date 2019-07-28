@@ -22,7 +22,7 @@
 /nv_dac.c/1.4/Thu Aug 16 16:35:27 2012//
 /nv_dga.c/1.3/Thu Aug 16 16:35:27 2012//
 /nv_dma.h/1.2/Tue Jul 29 20:04:57 2008//
-/nv_driver.c/1.18/Sat Feb 18 17:57:59 2017//
+/nv_driver.c/1.19/Sat Jul 27 07:46:01 2019//
 /nv_hw.c/1.4/Sun Aug 22 12:29:27 2010//
 /nv_include.h/1.5/Sat Feb 18 17:57:59 2017//
 /nv_local.h/1.3/Mon Nov 18 19:45:41 2013//
@@ -36,10 +36,10 @@
 /riva_cursor.c/1.4/Thu Aug 16 16:35:27 2012//
 /riva_dac.c/1.3/Thu Aug 16 16:35:27 2012//
 /riva_dga.c/1.3/Thu Aug 16 16:35:27 2012//
-/riva_driver.c/1.5/Sun May 12 13:06:25 2013//
+/riva_driver.c/1.6/Sat Jul 27 07:46:01 2019//
 /riva_hw.c/1.2/Tue Jul 29 20:04:57 2008//
 /riva_hw.h/1.2/Tue Jul 29 20:04:57 2008//
-/riva_include.h/1.4/Sun May 12 13:06:25 2013//
+/riva_include.h/1.5/Sat Jul 27 07:46:01 2019//
 /riva_local.h/1.2/Tue Jul 29 20:04:57 2008//
 /riva_proto.h/1.2/Thu Aug 16 16:35:27 2012//
 /riva_setup.c/1.3/Thu Aug 16 16:35:27 2012//

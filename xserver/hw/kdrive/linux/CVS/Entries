@@ -1,10 +1,2 @@
-/Makefile.am/1.4/Fri May  2 19:27:48 2014//
 /Makefile.in/1.34/Fri Dec  8 15:02:00 2017//
-/evdev.c/1.8/Fri Dec  8 15:02:00 2017//
-/keyboard.c/1.8/Tue Aug  9 18:59:52 2016//
-/linux.c/1.8/Fri Dec  8 15:02:00 2017//
-/mouse.c/1.7/Fri Dec  8 15:02:00 2017//
-/ms.c/1.5/Fri Dec  8 15:02:00 2017//
-/ps2.c/1.7/Fri Dec  8 15:02:00 2017//
-/tslib.c/1.8/Fri Dec  8 15:02:00 2017//
 D
