@@ -3,7 +3,6 @@
 /agp_noop.c/1.4/Fri Jun  7 17:28:52 2013//
 /ioperm_noop.c/1.5/Wed Sep 16 19:10:23 2015//
 /kmod_noop.c/1.3/Sun Jun 10 13:21:25 2012//
-/platform_noop.c/1.1/Fri Jun  7 17:28:52 2013//
 /pm_noop.c/1.2/Sun Jun 10 13:21:25 2012//
 /posix_tty.c/1.13/Sat Jul 27 07:57:18 2019//
 /sigio.c/1.11/Fri Dec  8 15:02:01 2017//

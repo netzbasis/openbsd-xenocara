@@ -1,4 +1,3 @@
-/.dir-locals.el/1.1/Fri Dec  8 15:01:59 2017//
 /COPYING/1.8/Wed Sep 16 19:10:19 2015//
 /ChangeLog/1.33/Sat Jul 27 07:57:06 2019//
 /Makefile.am/1.9/Sat Jul 27 07:57:07 2019//
@@ -14,10 +13,6 @@
 /depcomp/1.5/Fri Jun  7 17:28:46 2013//
 /devbook.am/1.3/Wed Sep 16 19:10:20 2015//
 /docbook.am/1.2/Sun Jun 10 13:21:06 2012//
-/fix-miregion/1.3/Fri Dec  8 15:01:59 2017//
-/fix-miregion-private/1.3/Fri Dec  8 15:01:59 2017//
-/fix-patch-whitespace/1.3/Fri Dec  8 15:01:59 2017//
-/fix-region/1.3/Fri Dec  8 15:01:59 2017//
 /install-sh/1.3/Sun Aug  5 18:14:29 2012//
 /ltmain.sh/1.8/Sun Dec 18 16:08:59 2011//
 /manpages.am/1.3/Sat Jul 27 07:57:07 2019//
