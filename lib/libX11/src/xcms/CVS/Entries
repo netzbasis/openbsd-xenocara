@@ -3,7 +3,7 @@
 /CCC.c/1.4/Sat Sep 28 17:03:20 2013//
 /Cv.h/1.2/Tue May 18 19:37:35 2010//
 /CvColW.c/1.3/Tue May 18 19:37:35 2010//
-/CvCols.c/1.4/Sat Sep 28 17:03:20 2013//
+/CvCols.c/1.5/Sun Aug  4 13:34:54 2019//
 /HVC.c/1.4/Thu Nov  3 10:21:31 2016//
 /HVCGcC.c/1.3/Tue May 18 19:37:35 2010//
 /HVCGcV.c/1.3/Tue May 18 19:37:35 2010//
@@ -35,7 +35,7 @@
 /LuvMxLC.c/1.3/Tue May 18 19:37:35 2010//
 /LuvWpAj.c/1.3/Tue May 18 19:37:35 2010//
 /Makefile.am/1.5/Sun Apr 28 16:55:57 2013//
-/Makefile.in/1.17/Tue Oct 11 22:15:22 2016//
+/Makefile.in/1.18/Sun Aug  4 13:34:54 2019//
 /OfCCC.c/1.3/Tue May 18 19:37:35 2010//
 /PrOfId.c/1.4/Sat Aug 27 15:34:15 2011//
 /QBlack.c/1.3/Tue May 18 19:37:35 2010//
@@ -48,7 +48,7 @@
 /SetCCC.c/1.3/Tue May 18 19:37:35 2010//
 /SetGetCols.c/1.4/Sat Sep 28 17:03:21 2013//
 /StCol.c/1.3/Tue May 18 19:37:35 2010//
-/StCols.c/1.4/Sat Sep 28 17:03:21 2013//
+/StCols.c/1.5/Sun Aug  4 13:34:54 2019//
 /UNDEFINED.c/1.3/Tue May 18 19:37:35 2010//
 /XRGB.c/1.3/Tue May 18 19:37:35 2010//
 /XYZ.c/1.4/Thu Nov  3 10:21:31 2016//
@@ -57,9 +57,9 @@
 /cmsAllCol.c/1.3/Tue May 18 19:37:35 2010//
 /cmsAllNCol.c/1.4/Mon May 30 19:19:38 2011//
 /cmsCmap.c/1.6/Thu Aug 23 19:38:12 2018//
-/cmsColNm.c/1.9/Thu Nov  3 10:21:31 2016//
+/cmsColNm.c/1.10/Sun Aug  4 13:34:54 2019//
 /cmsGlobls.c/1.3/Tue May 18 19:37:35 2010//
-/cmsInt.c/1.5/Sat Sep 28 17:03:21 2013//
+/cmsInt.c/1.6/Sun Aug  4 13:34:54 2019//
 /cmsLkCol.c/1.5/Sat Oct 20 19:23:26 2018//
 /cmsMath.c/1.4/Tue Jun  4 03:19:35 2013//
 /cmsProp.c/1.5/Thu Aug 23 19:38:12 2018//

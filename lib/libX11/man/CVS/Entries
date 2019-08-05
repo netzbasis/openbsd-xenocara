@@ -6,7 +6,7 @@
 /BlackPixelOfScreen.man/1.3/Sun Apr 28 16:55:55 2013//
 /CellsOfScreen.man/1.1/Mon May 30 19:19:30 2011//
 /ClientWhitePointOfCCC.man/1.1/Mon May 30 19:19:30 2011//
-/Compose.man/1.4/Mon Apr  6 20:57:56 2015//
+/Compose.man/1.5/Sun Aug  4 13:34:52 2019//
 /ConnectionNumber.man/1.1/Mon May 30 19:19:30 2011//
 /DefaultColormap.man/1.1/Mon May 30 19:19:30 2011//
 /DefaultColormapOfScreen.man/1.1/Mon May 30 19:19:30 2011//
@@ -43,7 +43,7 @@
 /IsPrivateKeypadKey.man/1.1/Mon May 30 19:19:30 2011//
 /LastKnownRequestProcessed.man/1.1/Mon May 30 19:19:30 2011//
 /Makefile.am/1.5/Sat Aug 27 15:34:14 2011//
-/Makefile.in/1.18/Tue Oct 11 22:15:20 2016//
+/Makefile.in/1.19/Sun Aug  4 13:34:52 2019//
 /MaxCmapsOfScreen.man/1.1/Mon May 30 19:19:30 2011//
 /MinCmapsOfScreen.man/1.1/Mon May 30 19:19:30 2011//
 /NextRequest.man/1.1/Mon May 30 19:19:30 2011//
@@ -570,7 +570,7 @@
 /XrmDestroyDatabase.man/1.1/Mon May 30 19:19:31 2011//
 /XrmEnumerateDatabase.man/1.3/Sun Apr 28 16:55:56 2013//
 /XrmGetDatabase.man/1.1/Mon May 30 19:19:31 2011//
-/XrmGetFileDatabase.man/1.4/Sun Apr 28 16:55:56 2013//
+/XrmGetFileDatabase.man/1.5/Sun Aug  4 13:34:52 2019//
 /XrmGetResource.man/1.3/Sun Apr 28 16:55:56 2013//
 /XrmGetStringDatabase.man/1.1/Mon May 30 19:19:31 2011//
 /XrmInitialize.man/1.4/Sun Apr 28 16:55:56 2013//
