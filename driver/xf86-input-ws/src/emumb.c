@@ -1,4 +1,4 @@
-/*	$OpenBSD: emumb.c,v 1.14 2015/12/25 15:08:28 matthieu Exp $ */
+/*	$OpenBSD: emumb.c,v 1.16 2019/08/08 12:28:09 matthieu Exp $ */
 /*
  * Copyright 1990,91 by Thomas Roell, Dinkelscherben, Germany.
  * Copyright 1993 by David Dawes <dawes@xfree86.org>
@@ -197,11 +197,9 @@ int
 wsmbEmuTimer(InputInfoPtr pInfo)
 {
 	WSDevicePtr priv = (WSDevicePtr)pInfo->private;
-	int sigstate;
 	int id;
 
-	sigstate = xf86BlockSIGIO();
-
+	input_lock();
 	priv->emulateMB.pending = FALSE;
 	if ((id = stateTab[priv->emulateMB.state][4][0]) != 0) {
 		xf86PostButtonEvent(pInfo->dev, 0, abs(id), (id >= 0), 0, 0);
@@ -211,8 +209,7 @@ wsmbEmuTimer(InputInfoPtr pInfo)
 		    "Got unexpected buttonTimer in state %d\n",
 		    priv->emulateMB.state);
 	}
-
-	xf86UnblockSIGIO(sigstate);
+	input_unlock();
 	return 0;
 }
 
@@ -275,7 +272,7 @@ wsmbEmuFilterEvent(InputInfoPtr pInfo, int button, BOOL press)
 }
 
 void
-wsmbEmuWakeupHandler(pointer data, int i, pointer LastSelectMask)
+wsmbEmuWakeupHandler(pointer data, int i)
 {
 	InputInfoPtr pInfo = (InputInfoPtr)data;
 	WSDevicePtr priv = (WSDevicePtr)pInfo->private;
@@ -289,8 +286,7 @@ wsmbEmuWakeupHandler(pointer data, int i, pointer LastSelectMask)
 }
 
 void
-wsmbEmuBlockHandler(pointer data, struct timeval **waitTime,
-    pointer LastSelectMask)
+wsmbEmuBlockHandler(pointer data, void *waitTime)
 {
 	InputInfoPtr pInfo = (InputInfoPtr)data;
 	WSDevicePtr priv = (WSDevicePtr)pInfo->private;
@@ -300,7 +296,7 @@ wsmbEmuBlockHandler(pointer data, struct timeval **waitTime,
 		ms = priv->emulateMB.expires - GetTimeInMillis();
 		if (ms <= 0)
 			ms = 0;
-		AdjustWaitForDelay(waitTime, ms);
+		AdjustWaitForDelay((struct timeval **)waitTime, ms);
 	}
 }
 
