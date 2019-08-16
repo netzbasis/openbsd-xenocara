@@ -1,4 +1,4 @@
-/Makefile/1.36/Fri Dec 21 14:37:24 2018//
+/Makefile/1.38/Thu Aug 15 17:01:12 2019//
 /Makefile.inc/1.3/Wed Sep 14 08:31:47 2016//
 D/appres////
 D/bdftopcf////
@@ -7,8 +7,6 @@ D/bitmap////
 D/cwm////
 D/editres////
 D/fonttosfnt////
-D/fslsfonts////
-D/fstobdf////
 D/fvwm////
 D/glxgears////
 D/glxinfo////
@@ -16,14 +14,11 @@ D/iceauth////
 D/ico////
 D/listres////
 D/luit////
-D/mkfontdir////
 D/mkfontscale////
 D/oclock////
 D/rgb////
-D/scripts////
 D/sessreg////
 D/setxkbmap////
-D/showfont////
 D/smproxy////
 D/ssh-askpass////
 D/twm////
@@ -48,8 +43,6 @@ D/xeyes////
 D/xf86dga////
 D/xfd////
 D/xfontsel////
-D/xfsinfo////
-D/xfwp////
 D/xgamma////
 D/xgc////
 D/xhost////
@@ -68,7 +61,6 @@ D/xlsatoms////
 D/xlsclients////
 D/xlsfonts////
 D/xmag////
-D/xman////
 D/xmessage////
 D/xmodmap////
 D/xmore////
@@ -80,7 +72,6 @@ D/xrefresh////
 D/xset////
 D/xsetroot////
 D/xsm////
-D/xstdcmap////
 D/xterm////
 D/xtsscale////
 D/xvctl////
