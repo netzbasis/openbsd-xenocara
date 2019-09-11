@@ -1,10 +1,10 @@
-/detect.mk/1.8/Mon May 21 11:52:24 2018//
-/exports.mk/1.8/Mon May 21 11:52:24 2018//
-/freetype.mk/1.11/Mon May 21 11:52:24 2018//
-/link_dos.mk/1.5/Mon May 21 11:52:24 2018//
-/link_std.mk/1.5/Mon May 21 11:52:24 2018//
-/modules.mk/1.7/Mon May 21 11:52:24 2018//
-/toplevel.mk/1.16/Mon May 21 11:52:24 2018//
+/detect.mk/1.9/Tue Sep 10 19:13:55 2019//
+/exports.mk/1.9/Tue Sep 10 19:13:55 2019//
+/freetype.mk/1.12/Tue Sep 10 19:13:55 2019//
+/link_dos.mk/1.6/Tue Sep 10 19:13:55 2019//
+/link_std.mk/1.6/Tue Sep 10 19:13:55 2019//
+/modules.mk/1.8/Tue Sep 10 19:13:55 2019//
+/toplevel.mk/1.17/Tue Sep 10 19:13:55 2019//
 D/amiga////
 D/ansi////
 D/atari////
