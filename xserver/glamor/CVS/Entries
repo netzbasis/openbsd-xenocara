@@ -10,8 +10,8 @@
 /glamor_core.c/1.5/Sat Jul 27 07:57:10 2019//
 /glamor_dash.c/1.4/Fri Dec  8 15:02:00 2017//
 /glamor_debug.h/1.2/Sat Jul 27 07:57:10 2019//
-/glamor_egl.c/1.7/Sat Jul 27 07:57:10 2019//
-/glamor_egl.h/1.2/Sat Jul 27 07:57:10 2019//
+/glamor_egl.c/1.8/Thu Dec 12 06:05:19 2019//
+/glamor_egl.h/1.3/Thu Dec 12 06:05:19 2019//
 /glamor_egl_ext.h/1.1/Sat Jul 27 07:57:10 2019//
 /glamor_egl_stubs.c/1.5/Sat Jul 27 07:57:10 2019//
 /glamor_eglmodule.c/1.3/Sat Jul 27 07:57:10 2019//
@@ -29,7 +29,7 @@
 /glamor_points.c/1.4/Fri Dec  8 15:02:00 2017//
 /glamor_prepare.c/1.3/Sun May 29 12:02:36 2016//
 /glamor_prepare.h/1.1/Wed Sep 16 19:10:21 2015//
-/glamor_priv.h/1.6/Sat Jul 27 07:57:10 2019//
+/glamor_priv.h/1.7/Thu Dec 12 06:05:19 2019//
 /glamor_program.c/1.6/Sat Jul 27 07:57:10 2019//
 /glamor_program.h/1.3/Sun May 29 12:02:36 2016//
 /glamor_rects.c/1.4/Sat Jul 27 07:57:10 2019//

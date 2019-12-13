@@ -1,6 +1,6 @@
 /Makefile.am/1.6/Wed Sep 16 19:10:25 2015//
 /Makefile.in/1.35/Sat Jul 27 07:57:23 2019//
-/mi.h/1.9/Wed Sep 16 19:10:25 2015//
+/mi.h/1.10/Thu Dec 12 06:05:20 2019//
 /miarc.c/1.11/Sat Jul 27 07:57:23 2019//
 /mibitblt.c/1.12/Sat Jul 27 07:57:23 2019//
 /micmap.c/1.9/Sun May 29 12:02:39 2016//
@@ -33,7 +33,7 @@
 /mipolytext.c/1.5/Wed Sep 16 19:10:25 2015//
 /mipushpxl.c/1.7/Wed Sep 16 19:10:25 2015//
 /miscanfill.h/1.2/Sun Jun 10 13:21:30 2012//
-/miscrinit.c/1.12/Sun May 29 12:02:39 2016//
+/miscrinit.c/1.13/Thu Dec 12 06:05:20 2019//
 /misprite.c/1.14/Sat Jul 27 07:57:23 2019//
 /misprite.h/1.4/Sun Jun 10 13:21:30 2012//
 /mistruct.h/1.3/Wed Sep 16 19:10:25 2015//

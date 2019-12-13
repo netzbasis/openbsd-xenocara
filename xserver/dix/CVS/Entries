@@ -8,14 +8,14 @@
 /colormap.c/1.10/Sun May 29 12:02:35 2016//
 /cursor.c/1.13/Tue Aug  9 18:59:51 2016//
 /devices.c/1.25/Sat Jul 27 07:57:09 2019//
-/dispatch.c/1.20/Sat Jul 27 07:57:09 2019//
+/dispatch.c/1.21/Thu Dec 12 06:05:19 2019//
 /dispatch.h/1.4/Wed Sep 16 19:10:20 2015//
 /dixfonts.c/1.18/Sat Jul 27 07:57:09 2019//
-/dixutils.c/1.15/Sat Jul 27 07:57:09 2019//
+/dixutils.c/1.16/Thu Dec 12 06:05:19 2019//
 /enterleave.c/1.9/Sat Jul 27 07:57:09 2019//
 /enterleave.h/1.5/Sun May 29 12:02:35 2016//
 /eventconvert.c/1.8/Sat Jul 27 07:57:09 2019//
-/events.c/1.19/Sat Jul 27 07:57:09 2019//
+/events.c/1.20/Thu Dec 12 06:05:19 2019//
 /extension.c/1.15/Sat Jul 27 07:57:09 2019//
 /gc.c/1.11/Sat Jul 27 07:57:09 2019//
 /getevents.c/1.24/Sat Jul 27 07:57:09 2019//
@@ -25,7 +25,7 @@
 /initatoms.c/1.2/Sun Jun 10 13:21:21 2012//
 /inpututils.c/1.11/Sat Jul 27 07:57:09 2019//
 /main.c/1.17/Sat Jul 27 07:57:09 2019//
-/pixmap.c/1.13/Sat Jul 27 07:57:09 2019//
+/pixmap.c/1.14/Thu Dec 12 06:05:19 2019//
 /privates.c/1.13/Sat Jul 27 07:57:09 2019//
 /property.c/1.13/Sat Jul 27 07:57:09 2019//
 /protocol.txt/1.8/Sat Jul 27 07:57:09 2019//
