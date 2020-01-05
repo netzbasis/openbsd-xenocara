@@ -1,15 +1,15 @@
 /Makefile.am/1.5/Sun Aug  4 13:34:54 2019//
 /Makefile.in/1.18/Sun Aug  4 13:34:54 2019//
 /XKB.c/1.6/Mon Apr  6 20:57:59 2015//
-/XKBAlloc.c/1.9/Sun Aug  4 13:34:54 2019//
+/XKBAlloc.c/1.10/Sat Jan  4 17:55:17 2020//
 /XKBBell.c/1.5/Sat Sep 28 17:03:21 2013//
 /XKBBind.c/1.7/Mon Apr  6 20:57:59 2015//
 /XKBCompat.c/1.5/Sat Sep 28 17:03:21 2013//
 /XKBCtrls.c/1.5/Sat Sep 28 17:03:21 2013//
 /XKBCvt.c/1.5/Sat Sep 28 17:03:21 2013//
 /XKBExtDev.c/1.8/Thu Aug 23 19:38:12 2018//
-/XKBGAlloc.c/1.8/Mon Apr  6 20:57:59 2015//
-/XKBGeom.c/1.8/Mon Apr  6 20:57:59 2015//
+/XKBGAlloc.c/1.9/Sat Jan  4 17:55:17 2020//
+/XKBGeom.c/1.9/Sat Jan  4 17:55:17 2020//
 /XKBGetByName.c/1.6/Thu Nov  3 10:21:31 2016//
 /XKBGetMap.c/1.8/Sun Aug  4 13:34:54 2019//
 /XKBList.c/1.5/Sat Sep 28 17:03:22 2013//
@@ -17,7 +17,7 @@
 /XKBMisc.c/1.6/Sat Sep 28 17:03:22 2013//
 /XKBNames.c/1.10/Sun Aug  4 13:34:54 2019//
 /XKBRdBuf.c/1.7/Mon Apr  6 20:57:59 2015//
-/XKBSetGeom.c/1.5/Sat Sep 28 17:03:22 2013//
+/XKBSetGeom.c/1.6/Sat Jan  4 17:55:17 2020//
 /XKBSetMap.c/1.5/Sat Sep 28 17:03:22 2013//
 /XKBUse.c/1.5/Sat Sep 28 17:03:22 2013//
 /XKBleds.c/1.5/Sat Sep 28 17:03:22 2013//

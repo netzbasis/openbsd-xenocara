@@ -11,7 +11,7 @@
 /XCloseDev.c/1.3/Mon Jun 11 19:24:49 2012//
 /XDelDProp.c/1.1/Sat May  2 15:23:04 2009//
 /XDevBell.c/1.3/Mon Jun 11 19:24:49 2012//
-/XExtInt.c/1.14/Sat Aug  6 09:56:29 2016//
+/XExtInt.c/1.15/Sat Jan  4 17:56:26 2020//
 /XExtToWire.c/1.4/Mon Jun 11 19:24:49 2012//
 /XFreeLst.c/1.3/Mon Jun 11 19:24:49 2012//
 /XGMotion.c/1.7/Tue Oct  4 15:01:03 2016//
@@ -35,7 +35,7 @@
 /XIGetDevFocus.c/1.3/Mon Jun 11 19:24:49 2012//
 /XIGrabDevice.c/1.5/Sat Aug  6 09:56:29 2016//
 /XIHierarchy.c/1.5/Sat Aug  6 09:56:29 2016//
-/XIPassiveGrab.c/1.7/Sun Sep 28 17:22:58 2014//
+/XIPassiveGrab.c/1.8/Sat Jan  4 17:56:26 2020//
 /XIProperties.c/1.5/Sat Aug  6 09:56:29 2016//
 /XIQueryDevice.c/1.7/Sun Feb 19 17:41:29 2017//
 /XIQueryPointer.c/1.3/Mon Jun 11 19:24:49 2012//
