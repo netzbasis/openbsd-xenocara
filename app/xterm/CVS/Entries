@@ -8,7 +8,7 @@
 /Imakefile/1.13/Sun Dec 29 08:54:02 2019//
 /KOI8RXTerm.ad/1.3/Sat May  8 12:20:46 2010//
 /MANIFEST/1.45/Sun Dec 29 08:54:02 2019//
-/Makefile/1.33/Sat Mar  9 20:10:19 2019//
+/Makefile/1.34/Mon Jan 20 21:03:35 2020//
 /Makefile.in/1.7/Sat Sep  5 14:11:45 2015//
 /NEWS/1.5/Sun Dec 29 08:54:02 2019//
 /README/1.1.1.2/Sat Aug 25 18:53:28 2007//
@@ -31,7 +31,7 @@
 /cachedGCs.c/1.16/Sun Dec 29 08:54:03 2019//
 /charclass.c/1.6/Sun Feb 24 11:41:42 2019//
 /charclass.h/1.2/Sat Jul 15 19:20:51 2017//
-/charproc.c/1.44/Sun Dec 29 08:54:03 2019//
+/charproc.c/1.45/Mon Jan 20 21:03:35 2020//
 /charsets.c/1.7/Sun Feb 24 11:41:42 2019//
 /config.guess/1.2/Sat Sep  5 14:11:45 2015//
 /config.sub/1.2/Sat Sep  5 14:11:45 2015//
@@ -67,7 +67,7 @@
 /main.c/1.45/Sun Dec 29 08:54:03 2019//
 /main.h/1.15/Sun Dec 29 08:54:03 2019//
 /make.com/1.1.1.1/Sun Nov 26 11:11:36 2006//
-/menu.c/1.29/Sun Dec 29 08:54:03 2019//
+/menu.c/1.30/Mon Jan 20 21:03:35 2020//
 /menu.h/1.17/Sun Feb 24 11:41:42 2019//
 /minstall.in/1.9/Sun Dec 29 08:54:03 2019//
 /misc.c/1.40/Sun Dec 29 08:54:03 2019//
