@@ -167,17 +167,19 @@ cle_libbroadcom_cle_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 libbroadcom_la_LIBADD =
 am__objects_2 = clif/clif_dump.lo common/v3d_debug.lo \
 	compiler/nir_to_vir.lo compiler/vir.lo compiler/vir_dump.lo \
-	compiler/vir_live_variables.lo compiler/vir_lower_uniforms.lo \
+	compiler/vir_live_variables.lo \
 	compiler/vir_opt_copy_propagate.lo \
 	compiler/vir_opt_dead_code.lo \
+	compiler/vir_opt_redundant_flags.lo \
 	compiler/vir_opt_small_immediates.lo \
 	compiler/vir_register_allocate.lo compiler/vir_to_qpu.lo \
 	compiler/qpu_schedule.lo compiler/qpu_validate.lo \
 	compiler/v3d33_tex.lo compiler/v3d33_vpm_setup.lo \
 	compiler/v3d40_tex.lo \
 	compiler/v3d_nir_lower_image_load_store.lo \
-	compiler/v3d_nir_lower_io.lo compiler/v3d_nir_lower_txf_ms.lo \
-	qpu/qpu_disasm.lo qpu/qpu_instr.lo qpu/qpu_pack.lo
+	compiler/v3d_nir_lower_io.lo compiler/v3d_nir_lower_scratch.lo \
+	compiler/v3d_nir_lower_txf_ms.lo qpu/qpu_disasm.lo \
+	qpu/qpu_instr.lo qpu/qpu_pack.lo
 am_libbroadcom_la_OBJECTS = $(am__objects_2)
 libbroadcom_la_OBJECTS = $(am_libbroadcom_la_OBJECTS)
 libbroadcom_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
@@ -323,6 +325,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -335,6 +338,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -635,9 +639,9 @@ BROADCOM_FILES = \
 	compiler/vir.c \
 	compiler/vir_dump.c \
 	compiler/vir_live_variables.c \
-	compiler/vir_lower_uniforms.c \
 	compiler/vir_opt_copy_propagate.c \
 	compiler/vir_opt_dead_code.c \
+	compiler/vir_opt_redundant_flags.c \
 	compiler/vir_opt_small_immediates.c \
 	compiler/vir_register_allocate.c \
 	compiler/vir_to_qpu.c \
@@ -649,6 +653,7 @@ BROADCOM_FILES = \
 	compiler/v3d_compiler.h \
 	compiler/v3d_nir_lower_image_load_store.c \
 	compiler/v3d_nir_lower_io.c \
+	compiler/v3d_nir_lower_scratch.c \
 	compiler/v3d_nir_lower_txf_ms.c \
 	qpu/qpu_disasm.c \
 	qpu/qpu_disasm.h \
@@ -833,11 +838,11 @@ compiler/vir_dump.lo: compiler/$(am__dirstamp) \
 	compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/vir_live_variables.lo: compiler/$(am__dirstamp) \
 	compiler/$(DEPDIR)/$(am__dirstamp)
-compiler/vir_lower_uniforms.lo: compiler/$(am__dirstamp) \
-	compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/vir_opt_copy_propagate.lo: compiler/$(am__dirstamp) \
 	compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/vir_opt_dead_code.lo: compiler/$(am__dirstamp) \
+	compiler/$(DEPDIR)/$(am__dirstamp)
+compiler/vir_opt_redundant_flags.lo: compiler/$(am__dirstamp) \
 	compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/vir_opt_small_immediates.lo: compiler/$(am__dirstamp) \
 	compiler/$(DEPDIR)/$(am__dirstamp)
@@ -858,6 +863,8 @@ compiler/v3d40_tex.lo: compiler/$(am__dirstamp) \
 compiler/v3d_nir_lower_image_load_store.lo: compiler/$(am__dirstamp) \
 	compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/v3d_nir_lower_io.lo: compiler/$(am__dirstamp) \
+	compiler/$(DEPDIR)/$(am__dirstamp)
+compiler/v3d_nir_lower_scratch.lo: compiler/$(am__dirstamp) \
 	compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/v3d_nir_lower_txf_ms.lo: compiler/$(am__dirstamp) \
 	compiler/$(DEPDIR)/$(am__dirstamp)
@@ -945,13 +952,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/v3d40_tex.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/v3d_nir_lower_image_load_store.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/v3d_nir_lower_io.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/v3d_nir_lower_scratch.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/v3d_nir_lower_txf_ms.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir_dump.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir_live_variables.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir_lower_uniforms.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir_opt_copy_propagate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir_opt_dead_code.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir_opt_redundant_flags.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir_opt_small_immediates.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir_register_allocate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/vir_to_qpu.Plo@am__quote@

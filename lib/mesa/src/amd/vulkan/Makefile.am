@@ -75,6 +75,7 @@ VULKAN_LIB_DEPS = \
 	$(top_builddir)/src/amd/addrlib/libamdgpu_addrlib.la \
 	$(top_builddir)/src/compiler/nir/libnir.la \
 	$(top_builddir)/src/util/libmesautil.la \
+	$(top_builddir)/src/util/libxmlconfig.la \
 	$(LLVM_LIBS) \
 	$(LIBELF_LIBS) \
 	$(PTHREAD_LIBS) \
@@ -159,6 +160,14 @@ vk_format_table.c: vk_format_table.py \
 		   vk_format_parse.py \
                    vk_format_layout.csv
 	$(PYTHON) $(srcdir)/vk_format_table.py $(srcdir)/vk_format_layout.csv > $@
+
+gfx10_format_table.h: gfx10_format_table.py \
+                      vk_format_layout.csv \
+                      $(srcdir)/../registers/gfx10-rsrc.json
+	$(PYTHON) $(srcdir)/gfx10_format_table.py \
+	    $(srcdir)/vk_format_layout.csv \
+	    $(srcdir)/../registers/gfx10-rsrc.json \
+	    > $@
 endif
 
 BUILT_SOURCES = $(VULKAN_GENERATED_FILES)
@@ -203,7 +212,7 @@ else
 radeon_icd.@host_cpu@.json :
 	@echo -e "{" > $@
 	@echo -e "    \"ICD\": {" >> $@
-	@echo -e "        \"api_version\": \"1.1.70\"," >> $@
+	@echo -e "        \"api_version\": \"1.1.107\"," >> $@
 	@echo -e "        \"library_path\": \"${libdir}/libvulkan_radeon.so\"" >> $@
 	@echo -e "    }," >> $@
 	@echo -e "    \"file_format_version\": \"1.0.0\"" >> $@

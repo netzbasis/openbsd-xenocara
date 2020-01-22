@@ -182,6 +182,27 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
+# Copyright © 2018 Intel Corporation
+#
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice (including the next
+# paragraph) shall be included in all copies or substantial portions of the
+# Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
 # Copyright © 2015 Intel Corporation
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -251,9 +272,10 @@ DIST_COMMON = $(am__noinst_HEADERS_DIST) \
 	$(srcdir)/Makefile.blorp.am $(srcdir)/Makefile.common.am \
 	$(srcdir)/Makefile.compiler.am $(srcdir)/Makefile.dev.am \
 	$(srcdir)/Makefile.genxml.am $(srcdir)/Makefile.in \
-	$(srcdir)/Makefile.isl.am $(srcdir)/Makefile.sources \
-	$(srcdir)/Makefile.tools.am $(srcdir)/Makefile.vulkan.am \
-	$(top_srcdir)/bin/depcomp $(top_srcdir)/install-lib-links.mk
+	$(srcdir)/Makefile.isl.am $(srcdir)/Makefile.perf.am \
+	$(srcdir)/Makefile.sources $(srcdir)/Makefile.tools.am \
+	$(srcdir)/Makefile.vulkan.am $(top_srcdir)/bin/depcomp \
+	$(top_srcdir)/install-lib-links.mk
 noinst_PROGRAMS = tools/aubinator$(EXEEXT) \
 	tools/aubinator_error_decode$(EXEEXT) \
 	tools/i965_disasm$(EXEEXT) tools/error2aub$(EXEEXT)
@@ -377,7 +399,6 @@ am__DEPENDENCIES_1 =
 common_libintel_common_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_2)
 am__objects_2 = common/common_libintel_common_la-gen_batch_decoder.lo \
-	common/common_libintel_common_la-gen_debug.lo \
 	common/common_libintel_common_la-gen_decoder.lo \
 	common/common_libintel_common_la-gen_disasm.lo \
 	common/common_libintel_common_la-gen_l3_config.lo \
@@ -401,6 +422,7 @@ am__objects_3 = compiler/compiler_libintel_compiler_la-brw_cfg.lo \
 	compiler/compiler_libintel_compiler_la-brw_compile_sf.lo \
 	compiler/compiler_libintel_compiler_la-brw_compiler.lo \
 	compiler/compiler_libintel_compiler_la-brw_dead_control_flow.lo \
+	compiler/compiler_libintel_compiler_la-brw_debug_recompile.lo \
 	compiler/compiler_libintel_compiler_la-brw_disasm.lo \
 	compiler/compiler_libintel_compiler_la-brw_disasm_info.lo \
 	compiler/compiler_libintel_compiler_la-brw_eu.lo \
@@ -424,7 +446,6 @@ am__objects_3 = compiler/compiler_libintel_compiler_la-brw_cfg.lo \
 	compiler/compiler_libintel_compiler_la-brw_fs_register_coalesce.lo \
 	compiler/compiler_libintel_compiler_la-brw_fs_saturate_propagation.lo \
 	compiler/compiler_libintel_compiler_la-brw_fs_sel_peephole.lo \
-	compiler/compiler_libintel_compiler_la-brw_fs_surface_builder.lo \
 	compiler/compiler_libintel_compiler_la-brw_fs_validate.lo \
 	compiler/compiler_libintel_compiler_la-brw_fs_visitor.lo \
 	compiler/compiler_libintel_compiler_la-brw_interpolation_map.lo \
@@ -432,6 +453,7 @@ am__objects_3 = compiler/compiler_libintel_compiler_la-brw_cfg.lo \
 	compiler/compiler_libintel_compiler_la-brw_nir_analyze_boolean_resolves.lo \
 	compiler/compiler_libintel_compiler_la-brw_nir_analyze_ubo_ranges.lo \
 	compiler/compiler_libintel_compiler_la-brw_nir_attribute_workarounds.lo \
+	compiler/compiler_libintel_compiler_la-brw_nir_lower_conversions.lo \
 	compiler/compiler_libintel_compiler_la-brw_nir_lower_cs_intrinsics.lo \
 	compiler/compiler_libintel_compiler_la-brw_nir_lower_image_load_store.lo \
 	compiler/compiler_libintel_compiler_la-brw_nir_lower_mem_access_bit_sizes.lo \
@@ -468,7 +490,8 @@ compiler_libintel_compiler_la_OBJECTS =  \
 	$(am_compiler_libintel_compiler_la_OBJECTS)
 dev_libintel_dev_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_2)
-am__objects_5 = dev/dev_libintel_dev_la-gen_device_info.lo
+am__objects_5 = dev/dev_libintel_dev_la-gen_debug.lo \
+	dev/dev_libintel_dev_la-gen_device_info.lo
 am_dev_libintel_dev_la_OBJECTS = $(am__objects_5)
 dev_libintel_dev_la_OBJECTS = $(am_dev_libintel_dev_la_OBJECTS)
 dev_libintel_dev_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
@@ -592,21 +615,31 @@ libisl_tiled_memcpy_sse41_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(libisl_tiled_memcpy_sse41_la_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 @SSE41_SUPPORTED_TRUE@am_libisl_tiled_memcpy_sse41_la_rpath =
+perf_libintel_perf_la_LIBADD =
+am__objects_19 = perf/perf_libintel_perf_la-gen_perf.lo \
+	perf/perf_libintel_perf_la-gen_perf_mdapi.lo
+am__objects_20 = perf/perf_libintel_perf_la-gen_perf_metrics.lo
+am_perf_libintel_perf_la_OBJECTS = $(am__objects_19) $(am__objects_20)
+perf_libintel_perf_la_OBJECTS = $(am_perf_libintel_perf_la_OBJECTS)
+perf_libintel_perf_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(perf_libintel_perf_la_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 vulkan_libanv_gen10_la_LIBADD =
 am__vulkan_libanv_gen10_la_SOURCES_DIST = vulkan/gen8_cmd_buffer.c \
 	vulkan/genX_blorp_exec.c vulkan/genX_cmd_buffer.c \
 	vulkan/genX_gpu_memcpy.c vulkan/genX_pipeline.c \
 	vulkan/genX_query.c vulkan/genX_state.c
-am__objects_19 = vulkan/vulkan_libanv_gen10_la-genX_blorp_exec.lo \
+am__objects_21 = vulkan/vulkan_libanv_gen10_la-genX_blorp_exec.lo \
 	vulkan/vulkan_libanv_gen10_la-genX_cmd_buffer.lo \
 	vulkan/vulkan_libanv_gen10_la-genX_gpu_memcpy.lo \
 	vulkan/vulkan_libanv_gen10_la-genX_pipeline.lo \
 	vulkan/vulkan_libanv_gen10_la-genX_query.lo \
 	vulkan/vulkan_libanv_gen10_la-genX_state.lo
-am__objects_20 = vulkan/vulkan_libanv_gen10_la-gen8_cmd_buffer.lo \
-	$(am__objects_19)
+am__objects_22 = vulkan/vulkan_libanv_gen10_la-gen8_cmd_buffer.lo \
+	$(am__objects_21)
 @HAVE_INTEL_VULKAN_TRUE@am_vulkan_libanv_gen10_la_OBJECTS =  \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_20)
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_22)
 vulkan_libanv_gen10_la_OBJECTS = $(am_vulkan_libanv_gen10_la_OBJECTS)
 vulkan_libanv_gen10_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -618,16 +651,16 @@ am__vulkan_libanv_gen11_la_SOURCES_DIST = vulkan/gen8_cmd_buffer.c \
 	vulkan/genX_blorp_exec.c vulkan/genX_cmd_buffer.c \
 	vulkan/genX_gpu_memcpy.c vulkan/genX_pipeline.c \
 	vulkan/genX_query.c vulkan/genX_state.c
-am__objects_21 = vulkan/vulkan_libanv_gen11_la-genX_blorp_exec.lo \
+am__objects_23 = vulkan/vulkan_libanv_gen11_la-genX_blorp_exec.lo \
 	vulkan/vulkan_libanv_gen11_la-genX_cmd_buffer.lo \
 	vulkan/vulkan_libanv_gen11_la-genX_gpu_memcpy.lo \
 	vulkan/vulkan_libanv_gen11_la-genX_pipeline.lo \
 	vulkan/vulkan_libanv_gen11_la-genX_query.lo \
 	vulkan/vulkan_libanv_gen11_la-genX_state.lo
-am__objects_22 = vulkan/vulkan_libanv_gen11_la-gen8_cmd_buffer.lo \
-	$(am__objects_21)
+am__objects_24 = vulkan/vulkan_libanv_gen11_la-gen8_cmd_buffer.lo \
+	$(am__objects_23)
 @HAVE_INTEL_VULKAN_TRUE@am_vulkan_libanv_gen11_la_OBJECTS =  \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_22)
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_24)
 vulkan_libanv_gen11_la_OBJECTS = $(am_vulkan_libanv_gen11_la_OBJECTS)
 vulkan_libanv_gen11_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -639,16 +672,16 @@ am__vulkan_libanv_gen7_la_SOURCES_DIST = vulkan/gen7_cmd_buffer.c \
 	vulkan/genX_blorp_exec.c vulkan/genX_cmd_buffer.c \
 	vulkan/genX_gpu_memcpy.c vulkan/genX_pipeline.c \
 	vulkan/genX_query.c vulkan/genX_state.c
-am__objects_23 = vulkan/vulkan_libanv_gen7_la-genX_blorp_exec.lo \
+am__objects_25 = vulkan/vulkan_libanv_gen7_la-genX_blorp_exec.lo \
 	vulkan/vulkan_libanv_gen7_la-genX_cmd_buffer.lo \
 	vulkan/vulkan_libanv_gen7_la-genX_gpu_memcpy.lo \
 	vulkan/vulkan_libanv_gen7_la-genX_pipeline.lo \
 	vulkan/vulkan_libanv_gen7_la-genX_query.lo \
 	vulkan/vulkan_libanv_gen7_la-genX_state.lo
-am__objects_24 = vulkan/vulkan_libanv_gen7_la-gen7_cmd_buffer.lo \
-	$(am__objects_23)
+am__objects_26 = vulkan/vulkan_libanv_gen7_la-gen7_cmd_buffer.lo \
+	$(am__objects_25)
 @HAVE_INTEL_VULKAN_TRUE@am_vulkan_libanv_gen7_la_OBJECTS =  \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_24)
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_26)
 vulkan_libanv_gen7_la_OBJECTS = $(am_vulkan_libanv_gen7_la_OBJECTS)
 vulkan_libanv_gen7_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -660,16 +693,16 @@ am__vulkan_libanv_gen75_la_SOURCES_DIST = vulkan/gen7_cmd_buffer.c \
 	vulkan/genX_blorp_exec.c vulkan/genX_cmd_buffer.c \
 	vulkan/genX_gpu_memcpy.c vulkan/genX_pipeline.c \
 	vulkan/genX_query.c vulkan/genX_state.c
-am__objects_25 = vulkan/vulkan_libanv_gen75_la-genX_blorp_exec.lo \
+am__objects_27 = vulkan/vulkan_libanv_gen75_la-genX_blorp_exec.lo \
 	vulkan/vulkan_libanv_gen75_la-genX_cmd_buffer.lo \
 	vulkan/vulkan_libanv_gen75_la-genX_gpu_memcpy.lo \
 	vulkan/vulkan_libanv_gen75_la-genX_pipeline.lo \
 	vulkan/vulkan_libanv_gen75_la-genX_query.lo \
 	vulkan/vulkan_libanv_gen75_la-genX_state.lo
-am__objects_26 = vulkan/vulkan_libanv_gen75_la-gen7_cmd_buffer.lo \
-	$(am__objects_25)
+am__objects_28 = vulkan/vulkan_libanv_gen75_la-gen7_cmd_buffer.lo \
+	$(am__objects_27)
 @HAVE_INTEL_VULKAN_TRUE@am_vulkan_libanv_gen75_la_OBJECTS =  \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_26)
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_28)
 vulkan_libanv_gen75_la_OBJECTS = $(am_vulkan_libanv_gen75_la_OBJECTS)
 vulkan_libanv_gen75_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -681,16 +714,16 @@ am__vulkan_libanv_gen8_la_SOURCES_DIST = vulkan/gen8_cmd_buffer.c \
 	vulkan/genX_blorp_exec.c vulkan/genX_cmd_buffer.c \
 	vulkan/genX_gpu_memcpy.c vulkan/genX_pipeline.c \
 	vulkan/genX_query.c vulkan/genX_state.c
-am__objects_27 = vulkan/vulkan_libanv_gen8_la-genX_blorp_exec.lo \
+am__objects_29 = vulkan/vulkan_libanv_gen8_la-genX_blorp_exec.lo \
 	vulkan/vulkan_libanv_gen8_la-genX_cmd_buffer.lo \
 	vulkan/vulkan_libanv_gen8_la-genX_gpu_memcpy.lo \
 	vulkan/vulkan_libanv_gen8_la-genX_pipeline.lo \
 	vulkan/vulkan_libanv_gen8_la-genX_query.lo \
 	vulkan/vulkan_libanv_gen8_la-genX_state.lo
-am__objects_28 = vulkan/vulkan_libanv_gen8_la-gen8_cmd_buffer.lo \
-	$(am__objects_27)
+am__objects_30 = vulkan/vulkan_libanv_gen8_la-gen8_cmd_buffer.lo \
+	$(am__objects_29)
 @HAVE_INTEL_VULKAN_TRUE@am_vulkan_libanv_gen8_la_OBJECTS =  \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_28)
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_30)
 vulkan_libanv_gen8_la_OBJECTS = $(am_vulkan_libanv_gen8_la_OBJECTS)
 vulkan_libanv_gen8_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -702,16 +735,16 @@ am__vulkan_libanv_gen9_la_SOURCES_DIST = vulkan/gen8_cmd_buffer.c \
 	vulkan/genX_blorp_exec.c vulkan/genX_cmd_buffer.c \
 	vulkan/genX_gpu_memcpy.c vulkan/genX_pipeline.c \
 	vulkan/genX_query.c vulkan/genX_state.c
-am__objects_29 = vulkan/vulkan_libanv_gen9_la-genX_blorp_exec.lo \
+am__objects_31 = vulkan/vulkan_libanv_gen9_la-genX_blorp_exec.lo \
 	vulkan/vulkan_libanv_gen9_la-genX_cmd_buffer.lo \
 	vulkan/vulkan_libanv_gen9_la-genX_gpu_memcpy.lo \
 	vulkan/vulkan_libanv_gen9_la-genX_pipeline.lo \
 	vulkan/vulkan_libanv_gen9_la-genX_query.lo \
 	vulkan/vulkan_libanv_gen9_la-genX_state.lo
-am__objects_30 = vulkan/vulkan_libanv_gen9_la-gen8_cmd_buffer.lo \
-	$(am__objects_29)
+am__objects_32 = vulkan/vulkan_libanv_gen9_la-gen8_cmd_buffer.lo \
+	$(am__objects_31)
 @HAVE_INTEL_VULKAN_TRUE@am_vulkan_libanv_gen9_la_OBJECTS =  \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_30)
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_32)
 vulkan_libanv_gen9_la_OBJECTS = $(am_vulkan_libanv_gen9_la_OBJECTS)
 vulkan_libanv_gen9_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -733,6 +766,7 @@ vulkan_libanv_gen9_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 @HAVE_INTEL_VULKAN_TRUE@	$(top_builddir)/src/vulkan/libvulkan_wsi.la \
 @HAVE_INTEL_VULKAN_TRUE@	$(top_builddir)/src/compiler/nir/libnir.la \
 @HAVE_INTEL_VULKAN_TRUE@	$(top_builddir)/src/util/libmesautil.la \
+@HAVE_INTEL_VULKAN_TRUE@	$(top_builddir)/src/util/libxmlconfig.la \
 @HAVE_INTEL_VULKAN_TRUE@	$(am__DEPENDENCIES_1) \
 @HAVE_INTEL_VULKAN_TRUE@	$(am__DEPENDENCIES_1) \
 @HAVE_INTEL_VULKAN_TRUE@	$(am__DEPENDENCIES_1) \
@@ -743,9 +777,9 @@ vulkan_libanv_gen9_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 @HAVE_INTEL_VULKAN_TRUE@vulkan_libvulkan_test_la_DEPENDENCIES =  \
 @HAVE_INTEL_VULKAN_TRUE@	$(am__DEPENDENCIES_8)
 am__vulkan_libvulkan_test_la_SOURCES_DIST = vulkan/anv_gem_stubs.c
-am__objects_31 = vulkan/vulkan_libvulkan_test_la-anv_gem_stubs.lo
+am__objects_33 = vulkan/vulkan_libvulkan_test_la-anv_gem_stubs.lo
 @HAVE_INTEL_VULKAN_TRUE@am_vulkan_libvulkan_test_la_OBJECTS =  \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_31)
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_33)
 vulkan_libvulkan_test_la_OBJECTS =  \
 	$(am_vulkan_libvulkan_test_la_OBJECTS)
 vulkan_libvulkan_test_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
@@ -764,7 +798,6 @@ am__vulkan_libvulkan_common_la_SOURCES_DIST =  \
 	vulkan/anv_genX.h vulkan/anv_image.c vulkan/anv_intel.c \
 	vulkan/anv_nir.h vulkan/anv_nir_add_base_work_group_id.c \
 	vulkan/anv_nir_apply_pipeline_layout.c \
-	vulkan/anv_nir_lower_input_attachments.c \
 	vulkan/anv_nir_lower_multiview.c \
 	vulkan/anv_nir_lower_push_constants.c \
 	vulkan/anv_nir_lower_ycbcr_textures.c vulkan/anv_pass.c \
@@ -773,9 +806,9 @@ am__vulkan_libvulkan_common_la_SOURCES_DIST =  \
 	vulkan/anv_wsi.c vulkan/vk_format_info.h vulkan/anv_android.c \
 	vulkan/anv_android_stubs.c vulkan/anv_wsi_x11.c \
 	vulkan/anv_wsi_wayland.c vulkan/anv_wsi_display.c
-am__objects_32 = vulkan/vulkan_libvulkan_common_la-anv_entrypoints.lo \
+am__objects_34 = vulkan/vulkan_libvulkan_common_la-anv_entrypoints.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_extensions.lo
-am__objects_33 = vulkan/vulkan_libvulkan_common_la-anv_allocator.lo \
+am__objects_35 = vulkan/vulkan_libvulkan_common_la-anv_allocator.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_batch_chain.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_blorp.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_cmd_buffer.lo \
@@ -787,7 +820,6 @@ am__objects_33 = vulkan/vulkan_libvulkan_common_la-anv_allocator.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_intel.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_nir_add_base_work_group_id.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_nir_apply_pipeline_layout.lo \
-	vulkan/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_nir_lower_multiview.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_nir_lower_push_constants.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_nir_lower_ycbcr_textures.lo \
@@ -797,23 +829,23 @@ am__objects_33 = vulkan/vulkan_libvulkan_common_la-anv_allocator.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_queue.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_util.lo \
 	vulkan/vulkan_libvulkan_common_la-anv_wsi.lo
-am__objects_34 = vulkan/vulkan_libvulkan_common_la-anv_android.lo
-@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_ANDROID_TRUE@am__objects_35 = $(am__objects_34)
-am__objects_36 =  \
+am__objects_36 = vulkan/vulkan_libvulkan_common_la-anv_android.lo
+@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_ANDROID_TRUE@am__objects_37 = $(am__objects_36)
+am__objects_38 =  \
 	vulkan/vulkan_libvulkan_common_la-anv_android_stubs.lo
-@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_ANDROID_FALSE@am__objects_37 = $(am__objects_36)
-am__objects_38 = vulkan/vulkan_libvulkan_common_la-anv_wsi_x11.lo
-@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_X11_TRUE@am__objects_39 = $(am__objects_38)
-am__objects_40 = vulkan/vulkan_libvulkan_common_la-anv_wsi_wayland.lo
-@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_WAYLAND_TRUE@am__objects_41 = $(am__objects_40)
-am__objects_42 = vulkan/vulkan_libvulkan_common_la-anv_wsi_display.lo
-@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_DRM_TRUE@am__objects_43 = $(am__objects_42)
-@HAVE_INTEL_VULKAN_TRUE@am__objects_44 = $(am__objects_32) \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_33) $(am__objects_35) \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_37) $(am__objects_39) \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_41) $(am__objects_43)
+@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_ANDROID_FALSE@am__objects_39 = $(am__objects_38)
+am__objects_40 = vulkan/vulkan_libvulkan_common_la-anv_wsi_x11.lo
+@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_X11_TRUE@am__objects_41 = $(am__objects_40)
+am__objects_42 = vulkan/vulkan_libvulkan_common_la-anv_wsi_wayland.lo
+@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_WAYLAND_TRUE@am__objects_43 = $(am__objects_42)
+am__objects_44 = vulkan/vulkan_libvulkan_common_la-anv_wsi_display.lo
+@HAVE_INTEL_VULKAN_TRUE@@HAVE_PLATFORM_DRM_TRUE@am__objects_45 = $(am__objects_44)
+@HAVE_INTEL_VULKAN_TRUE@am__objects_46 = $(am__objects_34) \
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_35) $(am__objects_37) \
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_39) $(am__objects_41) \
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_43) $(am__objects_45)
 @HAVE_INTEL_VULKAN_TRUE@am_vulkan_libvulkan_common_la_OBJECTS =  \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_44)
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_46)
 vulkan_libvulkan_common_la_OBJECTS =  \
 	$(am_vulkan_libvulkan_common_la_OBJECTS)
 vulkan_libvulkan_common_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
@@ -824,9 +856,9 @@ vulkan_libvulkan_common_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 @HAVE_INTEL_VULKAN_TRUE@vulkan_libvulkan_intel_la_DEPENDENCIES =  \
 @HAVE_INTEL_VULKAN_TRUE@	$(am__DEPENDENCIES_8)
 am__vulkan_libvulkan_intel_la_SOURCES_DIST = vulkan/anv_gem.c
-am__objects_45 = vulkan/vulkan_libvulkan_intel_la-anv_gem.lo
+am__objects_47 = vulkan/vulkan_libvulkan_intel_la-anv_gem.lo
 @HAVE_INTEL_VULKAN_TRUE@am_vulkan_libvulkan_intel_la_OBJECTS =  \
-@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_45)
+@HAVE_INTEL_VULKAN_TRUE@	$(am__objects_47)
 vulkan_libvulkan_intel_la_OBJECTS =  \
 	$(am_vulkan_libvulkan_intel_la_OBJECTS)
 vulkan_libvulkan_intel_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
@@ -1078,6 +1110,7 @@ SOURCES = $(blorp_libblorp_la_SOURCES) \
 	$(isl_libisl_gen8_la_SOURCES) $(isl_libisl_gen9_la_SOURCES) \
 	$(isl_libisl_la_SOURCES) $(libisl_tiled_memcpy_la_SOURCES) \
 	$(libisl_tiled_memcpy_sse41_la_SOURCES) \
+	$(perf_libintel_perf_la_SOURCES) \
 	$(vulkan_libanv_gen10_la_SOURCES) \
 	$(vulkan_libanv_gen11_la_SOURCES) \
 	$(vulkan_libanv_gen7_la_SOURCES) \
@@ -1116,6 +1149,7 @@ DIST_SOURCES = $(blorp_libblorp_la_SOURCES) \
 	$(isl_libisl_gen8_la_SOURCES) $(isl_libisl_gen9_la_SOURCES) \
 	$(isl_libisl_la_SOURCES) $(libisl_tiled_memcpy_la_SOURCES) \
 	$(libisl_tiled_memcpy_sse41_la_SOURCES) \
+	$(perf_libintel_perf_la_SOURCES) \
 	$(am__vulkan_libanv_gen10_la_SOURCES_DIST) \
 	$(am__vulkan_libanv_gen11_la_SOURCES_DIST) \
 	$(am__vulkan_libanv_gen7_la_SOURCES_DIST) \
@@ -1219,6 +1253,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -1231,6 +1266,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -1499,14 +1535,13 @@ BLORP_FILES = \
 COMMON_FILES = \
 	common/gen_clflush.h \
 	common/gen_batch_decoder.c \
-	common/gen_debug.c \
-	common/gen_debug.h \
 	common/gen_decoder.c \
 	common/gen_decoder.h \
 	common/gen_disasm.c \
 	common/gen_disasm.h \
 	common/gen_defines.h \
 	common/gen_gem.h \
+	common/gen_guardband.h \
 	common/gen_l3_config.c \
 	common/gen_l3_config.h \
 	common/gen_urb_config.c \
@@ -1529,6 +1564,7 @@ COMPILER_FILES = \
 	compiler/brw_compiler.h \
 	compiler/brw_dead_control_flow.cpp \
 	compiler/brw_dead_control_flow.h \
+	compiler/brw_debug_recompile.c \
 	compiler/brw_disasm.c \
 	compiler/brw_disasm_info.c \
 	compiler/brw_disasm_info.h \
@@ -1558,8 +1594,6 @@ COMPILER_FILES = \
 	compiler/brw_fs_register_coalesce.cpp \
 	compiler/brw_fs_saturate_propagation.cpp \
 	compiler/brw_fs_sel_peephole.cpp \
-	compiler/brw_fs_surface_builder.cpp \
-	compiler/brw_fs_surface_builder.h \
 	compiler/brw_fs_validate.cpp \
 	compiler/brw_fs_visitor.cpp \
 	compiler/brw_inst.h \
@@ -1572,6 +1606,7 @@ COMPILER_FILES = \
 	compiler/brw_nir_analyze_boolean_resolves.c \
 	compiler/brw_nir_analyze_ubo_ranges.c \
 	compiler/brw_nir_attribute_workarounds.c \
+	compiler/brw_nir_lower_conversions.c \
 	compiler/brw_nir_lower_cs_intrinsics.c \
 	compiler/brw_nir_lower_image_load_store.c \
 	compiler/brw_nir_lower_mem_access_bit_sizes.c \
@@ -1618,6 +1653,8 @@ COMPILER_GENERATED_FILES = \
 	compiler/brw_nir_trig_workarounds.c
 
 DEV_FILES = \
+	dev/gen_debug.c \
+	dev/gen_debug.h \
 	dev/gen_device_info.c \
 	dev/gen_device_info.h
 
@@ -1733,7 +1770,6 @@ VULKAN_FILES := \
 	vulkan/anv_nir.h \
 	vulkan/anv_nir_add_base_work_group_id.c \
 	vulkan/anv_nir_apply_pipeline_layout.c \
-	vulkan/anv_nir_lower_input_attachments.c \
 	vulkan/anv_nir_lower_multiview.c \
 	vulkan/anv_nir_lower_push_constants.c \
 	vulkan/anv_nir_lower_ycbcr_textures.c \
@@ -1805,6 +1841,32 @@ VULKAN_GEN11_FILES := \
 	vulkan/gen8_cmd_buffer.c \
 	$(VULKAN_GENX_FILES)
 
+GEN_PERF_XML_FILES = \
+	perf/oa-hsw.xml \
+	perf/oa-bdw.xml \
+	perf/oa-chv.xml \
+	perf/oa-sklgt2.xml \
+	perf/oa-sklgt3.xml \
+	perf/oa-sklgt4.xml \
+	perf/oa-bxt.xml \
+	perf/oa-kblgt2.xml \
+	perf/oa-kblgt3.xml \
+	perf/oa-glk.xml \
+	perf/oa-cflgt2.xml \
+	perf/oa-cflgt3.xml \
+	perf/oa-cnl.xml \
+	perf/oa-icl.xml
+
+GEN_PERF_FILES = \
+	perf/gen_perf.c \
+	perf/gen_perf.h \
+	perf/gen_perf_mdapi.h \
+	perf/gen_perf_mdapi.c
+
+GEN_PERF_GENERATED_FILES = \
+	perf/gen_perf_metrics.c \
+	perf/gen_perf_metrics.h
+
 
 # The gallium includes are for the util/u_math.h include from main/macros.h
 AM_CPPFLAGS = \
@@ -1818,7 +1880,6 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/src/gtest/include \
 	-I$(top_builddir)/src/intel \
 	-I$(top_srcdir)/src/intel \
-	-I$(top_srcdir)/include/drm-uapi \
 	-I$(top_srcdir)/src/mapi \
 	-I$(top_srcdir)/src/mesa \
 	-I$(top_srcdir)/src/gallium/auxiliary \
@@ -1843,9 +1904,10 @@ noinst_HEADERS = $(am__append_7)
 noinst_LTLIBRARIES = blorp/libblorp.la common/libintel_common.la \
 	compiler/libintel_compiler.la dev/libintel_dev.la \
 	$(ISL_GEN_LIBS) isl/libisl.la libisl_tiled_memcpy.la \
-	$(am__append_6) $(am__append_10)
+	$(am__append_6) perf/libintel_perf.la $(am__append_10)
 BUILT_SOURCES = $(COMPILER_GENERATED_FILES) $(GENXML_GENERATED_FILES) \
-	$(ISL_GENERATED_FILES) $(VULKAN_GENERATED_FILES)
+	$(ISL_GENERATED_FILES) $(GEN_PERF_GENERATED_FILES) \
+	$(VULKAN_GENERATED_FILES)
 CLEANFILES = $(VULKAN_GENERATED_FILES) vulkan/dev_icd.json \
 	vulkan/intel_icd.@host_cpu@.json $(BUILT_SOURCES)
 
@@ -1854,16 +1916,10 @@ EXTRA_DIST = blorp/meson.build common/meson.build compiler/meson.build \
 	dev/meson.build genxml/meson.build isl/meson.build \
 	tools/aubinator_viewer.cpp tools/aubinator_viewer.h \
 	tools/aubinator_viewer_decoder.cpp \
-	tools/aubinator_viewer_urb.h tools/imgui/README \
-	tools/imgui/stb_textedit.h tools/imgui/meson.build \
-	tools/imgui/imconfig.h tools/imgui/imgui.cpp \
-	tools/imgui/imgui.h tools/imgui/imgui_draw.cpp \
-	tools/imgui/imgui_demo.cpp tools/imgui/imgui_internal.h \
-	tools/imgui/imgui_impl_gtk3.cpp tools/imgui/imgui_impl_gtk3.h \
+	tools/aubinator_viewer_urb.h tools/imgui/imgui_impl_gtk3.cpp \
+	tools/imgui/imgui_impl_gtk3.h \
 	tools/imgui/imgui_impl_opengl3.cpp \
-	tools/imgui/imgui_impl_opengl3.h \
-	tools/imgui/imgui_memory_editor.h tools/imgui/stb_truetype.h \
-	tools/imgui/stb_rect_pack.h tools/imgui/LICENSE.txt \
+	tools/imgui/imgui_impl_opengl3.h tools/imgui/meson.build \
 	tools/intel_sanitize_gpu.c tools/intel_sanitize_gpu.in \
 	tools/intel_dump_gpu.c tools/intel_dump_gpu.in \
 	tools/meson.build vulkan/meson.build meson.build blorp/TODO \
@@ -1873,8 +1929,8 @@ EXTRA_DIST = blorp/meson.build common/meson.build compiler/meson.build \
 	genxml/gen_zipped_file.py genxml/gen_bits_header.py \
 	genxml/README isl/gen_format_layout.py \
 	isl/isl_format_layout.csv isl/README \
-	$(ISL_TILED_MEMCPY_DEP_FILES) \
-	$(top_srcdir)/include/vulkan/vk_icd.h \
+	$(ISL_TILED_MEMCPY_DEP_FILES) $(GEN_PERF_XML_FILES) \
+	perf/gen_perf.py $(top_srcdir)/include/vulkan/vk_icd.h \
 	vulkan/anv_entrypoints_gen.py vulkan/anv_extensions_gen.py \
 	vulkan/anv_extensions.py vulkan/anv_icd.py vulkan/TODO
 blorp_libblorp_la_SOURCES = $(BLORP_FILES)
@@ -2081,6 +2137,8 @@ tools_error2aub_LDADD = \
 	$(ZLIB_LIBS) \
 	-lm
 
+perf_libintel_perf_la_SOURCES = $(GEN_PERF_FILES) $(GEN_PERF_GENERATED_FILES)
+perf_libintel_perf_la_CFLAGS = $(AM_CFLAGS)
 
 # Due to a what seems like a autoconf bug, we must ensure that the genaration
 # rules must be outside of any AM_CONDITIONALs. Otherwise they will be commented
@@ -2103,7 +2161,7 @@ vulkan_api_xml = $(top_srcdir)/src/vulkan/registry/vk.xml
 @HAVE_INTEL_VULKAN_TRUE@VULKAN_CPPFLAGS =  \
 @HAVE_INTEL_VULKAN_TRUE@	-I$(top_srcdir)/src/compiler \
 @HAVE_INTEL_VULKAN_TRUE@	-I$(top_srcdir)/src/intel/compiler \
-@HAVE_INTEL_VULKAN_TRUE@	-I$(top_srcdir)/include/drm-uapi \
+@HAVE_INTEL_VULKAN_TRUE@	-I$(top_srcdir)/include \
 @HAVE_INTEL_VULKAN_TRUE@	-I$(top_builddir)/src/intel/vulkan \
 @HAVE_INTEL_VULKAN_TRUE@	-I$(top_srcdir)/src/intel/vulkan \
 @HAVE_INTEL_VULKAN_TRUE@	-I$(top_srcdir)/src/vulkan/wsi \
@@ -2145,6 +2203,7 @@ vulkan_api_xml = $(top_srcdir)/src/vulkan/registry/vk.xml
 @HAVE_INTEL_VULKAN_TRUE@	$(top_builddir)/src/vulkan/libvulkan_wsi.la \
 @HAVE_INTEL_VULKAN_TRUE@	$(top_builddir)/src/compiler/nir/libnir.la \
 @HAVE_INTEL_VULKAN_TRUE@	$(top_builddir)/src/util/libmesautil.la \
+@HAVE_INTEL_VULKAN_TRUE@	$(top_builddir)/src/util/libxmlconfig.la \
 @HAVE_INTEL_VULKAN_TRUE@	$(LIBDRM_LIBS) $(PTHREAD_LIBS) \
 @HAVE_INTEL_VULKAN_TRUE@	$(DLOPEN_LIBS) -lm $(am__append_13) \
 @HAVE_INTEL_VULKAN_TRUE@	$(am__append_18) $(am__append_21) \
@@ -2206,7 +2265,7 @@ all: $(BUILT_SOURCES)
 
 .SUFFIXES:
 .SUFFIXES: _pack.h _xml.h .xml .c .cpp .lo .o .obj
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/Makefile.sources $(srcdir)/Makefile.blorp.am $(srcdir)/Makefile.common.am $(srcdir)/Makefile.compiler.am $(srcdir)/Makefile.dev.am $(srcdir)/Makefile.genxml.am $(srcdir)/Makefile.isl.am $(srcdir)/Makefile.tools.am $(srcdir)/Makefile.vulkan.am $(top_srcdir)/install-lib-links.mk $(am__configure_deps)
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/Makefile.sources $(srcdir)/Makefile.blorp.am $(srcdir)/Makefile.common.am $(srcdir)/Makefile.compiler.am $(srcdir)/Makefile.dev.am $(srcdir)/Makefile.genxml.am $(srcdir)/Makefile.isl.am $(srcdir)/Makefile.tools.am $(srcdir)/Makefile.perf.am $(srcdir)/Makefile.vulkan.am $(top_srcdir)/install-lib-links.mk $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -2227,7 +2286,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
 	esac;
-$(srcdir)/Makefile.sources $(srcdir)/Makefile.blorp.am $(srcdir)/Makefile.common.am $(srcdir)/Makefile.compiler.am $(srcdir)/Makefile.dev.am $(srcdir)/Makefile.genxml.am $(srcdir)/Makefile.isl.am $(srcdir)/Makefile.tools.am $(srcdir)/Makefile.vulkan.am $(top_srcdir)/install-lib-links.mk:
+$(srcdir)/Makefile.sources $(srcdir)/Makefile.blorp.am $(srcdir)/Makefile.common.am $(srcdir)/Makefile.compiler.am $(srcdir)/Makefile.dev.am $(srcdir)/Makefile.genxml.am $(srcdir)/Makefile.isl.am $(srcdir)/Makefile.tools.am $(srcdir)/Makefile.perf.am $(srcdir)/Makefile.vulkan.am $(top_srcdir)/install-lib-links.mk:
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
@@ -2314,8 +2373,6 @@ common/$(DEPDIR)/$(am__dirstamp):
 	@: > common/$(DEPDIR)/$(am__dirstamp)
 common/common_libintel_common_la-gen_batch_decoder.lo:  \
 	common/$(am__dirstamp) common/$(DEPDIR)/$(am__dirstamp)
-common/common_libintel_common_la-gen_debug.lo: common/$(am__dirstamp) \
-	common/$(DEPDIR)/$(am__dirstamp)
 common/common_libintel_common_la-gen_decoder.lo:  \
 	common/$(am__dirstamp) common/$(DEPDIR)/$(am__dirstamp)
 common/common_libintel_common_la-gen_disasm.lo:  \
@@ -2353,6 +2410,8 @@ compiler/compiler_libintel_compiler_la-brw_compile_sf.lo:  \
 compiler/compiler_libintel_compiler_la-brw_compiler.lo:  \
 	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/compiler_libintel_compiler_la-brw_dead_control_flow.lo:  \
+	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
+compiler/compiler_libintel_compiler_la-brw_debug_recompile.lo:  \
 	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/compiler_libintel_compiler_la-brw_disasm.lo:  \
 	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
@@ -2400,8 +2459,6 @@ compiler/compiler_libintel_compiler_la-brw_fs_saturate_propagation.lo:  \
 	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/compiler_libintel_compiler_la-brw_fs_sel_peephole.lo:  \
 	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
-compiler/compiler_libintel_compiler_la-brw_fs_surface_builder.lo:  \
-	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/compiler_libintel_compiler_la-brw_fs_validate.lo:  \
 	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/compiler_libintel_compiler_la-brw_fs_visitor.lo:  \
@@ -2415,6 +2472,8 @@ compiler/compiler_libintel_compiler_la-brw_nir_analyze_boolean_resolves.lo:  \
 compiler/compiler_libintel_compiler_la-brw_nir_analyze_ubo_ranges.lo:  \
 	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/compiler_libintel_compiler_la-brw_nir_attribute_workarounds.lo:  \
+	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
+compiler/compiler_libintel_compiler_la-brw_nir_lower_conversions.lo:  \
 	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
 compiler/compiler_libintel_compiler_la-brw_nir_lower_cs_intrinsics.lo:  \
 	compiler/$(am__dirstamp) compiler/$(DEPDIR)/$(am__dirstamp)
@@ -2484,6 +2543,8 @@ dev/$(am__dirstamp):
 dev/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) dev/$(DEPDIR)
 	@: > dev/$(DEPDIR)/$(am__dirstamp)
+dev/dev_libintel_dev_la-gen_debug.lo: dev/$(am__dirstamp) \
+	dev/$(DEPDIR)/$(am__dirstamp)
 dev/dev_libintel_dev_la-gen_device_info.lo: dev/$(am__dirstamp) \
 	dev/$(DEPDIR)/$(am__dirstamp)
 dev/libintel_dev.la: $(dev_libintel_dev_la_OBJECTS) $(dev_libintel_dev_la_DEPENDENCIES) $(EXTRA_dev_libintel_dev_la_DEPENDENCIES) dev/$(am__dirstamp)
@@ -2575,6 +2636,20 @@ isl/libisl_tiled_memcpy_sse41_la-isl_tiled_memcpy_sse41.lo:  \
 	isl/$(am__dirstamp) isl/$(DEPDIR)/$(am__dirstamp)
 libisl_tiled_memcpy_sse41.la: $(libisl_tiled_memcpy_sse41_la_OBJECTS) $(libisl_tiled_memcpy_sse41_la_DEPENDENCIES) $(EXTRA_libisl_tiled_memcpy_sse41_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libisl_tiled_memcpy_sse41_la_LINK) $(am_libisl_tiled_memcpy_sse41_la_rpath) $(libisl_tiled_memcpy_sse41_la_OBJECTS) $(libisl_tiled_memcpy_sse41_la_LIBADD) $(LIBS)
+perf/$(am__dirstamp):
+	@$(MKDIR_P) perf
+	@: > perf/$(am__dirstamp)
+perf/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) perf/$(DEPDIR)
+	@: > perf/$(DEPDIR)/$(am__dirstamp)
+perf/perf_libintel_perf_la-gen_perf.lo: perf/$(am__dirstamp) \
+	perf/$(DEPDIR)/$(am__dirstamp)
+perf/perf_libintel_perf_la-gen_perf_mdapi.lo: perf/$(am__dirstamp) \
+	perf/$(DEPDIR)/$(am__dirstamp)
+perf/perf_libintel_perf_la-gen_perf_metrics.lo: perf/$(am__dirstamp) \
+	perf/$(DEPDIR)/$(am__dirstamp)
+perf/libintel_perf.la: $(perf_libintel_perf_la_OBJECTS) $(perf_libintel_perf_la_DEPENDENCIES) $(EXTRA_perf_libintel_perf_la_DEPENDENCIES) perf/$(am__dirstamp)
+	$(AM_V_CCLD)$(perf_libintel_perf_la_LINK)  $(perf_libintel_perf_la_OBJECTS) $(perf_libintel_perf_la_LIBADD) $(LIBS)
 vulkan/$(am__dirstamp):
 	@$(MKDIR_P) vulkan
 	@: > vulkan/$(am__dirstamp)
@@ -2708,8 +2783,6 @@ vulkan/vulkan_libvulkan_common_la-anv_intel.lo:  \
 vulkan/vulkan_libvulkan_common_la-anv_nir_add_base_work_group_id.lo:  \
 	vulkan/$(am__dirstamp) vulkan/$(DEPDIR)/$(am__dirstamp)
 vulkan/vulkan_libvulkan_common_la-anv_nir_apply_pipeline_layout.lo:  \
-	vulkan/$(am__dirstamp) vulkan/$(DEPDIR)/$(am__dirstamp)
-vulkan/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.lo:  \
 	vulkan/$(am__dirstamp) vulkan/$(DEPDIR)/$(am__dirstamp)
 vulkan/vulkan_libvulkan_common_la-anv_nir_lower_multiview.lo:  \
 	vulkan/$(am__dirstamp) vulkan/$(DEPDIR)/$(am__dirstamp)
@@ -2906,6 +2979,8 @@ mostlyclean-compile:
 	-rm -f isl/*.$(OBJEXT)
 	-rm -f isl/*.lo
 	-rm -f isl/tests/*.$(OBJEXT)
+	-rm -f perf/*.$(OBJEXT)
+	-rm -f perf/*.lo
 	-rm -f tools/*.$(OBJEXT)
 	-rm -f vulkan/*.$(OBJEXT)
 	-rm -f vulkan/*.lo
@@ -2919,7 +2994,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@blorp/$(DEPDIR)/blorp_blit.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@blorp/$(DEPDIR)/blorp_clear.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libintel_common_la-gen_batch_decoder.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libintel_common_la-gen_debug.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libintel_common_la-gen_decoder.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libintel_common_la-gen_disasm.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libintel_common_la-gen_l3_config.Plo@am__quote@
@@ -2935,6 +3009,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_compile_sf.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_compiler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_dead_control_flow.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_debug_recompile.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_disasm.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_disasm_info.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_eu.Plo@am__quote@
@@ -2958,7 +3033,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_register_coalesce.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_saturate_propagation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_sel_peephole.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_surface_builder.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_validate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_visitor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_interpolation_map.Plo@am__quote@
@@ -2966,6 +3040,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_analyze_boolean_resolves.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_analyze_ubo_ranges.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_attribute_workarounds.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_conversions.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_cs_intrinsics.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_image_load_store.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_mem_access_bit_sizes.Plo@am__quote@
@@ -3006,6 +3081,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/test_vec4_dead_code_eliminate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/test_vec4_register_coalesce.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@compiler/$(DEPDIR)/test_vf_float_conversions.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@dev/$(DEPDIR)/dev_libintel_dev_la-gen_debug.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@dev/$(DEPDIR)/dev_libintel_dev_la-gen_device_info.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@isl/$(DEPDIR)/isl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@isl/$(DEPDIR)/isl_drm.Plo@am__quote@
@@ -3038,6 +3114,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@isl/$(DEPDIR)/libisl_tiled_memcpy_la-isl_tiled_memcpy_normal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@isl/$(DEPDIR)/libisl_tiled_memcpy_sse41_la-isl_tiled_memcpy_sse41.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@isl/tests/$(DEPDIR)/isl_surf_get_image_offset_test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf_mdapi.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf_metrics.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@tools/$(DEPDIR)/tools_aubinator-aub_mem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@tools/$(DEPDIR)/tools_aubinator-aub_read.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@tools/$(DEPDIR)/tools_aubinator-aubinator.Po@am__quote@
@@ -3103,7 +3182,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_intel.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_add_base_work_group_id.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_apply_pipeline_layout.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_lower_multiview.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_lower_push_constants.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_lower_ycbcr_textures.Plo@am__quote@
@@ -3154,13 +3232,6 @@ common/common_libintel_common_la-gen_batch_decoder.lo: common/gen_batch_decoder.
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='common/gen_batch_decoder.c' object='common/common_libintel_common_la-gen_batch_decoder.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(common_libintel_common_la_CFLAGS) $(CFLAGS) -c -o common/common_libintel_common_la-gen_batch_decoder.lo `test -f 'common/gen_batch_decoder.c' || echo '$(srcdir)/'`common/gen_batch_decoder.c
-
-common/common_libintel_common_la-gen_debug.lo: common/gen_debug.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(common_libintel_common_la_CFLAGS) $(CFLAGS) -MT common/common_libintel_common_la-gen_debug.lo -MD -MP -MF common/$(DEPDIR)/common_libintel_common_la-gen_debug.Tpo -c -o common/common_libintel_common_la-gen_debug.lo `test -f 'common/gen_debug.c' || echo '$(srcdir)/'`common/gen_debug.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) common/$(DEPDIR)/common_libintel_common_la-gen_debug.Tpo common/$(DEPDIR)/common_libintel_common_la-gen_debug.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='common/gen_debug.c' object='common/common_libintel_common_la-gen_debug.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(common_libintel_common_la_CFLAGS) $(CFLAGS) -c -o common/common_libintel_common_la-gen_debug.lo `test -f 'common/gen_debug.c' || echo '$(srcdir)/'`common/gen_debug.c
 
 common/common_libintel_common_la-gen_decoder.lo: common/gen_decoder.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(common_libintel_common_la_CFLAGS) $(CFLAGS) -MT common/common_libintel_common_la-gen_decoder.lo -MD -MP -MF common/$(DEPDIR)/common_libintel_common_la-gen_decoder.Tpo -c -o common/common_libintel_common_la-gen_decoder.lo `test -f 'common/gen_decoder.c' || echo '$(srcdir)/'`common/gen_decoder.c
@@ -3253,6 +3324,13 @@ compiler/compiler_libintel_compiler_la-brw_compiler.lo: compiler/brw_compiler.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o compiler/compiler_libintel_compiler_la-brw_compiler.lo `test -f 'compiler/brw_compiler.c' || echo '$(srcdir)/'`compiler/brw_compiler.c
 
+compiler/compiler_libintel_compiler_la-brw_debug_recompile.lo: compiler/brw_debug_recompile.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT compiler/compiler_libintel_compiler_la-brw_debug_recompile.lo -MD -MP -MF compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_debug_recompile.Tpo -c -o compiler/compiler_libintel_compiler_la-brw_debug_recompile.lo `test -f 'compiler/brw_debug_recompile.c' || echo '$(srcdir)/'`compiler/brw_debug_recompile.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_debug_recompile.Tpo compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_debug_recompile.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='compiler/brw_debug_recompile.c' object='compiler/compiler_libintel_compiler_la-brw_debug_recompile.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o compiler/compiler_libintel_compiler_la-brw_debug_recompile.lo `test -f 'compiler/brw_debug_recompile.c' || echo '$(srcdir)/'`compiler/brw_debug_recompile.c
+
 compiler/compiler_libintel_compiler_la-brw_disasm.lo: compiler/brw_disasm.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT compiler/compiler_libintel_compiler_la-brw_disasm.lo -MD -MP -MF compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_disasm.Tpo -c -o compiler/compiler_libintel_compiler_la-brw_disasm.lo `test -f 'compiler/brw_disasm.c' || echo '$(srcdir)/'`compiler/brw_disasm.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_disasm.Tpo compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_disasm.Plo
@@ -3337,6 +3415,13 @@ compiler/compiler_libintel_compiler_la-brw_nir_attribute_workarounds.lo: compile
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o compiler/compiler_libintel_compiler_la-brw_nir_attribute_workarounds.lo `test -f 'compiler/brw_nir_attribute_workarounds.c' || echo '$(srcdir)/'`compiler/brw_nir_attribute_workarounds.c
 
+compiler/compiler_libintel_compiler_la-brw_nir_lower_conversions.lo: compiler/brw_nir_lower_conversions.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT compiler/compiler_libintel_compiler_la-brw_nir_lower_conversions.lo -MD -MP -MF compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_conversions.Tpo -c -o compiler/compiler_libintel_compiler_la-brw_nir_lower_conversions.lo `test -f 'compiler/brw_nir_lower_conversions.c' || echo '$(srcdir)/'`compiler/brw_nir_lower_conversions.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_conversions.Tpo compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_conversions.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='compiler/brw_nir_lower_conversions.c' object='compiler/compiler_libintel_compiler_la-brw_nir_lower_conversions.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o compiler/compiler_libintel_compiler_la-brw_nir_lower_conversions.lo `test -f 'compiler/brw_nir_lower_conversions.c' || echo '$(srcdir)/'`compiler/brw_nir_lower_conversions.c
+
 compiler/compiler_libintel_compiler_la-brw_nir_lower_cs_intrinsics.lo: compiler/brw_nir_lower_cs_intrinsics.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT compiler/compiler_libintel_compiler_la-brw_nir_lower_cs_intrinsics.lo -MD -MP -MF compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_cs_intrinsics.Tpo -c -o compiler/compiler_libintel_compiler_la-brw_nir_lower_cs_intrinsics.lo `test -f 'compiler/brw_nir_lower_cs_intrinsics.c' || echo '$(srcdir)/'`compiler/brw_nir_lower_cs_intrinsics.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_cs_intrinsics.Tpo compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_nir_lower_cs_intrinsics.Plo
@@ -3399,6 +3484,13 @@ compiler/compiler_libintel_compiler_la-brw_nir_trig_workarounds.lo: compiler/brw
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='compiler/brw_nir_trig_workarounds.c' object='compiler/compiler_libintel_compiler_la-brw_nir_trig_workarounds.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o compiler/compiler_libintel_compiler_la-brw_nir_trig_workarounds.lo `test -f 'compiler/brw_nir_trig_workarounds.c' || echo '$(srcdir)/'`compiler/brw_nir_trig_workarounds.c
+
+dev/dev_libintel_dev_la-gen_debug.lo: dev/gen_debug.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dev_libintel_dev_la_CFLAGS) $(CFLAGS) -MT dev/dev_libintel_dev_la-gen_debug.lo -MD -MP -MF dev/$(DEPDIR)/dev_libintel_dev_la-gen_debug.Tpo -c -o dev/dev_libintel_dev_la-gen_debug.lo `test -f 'dev/gen_debug.c' || echo '$(srcdir)/'`dev/gen_debug.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) dev/$(DEPDIR)/dev_libintel_dev_la-gen_debug.Tpo dev/$(DEPDIR)/dev_libintel_dev_la-gen_debug.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='dev/gen_debug.c' object='dev/dev_libintel_dev_la-gen_debug.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dev_libintel_dev_la_CFLAGS) $(CFLAGS) -c -o dev/dev_libintel_dev_la-gen_debug.lo `test -f 'dev/gen_debug.c' || echo '$(srcdir)/'`dev/gen_debug.c
 
 dev/dev_libintel_dev_la-gen_device_info.lo: dev/gen_device_info.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(dev_libintel_dev_la_CFLAGS) $(CFLAGS) -MT dev/dev_libintel_dev_la-gen_device_info.lo -MD -MP -MF dev/$(DEPDIR)/dev_libintel_dev_la-gen_device_info.Tpo -c -o dev/dev_libintel_dev_la-gen_device_info.lo `test -f 'dev/gen_device_info.c' || echo '$(srcdir)/'`dev/gen_device_info.c
@@ -3581,6 +3673,27 @@ isl/libisl_tiled_memcpy_sse41_la-isl_tiled_memcpy_sse41.lo: isl/isl_tiled_memcpy
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='isl/isl_tiled_memcpy_sse41.c' object='isl/libisl_tiled_memcpy_sse41_la-isl_tiled_memcpy_sse41.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libisl_tiled_memcpy_sse41_la_CFLAGS) $(CFLAGS) -c -o isl/libisl_tiled_memcpy_sse41_la-isl_tiled_memcpy_sse41.lo `test -f 'isl/isl_tiled_memcpy_sse41.c' || echo '$(srcdir)/'`isl/isl_tiled_memcpy_sse41.c
+
+perf/perf_libintel_perf_la-gen_perf.lo: perf/gen_perf.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(perf_libintel_perf_la_CFLAGS) $(CFLAGS) -MT perf/perf_libintel_perf_la-gen_perf.lo -MD -MP -MF perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf.Tpo -c -o perf/perf_libintel_perf_la-gen_perf.lo `test -f 'perf/gen_perf.c' || echo '$(srcdir)/'`perf/gen_perf.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf.Tpo perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='perf/gen_perf.c' object='perf/perf_libintel_perf_la-gen_perf.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(perf_libintel_perf_la_CFLAGS) $(CFLAGS) -c -o perf/perf_libintel_perf_la-gen_perf.lo `test -f 'perf/gen_perf.c' || echo '$(srcdir)/'`perf/gen_perf.c
+
+perf/perf_libintel_perf_la-gen_perf_mdapi.lo: perf/gen_perf_mdapi.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(perf_libintel_perf_la_CFLAGS) $(CFLAGS) -MT perf/perf_libintel_perf_la-gen_perf_mdapi.lo -MD -MP -MF perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf_mdapi.Tpo -c -o perf/perf_libintel_perf_la-gen_perf_mdapi.lo `test -f 'perf/gen_perf_mdapi.c' || echo '$(srcdir)/'`perf/gen_perf_mdapi.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf_mdapi.Tpo perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf_mdapi.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='perf/gen_perf_mdapi.c' object='perf/perf_libintel_perf_la-gen_perf_mdapi.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(perf_libintel_perf_la_CFLAGS) $(CFLAGS) -c -o perf/perf_libintel_perf_la-gen_perf_mdapi.lo `test -f 'perf/gen_perf_mdapi.c' || echo '$(srcdir)/'`perf/gen_perf_mdapi.c
+
+perf/perf_libintel_perf_la-gen_perf_metrics.lo: perf/gen_perf_metrics.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(perf_libintel_perf_la_CFLAGS) $(CFLAGS) -MT perf/perf_libintel_perf_la-gen_perf_metrics.lo -MD -MP -MF perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf_metrics.Tpo -c -o perf/perf_libintel_perf_la-gen_perf_metrics.lo `test -f 'perf/gen_perf_metrics.c' || echo '$(srcdir)/'`perf/gen_perf_metrics.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf_metrics.Tpo perf/$(DEPDIR)/perf_libintel_perf_la-gen_perf_metrics.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='perf/gen_perf_metrics.c' object='perf/perf_libintel_perf_la-gen_perf_metrics.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(perf_libintel_perf_la_CFLAGS) $(CFLAGS) -c -o perf/perf_libintel_perf_la-gen_perf_metrics.lo `test -f 'perf/gen_perf_metrics.c' || echo '$(srcdir)/'`perf/gen_perf_metrics.c
 
 vulkan/vulkan_libanv_gen10_la-gen8_cmd_buffer.lo: vulkan/gen8_cmd_buffer.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vulkan_libanv_gen10_la_CPPFLAGS) $(CPPFLAGS) $(vulkan_libanv_gen10_la_CFLAGS) $(CFLAGS) -MT vulkan/vulkan_libanv_gen10_la-gen8_cmd_buffer.lo -MD -MP -MF vulkan/$(DEPDIR)/vulkan_libanv_gen10_la-gen8_cmd_buffer.Tpo -c -o vulkan/vulkan_libanv_gen10_la-gen8_cmd_buffer.lo `test -f 'vulkan/gen8_cmd_buffer.c' || echo '$(srcdir)/'`vulkan/gen8_cmd_buffer.c
@@ -3980,13 +4093,6 @@ vulkan/vulkan_libvulkan_common_la-anv_nir_apply_pipeline_layout.lo: vulkan/anv_n
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='vulkan/anv_nir_apply_pipeline_layout.c' object='vulkan/vulkan_libvulkan_common_la-anv_nir_apply_pipeline_layout.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vulkan_libvulkan_common_la_CPPFLAGS) $(CPPFLAGS) $(vulkan_libvulkan_common_la_CFLAGS) $(CFLAGS) -c -o vulkan/vulkan_libvulkan_common_la-anv_nir_apply_pipeline_layout.lo `test -f 'vulkan/anv_nir_apply_pipeline_layout.c' || echo '$(srcdir)/'`vulkan/anv_nir_apply_pipeline_layout.c
-
-vulkan/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.lo: vulkan/anv_nir_lower_input_attachments.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vulkan_libvulkan_common_la_CPPFLAGS) $(CPPFLAGS) $(vulkan_libvulkan_common_la_CFLAGS) $(CFLAGS) -MT vulkan/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.lo -MD -MP -MF vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.Tpo -c -o vulkan/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.lo `test -f 'vulkan/anv_nir_lower_input_attachments.c' || echo '$(srcdir)/'`vulkan/anv_nir_lower_input_attachments.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.Tpo vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='vulkan/anv_nir_lower_input_attachments.c' object='vulkan/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vulkan_libvulkan_common_la_CPPFLAGS) $(CPPFLAGS) $(vulkan_libvulkan_common_la_CFLAGS) $(CFLAGS) -c -o vulkan/vulkan_libvulkan_common_la-anv_nir_lower_input_attachments.lo `test -f 'vulkan/anv_nir_lower_input_attachments.c' || echo '$(srcdir)/'`vulkan/anv_nir_lower_input_attachments.c
 
 vulkan/vulkan_libvulkan_common_la-anv_nir_lower_multiview.lo: vulkan/anv_nir_lower_multiview.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(vulkan_libvulkan_common_la_CPPFLAGS) $(CPPFLAGS) $(vulkan_libvulkan_common_la_CFLAGS) $(CFLAGS) -MT vulkan/vulkan_libvulkan_common_la-anv_nir_lower_multiview.lo -MD -MP -MF vulkan/$(DEPDIR)/vulkan_libvulkan_common_la-anv_nir_lower_multiview.Tpo -c -o vulkan/vulkan_libvulkan_common_la-anv_nir_lower_multiview.lo `test -f 'vulkan/anv_nir_lower_multiview.c' || echo '$(srcdir)/'`vulkan/anv_nir_lower_multiview.c
@@ -4411,13 +4517,6 @@ compiler/compiler_libintel_compiler_la-brw_fs_sel_peephole.lo: compiler/brw_fs_s
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o compiler/compiler_libintel_compiler_la-brw_fs_sel_peephole.lo `test -f 'compiler/brw_fs_sel_peephole.cpp' || echo '$(srcdir)/'`compiler/brw_fs_sel_peephole.cpp
 
-compiler/compiler_libintel_compiler_la-brw_fs_surface_builder.lo: compiler/brw_fs_surface_builder.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT compiler/compiler_libintel_compiler_la-brw_fs_surface_builder.lo -MD -MP -MF compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_surface_builder.Tpo -c -o compiler/compiler_libintel_compiler_la-brw_fs_surface_builder.lo `test -f 'compiler/brw_fs_surface_builder.cpp' || echo '$(srcdir)/'`compiler/brw_fs_surface_builder.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_surface_builder.Tpo compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_surface_builder.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='compiler/brw_fs_surface_builder.cpp' object='compiler/compiler_libintel_compiler_la-brw_fs_surface_builder.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o compiler/compiler_libintel_compiler_la-brw_fs_surface_builder.lo `test -f 'compiler/brw_fs_surface_builder.cpp' || echo '$(srcdir)/'`compiler/brw_fs_surface_builder.cpp
-
 compiler/compiler_libintel_compiler_la-brw_fs_validate.lo: compiler/brw_fs_validate.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(compiler_libintel_compiler_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT compiler/compiler_libintel_compiler_la-brw_fs_validate.lo -MD -MP -MF compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_validate.Tpo -c -o compiler/compiler_libintel_compiler_la-brw_fs_validate.lo `test -f 'compiler/brw_fs_validate.cpp' || echo '$(srcdir)/'`compiler/brw_fs_validate.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_validate.Tpo compiler/$(DEPDIR)/compiler_libintel_compiler_la-brw_fs_validate.Plo
@@ -4597,6 +4696,7 @@ clean-libtool:
 	-rm -rf dev/.libs dev/_libs
 	-rm -rf isl/.libs isl/_libs
 	-rm -rf isl/tests/.libs isl/tests/_libs
+	-rm -rf perf/.libs perf/_libs
 	-rm -rf tools/.libs tools/_libs
 	-rm -rf vulkan/.libs vulkan/_libs
 	-rm -rf vulkan/tests/.libs vulkan/tests/_libs
@@ -4886,6 +4986,8 @@ distclean-generic:
 	-rm -f isl/$(am__dirstamp)
 	-rm -f isl/tests/$(DEPDIR)/$(am__dirstamp)
 	-rm -f isl/tests/$(am__dirstamp)
+	-rm -f perf/$(DEPDIR)/$(am__dirstamp)
+	-rm -f perf/$(am__dirstamp)
 	-rm -f tools/$(DEPDIR)/$(am__dirstamp)
 	-rm -f tools/$(am__dirstamp)
 	-rm -f vulkan/$(DEPDIR)/$(am__dirstamp)
@@ -4907,7 +5009,7 @@ clean-am: clean-checkLTLIBRARIES clean-checkPROGRAMS clean-generic \
 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR) blorp/$(DEPDIR) common/$(DEPDIR) compiler/$(DEPDIR) dev/$(DEPDIR) isl/$(DEPDIR) isl/tests/$(DEPDIR) tools/$(DEPDIR) vulkan/$(DEPDIR) vulkan/tests/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) blorp/$(DEPDIR) common/$(DEPDIR) compiler/$(DEPDIR) dev/$(DEPDIR) isl/$(DEPDIR) isl/tests/$(DEPDIR) perf/$(DEPDIR) tools/$(DEPDIR) vulkan/$(DEPDIR) vulkan/tests/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -4953,7 +5055,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR) blorp/$(DEPDIR) common/$(DEPDIR) compiler/$(DEPDIR) dev/$(DEPDIR) isl/$(DEPDIR) isl/tests/$(DEPDIR) tools/$(DEPDIR) vulkan/$(DEPDIR) vulkan/tests/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) blorp/$(DEPDIR) common/$(DEPDIR) compiler/$(DEPDIR) dev/$(DEPDIR) isl/$(DEPDIR) isl/tests/$(DEPDIR) perf/$(DEPDIR) tools/$(DEPDIR) vulkan/$(DEPDIR) vulkan/tests/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -5023,6 +5125,15 @@ isl_tiled_memcpy_sse41.c: $(ISL_TILED_MEMCPY_DEP_FILES)
 @REGEN_SOURCES_TRUE@	$(PYTHON_GEN) $(srcdir)/isl/gen_format_layout.py \
 @REGEN_SOURCES_TRUE@	    --csv $(srcdir)/isl/isl_format_layout.csv --out $@
 
+@REGEN_SOURCES_TRUE@perf/gen_perf_metrics.c: perf/gen_perf.py $(GEN_PERF_XML_FILES)
+@REGEN_SOURCES_TRUE@	$(MKDIR_GEN)
+@REGEN_SOURCES_TRUE@	$(PYTHON_GEN) $(PYTHON_FLAGS) $(srcdir)/perf/gen_perf.py \
+@REGEN_SOURCES_TRUE@	--code=$(builddir)/perf/gen_perf_metrics.c \
+@REGEN_SOURCES_TRUE@	--header=$(builddir)/perf/gen_perf_metrics.h \
+@REGEN_SOURCES_TRUE@	$(GEN_PERF_XML_FILES:%=$(srcdir)/%)
+
+perf/gen_perf_metrics.h: perf/gen_perf_metrics.c
+
 @REGEN_SOURCES_TRUE@vulkan/anv_entrypoints.c: vulkan/anv_entrypoints_gen.py \
 @REGEN_SOURCES_TRUE@			  vulkan/anv_extensions.py \
 @REGEN_SOURCES_TRUE@			  $(vulkan_api_xml)
@@ -5061,7 +5172,7 @@ isl_tiled_memcpy_sse41.c: $(ISL_TILED_MEMCPY_DEP_FILES)
 @REGEN_SOURCES_FALSE@	$(MKDIR_GEN)
 @REGEN_SOURCES_FALSE@	@echo -e "{" > $@
 @REGEN_SOURCES_FALSE@	@echo -e "    \"ICD\": {" >> $@
-@REGEN_SOURCES_FALSE@	@echo -e "        \"api_version\": \"1.1.96\"," >> $@
+@REGEN_SOURCES_FALSE@	@echo -e "        \"api_version\": \"1.1.102\"," >> $@
 @REGEN_SOURCES_FALSE@	@echo -e "        \"library_path\": \"${libdir}/libvulkan_intel.so\"" >> $@
 @REGEN_SOURCES_FALSE@	@echo -e "    }," >> $@
 @REGEN_SOURCES_FALSE@	@echo -e "    \"file_format_version\": \"1.0.0\"" >> $@

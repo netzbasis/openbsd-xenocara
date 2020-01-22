@@ -127,7 +127,9 @@ am__objects_2 = nv30/nv30_clear.lo nv30/nv30_context.lo \
 	nv30/nvfx_fragprog.lo nv30/nvfx_vertprog.lo
 am__objects_3 = codegen/nv50_ir.lo codegen/nv50_ir_bb.lo \
 	codegen/nv50_ir_build_util.lo codegen/nv50_ir_emit_nv50.lo \
+	codegen/nv50_ir_from_common.lo codegen/nv50_ir_from_nir.lo \
 	codegen/nv50_ir_from_tgsi.lo codegen/nv50_ir_graph.lo \
+	codegen/nv50_ir_lowering_helper.lo \
 	codegen/nv50_ir_lowering_nv50.lo codegen/nv50_ir_peephole.lo \
 	codegen/nv50_ir_print.lo codegen/nv50_ir_ra.lo \
 	codegen/nv50_ir_ssa.lo codegen/nv50_ir_target.lo \
@@ -182,6 +184,7 @@ am__DEPENDENCIES_4 = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2) \
 	$(am__DEPENDENCIES_3)
 nouveau_compiler_DEPENDENCIES = libnouveau.la \
+	$(top_builddir)/src/compiler/nir/libnir.la \
 	$(top_builddir)/src/gallium/auxiliary/libgallium.la \
 	$(top_builddir)/src/util/libmesautil.la $(am__DEPENDENCIES_4)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -300,6 +303,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -312,6 +316,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -582,7 +587,6 @@ C_SOURCES := \
 	nouveau_mm.h \
 	nouveau_screen.c \
 	nouveau_screen.h \
-	nouveau_statebuf.h \
 	nouveau_video.c \
 	nouveau_video.h \
 	nouveau_vp3_video_bsp.c \
@@ -685,11 +689,16 @@ NV50_CODEGEN_SOURCES := \
 	codegen/nv50_ir_build_util.h \
 	codegen/nv50_ir_driver.h \
 	codegen/nv50_ir_emit_nv50.cpp \
+	codegen/nv50_ir_from_common.cpp \
+	codegen/nv50_ir_from_common.h \
+	codegen/nv50_ir_from_nir.cpp \
 	codegen/nv50_ir_from_tgsi.cpp \
 	codegen/nv50_ir_graph.cpp \
 	codegen/nv50_ir_graph.h \
 	codegen/nv50_ir.h \
 	codegen/nv50_ir_inlines.h \
+	codegen/nv50_ir_lowering_helper.cpp \
+	codegen/nv50_ir_lowering_helper.h \
 	codegen/nv50_ir_lowering_nv50.cpp \
 	codegen/nv50_ir_peephole.cpp \
 	codegen/nv50_ir_print.cpp \
@@ -828,7 +837,11 @@ GALLIUM_PIPE_LOADER_WINSYS_LIBS =  \
 	$(top_builddir)/src/gallium/winsys/sw/wrapper/libwsw.la \
 	$(am__append_3) $(am__append_4)
 AM_CPPFLAGS = \
-	-I$(top_srcdir)/include/drm-uapi \
+	-I$(top_srcdir)/include \
+	-I$(top_builddir)/src/compiler/nir \
+	-I$(top_srcdir)/src/compiler/nir \
+	-I$(top_srcdir)/src/mapi \
+	-I$(top_srcdir)/src/mesa \
 	$(GALLIUM_DRIVER_CFLAGS) \
 	$(LIBDRM_CFLAGS) \
 	$(NOUVEAU_CFLAGS)
@@ -848,6 +861,7 @@ nouveau_compiler_SOURCES = \
 
 nouveau_compiler_LDADD = \
 	libnouveau.la \
+	$(top_builddir)/src/compiler/nir/libnir.la \
 	$(top_builddir)/src/gallium/auxiliary/libgallium.la \
 	$(top_builddir)/src/util/libmesautil.la \
 	$(GALLIUM_COMMON_LIB_DEPS)
@@ -956,9 +970,15 @@ codegen/nv50_ir_build_util.lo: codegen/$(am__dirstamp) \
 	codegen/$(DEPDIR)/$(am__dirstamp)
 codegen/nv50_ir_emit_nv50.lo: codegen/$(am__dirstamp) \
 	codegen/$(DEPDIR)/$(am__dirstamp)
+codegen/nv50_ir_from_common.lo: codegen/$(am__dirstamp) \
+	codegen/$(DEPDIR)/$(am__dirstamp)
+codegen/nv50_ir_from_nir.lo: codegen/$(am__dirstamp) \
+	codegen/$(DEPDIR)/$(am__dirstamp)
 codegen/nv50_ir_from_tgsi.lo: codegen/$(am__dirstamp) \
 	codegen/$(DEPDIR)/$(am__dirstamp)
 codegen/nv50_ir_graph.lo: codegen/$(am__dirstamp) \
+	codegen/$(DEPDIR)/$(am__dirstamp)
+codegen/nv50_ir_lowering_helper.lo: codegen/$(am__dirstamp) \
 	codegen/$(DEPDIR)/$(am__dirstamp)
 codegen/nv50_ir_lowering_nv50.lo: codegen/$(am__dirstamp) \
 	codegen/$(DEPDIR)/$(am__dirstamp)
@@ -1146,9 +1166,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_emit_gm107.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_emit_nv50.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_emit_nvc0.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_from_common.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_from_nir.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_from_tgsi.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_graph.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_lowering_gm107.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_lowering_helper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_lowering_nv50.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_lowering_nvc0.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@codegen/$(DEPDIR)/nv50_ir_peephole.Plo@am__quote@

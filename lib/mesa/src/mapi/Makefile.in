@@ -126,14 +126,14 @@ DIST_COMMON = $(am__GLES2_include_HEADERS_DIST) \
 
 @HAVE_OPENGL_TRUE@@HAVE_SHARED_GLAPI_FALSE@am__append_11 = glapi-test
 @HAVE_OPENGL_TRUE@@HAVE_SHARED_GLAPI_FALSE@am__append_12 = glapi-test
-@HAVE_OPENGL_ES1_TRUE@am__append_13 = es1api/ABI-check
-@HAVE_OPENGL_ES1_TRUE@am__append_14 = es1api/glapi_mapi_tmp.h
-@HAVE_OPENGL_ES1_TRUE@am__append_15 = es1api/glesv1_cm.pc
-@HAVE_OPENGL_ES1_TRUE@am__append_16 = es1api/libGLESv1_CM.la
-@HAVE_OPENGL_ES2_TRUE@am__append_17 = es2api/ABI-check
-@HAVE_OPENGL_ES2_TRUE@am__append_18 = es2api/glapi_mapi_tmp.h
-@HAVE_OPENGL_ES2_TRUE@am__append_19 = es2api/glesv2.pc
-@HAVE_OPENGL_ES2_TRUE@am__append_20 = es2api/libGLESv2.la
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@am__append_13 = es1api/ABI-check
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@am__append_14 = es1api/glapi_mapi_tmp.h
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@am__append_15 = es1api/glesv1_cm.pc
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@am__append_16 = es1api/libGLESv1_CM@GLES_LIB_SUFFIX@.la
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@am__append_17 = es2api/ABI-check
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@am__append_18 = es2api/glapi_mapi_tmp.h
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@am__append_19 = es2api/glesv2.pc
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@am__append_20 = es2api/libGLESv2@GLES_LIB_SUFFIX@.la
 subdir = src/mapi
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_compile_flag.m4 \
@@ -185,37 +185,39 @@ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgconfigdir)" \
 	"$(DESTDIR)$(khrdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-@HAVE_OPENGL_ES1_TRUE@es1api_libGLESv1_CM_la_DEPENDENCIES =  \
-@HAVE_OPENGL_ES1_TRUE@	$(am__DEPENDENCIES_1) \
-@HAVE_OPENGL_ES1_TRUE@	shared-glapi/libglapi.la
-am__es1api_libGLESv1_CM_la_SOURCES_DIST = entry.c \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	shared-glapi/libglapi.la
+am__es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_SOURCES_DIST = entry.c \
 	es1api/glapi_mapi_tmp.h
-@HAVE_OPENGL_ES1_TRUE@am_es1api_libGLESv1_CM_la_OBJECTS =  \
-@HAVE_OPENGL_ES1_TRUE@	es1api_libGLESv1_CM_la-entry.lo
-es1api_libGLESv1_CM_la_OBJECTS = $(am_es1api_libGLESv1_CM_la_OBJECTS)
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@am_es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_OBJECTS = es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.lo
+es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_OBJECTS =  \
+	$(am_es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-es1api_libGLESv1_CM_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
-	$(es1api_libGLESv1_CM_la_CFLAGS) $(CFLAGS) \
-	$(es1api_libGLESv1_CM_la_LDFLAGS) $(LDFLAGS) -o $@
-@HAVE_OPENGL_ES1_TRUE@am_es1api_libGLESv1_CM_la_rpath = -rpath \
-@HAVE_OPENGL_ES1_TRUE@	$(libdir)
+es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CCLD) $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_CFLAGS) \
+	$(CFLAGS) $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@am_es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_rpath =  \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	-rpath $(libdir)
 am__dirstamp = $(am__leading_dot)dirstamp
-@HAVE_OPENGL_ES2_TRUE@es2api_libGLESv2_la_DEPENDENCIES =  \
-@HAVE_OPENGL_ES2_TRUE@	$(am__DEPENDENCIES_1) \
-@HAVE_OPENGL_ES2_TRUE@	shared-glapi/libglapi.la
-am__es2api_libGLESv2_la_SOURCES_DIST = entry.c es2api/glapi_mapi_tmp.h
-@HAVE_OPENGL_ES2_TRUE@am_es2api_libGLESv2_la_OBJECTS =  \
-@HAVE_OPENGL_ES2_TRUE@	es2api_libGLESv2_la-entry.lo
-es2api_libGLESv2_la_OBJECTS = $(am_es2api_libGLESv2_la_OBJECTS)
-es2api_libGLESv2_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
-	$(es2api_libGLESv2_la_CFLAGS) $(CFLAGS) \
-	$(es2api_libGLESv2_la_LDFLAGS) $(LDFLAGS) -o $@
-@HAVE_OPENGL_ES2_TRUE@am_es2api_libGLESv2_la_rpath = -rpath $(libdir)
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@es2api_libGLESv2@GLES_LIB_SUFFIX@_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	shared-glapi/libglapi.la
+am__es2api_libGLESv2@GLES_LIB_SUFFIX@_la_SOURCES_DIST = entry.c \
+	es2api/glapi_mapi_tmp.h
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@am_es2api_libGLESv2@GLES_LIB_SUFFIX@_la_OBJECTS = es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.lo
+es2api_libGLESv2@GLES_LIB_SUFFIX@_la_OBJECTS =  \
+	$(am_es2api_libGLESv2@GLES_LIB_SUFFIX@_la_OBJECTS)
+es2api_libGLESv2@GLES_LIB_SUFFIX@_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CCLD) $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_CFLAGS) \
+	$(CFLAGS) $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@am_es2api_libGLESv2@GLES_LIB_SUFFIX@_la_rpath =  \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	-rpath $(libdir)
 glapi_libglapi_la_LIBADD =
 am__glapi_libglapi_la_SOURCES_DIST = glapi/glapi_gentable.c entry.c \
 	entry.h entry_x86-64_tls.h entry_x86_tls.h entry_x86_tsd.h \
@@ -345,12 +347,14 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(es1api_libGLESv1_CM_la_SOURCES) \
-	$(es2api_libGLESv2_la_SOURCES) $(glapi_libglapi_la_SOURCES) \
+SOURCES = $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_SOURCES) \
+	$(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_SOURCES) \
+	$(glapi_libglapi_la_SOURCES) \
 	$(shared_glapi_libglapi_la_SOURCES) $(glapi_test_SOURCES) \
 	$(shared_glapi_test_SOURCES)
-DIST_SOURCES = $(am__es1api_libGLESv1_CM_la_SOURCES_DIST) \
-	$(am__es2api_libGLESv2_la_SOURCES_DIST) \
+DIST_SOURCES =  \
+	$(am__es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_SOURCES_DIST) \
+	$(am__es2api_libGLESv2@GLES_LIB_SUFFIX@_la_SOURCES_DIST) \
 	$(am__glapi_libglapi_la_SOURCES_DIST) \
 	$(am__shared_glapi_libglapi_la_SOURCES_DIST) \
 	$(am__glapi_test_SOURCES_DIST) \
@@ -474,6 +478,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -486,6 +491,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -751,8 +757,8 @@ pkgconfig_DATA = $(am__append_15) $(am__append_19)
 EXTRA_DIST = \
 	new/genCommon.py \
 	new/gen_gldispatch_mapi.py \
-	es1api/ABI-check \
-	es2api/ABI-check \
+	es1api/gles1-symbols.txt \
+	es2api/gles2-symbols.txt \
 	mapi_abi.py \
 	glapi/SConscript \
 	glapi/registry/gl.xml \
@@ -835,6 +841,7 @@ glapi_gen_mapi = $(AM_V_GEN)$(PYTHON) $(PYTHON_FLAGS) $(glapi_gen_mapi_script)
 
 @HAVE_SHARED_GLAPI_TRUE@shared_glapi_libglapi_la_LDFLAGS = \
 @HAVE_SHARED_GLAPI_TRUE@	-no-undefined \
+@HAVE_SHARED_GLAPI_TRUE@	-version-number 0:2 \
 @HAVE_SHARED_GLAPI_TRUE@	$(GC_SECTIONS) \
 @HAVE_SHARED_GLAPI_TRUE@	$(LD_NO_UNDEFINED)
 
@@ -868,63 +875,63 @@ glapi_gen_mapi = $(AM_V_GEN)$(PYTHON) $(PYTHON_FLAGS) $(glapi_gen_mapi_script)
 @HAVE_OPENGL_TRUE@@HAVE_SHARED_GLAPI_FALSE@	$(top_builddir)/src/mapi/glapi/libglapi.la \
 @HAVE_OPENGL_TRUE@@HAVE_SHARED_GLAPI_FALSE@	$(top_builddir)/src/gtest/libgtest.la
 
-@HAVE_OPENGL_ES1_TRUE@GLES_includedir = $(includedir)/GLES
-@HAVE_OPENGL_ES1_TRUE@GLES_include_HEADERS = \
-@HAVE_OPENGL_ES1_TRUE@	$(top_srcdir)/include/GLES/egl.h \
-@HAVE_OPENGL_ES1_TRUE@	$(top_srcdir)/include/GLES/gl.h \
-@HAVE_OPENGL_ES1_TRUE@	$(top_srcdir)/include/GLES/glext.h \
-@HAVE_OPENGL_ES1_TRUE@	$(top_srcdir)/include/GLES/glplatform.h
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@GLES_includedir = $(includedir)/GLES
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@GLES_include_HEADERS = \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES/egl.h \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES/gl.h \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES/glext.h \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES/glplatform.h
 
-@HAVE_OPENGL_ES1_TRUE@es1api_libGLESv1_CM_la_SOURCES = entry.c es1api/glapi_mapi_tmp.h
-@HAVE_OPENGL_ES1_TRUE@es1api_libGLESv1_CM_la_CFLAGS = \
-@HAVE_OPENGL_ES1_TRUE@	$(AM_CFLAGS) \
-@HAVE_OPENGL_ES1_TRUE@	$(VISIBILITY_CFLAGS)
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_SOURCES = entry.c es1api/glapi_mapi_tmp.h
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_CFLAGS = \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	$(AM_CFLAGS) \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	$(VISIBILITY_CFLAGS)
 
-@HAVE_OPENGL_ES1_TRUE@es1api_libGLESv1_CM_la_CPPFLAGS = \
-@HAVE_OPENGL_ES1_TRUE@	$(AM_CPPFLAGS) \
-@HAVE_OPENGL_ES1_TRUE@	-DMAPI_MODE_BRIDGE \
-@HAVE_OPENGL_ES1_TRUE@	-DMAPI_ABI_HEADER=\"es1api/glapi_mapi_tmp.h\"
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_CPPFLAGS = \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	$(AM_CPPFLAGS) \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	-DMAPI_MODE_BRIDGE \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	-DMAPI_ABI_HEADER=\"es1api/glapi_mapi_tmp.h\"
 
-@HAVE_OPENGL_ES1_TRUE@es1api_libGLESv1_CM_la_LIBADD =  \
-@HAVE_OPENGL_ES1_TRUE@	$(GLESv1_CM_LIB_DEPS) \
-@HAVE_OPENGL_ES1_TRUE@	shared-glapi/libglapi.la
-@HAVE_OPENGL_ES1_TRUE@es1api_libGLESv1_CM_la_LDFLAGS = \
-@HAVE_OPENGL_ES1_TRUE@	-no-undefined \
-@HAVE_OPENGL_ES1_TRUE@	-version-number 1:1 \
-@HAVE_OPENGL_ES1_TRUE@	$(GC_SECTIONS) \
-@HAVE_OPENGL_ES1_TRUE@	$(LD_NO_UNDEFINED)
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_LIBADD = $(GLESv1_CM_LIB_DEPS) \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	shared-glapi/libglapi.la
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_LDFLAGS = \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	-no-undefined \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	-version-number 2:0 \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	$(GC_SECTIONS) \
+@HAVE_OPENGL_ES1_TRUE@@USE_LIBGLVND_FALSE@	$(LD_NO_UNDEFINED)
 
-@HAVE_OPENGL_ES2_TRUE@GLES2_includedir = $(includedir)/GLES2
-@HAVE_OPENGL_ES2_TRUE@GLES2_include_HEADERS = \
-@HAVE_OPENGL_ES2_TRUE@	$(top_srcdir)/include/GLES2/gl2.h \
-@HAVE_OPENGL_ES2_TRUE@	$(top_srcdir)/include/GLES2/gl2ext.h \
-@HAVE_OPENGL_ES2_TRUE@	$(top_srcdir)/include/GLES2/gl2platform.h
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@GLES2_includedir = $(includedir)/GLES2
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@GLES2_include_HEADERS = \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES2/gl2.h \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES2/gl2ext.h \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES2/gl2platform.h
 
-@HAVE_OPENGL_ES2_TRUE@GLES3_includedir = $(includedir)/GLES3
-@HAVE_OPENGL_ES2_TRUE@GLES3_include_HEADERS = \
-@HAVE_OPENGL_ES2_TRUE@	$(top_srcdir)/include/GLES3/gl3.h \
-@HAVE_OPENGL_ES2_TRUE@	$(top_srcdir)/include/GLES3/gl31.h \
-@HAVE_OPENGL_ES2_TRUE@	$(top_srcdir)/include/GLES3/gl32.h \
-@HAVE_OPENGL_ES2_TRUE@	$(top_srcdir)/include/GLES3/gl3ext.h \
-@HAVE_OPENGL_ES2_TRUE@	$(top_srcdir)/include/GLES3/gl3platform.h
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@GLES3_includedir = $(includedir)/GLES3
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@GLES3_include_HEADERS = \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES3/gl3.h \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES3/gl31.h \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES3/gl32.h \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES3/gl3ext.h \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(top_srcdir)/include/GLES3/gl3platform.h
 
-@HAVE_OPENGL_ES2_TRUE@es2api_libGLESv2_la_SOURCES = entry.c es2api/glapi_mapi_tmp.h
-@HAVE_OPENGL_ES2_TRUE@es2api_libGLESv2_la_CFLAGS = \
-@HAVE_OPENGL_ES2_TRUE@	$(AM_CFLAGS) \
-@HAVE_OPENGL_ES2_TRUE@	$(VISIBILITY_CFLAGS)
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@es2api_libGLESv2@GLES_LIB_SUFFIX@_la_SOURCES = entry.c es2api/glapi_mapi_tmp.h
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@es2api_libGLESv2@GLES_LIB_SUFFIX@_la_CFLAGS = \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(AM_CFLAGS) \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(VISIBILITY_CFLAGS)
 
-@HAVE_OPENGL_ES2_TRUE@es2api_libGLESv2_la_CPPFLAGS = \
-@HAVE_OPENGL_ES2_TRUE@	$(AM_CPPFLAGS) \
-@HAVE_OPENGL_ES2_TRUE@	-DMAPI_MODE_BRIDGE \
-@HAVE_OPENGL_ES2_TRUE@	-DMAPI_ABI_HEADER=\"es2api/glapi_mapi_tmp.h\"
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@es2api_libGLESv2@GLES_LIB_SUFFIX@_la_CPPFLAGS = \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(AM_CPPFLAGS) \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	-DMAPI_MODE_BRIDGE \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	-DMAPI_ABI_HEADER=\"es2api/glapi_mapi_tmp.h\"
 
-@HAVE_OPENGL_ES2_TRUE@es2api_libGLESv2_la_LIBADD = $(GLESv2_LIB_DEPS) \
-@HAVE_OPENGL_ES2_TRUE@	shared-glapi/libglapi.la
-@HAVE_OPENGL_ES2_TRUE@es2api_libGLESv2_la_LDFLAGS = \
-@HAVE_OPENGL_ES2_TRUE@	-no-undefined \
-@HAVE_OPENGL_ES2_TRUE@	-version-number 2 \
-@HAVE_OPENGL_ES2_TRUE@	$(GC_SECTIONS) \
-@HAVE_OPENGL_ES2_TRUE@	$(LD_NO_UNDEFINED)
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@es2api_libGLESv2@GLES_LIB_SUFFIX@_la_LIBADD =  \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(GLESv2_LIB_DEPS) \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	shared-glapi/libglapi.la
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@es2api_libGLESv2@GLES_LIB_SUFFIX@_la_LDFLAGS = \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	-no-undefined \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	-version-number 2:0 \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(GC_SECTIONS) \
+@HAVE_OPENGL_ES2_TRUE@@USE_LIBGLVND_FALSE@	$(LD_NO_UNDEFINED)
 
 @NEED_KHRPLATFORM_TRUE@khrdir = $(includedir)/KHR
 @NEED_KHRPLATFORM_TRUE@khr_HEADERS = $(top_srcdir)/include/KHR/khrplatform.h
@@ -1012,13 +1019,13 @@ clean-noinstLTLIBRARIES:
 es1api/$(am__dirstamp):
 	@$(MKDIR_P) es1api
 	@: > es1api/$(am__dirstamp)
-es1api/libGLESv1_CM.la: $(es1api_libGLESv1_CM_la_OBJECTS) $(es1api_libGLESv1_CM_la_DEPENDENCIES) $(EXTRA_es1api_libGLESv1_CM_la_DEPENDENCIES) es1api/$(am__dirstamp)
-	$(AM_V_CCLD)$(es1api_libGLESv1_CM_la_LINK) $(am_es1api_libGLESv1_CM_la_rpath) $(es1api_libGLESv1_CM_la_OBJECTS) $(es1api_libGLESv1_CM_la_LIBADD) $(LIBS)
+es1api/libGLESv1_CM@GLES_LIB_SUFFIX@.la: $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_OBJECTS) $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_DEPENDENCIES) $(EXTRA_es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_DEPENDENCIES) es1api/$(am__dirstamp)
+	$(AM_V_CCLD)$(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_LINK) $(am_es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_rpath) $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_OBJECTS) $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_LIBADD) $(LIBS)
 es2api/$(am__dirstamp):
 	@$(MKDIR_P) es2api
 	@: > es2api/$(am__dirstamp)
-es2api/libGLESv2.la: $(es2api_libGLESv2_la_OBJECTS) $(es2api_libGLESv2_la_DEPENDENCIES) $(EXTRA_es2api_libGLESv2_la_DEPENDENCIES) es2api/$(am__dirstamp)
-	$(AM_V_CCLD)$(es2api_libGLESv2_la_LINK) $(am_es2api_libGLESv2_la_rpath) $(es2api_libGLESv2_la_OBJECTS) $(es2api_libGLESv2_la_LIBADD) $(LIBS)
+es2api/libGLESv2@GLES_LIB_SUFFIX@.la: $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_OBJECTS) $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_DEPENDENCIES) $(EXTRA_es2api_libGLESv2@GLES_LIB_SUFFIX@_la_DEPENDENCIES) es2api/$(am__dirstamp)
+	$(AM_V_CCLD)$(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_LINK) $(am_es2api_libGLESv2@GLES_LIB_SUFFIX@_la_rpath) $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_OBJECTS) $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_LIBADD) $(LIBS)
 glapi/$(am__dirstamp):
 	@$(MKDIR_P) glapi
 	@: > glapi/$(am__dirstamp)
@@ -1094,8 +1101,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/es1api_libGLESv1_CM_la-entry.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/es2api_libGLESv2_la-entry.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glapi_libglapi_la-entry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glapi_libglapi_la-u_current.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/glapi_libglapi_la-u_execmem.Plo@am__quote@
@@ -1186,19 +1193,19 @@ glapi/glapi_libglapi_la-glapi_x86-64.lo: glapi/glapi_x86-64.S
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
 
-es1api_libGLESv1_CM_la-entry.lo: entry.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(es1api_libGLESv1_CM_la_CPPFLAGS) $(CPPFLAGS) $(es1api_libGLESv1_CM_la_CFLAGS) $(CFLAGS) -MT es1api_libGLESv1_CM_la-entry.lo -MD -MP -MF $(DEPDIR)/es1api_libGLESv1_CM_la-entry.Tpo -c -o es1api_libGLESv1_CM_la-entry.lo `test -f 'entry.c' || echo '$(srcdir)/'`entry.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/es1api_libGLESv1_CM_la-entry.Tpo $(DEPDIR)/es1api_libGLESv1_CM_la-entry.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='entry.c' object='es1api_libGLESv1_CM_la-entry.lo' libtool=yes @AMDEPBACKSLASH@
+es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.lo: entry.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_CPPFLAGS) $(CPPFLAGS) $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_CFLAGS) $(CFLAGS) -MT es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.lo -MD -MP -MF $(DEPDIR)/es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.Tpo -c -o es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.lo `test -f 'entry.c' || echo '$(srcdir)/'`entry.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.Tpo $(DEPDIR)/es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='entry.c' object='es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(es1api_libGLESv1_CM_la_CPPFLAGS) $(CPPFLAGS) $(es1api_libGLESv1_CM_la_CFLAGS) $(CFLAGS) -c -o es1api_libGLESv1_CM_la-entry.lo `test -f 'entry.c' || echo '$(srcdir)/'`entry.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_CPPFLAGS) $(CPPFLAGS) $(es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_CFLAGS) $(CFLAGS) -c -o es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la-entry.lo `test -f 'entry.c' || echo '$(srcdir)/'`entry.c
 
-es2api_libGLESv2_la-entry.lo: entry.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(es2api_libGLESv2_la_CPPFLAGS) $(CPPFLAGS) $(es2api_libGLESv2_la_CFLAGS) $(CFLAGS) -MT es2api_libGLESv2_la-entry.lo -MD -MP -MF $(DEPDIR)/es2api_libGLESv2_la-entry.Tpo -c -o es2api_libGLESv2_la-entry.lo `test -f 'entry.c' || echo '$(srcdir)/'`entry.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/es2api_libGLESv2_la-entry.Tpo $(DEPDIR)/es2api_libGLESv2_la-entry.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='entry.c' object='es2api_libGLESv2_la-entry.lo' libtool=yes @AMDEPBACKSLASH@
+es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.lo: entry.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_CPPFLAGS) $(CPPFLAGS) $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_CFLAGS) $(CFLAGS) -MT es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.lo -MD -MP -MF $(DEPDIR)/es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.Tpo -c -o es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.lo `test -f 'entry.c' || echo '$(srcdir)/'`entry.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.Tpo $(DEPDIR)/es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='entry.c' object='es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(es2api_libGLESv2_la_CPPFLAGS) $(CPPFLAGS) $(es2api_libGLESv2_la_CFLAGS) $(CFLAGS) -c -o es2api_libGLESv2_la-entry.lo `test -f 'entry.c' || echo '$(srcdir)/'`entry.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_CPPFLAGS) $(CPPFLAGS) $(es2api_libGLESv2@GLES_LIB_SUFFIX@_la_CFLAGS) $(CFLAGS) -c -o es2api_libGLESv2@GLES_LIB_SUFFIX@_la-entry.lo `test -f 'entry.c' || echo '$(srcdir)/'`entry.c
 
 glapi/glapi_libglapi_la-glapi_gentable.lo: glapi/glapi_gentable.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(glapi_libglapi_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT glapi/glapi_libglapi_la-glapi_gentable.lo -MD -MP -MF glapi/$(DEPDIR)/glapi_libglapi_la-glapi_gentable.Tpo -c -o glapi/glapi_libglapi_la-glapi_gentable.lo `test -f 'glapi/glapi_gentable.c' || echo '$(srcdir)/'`glapi/glapi_gentable.c

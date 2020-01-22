@@ -112,7 +112,8 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
 libvirgl_la_LIBADD =
 am__objects_1 = virgl_buffer.lo virgl_context.lo virgl_encode.lo \
 	virgl_query.lo virgl_resource.lo virgl_screen.lo \
-	virgl_streamout.lo virgl_texture.lo virgl_tgsi.lo
+	virgl_staging_mgr.lo virgl_streamout.lo virgl_texture.lo \
+	virgl_tgsi.lo virgl_transfer_queue.lo
 am_libvirgl_la_OBJECTS = $(am__objects_1)
 libvirgl_la_OBJECTS = $(am_libvirgl_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -216,6 +217,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -228,6 +230,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -498,9 +501,13 @@ C_SOURCES := \
 	virgl_resource.h \
 	virgl_screen.c \
 	virgl_screen.h \
+	virgl_staging_mgr.c \
+	virgl_staging_mgr.h \
 	virgl_streamout.c \
 	virgl_texture.c \
 	virgl_tgsi.c \
+	virgl_transfer_queue.c \
+	virgl_transfer_queue.h \
 	virgl_winsys.h
 
 GALLIUM_CFLAGS = \
@@ -635,9 +642,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virgl_query.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virgl_resource.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virgl_screen.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virgl_staging_mgr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virgl_streamout.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virgl_texture.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virgl_tgsi.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virgl_transfer_queue.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\

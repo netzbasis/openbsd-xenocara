@@ -9284,6 +9284,209 @@ util_format_r5sg5sb6u_norm_pack_rgba_8unorm(uint8_t *dst_row, unsigned dst_strid
    }
 }
 
+union util_format_z24_unorm_s8_uint_as_r8g8b8a8 {
+   uint32_t value;
+   struct {
+#ifdef PIPE_ARCH_BIG_ENDIAN
+      uint8_t r;
+      uint8_t g;
+      uint8_t b;
+      uint8_t a;
+#else
+      uint8_t r;
+      uint8_t g;
+      uint8_t b;
+      uint8_t a;
+#endif
+   } chan;
+};
+
+static inline void
+util_format_z24_unorm_s8_uint_as_r8g8b8a8_unpack_rgba_float(float *dst_row, unsigned dst_stride, const uint8_t *src_row, unsigned src_stride, unsigned width, unsigned height)
+{
+   unsigned x, y;
+   for(y = 0; y < height; y += 1) {
+      float *dst = dst_row;
+      const uint8_t *src = src_row;
+      for(x = 0; x < width; x += 1) {
+#ifdef PIPE_ARCH_BIG_ENDIAN
+         uint32_t value = *(const uint32_t *)src;
+         uint32_t r;
+         uint32_t g;
+         uint32_t b;
+         uint32_t a;
+         r = value >> 24;
+         g = (value >> 16) & 0xff;
+         b = (value >> 8) & 0xff;
+         a = (value) & 0xff;
+         dst[0] = ubyte_to_float(r); /* r */
+         dst[1] = ubyte_to_float(g); /* g */
+         dst[2] = ubyte_to_float(b); /* b */
+         dst[3] = ubyte_to_float(a); /* a */
+#else
+         uint32_t value = *(const uint32_t *)src;
+         uint32_t r;
+         uint32_t g;
+         uint32_t b;
+         uint32_t a;
+         r = (value) & 0xff;
+         g = (value >> 8) & 0xff;
+         b = (value >> 16) & 0xff;
+         a = value >> 24;
+         dst[0] = ubyte_to_float(r); /* r */
+         dst[1] = ubyte_to_float(g); /* g */
+         dst[2] = ubyte_to_float(b); /* b */
+         dst[3] = ubyte_to_float(a); /* a */
+#endif
+         src += 4;
+         dst += 4;
+      }
+      src_row += src_stride;
+      dst_row += dst_stride/sizeof(*dst_row);
+   }
+}
+
+static inline void
+util_format_z24_unorm_s8_uint_as_r8g8b8a8_pack_rgba_float(uint8_t *dst_row, unsigned dst_stride, const float *src_row, unsigned src_stride, unsigned width, unsigned height)
+{
+   unsigned x, y;
+   for(y = 0; y < height; y += 1) {
+      const float *src = src_row;
+      uint8_t *dst = dst_row;
+      for(x = 0; x < width; x += 1) {
+#ifdef PIPE_ARCH_BIG_ENDIAN
+         uint32_t value = 0;
+         value |= (float_to_ubyte(src[0])) << 24;
+         value |= ((float_to_ubyte(src[1])) & 0xff) << 16;
+         value |= ((float_to_ubyte(src[2])) & 0xff) << 8;
+         value |= (float_to_ubyte(src[3])) & 0xff;
+         *(uint32_t *)dst = value;
+#else
+         uint32_t value = 0;
+         value |= (float_to_ubyte(src[0])) & 0xff;
+         value |= ((float_to_ubyte(src[1])) & 0xff) << 8;
+         value |= ((float_to_ubyte(src[2])) & 0xff) << 16;
+         value |= (float_to_ubyte(src[3])) << 24;
+         *(uint32_t *)dst = value;
+#endif
+         src += 4;
+         dst += 4;
+      }
+      dst_row += dst_stride;
+      src_row += src_stride/sizeof(*src_row);
+   }
+}
+
+static inline void
+util_format_z24_unorm_s8_uint_as_r8g8b8a8_fetch_rgba_float(float *dst, const uint8_t *src, UNUSED unsigned i, UNUSED unsigned j)
+{
+#ifdef PIPE_ARCH_BIG_ENDIAN
+         uint32_t value = *(const uint32_t *)src;
+         uint32_t r;
+         uint32_t g;
+         uint32_t b;
+         uint32_t a;
+         r = value >> 24;
+         g = (value >> 16) & 0xff;
+         b = (value >> 8) & 0xff;
+         a = (value) & 0xff;
+         dst[0] = ubyte_to_float(r); /* r */
+         dst[1] = ubyte_to_float(g); /* g */
+         dst[2] = ubyte_to_float(b); /* b */
+         dst[3] = ubyte_to_float(a); /* a */
+#else
+         uint32_t value = *(const uint32_t *)src;
+         uint32_t r;
+         uint32_t g;
+         uint32_t b;
+         uint32_t a;
+         r = (value) & 0xff;
+         g = (value >> 8) & 0xff;
+         b = (value >> 16) & 0xff;
+         a = value >> 24;
+         dst[0] = ubyte_to_float(r); /* r */
+         dst[1] = ubyte_to_float(g); /* g */
+         dst[2] = ubyte_to_float(b); /* b */
+         dst[3] = ubyte_to_float(a); /* a */
+#endif
+}
+
+static inline void
+util_format_z24_unorm_s8_uint_as_r8g8b8a8_unpack_rgba_8unorm(uint8_t *dst_row, unsigned dst_stride, const uint8_t *src_row, unsigned src_stride, unsigned width, unsigned height)
+{
+   unsigned x, y;
+   for(y = 0; y < height; y += 1) {
+      uint8_t *dst = dst_row;
+      const uint8_t *src = src_row;
+      for(x = 0; x < width; x += 1) {
+#ifdef PIPE_ARCH_BIG_ENDIAN
+         uint32_t value = *(const uint32_t *)src;
+         uint32_t r;
+         uint32_t g;
+         uint32_t b;
+         uint32_t a;
+         r = value >> 24;
+         g = (value >> 16) & 0xff;
+         b = (value >> 8) & 0xff;
+         a = (value) & 0xff;
+         dst[0] = r; /* r */
+         dst[1] = g; /* g */
+         dst[2] = b; /* b */
+         dst[3] = a; /* a */
+#else
+         uint32_t value = *(const uint32_t *)src;
+         uint32_t r;
+         uint32_t g;
+         uint32_t b;
+         uint32_t a;
+         r = (value) & 0xff;
+         g = (value >> 8) & 0xff;
+         b = (value >> 16) & 0xff;
+         a = value >> 24;
+         dst[0] = r; /* r */
+         dst[1] = g; /* g */
+         dst[2] = b; /* b */
+         dst[3] = a; /* a */
+#endif
+         src += 4;
+         dst += 4;
+      }
+      src_row += src_stride;
+      dst_row += dst_stride/sizeof(*dst_row);
+   }
+}
+
+static inline void
+util_format_z24_unorm_s8_uint_as_r8g8b8a8_pack_rgba_8unorm(uint8_t *dst_row, unsigned dst_stride, const uint8_t *src_row, unsigned src_stride, unsigned width, unsigned height)
+{
+   unsigned x, y;
+   for(y = 0; y < height; y += 1) {
+      const uint8_t *src = src_row;
+      uint8_t *dst = dst_row;
+      for(x = 0; x < width; x += 1) {
+#ifdef PIPE_ARCH_BIG_ENDIAN
+         uint32_t value = 0;
+         value |= (src[0]) << 24;
+         value |= ((src[1]) & 0xff) << 16;
+         value |= ((src[2]) & 0xff) << 8;
+         value |= (src[3]) & 0xff;
+         *(uint32_t *)dst = value;
+#else
+         uint32_t value = 0;
+         value |= (src[0]) & 0xff;
+         value |= ((src[1]) & 0xff) << 8;
+         value |= ((src[2]) & 0xff) << 16;
+         value |= (src[3]) << 24;
+         *(uint32_t *)dst = value;
+#endif
+         src += 4;
+         dst += 4;
+      }
+      dst_row += dst_stride;
+      src_row += src_stride/sizeof(*src_row);
+   }
+}
+
 union util_format_r64_float {
    uint64_t value;
    struct {
@@ -38373,6 +38576,70 @@ util_format_x32_s8x24_uint_description = {
 };
 
 const struct util_format_description
+util_format_z24_unorm_s8_uint_as_r8g8b8a8_description = {
+   PIPE_FORMAT_Z24_UNORM_S8_UINT_AS_R8G8B8A8,
+   "PIPE_FORMAT_Z24_UNORM_S8_UINT_AS_R8G8B8A8",
+   "z24_unorm_s8_uint_as_r8g8b8a8",
+   {1, 1, 32},	/* block */
+   UTIL_FORMAT_LAYOUT_PLAIN,
+   4,	/* nr_channels */
+   TRUE,	/* is_array */
+   TRUE,	/* is_bitmask */
+   FALSE,	/* is_mixed */
+   TRUE,	/* is_unorm */
+   FALSE,	/* is_snorm */
+#ifdef PIPE_ARCH_BIG_ENDIAN
+   {
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 24},	/* x = r */
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 16},	/* y = g */
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 8},	/* z = b */
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 0}	/* w = a */
+   },
+#else
+   {
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 0},	/* x = r */
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 8},	/* y = g */
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 16},	/* z = b */
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 24}	/* w = a */
+   },
+#endif
+#ifdef PIPE_ARCH_BIG_ENDIAN
+   {
+      PIPE_SWIZZLE_X,	/* r */
+      PIPE_SWIZZLE_Y,	/* g */
+      PIPE_SWIZZLE_Z,	/* b */
+      PIPE_SWIZZLE_W	/* a */
+   },
+#else
+   {
+      PIPE_SWIZZLE_X,	/* r */
+      PIPE_SWIZZLE_Y,	/* g */
+      PIPE_SWIZZLE_Z,	/* b */
+      PIPE_SWIZZLE_W	/* a */
+   },
+#endif
+   UTIL_FORMAT_COLORSPACE_RGB,
+   &util_format_z24_unorm_s8_uint_as_r8g8b8a8_unpack_rgba_8unorm,
+   &util_format_z24_unorm_s8_uint_as_r8g8b8a8_pack_rgba_8unorm,
+   NULL, /* fetch_rgba_8unorm */
+   &util_format_z24_unorm_s8_uint_as_r8g8b8a8_unpack_rgba_float,
+   &util_format_z24_unorm_s8_uint_as_r8g8b8a8_pack_rgba_float,
+   &util_format_z24_unorm_s8_uint_as_r8g8b8a8_fetch_rgba_float,
+   NULL, /* unpack_z_32unorm */
+   NULL, /* pack_z_32unorm */
+   NULL, /* unpack_z_float */
+   NULL, /* pack_z_float */
+   NULL, /* unpack_s_8uint */
+   NULL, /* pack_s_8uint */
+   NULL, /* unpack_rgba_uint */
+   NULL, /* pack_rgba_uint */
+   NULL, /* unpack_rgba_sint */
+   NULL, /* pack_rgba_sint */
+   NULL, /* fetch_rgba_uint */
+   NULL  /* fetch_rgba_sint */
+};
+
+const struct util_format_description
 util_format_uyvy_description = {
    PIPE_FORMAT_UYVY,
    "PIPE_FORMAT_UYVY",
@@ -38450,6 +38717,98 @@ util_format_yuyv_description = {
    &util_format_yuyv_unpack_rgba_float,
    &util_format_yuyv_pack_rgba_float,
    &util_format_yuyv_fetch_rgba_float,
+   NULL, /* unpack_z_32unorm */
+   NULL, /* pack_z_32unorm */
+   NULL, /* unpack_z_float */
+   NULL, /* pack_z_float */
+   NULL, /* unpack_s_8uint */
+   NULL, /* pack_s_8uint */
+   NULL, /* unpack_rgba_uint */
+   NULL, /* pack_rgba_uint */
+   NULL, /* unpack_rgba_sint */
+   NULL, /* pack_rgba_sint */
+   NULL, /* fetch_rgba_uint */
+   NULL  /* fetch_rgba_sint */
+};
+
+const struct util_format_description
+util_format_ayuv_description = {
+   PIPE_FORMAT_AYUV,
+   "PIPE_FORMAT_AYUV",
+   "ayuv",
+   {4, 4, 8},	/* block */
+   UTIL_FORMAT_LAYOUT_OTHER,
+   1,	/* nr_channels */
+   FALSE,	/* is_array */
+   FALSE,	/* is_bitmask */
+   FALSE,	/* is_mixed */
+   FALSE,	/* is_unorm */
+   FALSE,	/* is_snorm */
+   {
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      PIPE_SWIZZLE_X,	/* y */
+      PIPE_SWIZZLE_Y,	/* u */
+      PIPE_SWIZZLE_Z,	/* v */
+      PIPE_SWIZZLE_W	/* ignored */
+   },
+   UTIL_FORMAT_COLORSPACE_YUV,
+   &util_format_ayuv_unpack_rgba_8unorm,
+   &util_format_ayuv_pack_rgba_8unorm,
+   NULL, /* fetch_rgba_8unorm */
+   &util_format_ayuv_unpack_rgba_float,
+   &util_format_ayuv_pack_rgba_float,
+   &util_format_ayuv_fetch_rgba_float,
+   NULL, /* unpack_z_32unorm */
+   NULL, /* pack_z_32unorm */
+   NULL, /* unpack_z_float */
+   NULL, /* pack_z_float */
+   NULL, /* unpack_s_8uint */
+   NULL, /* pack_s_8uint */
+   NULL, /* unpack_rgba_uint */
+   NULL, /* pack_rgba_uint */
+   NULL, /* unpack_rgba_sint */
+   NULL, /* pack_rgba_sint */
+   NULL, /* fetch_rgba_uint */
+   NULL  /* fetch_rgba_sint */
+};
+
+const struct util_format_description
+util_format_xyuv_description = {
+   PIPE_FORMAT_XYUV,
+   "PIPE_FORMAT_XYUV",
+   "xyuv",
+   {4, 4, 8},	/* block */
+   UTIL_FORMAT_LAYOUT_OTHER,
+   1,	/* nr_channels */
+   FALSE,	/* is_array */
+   FALSE,	/* is_bitmask */
+   FALSE,	/* is_mixed */
+   FALSE,	/* is_unorm */
+   FALSE,	/* is_snorm */
+   {
+      {UTIL_FORMAT_TYPE_UNSIGNED, TRUE, FALSE, 8, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      PIPE_SWIZZLE_X,	/* y */
+      PIPE_SWIZZLE_Y,	/* u */
+      PIPE_SWIZZLE_Z,	/* v */
+      PIPE_SWIZZLE_1	/* ignored */
+   },
+   UTIL_FORMAT_COLORSPACE_YUV,
+   &util_format_xyuv_unpack_rgba_8unorm,
+   &util_format_xyuv_pack_rgba_8unorm,
+   NULL, /* fetch_rgba_8unorm */
+   &util_format_xyuv_unpack_rgba_float,
+   &util_format_xyuv_pack_rgba_float,
+   &util_format_xyuv_fetch_rgba_float,
    NULL, /* unpack_z_32unorm */
    NULL, /* pack_z_32unorm */
    NULL, /* unpack_z_float */
@@ -41544,6 +41903,144 @@ util_format_astc_12x12_srgb_description = {
       PIPE_SWIZZLE_W	/* a */
    },
    UTIL_FORMAT_COLORSPACE_SRGB,
+   NULL, /* unpack_rgba_8unorm */
+   NULL, /* pack_rgba_8unorm */
+   NULL, /* fetch_rgba_8unorm */
+   NULL, /* unpack_rgba_float */
+   NULL, /* pack_rgba_float */
+   NULL, /* fetch_rgba_float */
+   NULL, /* unpack_z_32unorm */
+   NULL, /* pack_z_32unorm */
+   NULL, /* unpack_z_float */
+   NULL, /* pack_z_float */
+   NULL, /* unpack_s_8uint */
+   NULL, /* pack_s_8uint */
+   NULL, /* unpack_rgba_uint */
+   NULL, /* pack_rgba_uint */
+   NULL, /* unpack_rgba_sint */
+   NULL, /* pack_rgba_sint */
+   NULL, /* fetch_rgba_uint */
+   NULL  /* fetch_rgba_sint */
+};
+
+const struct util_format_description
+util_format_atc_rgb_description = {
+   PIPE_FORMAT_ATC_RGB,
+   "PIPE_FORMAT_ATC_RGB",
+   "atc_rgb",
+   {4, 4, 64},	/* block */
+   UTIL_FORMAT_LAYOUT_ATC,
+   1,	/* nr_channels */
+   FALSE,	/* is_array */
+   FALSE,	/* is_bitmask */
+   FALSE,	/* is_mixed */
+   TRUE,	/* is_unorm */
+   FALSE,	/* is_snorm */
+   {
+      {UTIL_FORMAT_TYPE_VOID, FALSE, FALSE, 64, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      PIPE_SWIZZLE_X,	/* r */
+      PIPE_SWIZZLE_Y,	/* g */
+      PIPE_SWIZZLE_Z,	/* b */
+      PIPE_SWIZZLE_1	/* a */
+   },
+   UTIL_FORMAT_COLORSPACE_RGB,
+   NULL, /* unpack_rgba_8unorm */
+   NULL, /* pack_rgba_8unorm */
+   NULL, /* fetch_rgba_8unorm */
+   NULL, /* unpack_rgba_float */
+   NULL, /* pack_rgba_float */
+   NULL, /* fetch_rgba_float */
+   NULL, /* unpack_z_32unorm */
+   NULL, /* pack_z_32unorm */
+   NULL, /* unpack_z_float */
+   NULL, /* pack_z_float */
+   NULL, /* unpack_s_8uint */
+   NULL, /* pack_s_8uint */
+   NULL, /* unpack_rgba_uint */
+   NULL, /* pack_rgba_uint */
+   NULL, /* unpack_rgba_sint */
+   NULL, /* pack_rgba_sint */
+   NULL, /* fetch_rgba_uint */
+   NULL  /* fetch_rgba_sint */
+};
+
+const struct util_format_description
+util_format_atc_rgba_explicit_description = {
+   PIPE_FORMAT_ATC_RGBA_EXPLICIT,
+   "PIPE_FORMAT_ATC_RGBA_EXPLICIT",
+   "atc_rgba_explicit",
+   {4, 4, 128},	/* block */
+   UTIL_FORMAT_LAYOUT_ATC,
+   1,	/* nr_channels */
+   FALSE,	/* is_array */
+   FALSE,	/* is_bitmask */
+   FALSE,	/* is_mixed */
+   TRUE,	/* is_unorm */
+   FALSE,	/* is_snorm */
+   {
+      {UTIL_FORMAT_TYPE_VOID, FALSE, FALSE, 128, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      PIPE_SWIZZLE_X,	/* r */
+      PIPE_SWIZZLE_Y,	/* g */
+      PIPE_SWIZZLE_Z,	/* b */
+      PIPE_SWIZZLE_W	/* a */
+   },
+   UTIL_FORMAT_COLORSPACE_RGB,
+   NULL, /* unpack_rgba_8unorm */
+   NULL, /* pack_rgba_8unorm */
+   NULL, /* fetch_rgba_8unorm */
+   NULL, /* unpack_rgba_float */
+   NULL, /* pack_rgba_float */
+   NULL, /* fetch_rgba_float */
+   NULL, /* unpack_z_32unorm */
+   NULL, /* pack_z_32unorm */
+   NULL, /* unpack_z_float */
+   NULL, /* pack_z_float */
+   NULL, /* unpack_s_8uint */
+   NULL, /* pack_s_8uint */
+   NULL, /* unpack_rgba_uint */
+   NULL, /* pack_rgba_uint */
+   NULL, /* unpack_rgba_sint */
+   NULL, /* pack_rgba_sint */
+   NULL, /* fetch_rgba_uint */
+   NULL  /* fetch_rgba_sint */
+};
+
+const struct util_format_description
+util_format_atc_rgba_interpolated_description = {
+   PIPE_FORMAT_ATC_RGBA_INTERPOLATED,
+   "PIPE_FORMAT_ATC_RGBA_INTERPOLATED",
+   "atc_rgba_interpolated",
+   {4, 4, 128},	/* block */
+   UTIL_FORMAT_LAYOUT_ATC,
+   1,	/* nr_channels */
+   FALSE,	/* is_array */
+   FALSE,	/* is_bitmask */
+   FALSE,	/* is_mixed */
+   TRUE,	/* is_unorm */
+   FALSE,	/* is_snorm */
+   {
+      {UTIL_FORMAT_TYPE_VOID, FALSE, FALSE, 128, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      PIPE_SWIZZLE_X,	/* r */
+      PIPE_SWIZZLE_Y,	/* g */
+      PIPE_SWIZZLE_Z,	/* b */
+      PIPE_SWIZZLE_W	/* a */
+   },
+   UTIL_FORMAT_COLORSPACE_RGB,
    NULL, /* unpack_rgba_8unorm */
    NULL, /* pack_rgba_8unorm */
    NULL, /* fetch_rgba_8unorm */
@@ -51938,10 +52435,16 @@ util_format_description(enum pipe_format format)
       return &util_format_z32_float_s8x24_uint_description;
    case PIPE_FORMAT_X32_S8X24_UINT:
       return &util_format_x32_s8x24_uint_description;
+   case PIPE_FORMAT_Z24_UNORM_S8_UINT_AS_R8G8B8A8:
+      return &util_format_z24_unorm_s8_uint_as_r8g8b8a8_description;
    case PIPE_FORMAT_UYVY:
       return &util_format_uyvy_description;
    case PIPE_FORMAT_YUYV:
       return &util_format_yuyv_description;
+   case PIPE_FORMAT_AYUV:
+      return &util_format_ayuv_description;
+   case PIPE_FORMAT_XYUV:
+      return &util_format_xyuv_description;
    case PIPE_FORMAT_R8G8_B8G8_UNORM:
       return &util_format_r8g8_b8g8_unorm_description;
    case PIPE_FORMAT_G8R8_G8B8_UNORM:
@@ -52076,6 +52579,12 @@ util_format_description(enum pipe_format format)
       return &util_format_astc_12x10_srgb_description;
    case PIPE_FORMAT_ASTC_12x12_SRGB:
       return &util_format_astc_12x12_srgb_description;
+   case PIPE_FORMAT_ATC_RGB:
+      return &util_format_atc_rgb_description;
+   case PIPE_FORMAT_ATC_RGBA_EXPLICIT:
+      return &util_format_atc_rgba_explicit_description;
+   case PIPE_FORMAT_ATC_RGBA_INTERPOLATED:
+      return &util_format_atc_rgba_interpolated_description;
    case PIPE_FORMAT_R64_FLOAT:
       return &util_format_r64_float_description;
    case PIPE_FORMAT_R64G64_FLOAT:

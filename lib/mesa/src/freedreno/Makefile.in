@@ -154,20 +154,30 @@ libfreedreno_drm_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 libfreedreno_ir3_la_LIBADD =
 am__objects_2 = ir3/libfreedreno_ir3_la-disasm-a3xx.lo \
 	ir3/libfreedreno_ir3_la-ir3.lo \
+	ir3/libfreedreno_ir3_la-ir3_a4xx.lo \
+	ir3/libfreedreno_ir3_la-ir3_a6xx.lo \
 	ir3/libfreedreno_ir3_la-ir3_compiler.lo \
 	ir3/libfreedreno_ir3_la-ir3_compiler_nir.lo \
 	ir3/libfreedreno_ir3_la-ir3_context.lo \
 	ir3/libfreedreno_ir3_la-ir3_cp.lo \
 	ir3/libfreedreno_ir3_la-ir3_depth.lo \
 	ir3/libfreedreno_ir3_la-ir3_group.lo \
+	ir3/libfreedreno_ir3_la-ir3_image.lo \
 	ir3/libfreedreno_ir3_la-ir3_legalize.lo \
 	ir3/libfreedreno_ir3_la-ir3_nir.lo \
+	ir3/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.lo \
+	ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.lo \
+	ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.lo \
+	ir3/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.lo \
 	ir3/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.lo \
+	ir3/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.lo \
 	ir3/libfreedreno_ir3_la-ir3_print.lo \
 	ir3/libfreedreno_ir3_la-ir3_ra.lo \
 	ir3/libfreedreno_ir3_la-ir3_sched.lo \
-	ir3/libfreedreno_ir3_la-ir3_shader.lo
-am__objects_3 = ir3/libfreedreno_ir3_la-ir3_nir_trig.lo
+	ir3/libfreedreno_ir3_la-ir3_shader.lo \
+	ir3/libfreedreno_ir3_la-ir3_sun.lo
+am__objects_3 = ir3/libfreedreno_ir3_la-ir3_nir_trig.lo \
+	ir3/libfreedreno_ir3_la-ir3_nir_imul.lo
 am_libfreedreno_ir3_la_OBJECTS = $(am__objects_2) $(am__objects_3)
 libfreedreno_ir3_la_OBJECTS = $(am_libfreedreno_ir3_la_OBJECTS)
 libfreedreno_ir3_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
@@ -280,6 +290,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -292,6 +303,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -574,13 +586,14 @@ drm_SOURCES := \
 	drm/msm_priv.h \
 	drm/freedreno_device.c \
 	drm/freedreno_priv.h \
-	drm/msm_drm.h \
 	drm/msm_ringbuffer.c
 
 ir3_SOURCES := \
 	ir3/disasm-a3xx.c \
 	ir3/instr-a3xx.h \
 	ir3/ir3.c \
+	ir3/ir3_a4xx.c \
+	ir3/ir3_a6xx.c \
 	ir3/ir3_compiler.c \
 	ir3/ir3_compiler.h \
 	ir3/ir3_compiler_nir.c \
@@ -589,28 +602,28 @@ ir3_SOURCES := \
 	ir3/ir3_cp.c \
 	ir3/ir3_depth.c \
 	ir3/ir3_group.c \
+	ir3/ir3_image.c \
+	ir3/ir3_image.h \
 	ir3/ir3.h \
 	ir3/ir3_legalize.c \
 	ir3/ir3_nir.c \
 	ir3/ir3_nir.h \
+	ir3/ir3_nir_analyze_ubo_ranges.c \
+	ir3/ir3_nir_lower_load_barycentric_at_sample.c \
+	ir3/ir3_nir_lower_load_barycentric_at_offset.c \
+	ir3/ir3_nir_lower_io_offsets.c \
 	ir3/ir3_nir_lower_tg4_to_tex.c \
+	ir3/ir3_nir_move_varying_inputs.c \
 	ir3/ir3_print.c \
 	ir3/ir3_ra.c \
 	ir3/ir3_sched.c \
 	ir3/ir3_shader.c \
-	ir3/ir3_shader.h
+	ir3/ir3_shader.h \
+	ir3/ir3_sun.c
 
 ir3_GENERATED_FILES := \
-	ir3/ir3_nir_trig.c
-
-registers_FILES := \
-	registers/a2xx.xml.h \
-	registers/a3xx.xml.h \
-	registers/a4xx.xml.h \
-	registers/a5xx.xml.h \
-	registers/a6xx.xml.h \
-	registers/adreno_common.xml.h \
-	registers/adreno_pm4.xml.h
+	ir3/ir3_nir_trig.c \
+	ir3/ir3_nir_imul.c
 
 lib_LTLIBRARIES = 
 check_LTLIBRARIES = 
@@ -765,6 +778,10 @@ ir3/libfreedreno_ir3_la-disasm-a3xx.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_a4xx.lo: ir3/$(am__dirstamp) \
+	ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_a6xx.lo: ir3/$(am__dirstamp) \
+	ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3_compiler.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3_compiler_nir.lo: ir3/$(am__dirstamp) \
@@ -777,11 +794,23 @@ ir3/libfreedreno_ir3_la-ir3_depth.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3_group.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_image.lo: ir3/$(am__dirstamp) \
+	ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3_legalize.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3_nir.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.lo:  \
+	ir3/$(am__dirstamp) ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.lo:  \
+	ir3/$(am__dirstamp) ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.lo:  \
+	ir3/$(am__dirstamp) ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.lo:  \
+	ir3/$(am__dirstamp) ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.lo:  \
+	ir3/$(am__dirstamp) ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.lo:  \
 	ir3/$(am__dirstamp) ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3_print.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
@@ -791,7 +820,11 @@ ir3/libfreedreno_ir3_la-ir3_sched.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3_shader.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_sun.lo: ir3/$(am__dirstamp) \
+	ir3/$(DEPDIR)/$(am__dirstamp)
 ir3/libfreedreno_ir3_la-ir3_nir_trig.lo: ir3/$(am__dirstamp) \
+	ir3/$(DEPDIR)/$(am__dirstamp)
+ir3/libfreedreno_ir3_la-ir3_nir_imul.lo: ir3/$(am__dirstamp) \
 	ir3/$(DEPDIR)/$(am__dirstamp)
 libfreedreno_ir3.la: $(libfreedreno_ir3_la_OBJECTS) $(libfreedreno_ir3_la_DEPENDENCIES) $(EXTRA_libfreedreno_ir3_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libfreedreno_ir3_la_LINK)  $(libfreedreno_ir3_la_OBJECTS) $(libfreedreno_ir3_la_LIBADD) $(LIBS)
@@ -836,20 +869,30 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@drm/$(DEPDIR)/libfreedreno_drm_la-msm_ringbuffer_sp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-disasm-a3xx.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_a4xx.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_a6xx.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_compiler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_compiler_nir.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_context.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_cp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_depth.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_group.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_image.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_legalize.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_imul.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_trig.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_print.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_ra.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_sched.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_shader.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_sun.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -959,6 +1002,20 @@ ir3/libfreedreno_ir3_la-ir3.lo: ir3/ir3.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3.lo `test -f 'ir3/ir3.c' || echo '$(srcdir)/'`ir3/ir3.c
 
+ir3/libfreedreno_ir3_la-ir3_a4xx.lo: ir3/ir3_a4xx.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_a4xx.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_a4xx.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_a4xx.lo `test -f 'ir3/ir3_a4xx.c' || echo '$(srcdir)/'`ir3/ir3_a4xx.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_a4xx.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_a4xx.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_a4xx.c' object='ir3/libfreedreno_ir3_la-ir3_a4xx.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_a4xx.lo `test -f 'ir3/ir3_a4xx.c' || echo '$(srcdir)/'`ir3/ir3_a4xx.c
+
+ir3/libfreedreno_ir3_la-ir3_a6xx.lo: ir3/ir3_a6xx.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_a6xx.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_a6xx.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_a6xx.lo `test -f 'ir3/ir3_a6xx.c' || echo '$(srcdir)/'`ir3/ir3_a6xx.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_a6xx.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_a6xx.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_a6xx.c' object='ir3/libfreedreno_ir3_la-ir3_a6xx.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_a6xx.lo `test -f 'ir3/ir3_a6xx.c' || echo '$(srcdir)/'`ir3/ir3_a6xx.c
+
 ir3/libfreedreno_ir3_la-ir3_compiler.lo: ir3/ir3_compiler.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_compiler.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_compiler.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_compiler.lo `test -f 'ir3/ir3_compiler.c' || echo '$(srcdir)/'`ir3/ir3_compiler.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_compiler.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_compiler.Plo
@@ -1001,6 +1058,13 @@ ir3/libfreedreno_ir3_la-ir3_group.lo: ir3/ir3_group.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_group.lo `test -f 'ir3/ir3_group.c' || echo '$(srcdir)/'`ir3/ir3_group.c
 
+ir3/libfreedreno_ir3_la-ir3_image.lo: ir3/ir3_image.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_image.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_image.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_image.lo `test -f 'ir3/ir3_image.c' || echo '$(srcdir)/'`ir3/ir3_image.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_image.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_image.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_image.c' object='ir3/libfreedreno_ir3_la-ir3_image.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_image.lo `test -f 'ir3/ir3_image.c' || echo '$(srcdir)/'`ir3/ir3_image.c
+
 ir3/libfreedreno_ir3_la-ir3_legalize.lo: ir3/ir3_legalize.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_legalize.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_legalize.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_legalize.lo `test -f 'ir3/ir3_legalize.c' || echo '$(srcdir)/'`ir3/ir3_legalize.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_legalize.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_legalize.Plo
@@ -1015,12 +1079,47 @@ ir3/libfreedreno_ir3_la-ir3_nir.lo: ir3/ir3_nir.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_nir.lo `test -f 'ir3/ir3_nir.c' || echo '$(srcdir)/'`ir3/ir3_nir.c
 
+ir3/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.lo: ir3/ir3_nir_analyze_ubo_ranges.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.lo `test -f 'ir3/ir3_nir_analyze_ubo_ranges.c' || echo '$(srcdir)/'`ir3/ir3_nir_analyze_ubo_ranges.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_nir_analyze_ubo_ranges.c' object='ir3/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_nir_analyze_ubo_ranges.lo `test -f 'ir3/ir3_nir_analyze_ubo_ranges.c' || echo '$(srcdir)/'`ir3/ir3_nir_analyze_ubo_ranges.c
+
+ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.lo: ir3/ir3_nir_lower_load_barycentric_at_sample.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.lo `test -f 'ir3/ir3_nir_lower_load_barycentric_at_sample.c' || echo '$(srcdir)/'`ir3/ir3_nir_lower_load_barycentric_at_sample.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_nir_lower_load_barycentric_at_sample.c' object='ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_sample.lo `test -f 'ir3/ir3_nir_lower_load_barycentric_at_sample.c' || echo '$(srcdir)/'`ir3/ir3_nir_lower_load_barycentric_at_sample.c
+
+ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.lo: ir3/ir3_nir_lower_load_barycentric_at_offset.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.lo `test -f 'ir3/ir3_nir_lower_load_barycentric_at_offset.c' || echo '$(srcdir)/'`ir3/ir3_nir_lower_load_barycentric_at_offset.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_nir_lower_load_barycentric_at_offset.c' object='ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_nir_lower_load_barycentric_at_offset.lo `test -f 'ir3/ir3_nir_lower_load_barycentric_at_offset.c' || echo '$(srcdir)/'`ir3/ir3_nir_lower_load_barycentric_at_offset.c
+
+ir3/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.lo: ir3/ir3_nir_lower_io_offsets.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.lo `test -f 'ir3/ir3_nir_lower_io_offsets.c' || echo '$(srcdir)/'`ir3/ir3_nir_lower_io_offsets.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_nir_lower_io_offsets.c' object='ir3/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_nir_lower_io_offsets.lo `test -f 'ir3/ir3_nir_lower_io_offsets.c' || echo '$(srcdir)/'`ir3/ir3_nir_lower_io_offsets.c
+
 ir3/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.lo: ir3/ir3_nir_lower_tg4_to_tex.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.lo `test -f 'ir3/ir3_nir_lower_tg4_to_tex.c' || echo '$(srcdir)/'`ir3/ir3_nir_lower_tg4_to_tex.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.Plo
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_nir_lower_tg4_to_tex.c' object='ir3/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_nir_lower_tg4_to_tex.lo `test -f 'ir3/ir3_nir_lower_tg4_to_tex.c' || echo '$(srcdir)/'`ir3/ir3_nir_lower_tg4_to_tex.c
+
+ir3/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.lo: ir3/ir3_nir_move_varying_inputs.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.lo `test -f 'ir3/ir3_nir_move_varying_inputs.c' || echo '$(srcdir)/'`ir3/ir3_nir_move_varying_inputs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_nir_move_varying_inputs.c' object='ir3/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_nir_move_varying_inputs.lo `test -f 'ir3/ir3_nir_move_varying_inputs.c' || echo '$(srcdir)/'`ir3/ir3_nir_move_varying_inputs.c
 
 ir3/libfreedreno_ir3_la-ir3_print.lo: ir3/ir3_print.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_print.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_print.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_print.lo `test -f 'ir3/ir3_print.c' || echo '$(srcdir)/'`ir3/ir3_print.c
@@ -1050,12 +1149,26 @@ ir3/libfreedreno_ir3_la-ir3_shader.lo: ir3/ir3_shader.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_shader.lo `test -f 'ir3/ir3_shader.c' || echo '$(srcdir)/'`ir3/ir3_shader.c
 
+ir3/libfreedreno_ir3_la-ir3_sun.lo: ir3/ir3_sun.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_sun.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_sun.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_sun.lo `test -f 'ir3/ir3_sun.c' || echo '$(srcdir)/'`ir3/ir3_sun.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_sun.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_sun.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_sun.c' object='ir3/libfreedreno_ir3_la-ir3_sun.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_sun.lo `test -f 'ir3/ir3_sun.c' || echo '$(srcdir)/'`ir3/ir3_sun.c
+
 ir3/libfreedreno_ir3_la-ir3_nir_trig.lo: ir3/ir3_nir_trig.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_nir_trig.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_trig.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_nir_trig.lo `test -f 'ir3/ir3_nir_trig.c' || echo '$(srcdir)/'`ir3/ir3_nir_trig.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_trig.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_trig.Plo
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_nir_trig.c' object='ir3/libfreedreno_ir3_la-ir3_nir_trig.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_nir_trig.lo `test -f 'ir3/ir3_nir_trig.c' || echo '$(srcdir)/'`ir3/ir3_nir_trig.c
+
+ir3/libfreedreno_ir3_la-ir3_nir_imul.lo: ir3/ir3_nir_imul.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -MT ir3/libfreedreno_ir3_la-ir3_nir_imul.lo -MD -MP -MF ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_imul.Tpo -c -o ir3/libfreedreno_ir3_la-ir3_nir_imul.lo `test -f 'ir3/ir3_nir_imul.c' || echo '$(srcdir)/'`ir3/ir3_nir_imul.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_imul.Tpo ir3/$(DEPDIR)/libfreedreno_ir3_la-ir3_nir_imul.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ir3/ir3_nir_imul.c' object='ir3/libfreedreno_ir3_la-ir3_nir_imul.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libfreedreno_ir3_la_CFLAGS) $(CFLAGS) -c -o ir3/libfreedreno_ir3_la-ir3_nir_imul.lo `test -f 'ir3/ir3_nir_imul.c' || echo '$(srcdir)/'`ir3/ir3_nir_imul.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1395,6 +1508,10 @@ uninstall-am: uninstall-libLTLIBRARIES
 ir3/ir3_nir_trig.c: ir3/ir3_nir_trig.py $(top_srcdir)/src/compiler/nir/nir_algebraic.py
 	$(MKDIR_GEN)
 	$(AM_V_GEN) $(PYTHON) $(PYTHON_FLAGS) $(srcdir)/ir3/ir3_nir_trig.py -p $(top_srcdir)/src/compiler/nir > $@ || ($(RM) $@; false)
+
+ir3/ir3_nir_imul.c: ir3/ir3_nir_imul.py $(top_srcdir)/src/compiler/nir/nir_algebraic.py
+	$(MKDIR_GEN)
+	$(AM_V_GEN) $(PYTHON) $(PYTHON_FLAGS) $(srcdir)/ir3/ir3_nir_imul.py -p $(top_srcdir)/src/compiler/nir > $@ || ($(RM) $@; false)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

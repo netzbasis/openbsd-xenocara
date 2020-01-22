@@ -69,8 +69,8 @@ static void generate_points_ushort_first2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)(i);
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)(i);
    }
 }
 static void generate_lines_ushort_first2first(
@@ -81,9 +81,9 @@ static void generate_lines_ushort_first2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)(i);
-      (out+i)[1] = (ushort)(i+1);
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)(i);
+      (out+j)[1] = (ushort)(i+1);
    }
 }
 static void generate_linestrip_ushort_first2first(
@@ -122,10 +122,10 @@ static void generate_tris_ushort_first2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)(i);
-      (out+i)[1] = (ushort)(i+1);
-      (out+i)[2] = (ushort)(i+2);
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)(i);
+      (out+j)[1] = (ushort)(i+1);
+      (out+j)[2] = (ushort)(i+2);
    }
 }
 static void generate_tristrip_ushort_first2first(
@@ -212,11 +212,11 @@ static void generate_linesadj_ushort_first2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)(i+0);
-      (out+i)[1] = (ushort)(i+1);
-      (out+i)[2] = (ushort)(i+2);
-      (out+i)[3] = (ushort)(i+3);
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)(i+0);
+      (out+j)[1] = (ushort)(i+1);
+      (out+j)[2] = (ushort)(i+2);
+      (out+j)[3] = (ushort)(i+3);
   }
 }
 static void generate_linestripadj_ushort_first2first(
@@ -242,13 +242,13 @@ static void generate_trisadj_ushort_first2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)(i+0);
-      (out+i)[1] = (ushort)(i+1);
-      (out+i)[2] = (ushort)(i+2);
-      (out+i)[3] = (ushort)(i+3);
-      (out+i)[4] = (ushort)(i+4);
-      (out+i)[5] = (ushort)(i+5);
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)(i+0);
+      (out+j)[1] = (ushort)(i+1);
+      (out+j)[2] = (ushort)(i+2);
+      (out+j)[3] = (ushort)(i+3);
+      (out+j)[4] = (ushort)(i+4);
+      (out+j)[5] = (ushort)(i+5);
   }
 }
 static void generate_tristripadj_ushort_first2first(
@@ -287,8 +287,8 @@ static void generate_points_ushort_first2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)(i);
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)(i);
    }
 }
 static void generate_lines_ushort_first2last(
@@ -299,9 +299,9 @@ static void generate_lines_ushort_first2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)(i+1);
-      (out+i)[1] = (ushort)(i);
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)(i+1);
+      (out+j)[1] = (ushort)(i);
    }
 }
 static void generate_linestrip_ushort_first2last(
@@ -340,10 +340,10 @@ static void generate_tris_ushort_first2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)(i+1);
-      (out+i)[1] = (ushort)(i+2);
-      (out+i)[2] = (ushort)(i);
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)(i+1);
+      (out+j)[1] = (ushort)(i+2);
+      (out+j)[2] = (ushort)(i);
    }
 }
 static void generate_tristrip_ushort_first2last(
@@ -430,11 +430,11 @@ static void generate_linesadj_ushort_first2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)(i+3);
-      (out+i)[1] = (ushort)(i+2);
-      (out+i)[2] = (ushort)(i+1);
-      (out+i)[3] = (ushort)(i+0);
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)(i+3);
+      (out+j)[1] = (ushort)(i+2);
+      (out+j)[2] = (ushort)(i+1);
+      (out+j)[3] = (ushort)(i+0);
   }
 }
 static void generate_linestripadj_ushort_first2last(
@@ -460,13 +460,13 @@ static void generate_trisadj_ushort_first2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)(i+4);
-      (out+i)[1] = (ushort)(i+5);
-      (out+i)[2] = (ushort)(i+0);
-      (out+i)[3] = (ushort)(i+1);
-      (out+i)[4] = (ushort)(i+2);
-      (out+i)[5] = (ushort)(i+3);
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)(i+4);
+      (out+j)[1] = (ushort)(i+5);
+      (out+j)[2] = (ushort)(i+0);
+      (out+j)[3] = (ushort)(i+1);
+      (out+j)[4] = (ushort)(i+2);
+      (out+j)[5] = (ushort)(i+3);
   }
 }
 static void generate_tristripadj_ushort_first2last(
@@ -505,8 +505,8 @@ static void generate_points_ushort_last2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)(i);
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)(i);
    }
 }
 static void generate_lines_ushort_last2first(
@@ -517,9 +517,9 @@ static void generate_lines_ushort_last2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)(i+1);
-      (out+i)[1] = (ushort)(i);
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)(i+1);
+      (out+j)[1] = (ushort)(i);
    }
 }
 static void generate_linestrip_ushort_last2first(
@@ -558,10 +558,10 @@ static void generate_tris_ushort_last2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)(i+2);
-      (out+i)[1] = (ushort)(i);
-      (out+i)[2] = (ushort)(i+1);
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)(i+2);
+      (out+j)[1] = (ushort)(i);
+      (out+j)[2] = (ushort)(i+1);
    }
 }
 static void generate_tristrip_ushort_last2first(
@@ -648,11 +648,11 @@ static void generate_linesadj_ushort_last2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)(i+3);
-      (out+i)[1] = (ushort)(i+2);
-      (out+i)[2] = (ushort)(i+1);
-      (out+i)[3] = (ushort)(i+0);
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)(i+3);
+      (out+j)[1] = (ushort)(i+2);
+      (out+j)[2] = (ushort)(i+1);
+      (out+j)[3] = (ushort)(i+0);
   }
 }
 static void generate_linestripadj_ushort_last2first(
@@ -678,13 +678,13 @@ static void generate_trisadj_ushort_last2first(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)(i+4);
-      (out+i)[1] = (ushort)(i+5);
-      (out+i)[2] = (ushort)(i+0);
-      (out+i)[3] = (ushort)(i+1);
-      (out+i)[4] = (ushort)(i+2);
-      (out+i)[5] = (ushort)(i+3);
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)(i+4);
+      (out+j)[1] = (ushort)(i+5);
+      (out+j)[2] = (ushort)(i+0);
+      (out+j)[3] = (ushort)(i+1);
+      (out+j)[4] = (ushort)(i+2);
+      (out+j)[5] = (ushort)(i+3);
   }
 }
 static void generate_tristripadj_ushort_last2first(
@@ -723,8 +723,8 @@ static void generate_points_ushort_last2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)(i);
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)(i);
    }
 }
 static void generate_lines_ushort_last2last(
@@ -735,9 +735,9 @@ static void generate_lines_ushort_last2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)(i);
-      (out+i)[1] = (ushort)(i+1);
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)(i);
+      (out+j)[1] = (ushort)(i+1);
    }
 }
 static void generate_linestrip_ushort_last2last(
@@ -776,10 +776,10 @@ static void generate_tris_ushort_last2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)(i);
-      (out+i)[1] = (ushort)(i+1);
-      (out+i)[2] = (ushort)(i+2);
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)(i);
+      (out+j)[1] = (ushort)(i+1);
+      (out+j)[2] = (ushort)(i+2);
    }
 }
 static void generate_tristrip_ushort_last2last(
@@ -866,11 +866,11 @@ static void generate_linesadj_ushort_last2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)(i+0);
-      (out+i)[1] = (ushort)(i+1);
-      (out+i)[2] = (ushort)(i+2);
-      (out+i)[3] = (ushort)(i+3);
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)(i+0);
+      (out+j)[1] = (ushort)(i+1);
+      (out+j)[2] = (ushort)(i+2);
+      (out+j)[3] = (ushort)(i+3);
   }
 }
 static void generate_linestripadj_ushort_last2last(
@@ -896,13 +896,13 @@ static void generate_trisadj_ushort_last2last(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)(i+0);
-      (out+i)[1] = (ushort)(i+1);
-      (out+i)[2] = (ushort)(i+2);
-      (out+i)[3] = (ushort)(i+3);
-      (out+i)[4] = (ushort)(i+4);
-      (out+i)[5] = (ushort)(i+5);
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)(i+0);
+      (out+j)[1] = (ushort)(i+1);
+      (out+j)[2] = (ushort)(i+2);
+      (out+j)[3] = (ushort)(i+3);
+      (out+j)[4] = (ushort)(i+4);
+      (out+j)[5] = (ushort)(i+5);
   }
 }
 static void generate_tristripadj_ushort_last2last(
@@ -941,8 +941,8 @@ static void generate_points_uint_first2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)(i);
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)(i);
    }
 }
 static void generate_lines_uint_first2first(
@@ -953,9 +953,9 @@ static void generate_lines_uint_first2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)(i);
-      (out+i)[1] = (uint)(i+1);
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)(i);
+      (out+j)[1] = (uint)(i+1);
    }
 }
 static void generate_linestrip_uint_first2first(
@@ -994,10 +994,10 @@ static void generate_tris_uint_first2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)(i);
-      (out+i)[1] = (uint)(i+1);
-      (out+i)[2] = (uint)(i+2);
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)(i);
+      (out+j)[1] = (uint)(i+1);
+      (out+j)[2] = (uint)(i+2);
    }
 }
 static void generate_tristrip_uint_first2first(
@@ -1084,11 +1084,11 @@ static void generate_linesadj_uint_first2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)(i+0);
-      (out+i)[1] = (uint)(i+1);
-      (out+i)[2] = (uint)(i+2);
-      (out+i)[3] = (uint)(i+3);
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)(i+0);
+      (out+j)[1] = (uint)(i+1);
+      (out+j)[2] = (uint)(i+2);
+      (out+j)[3] = (uint)(i+3);
   }
 }
 static void generate_linestripadj_uint_first2first(
@@ -1114,13 +1114,13 @@ static void generate_trisadj_uint_first2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)(i+0);
-      (out+i)[1] = (uint)(i+1);
-      (out+i)[2] = (uint)(i+2);
-      (out+i)[3] = (uint)(i+3);
-      (out+i)[4] = (uint)(i+4);
-      (out+i)[5] = (uint)(i+5);
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)(i+0);
+      (out+j)[1] = (uint)(i+1);
+      (out+j)[2] = (uint)(i+2);
+      (out+j)[3] = (uint)(i+3);
+      (out+j)[4] = (uint)(i+4);
+      (out+j)[5] = (uint)(i+5);
   }
 }
 static void generate_tristripadj_uint_first2first(
@@ -1159,8 +1159,8 @@ static void generate_points_uint_first2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)(i);
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)(i);
    }
 }
 static void generate_lines_uint_first2last(
@@ -1171,9 +1171,9 @@ static void generate_lines_uint_first2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)(i+1);
-      (out+i)[1] = (uint)(i);
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)(i+1);
+      (out+j)[1] = (uint)(i);
    }
 }
 static void generate_linestrip_uint_first2last(
@@ -1212,10 +1212,10 @@ static void generate_tris_uint_first2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)(i+1);
-      (out+i)[1] = (uint)(i+2);
-      (out+i)[2] = (uint)(i);
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)(i+1);
+      (out+j)[1] = (uint)(i+2);
+      (out+j)[2] = (uint)(i);
    }
 }
 static void generate_tristrip_uint_first2last(
@@ -1302,11 +1302,11 @@ static void generate_linesadj_uint_first2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)(i+3);
-      (out+i)[1] = (uint)(i+2);
-      (out+i)[2] = (uint)(i+1);
-      (out+i)[3] = (uint)(i+0);
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)(i+3);
+      (out+j)[1] = (uint)(i+2);
+      (out+j)[2] = (uint)(i+1);
+      (out+j)[3] = (uint)(i+0);
   }
 }
 static void generate_linestripadj_uint_first2last(
@@ -1332,13 +1332,13 @@ static void generate_trisadj_uint_first2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)(i+4);
-      (out+i)[1] = (uint)(i+5);
-      (out+i)[2] = (uint)(i+0);
-      (out+i)[3] = (uint)(i+1);
-      (out+i)[4] = (uint)(i+2);
-      (out+i)[5] = (uint)(i+3);
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)(i+4);
+      (out+j)[1] = (uint)(i+5);
+      (out+j)[2] = (uint)(i+0);
+      (out+j)[3] = (uint)(i+1);
+      (out+j)[4] = (uint)(i+2);
+      (out+j)[5] = (uint)(i+3);
   }
 }
 static void generate_tristripadj_uint_first2last(
@@ -1377,8 +1377,8 @@ static void generate_points_uint_last2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)(i);
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)(i);
    }
 }
 static void generate_lines_uint_last2first(
@@ -1389,9 +1389,9 @@ static void generate_lines_uint_last2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)(i+1);
-      (out+i)[1] = (uint)(i);
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)(i+1);
+      (out+j)[1] = (uint)(i);
    }
 }
 static void generate_linestrip_uint_last2first(
@@ -1430,10 +1430,10 @@ static void generate_tris_uint_last2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)(i+2);
-      (out+i)[1] = (uint)(i);
-      (out+i)[2] = (uint)(i+1);
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)(i+2);
+      (out+j)[1] = (uint)(i);
+      (out+j)[2] = (uint)(i+1);
    }
 }
 static void generate_tristrip_uint_last2first(
@@ -1520,11 +1520,11 @@ static void generate_linesadj_uint_last2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)(i+3);
-      (out+i)[1] = (uint)(i+2);
-      (out+i)[2] = (uint)(i+1);
-      (out+i)[3] = (uint)(i+0);
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)(i+3);
+      (out+j)[1] = (uint)(i+2);
+      (out+j)[2] = (uint)(i+1);
+      (out+j)[3] = (uint)(i+0);
   }
 }
 static void generate_linestripadj_uint_last2first(
@@ -1550,13 +1550,13 @@ static void generate_trisadj_uint_last2first(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)(i+4);
-      (out+i)[1] = (uint)(i+5);
-      (out+i)[2] = (uint)(i+0);
-      (out+i)[3] = (uint)(i+1);
-      (out+i)[4] = (uint)(i+2);
-      (out+i)[5] = (uint)(i+3);
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)(i+4);
+      (out+j)[1] = (uint)(i+5);
+      (out+j)[2] = (uint)(i+0);
+      (out+j)[3] = (uint)(i+1);
+      (out+j)[4] = (uint)(i+2);
+      (out+j)[5] = (uint)(i+3);
   }
 }
 static void generate_tristripadj_uint_last2first(
@@ -1595,8 +1595,8 @@ static void generate_points_uint_last2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)(i);
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)(i);
    }
 }
 static void generate_lines_uint_last2last(
@@ -1607,9 +1607,9 @@ static void generate_lines_uint_last2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)(i);
-      (out+i)[1] = (uint)(i+1);
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)(i);
+      (out+j)[1] = (uint)(i+1);
    }
 }
 static void generate_linestrip_uint_last2last(
@@ -1648,10 +1648,10 @@ static void generate_tris_uint_last2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)(i);
-      (out+i)[1] = (uint)(i+1);
-      (out+i)[2] = (uint)(i+2);
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)(i);
+      (out+j)[1] = (uint)(i+1);
+      (out+j)[2] = (uint)(i+2);
    }
 }
 static void generate_tristrip_uint_last2last(
@@ -1738,11 +1738,11 @@ static void generate_linesadj_uint_last2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)(i+0);
-      (out+i)[1] = (uint)(i+1);
-      (out+i)[2] = (uint)(i+2);
-      (out+i)[3] = (uint)(i+3);
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)(i+0);
+      (out+j)[1] = (uint)(i+1);
+      (out+j)[2] = (uint)(i+2);
+      (out+j)[3] = (uint)(i+3);
   }
 }
 static void generate_linestripadj_uint_last2last(
@@ -1768,13 +1768,13 @@ static void generate_trisadj_uint_last2last(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)(i+0);
-      (out+i)[1] = (uint)(i+1);
-      (out+i)[2] = (uint)(i+2);
-      (out+i)[3] = (uint)(i+3);
-      (out+i)[4] = (uint)(i+4);
-      (out+i)[5] = (uint)(i+5);
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)(i+0);
+      (out+j)[1] = (uint)(i+1);
+      (out+j)[2] = (uint)(i+2);
+      (out+j)[3] = (uint)(i+3);
+      (out+j)[4] = (uint)(i+4);
+      (out+j)[5] = (uint)(i+5);
   }
 }
 static void generate_tristripadj_uint_last2last(
@@ -1817,8 +1817,8 @@ static void translate_points_ubyte2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ubyte2ushort_first2first_prdisable(
@@ -1833,9 +1833,9 @@ static void translate_lines_ubyte2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_ubyte2ushort_first2first_prdisable(
@@ -1886,10 +1886,10 @@ static void translate_tris_ubyte2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_ubyte2ushort_first2first_prdisable(
@@ -2000,11 +2000,11 @@ static void translate_linesadj_ubyte2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_ubyte2ushort_first2first_prdisable(
@@ -2038,13 +2038,13 @@ static void translate_trisadj_ubyte2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_ubyte2ushort_first2first_prdisable(
@@ -2091,8 +2091,8 @@ static void translate_points_ubyte2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ubyte2ushort_first2first_prenable(
@@ -2107,9 +2107,9 @@ static void translate_lines_ubyte2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_ubyte2ushort_first2first_prenable(
@@ -2160,10 +2160,10 @@ static void translate_tris_ubyte2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_ubyte2ushort_first2first_prenable(
@@ -2348,11 +2348,11 @@ static void translate_linesadj_ubyte2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_ubyte2ushort_first2first_prenable(
@@ -2386,13 +2386,13 @@ static void translate_trisadj_ubyte2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_ubyte2ushort_first2first_prenable(
@@ -2439,8 +2439,8 @@ static void translate_points_ubyte2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ubyte2ushort_first2last_prdisable(
@@ -2455,9 +2455,9 @@ static void translate_lines_ubyte2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_ubyte2ushort_first2last_prdisable(
@@ -2508,10 +2508,10 @@ static void translate_tris_ubyte2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i];
    }
 }
 static void translate_tristrip_ubyte2ushort_first2last_prdisable(
@@ -2622,11 +2622,11 @@ static void translate_linesadj_ubyte2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_ubyte2ushort_first2last_prdisable(
@@ -2660,13 +2660,13 @@ static void translate_trisadj_ubyte2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_ubyte2ushort_first2last_prdisable(
@@ -2713,8 +2713,8 @@ static void translate_points_ubyte2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ubyte2ushort_first2last_prenable(
@@ -2729,9 +2729,9 @@ static void translate_lines_ubyte2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_ubyte2ushort_first2last_prenable(
@@ -2782,10 +2782,10 @@ static void translate_tris_ubyte2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i];
    }
 }
 static void translate_tristrip_ubyte2ushort_first2last_prenable(
@@ -2970,11 +2970,11 @@ static void translate_linesadj_ubyte2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_ubyte2ushort_first2last_prenable(
@@ -3008,13 +3008,13 @@ static void translate_trisadj_ubyte2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_ubyte2ushort_first2last_prenable(
@@ -3061,8 +3061,8 @@ static void translate_points_ubyte2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ubyte2ushort_last2first_prdisable(
@@ -3077,9 +3077,9 @@ static void translate_lines_ubyte2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_ubyte2ushort_last2first_prdisable(
@@ -3130,10 +3130,10 @@ static void translate_tris_ubyte2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+2];
-      (out+i)[1] = (ushort)in[i];
-      (out+i)[2] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+2];
+      (out+j)[1] = (ushort)in[i];
+      (out+j)[2] = (ushort)in[i+1];
    }
 }
 static void translate_tristrip_ubyte2ushort_last2first_prdisable(
@@ -3244,11 +3244,11 @@ static void translate_linesadj_ubyte2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_ubyte2ushort_last2first_prdisable(
@@ -3282,13 +3282,13 @@ static void translate_trisadj_ubyte2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_ubyte2ushort_last2first_prdisable(
@@ -3335,8 +3335,8 @@ static void translate_points_ubyte2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ubyte2ushort_last2first_prenable(
@@ -3351,9 +3351,9 @@ static void translate_lines_ubyte2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_ubyte2ushort_last2first_prenable(
@@ -3404,10 +3404,10 @@ static void translate_tris_ubyte2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+2];
-      (out+i)[1] = (ushort)in[i];
-      (out+i)[2] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+2];
+      (out+j)[1] = (ushort)in[i];
+      (out+j)[2] = (ushort)in[i+1];
    }
 }
 static void translate_tristrip_ubyte2ushort_last2first_prenable(
@@ -3592,11 +3592,11 @@ static void translate_linesadj_ubyte2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_ubyte2ushort_last2first_prenable(
@@ -3630,13 +3630,13 @@ static void translate_trisadj_ubyte2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_ubyte2ushort_last2first_prenable(
@@ -3683,8 +3683,8 @@ static void translate_points_ubyte2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ubyte2ushort_last2last_prdisable(
@@ -3699,9 +3699,9 @@ static void translate_lines_ubyte2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_ubyte2ushort_last2last_prdisable(
@@ -3752,10 +3752,10 @@ static void translate_tris_ubyte2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_ubyte2ushort_last2last_prdisable(
@@ -3866,11 +3866,11 @@ static void translate_linesadj_ubyte2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_ubyte2ushort_last2last_prdisable(
@@ -3904,13 +3904,13 @@ static void translate_trisadj_ubyte2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_ubyte2ushort_last2last_prdisable(
@@ -3957,8 +3957,8 @@ static void translate_points_ubyte2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ubyte2ushort_last2last_prenable(
@@ -3973,9 +3973,9 @@ static void translate_lines_ubyte2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_ubyte2ushort_last2last_prenable(
@@ -4026,10 +4026,10 @@ static void translate_tris_ubyte2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_ubyte2ushort_last2last_prenable(
@@ -4214,11 +4214,11 @@ static void translate_linesadj_ubyte2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_ubyte2ushort_last2last_prenable(
@@ -4252,13 +4252,13 @@ static void translate_trisadj_ubyte2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_ubyte2ushort_last2last_prenable(
@@ -4305,8 +4305,8 @@ static void translate_points_ubyte2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ubyte2uint_first2first_prdisable(
@@ -4321,9 +4321,9 @@ static void translate_lines_ubyte2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_ubyte2uint_first2first_prdisable(
@@ -4374,10 +4374,10 @@ static void translate_tris_ubyte2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_ubyte2uint_first2first_prdisable(
@@ -4488,11 +4488,11 @@ static void translate_linesadj_ubyte2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_ubyte2uint_first2first_prdisable(
@@ -4526,13 +4526,13 @@ static void translate_trisadj_ubyte2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_ubyte2uint_first2first_prdisable(
@@ -4579,8 +4579,8 @@ static void translate_points_ubyte2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ubyte2uint_first2first_prenable(
@@ -4595,9 +4595,9 @@ static void translate_lines_ubyte2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_ubyte2uint_first2first_prenable(
@@ -4648,10 +4648,10 @@ static void translate_tris_ubyte2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_ubyte2uint_first2first_prenable(
@@ -4836,11 +4836,11 @@ static void translate_linesadj_ubyte2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_ubyte2uint_first2first_prenable(
@@ -4874,13 +4874,13 @@ static void translate_trisadj_ubyte2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_ubyte2uint_first2first_prenable(
@@ -4927,8 +4927,8 @@ static void translate_points_ubyte2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ubyte2uint_first2last_prdisable(
@@ -4943,9 +4943,9 @@ static void translate_lines_ubyte2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_ubyte2uint_first2last_prdisable(
@@ -4996,10 +4996,10 @@ static void translate_tris_ubyte2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i];
    }
 }
 static void translate_tristrip_ubyte2uint_first2last_prdisable(
@@ -5110,11 +5110,11 @@ static void translate_linesadj_ubyte2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_ubyte2uint_first2last_prdisable(
@@ -5148,13 +5148,13 @@ static void translate_trisadj_ubyte2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_ubyte2uint_first2last_prdisable(
@@ -5201,8 +5201,8 @@ static void translate_points_ubyte2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ubyte2uint_first2last_prenable(
@@ -5217,9 +5217,9 @@ static void translate_lines_ubyte2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_ubyte2uint_first2last_prenable(
@@ -5270,10 +5270,10 @@ static void translate_tris_ubyte2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i];
    }
 }
 static void translate_tristrip_ubyte2uint_first2last_prenable(
@@ -5458,11 +5458,11 @@ static void translate_linesadj_ubyte2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_ubyte2uint_first2last_prenable(
@@ -5496,13 +5496,13 @@ static void translate_trisadj_ubyte2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_ubyte2uint_first2last_prenable(
@@ -5549,8 +5549,8 @@ static void translate_points_ubyte2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ubyte2uint_last2first_prdisable(
@@ -5565,9 +5565,9 @@ static void translate_lines_ubyte2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_ubyte2uint_last2first_prdisable(
@@ -5618,10 +5618,10 @@ static void translate_tris_ubyte2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+2];
-      (out+i)[1] = (uint)in[i];
-      (out+i)[2] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+2];
+      (out+j)[1] = (uint)in[i];
+      (out+j)[2] = (uint)in[i+1];
    }
 }
 static void translate_tristrip_ubyte2uint_last2first_prdisable(
@@ -5732,11 +5732,11 @@ static void translate_linesadj_ubyte2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_ubyte2uint_last2first_prdisable(
@@ -5770,13 +5770,13 @@ static void translate_trisadj_ubyte2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_ubyte2uint_last2first_prdisable(
@@ -5823,8 +5823,8 @@ static void translate_points_ubyte2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ubyte2uint_last2first_prenable(
@@ -5839,9 +5839,9 @@ static void translate_lines_ubyte2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_ubyte2uint_last2first_prenable(
@@ -5892,10 +5892,10 @@ static void translate_tris_ubyte2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+2];
-      (out+i)[1] = (uint)in[i];
-      (out+i)[2] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+2];
+      (out+j)[1] = (uint)in[i];
+      (out+j)[2] = (uint)in[i+1];
    }
 }
 static void translate_tristrip_ubyte2uint_last2first_prenable(
@@ -6080,11 +6080,11 @@ static void translate_linesadj_ubyte2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_ubyte2uint_last2first_prenable(
@@ -6118,13 +6118,13 @@ static void translate_trisadj_ubyte2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_ubyte2uint_last2first_prenable(
@@ -6171,8 +6171,8 @@ static void translate_points_ubyte2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ubyte2uint_last2last_prdisable(
@@ -6187,9 +6187,9 @@ static void translate_lines_ubyte2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_ubyte2uint_last2last_prdisable(
@@ -6240,10 +6240,10 @@ static void translate_tris_ubyte2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_ubyte2uint_last2last_prdisable(
@@ -6354,11 +6354,11 @@ static void translate_linesadj_ubyte2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_ubyte2uint_last2last_prdisable(
@@ -6392,13 +6392,13 @@ static void translate_trisadj_ubyte2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_ubyte2uint_last2last_prdisable(
@@ -6445,8 +6445,8 @@ static void translate_points_ubyte2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ubyte2uint_last2last_prenable(
@@ -6461,9 +6461,9 @@ static void translate_lines_ubyte2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_ubyte2uint_last2last_prenable(
@@ -6514,10 +6514,10 @@ static void translate_tris_ubyte2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_ubyte2uint_last2last_prenable(
@@ -6702,11 +6702,11 @@ static void translate_linesadj_ubyte2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_ubyte2uint_last2last_prenable(
@@ -6740,13 +6740,13 @@ static void translate_trisadj_ubyte2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_ubyte2uint_last2last_prenable(
@@ -6793,8 +6793,8 @@ static void translate_points_ushort2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ushort2ushort_first2first_prdisable(
@@ -6809,9 +6809,9 @@ static void translate_lines_ushort2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_ushort2ushort_first2first_prdisable(
@@ -6862,10 +6862,10 @@ static void translate_tris_ushort2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_ushort2ushort_first2first_prdisable(
@@ -6976,11 +6976,11 @@ static void translate_linesadj_ushort2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_ushort2ushort_first2first_prdisable(
@@ -7014,13 +7014,13 @@ static void translate_trisadj_ushort2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_ushort2ushort_first2first_prdisable(
@@ -7067,8 +7067,8 @@ static void translate_points_ushort2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ushort2ushort_first2first_prenable(
@@ -7083,9 +7083,9 @@ static void translate_lines_ushort2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_ushort2ushort_first2first_prenable(
@@ -7136,10 +7136,10 @@ static void translate_tris_ushort2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_ushort2ushort_first2first_prenable(
@@ -7324,11 +7324,11 @@ static void translate_linesadj_ushort2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_ushort2ushort_first2first_prenable(
@@ -7362,13 +7362,13 @@ static void translate_trisadj_ushort2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_ushort2ushort_first2first_prenable(
@@ -7415,8 +7415,8 @@ static void translate_points_ushort2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ushort2ushort_first2last_prdisable(
@@ -7431,9 +7431,9 @@ static void translate_lines_ushort2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_ushort2ushort_first2last_prdisable(
@@ -7484,10 +7484,10 @@ static void translate_tris_ushort2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i];
    }
 }
 static void translate_tristrip_ushort2ushort_first2last_prdisable(
@@ -7598,11 +7598,11 @@ static void translate_linesadj_ushort2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_ushort2ushort_first2last_prdisable(
@@ -7636,13 +7636,13 @@ static void translate_trisadj_ushort2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_ushort2ushort_first2last_prdisable(
@@ -7689,8 +7689,8 @@ static void translate_points_ushort2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ushort2ushort_first2last_prenable(
@@ -7705,9 +7705,9 @@ static void translate_lines_ushort2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_ushort2ushort_first2last_prenable(
@@ -7758,10 +7758,10 @@ static void translate_tris_ushort2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i];
    }
 }
 static void translate_tristrip_ushort2ushort_first2last_prenable(
@@ -7946,11 +7946,11 @@ static void translate_linesadj_ushort2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_ushort2ushort_first2last_prenable(
@@ -7984,13 +7984,13 @@ static void translate_trisadj_ushort2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_ushort2ushort_first2last_prenable(
@@ -8037,8 +8037,8 @@ static void translate_points_ushort2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ushort2ushort_last2first_prdisable(
@@ -8053,9 +8053,9 @@ static void translate_lines_ushort2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_ushort2ushort_last2first_prdisable(
@@ -8106,10 +8106,10 @@ static void translate_tris_ushort2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+2];
-      (out+i)[1] = (ushort)in[i];
-      (out+i)[2] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+2];
+      (out+j)[1] = (ushort)in[i];
+      (out+j)[2] = (ushort)in[i+1];
    }
 }
 static void translate_tristrip_ushort2ushort_last2first_prdisable(
@@ -8220,11 +8220,11 @@ static void translate_linesadj_ushort2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_ushort2ushort_last2first_prdisable(
@@ -8258,13 +8258,13 @@ static void translate_trisadj_ushort2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_ushort2ushort_last2first_prdisable(
@@ -8311,8 +8311,8 @@ static void translate_points_ushort2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ushort2ushort_last2first_prenable(
@@ -8327,9 +8327,9 @@ static void translate_lines_ushort2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_ushort2ushort_last2first_prenable(
@@ -8380,10 +8380,10 @@ static void translate_tris_ushort2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+2];
-      (out+i)[1] = (ushort)in[i];
-      (out+i)[2] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+2];
+      (out+j)[1] = (ushort)in[i];
+      (out+j)[2] = (ushort)in[i+1];
    }
 }
 static void translate_tristrip_ushort2ushort_last2first_prenable(
@@ -8568,11 +8568,11 @@ static void translate_linesadj_ushort2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_ushort2ushort_last2first_prenable(
@@ -8606,13 +8606,13 @@ static void translate_trisadj_ushort2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_ushort2ushort_last2first_prenable(
@@ -8659,8 +8659,8 @@ static void translate_points_ushort2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ushort2ushort_last2last_prdisable(
@@ -8675,9 +8675,9 @@ static void translate_lines_ushort2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_ushort2ushort_last2last_prdisable(
@@ -8728,10 +8728,10 @@ static void translate_tris_ushort2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_ushort2ushort_last2last_prdisable(
@@ -8842,11 +8842,11 @@ static void translate_linesadj_ushort2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_ushort2ushort_last2last_prdisable(
@@ -8880,13 +8880,13 @@ static void translate_trisadj_ushort2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_ushort2ushort_last2last_prdisable(
@@ -8933,8 +8933,8 @@ static void translate_points_ushort2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_ushort2ushort_last2last_prenable(
@@ -8949,9 +8949,9 @@ static void translate_lines_ushort2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_ushort2ushort_last2last_prenable(
@@ -9002,10 +9002,10 @@ static void translate_tris_ushort2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_ushort2ushort_last2last_prenable(
@@ -9190,11 +9190,11 @@ static void translate_linesadj_ushort2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_ushort2ushort_last2last_prenable(
@@ -9228,13 +9228,13 @@ static void translate_trisadj_ushort2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_ushort2ushort_last2last_prenable(
@@ -9281,8 +9281,8 @@ static void translate_points_ushort2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ushort2uint_first2first_prdisable(
@@ -9297,9 +9297,9 @@ static void translate_lines_ushort2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_ushort2uint_first2first_prdisable(
@@ -9350,10 +9350,10 @@ static void translate_tris_ushort2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_ushort2uint_first2first_prdisable(
@@ -9464,11 +9464,11 @@ static void translate_linesadj_ushort2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_ushort2uint_first2first_prdisable(
@@ -9502,13 +9502,13 @@ static void translate_trisadj_ushort2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_ushort2uint_first2first_prdisable(
@@ -9555,8 +9555,8 @@ static void translate_points_ushort2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ushort2uint_first2first_prenable(
@@ -9571,9 +9571,9 @@ static void translate_lines_ushort2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_ushort2uint_first2first_prenable(
@@ -9624,10 +9624,10 @@ static void translate_tris_ushort2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_ushort2uint_first2first_prenable(
@@ -9812,11 +9812,11 @@ static void translate_linesadj_ushort2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_ushort2uint_first2first_prenable(
@@ -9850,13 +9850,13 @@ static void translate_trisadj_ushort2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_ushort2uint_first2first_prenable(
@@ -9903,8 +9903,8 @@ static void translate_points_ushort2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ushort2uint_first2last_prdisable(
@@ -9919,9 +9919,9 @@ static void translate_lines_ushort2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_ushort2uint_first2last_prdisable(
@@ -9972,10 +9972,10 @@ static void translate_tris_ushort2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i];
    }
 }
 static void translate_tristrip_ushort2uint_first2last_prdisable(
@@ -10086,11 +10086,11 @@ static void translate_linesadj_ushort2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_ushort2uint_first2last_prdisable(
@@ -10124,13 +10124,13 @@ static void translate_trisadj_ushort2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_ushort2uint_first2last_prdisable(
@@ -10177,8 +10177,8 @@ static void translate_points_ushort2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ushort2uint_first2last_prenable(
@@ -10193,9 +10193,9 @@ static void translate_lines_ushort2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_ushort2uint_first2last_prenable(
@@ -10246,10 +10246,10 @@ static void translate_tris_ushort2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i];
    }
 }
 static void translate_tristrip_ushort2uint_first2last_prenable(
@@ -10434,11 +10434,11 @@ static void translate_linesadj_ushort2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_ushort2uint_first2last_prenable(
@@ -10472,13 +10472,13 @@ static void translate_trisadj_ushort2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_ushort2uint_first2last_prenable(
@@ -10525,8 +10525,8 @@ static void translate_points_ushort2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ushort2uint_last2first_prdisable(
@@ -10541,9 +10541,9 @@ static void translate_lines_ushort2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_ushort2uint_last2first_prdisable(
@@ -10594,10 +10594,10 @@ static void translate_tris_ushort2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+2];
-      (out+i)[1] = (uint)in[i];
-      (out+i)[2] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+2];
+      (out+j)[1] = (uint)in[i];
+      (out+j)[2] = (uint)in[i+1];
    }
 }
 static void translate_tristrip_ushort2uint_last2first_prdisable(
@@ -10708,11 +10708,11 @@ static void translate_linesadj_ushort2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_ushort2uint_last2first_prdisable(
@@ -10746,13 +10746,13 @@ static void translate_trisadj_ushort2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_ushort2uint_last2first_prdisable(
@@ -10799,8 +10799,8 @@ static void translate_points_ushort2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ushort2uint_last2first_prenable(
@@ -10815,9 +10815,9 @@ static void translate_lines_ushort2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_ushort2uint_last2first_prenable(
@@ -10868,10 +10868,10 @@ static void translate_tris_ushort2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+2];
-      (out+i)[1] = (uint)in[i];
-      (out+i)[2] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+2];
+      (out+j)[1] = (uint)in[i];
+      (out+j)[2] = (uint)in[i+1];
    }
 }
 static void translate_tristrip_ushort2uint_last2first_prenable(
@@ -11056,11 +11056,11 @@ static void translate_linesadj_ushort2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_ushort2uint_last2first_prenable(
@@ -11094,13 +11094,13 @@ static void translate_trisadj_ushort2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_ushort2uint_last2first_prenable(
@@ -11147,8 +11147,8 @@ static void translate_points_ushort2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ushort2uint_last2last_prdisable(
@@ -11163,9 +11163,9 @@ static void translate_lines_ushort2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_ushort2uint_last2last_prdisable(
@@ -11216,10 +11216,10 @@ static void translate_tris_ushort2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_ushort2uint_last2last_prdisable(
@@ -11330,11 +11330,11 @@ static void translate_linesadj_ushort2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_ushort2uint_last2last_prdisable(
@@ -11368,13 +11368,13 @@ static void translate_trisadj_ushort2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_ushort2uint_last2last_prdisable(
@@ -11421,8 +11421,8 @@ static void translate_points_ushort2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_ushort2uint_last2last_prenable(
@@ -11437,9 +11437,9 @@ static void translate_lines_ushort2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_ushort2uint_last2last_prenable(
@@ -11490,10 +11490,10 @@ static void translate_tris_ushort2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_ushort2uint_last2last_prenable(
@@ -11678,11 +11678,11 @@ static void translate_linesadj_ushort2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_ushort2uint_last2last_prenable(
@@ -11716,13 +11716,13 @@ static void translate_trisadj_ushort2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_ushort2uint_last2last_prenable(
@@ -11769,8 +11769,8 @@ static void translate_points_uint2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_uint2ushort_first2first_prdisable(
@@ -11785,9 +11785,9 @@ static void translate_lines_uint2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_uint2ushort_first2first_prdisable(
@@ -11838,10 +11838,10 @@ static void translate_tris_uint2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_uint2ushort_first2first_prdisable(
@@ -11952,11 +11952,11 @@ static void translate_linesadj_uint2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_uint2ushort_first2first_prdisable(
@@ -11990,13 +11990,13 @@ static void translate_trisadj_uint2ushort_first2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_uint2ushort_first2first_prdisable(
@@ -12043,8 +12043,8 @@ static void translate_points_uint2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_uint2ushort_first2first_prenable(
@@ -12059,9 +12059,9 @@ static void translate_lines_uint2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_uint2ushort_first2first_prenable(
@@ -12112,10 +12112,10 @@ static void translate_tris_uint2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_uint2ushort_first2first_prenable(
@@ -12300,11 +12300,11 @@ static void translate_linesadj_uint2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_uint2ushort_first2first_prenable(
@@ -12338,13 +12338,13 @@ static void translate_trisadj_uint2ushort_first2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_uint2ushort_first2first_prenable(
@@ -12391,8 +12391,8 @@ static void translate_points_uint2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_uint2ushort_first2last_prdisable(
@@ -12407,9 +12407,9 @@ static void translate_lines_uint2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_uint2ushort_first2last_prdisable(
@@ -12460,10 +12460,10 @@ static void translate_tris_uint2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i];
    }
 }
 static void translate_tristrip_uint2ushort_first2last_prdisable(
@@ -12574,11 +12574,11 @@ static void translate_linesadj_uint2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_uint2ushort_first2last_prdisable(
@@ -12612,13 +12612,13 @@ static void translate_trisadj_uint2ushort_first2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_uint2ushort_first2last_prdisable(
@@ -12665,8 +12665,8 @@ static void translate_points_uint2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_uint2ushort_first2last_prenable(
@@ -12681,9 +12681,9 @@ static void translate_lines_uint2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_uint2ushort_first2last_prenable(
@@ -12734,10 +12734,10 @@ static void translate_tris_uint2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i];
    }
 }
 static void translate_tristrip_uint2ushort_first2last_prenable(
@@ -12922,11 +12922,11 @@ static void translate_linesadj_uint2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_uint2ushort_first2last_prenable(
@@ -12960,13 +12960,13 @@ static void translate_trisadj_uint2ushort_first2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_uint2ushort_first2last_prenable(
@@ -13013,8 +13013,8 @@ static void translate_points_uint2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_uint2ushort_last2first_prdisable(
@@ -13029,9 +13029,9 @@ static void translate_lines_uint2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_uint2ushort_last2first_prdisable(
@@ -13082,10 +13082,10 @@ static void translate_tris_uint2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+2];
-      (out+i)[1] = (ushort)in[i];
-      (out+i)[2] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+2];
+      (out+j)[1] = (ushort)in[i];
+      (out+j)[2] = (ushort)in[i+1];
    }
 }
 static void translate_tristrip_uint2ushort_last2first_prdisable(
@@ -13196,11 +13196,11 @@ static void translate_linesadj_uint2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_uint2ushort_last2first_prdisable(
@@ -13234,13 +13234,13 @@ static void translate_trisadj_uint2ushort_last2first_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_uint2ushort_last2first_prdisable(
@@ -13287,8 +13287,8 @@ static void translate_points_uint2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_uint2ushort_last2first_prenable(
@@ -13303,9 +13303,9 @@ static void translate_lines_uint2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i+1];
-      (out+i)[1] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i+1];
+      (out+j)[1] = (ushort)in[i];
    }
 }
 static void translate_linestrip_uint2ushort_last2first_prenable(
@@ -13356,10 +13356,10 @@ static void translate_tris_uint2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i+2];
-      (out+i)[1] = (ushort)in[i];
-      (out+i)[2] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i+2];
+      (out+j)[1] = (ushort)in[i];
+      (out+j)[2] = (ushort)in[i+1];
    }
 }
 static void translate_tristrip_uint2ushort_last2first_prenable(
@@ -13544,11 +13544,11 @@ static void translate_linesadj_uint2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+3];
-      (out+i)[1] = (ushort)in[i+2];
-      (out+i)[2] = (ushort)in[i+1];
-      (out+i)[3] = (ushort)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+3];
+      (out+j)[1] = (ushort)in[i+2];
+      (out+j)[2] = (ushort)in[i+1];
+      (out+j)[3] = (ushort)in[i+0];
   }
 }
 static void translate_linestripadj_uint2ushort_last2first_prenable(
@@ -13582,13 +13582,13 @@ static void translate_trisadj_uint2ushort_last2first_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+4];
-      (out+i)[1] = (ushort)in[i+5];
-      (out+i)[2] = (ushort)in[i+0];
-      (out+i)[3] = (ushort)in[i+1];
-      (out+i)[4] = (ushort)in[i+2];
-      (out+i)[5] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+4];
+      (out+j)[1] = (ushort)in[i+5];
+      (out+j)[2] = (ushort)in[i+0];
+      (out+j)[3] = (ushort)in[i+1];
+      (out+j)[4] = (ushort)in[i+2];
+      (out+j)[5] = (ushort)in[i+3];
   }
 }
 static void translate_tristripadj_uint2ushort_last2first_prenable(
@@ -13635,8 +13635,8 @@ static void translate_points_uint2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_uint2ushort_last2last_prdisable(
@@ -13651,9 +13651,9 @@ static void translate_lines_uint2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_uint2ushort_last2last_prdisable(
@@ -13704,10 +13704,10 @@ static void translate_tris_uint2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_uint2ushort_last2last_prdisable(
@@ -13818,11 +13818,11 @@ static void translate_linesadj_uint2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_uint2ushort_last2last_prdisable(
@@ -13856,13 +13856,13 @@ static void translate_trisadj_uint2ushort_last2last_prdisable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_uint2ushort_last2last_prdisable(
@@ -13909,8 +13909,8 @@ static void translate_points_uint2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (ushort)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (ushort)in[i];
    }
 }
 static void translate_lines_uint2ushort_last2last_prenable(
@@ -13925,9 +13925,9 @@ static void translate_lines_uint2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
    }
 }
 static void translate_linestrip_uint2ushort_last2last_prenable(
@@ -13978,10 +13978,10 @@ static void translate_tris_uint2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (ushort)in[i];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (ushort)in[i];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
    }
 }
 static void translate_tristrip_uint2ushort_last2last_prenable(
@@ -14166,11 +14166,11 @@ static void translate_linesadj_uint2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
   }
 }
 static void translate_linestripadj_uint2ushort_last2last_prenable(
@@ -14204,13 +14204,13 @@ static void translate_trisadj_uint2ushort_last2last_prenable(
   ushort *out = (ushort*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (ushort)in[i+0];
-      (out+i)[1] = (ushort)in[i+1];
-      (out+i)[2] = (ushort)in[i+2];
-      (out+i)[3] = (ushort)in[i+3];
-      (out+i)[4] = (ushort)in[i+4];
-      (out+i)[5] = (ushort)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (ushort)in[i+0];
+      (out+j)[1] = (ushort)in[i+1];
+      (out+j)[2] = (ushort)in[i+2];
+      (out+j)[3] = (ushort)in[i+3];
+      (out+j)[4] = (ushort)in[i+4];
+      (out+j)[5] = (ushort)in[i+5];
   }
 }
 static void translate_tristripadj_uint2ushort_last2last_prenable(
@@ -14257,8 +14257,8 @@ static void translate_points_uint2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_uint2uint_first2first_prdisable(
@@ -14273,9 +14273,9 @@ static void translate_lines_uint2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_uint2uint_first2first_prdisable(
@@ -14326,10 +14326,10 @@ static void translate_tris_uint2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_uint2uint_first2first_prdisable(
@@ -14440,11 +14440,11 @@ static void translate_linesadj_uint2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_uint2uint_first2first_prdisable(
@@ -14478,13 +14478,13 @@ static void translate_trisadj_uint2uint_first2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_uint2uint_first2first_prdisable(
@@ -14531,8 +14531,8 @@ static void translate_points_uint2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_uint2uint_first2first_prenable(
@@ -14547,9 +14547,9 @@ static void translate_lines_uint2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_uint2uint_first2first_prenable(
@@ -14600,10 +14600,10 @@ static void translate_tris_uint2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_uint2uint_first2first_prenable(
@@ -14788,11 +14788,11 @@ static void translate_linesadj_uint2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_uint2uint_first2first_prenable(
@@ -14826,13 +14826,13 @@ static void translate_trisadj_uint2uint_first2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_uint2uint_first2first_prenable(
@@ -14879,8 +14879,8 @@ static void translate_points_uint2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_uint2uint_first2last_prdisable(
@@ -14895,9 +14895,9 @@ static void translate_lines_uint2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_uint2uint_first2last_prdisable(
@@ -14948,10 +14948,10 @@ static void translate_tris_uint2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i];
    }
 }
 static void translate_tristrip_uint2uint_first2last_prdisable(
@@ -15062,11 +15062,11 @@ static void translate_linesadj_uint2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_uint2uint_first2last_prdisable(
@@ -15100,13 +15100,13 @@ static void translate_trisadj_uint2uint_first2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_uint2uint_first2last_prdisable(
@@ -15153,8 +15153,8 @@ static void translate_points_uint2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_uint2uint_first2last_prenable(
@@ -15169,9 +15169,9 @@ static void translate_lines_uint2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_uint2uint_first2last_prenable(
@@ -15222,10 +15222,10 @@ static void translate_tris_uint2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i];
    }
 }
 static void translate_tristrip_uint2uint_first2last_prenable(
@@ -15410,11 +15410,11 @@ static void translate_linesadj_uint2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_uint2uint_first2last_prenable(
@@ -15448,13 +15448,13 @@ static void translate_trisadj_uint2uint_first2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_uint2uint_first2last_prenable(
@@ -15501,8 +15501,8 @@ static void translate_points_uint2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_uint2uint_last2first_prdisable(
@@ -15517,9 +15517,9 @@ static void translate_lines_uint2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_uint2uint_last2first_prdisable(
@@ -15570,10 +15570,10 @@ static void translate_tris_uint2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+2];
-      (out+i)[1] = (uint)in[i];
-      (out+i)[2] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+2];
+      (out+j)[1] = (uint)in[i];
+      (out+j)[2] = (uint)in[i+1];
    }
 }
 static void translate_tristrip_uint2uint_last2first_prdisable(
@@ -15684,11 +15684,11 @@ static void translate_linesadj_uint2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_uint2uint_last2first_prdisable(
@@ -15722,13 +15722,13 @@ static void translate_trisadj_uint2uint_last2first_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_uint2uint_last2first_prdisable(
@@ -15775,8 +15775,8 @@ static void translate_points_uint2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_uint2uint_last2first_prenable(
@@ -15791,9 +15791,9 @@ static void translate_lines_uint2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i+1];
-      (out+i)[1] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i+1];
+      (out+j)[1] = (uint)in[i];
    }
 }
 static void translate_linestrip_uint2uint_last2first_prenable(
@@ -15844,10 +15844,10 @@ static void translate_tris_uint2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i+2];
-      (out+i)[1] = (uint)in[i];
-      (out+i)[2] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i+2];
+      (out+j)[1] = (uint)in[i];
+      (out+j)[2] = (uint)in[i+1];
    }
 }
 static void translate_tristrip_uint2uint_last2first_prenable(
@@ -16032,11 +16032,11 @@ static void translate_linesadj_uint2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+3];
-      (out+i)[1] = (uint)in[i+2];
-      (out+i)[2] = (uint)in[i+1];
-      (out+i)[3] = (uint)in[i+0];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+3];
+      (out+j)[1] = (uint)in[i+2];
+      (out+j)[2] = (uint)in[i+1];
+      (out+j)[3] = (uint)in[i+0];
   }
 }
 static void translate_linestripadj_uint2uint_last2first_prenable(
@@ -16070,13 +16070,13 @@ static void translate_trisadj_uint2uint_last2first_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+4];
-      (out+i)[1] = (uint)in[i+5];
-      (out+i)[2] = (uint)in[i+0];
-      (out+i)[3] = (uint)in[i+1];
-      (out+i)[4] = (uint)in[i+2];
-      (out+i)[5] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+4];
+      (out+j)[1] = (uint)in[i+5];
+      (out+j)[2] = (uint)in[i+0];
+      (out+j)[3] = (uint)in[i+1];
+      (out+j)[4] = (uint)in[i+2];
+      (out+j)[5] = (uint)in[i+3];
   }
 }
 static void translate_tristripadj_uint2uint_last2first_prenable(
@@ -16123,8 +16123,8 @@ static void translate_points_uint2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_uint2uint_last2last_prdisable(
@@ -16139,9 +16139,9 @@ static void translate_lines_uint2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_uint2uint_last2last_prdisable(
@@ -16192,10 +16192,10 @@ static void translate_tris_uint2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_uint2uint_last2last_prdisable(
@@ -16306,11 +16306,11 @@ static void translate_linesadj_uint2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_uint2uint_last2last_prdisable(
@@ -16344,13 +16344,13 @@ static void translate_trisadj_uint2uint_last2last_prdisable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_uint2uint_last2last_prdisable(
@@ -16397,8 +16397,8 @@ static void translate_points_uint2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i++) { 
-      (out+i)[0] = (uint)in[i];
+  for (i = start, j = 0; j < out_nr; j++, i++) { 
+      (out+j)[0] = (uint)in[i];
    }
 }
 static void translate_lines_uint2uint_last2last_prenable(
@@ -16413,9 +16413,9 @@ static void translate_lines_uint2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=2) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
+  for (i = start, j = 0; j < out_nr; j+=2, i+=2) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
    }
 }
 static void translate_linestrip_uint2uint_last2last_prenable(
@@ -16466,10 +16466,10 @@ static void translate_tris_uint2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=3) { 
-      (out+i)[0] = (uint)in[i];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
+  for (i = start, j = 0; j < out_nr; j+=3, i+=3) { 
+      (out+j)[0] = (uint)in[i];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
    }
 }
 static void translate_tristrip_uint2uint_last2last_prenable(
@@ -16654,11 +16654,11 @@ static void translate_linesadj_uint2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=4) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
+  for (i = start, j = 0; j < out_nr; j+=4, i+=4) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
   }
 }
 static void translate_linestripadj_uint2uint_last2last_prenable(
@@ -16692,13 +16692,13 @@ static void translate_trisadj_uint2uint_last2last_prenable(
   uint *out = (uint*)_out;
   unsigned i, j;
   (void)j;
-  for (i = start; i < (out_nr+start); i+=6) { 
-      (out+i)[0] = (uint)in[i+0];
-      (out+i)[1] = (uint)in[i+1];
-      (out+i)[2] = (uint)in[i+2];
-      (out+i)[3] = (uint)in[i+3];
-      (out+i)[4] = (uint)in[i+4];
-      (out+i)[5] = (uint)in[i+5];
+  for (i = start, j = 0; j < out_nr; j+=6, i+=6) { 
+      (out+j)[0] = (uint)in[i+0];
+      (out+j)[1] = (uint)in[i+1];
+      (out+j)[2] = (uint)in[i+2];
+      (out+j)[3] = (uint)in[i+3];
+      (out+j)[4] = (uint)in[i+4];
+      (out+j)[5] = (uint)in[i+5];
   }
 }
 static void translate_tristripadj_uint2uint_last2last_prenable(

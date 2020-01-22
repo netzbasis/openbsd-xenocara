@@ -237,10 +237,9 @@ libxatracker_la_DEPENDENCIES =  \
 	$(top_builddir)/src/gallium/state_trackers/xa/libxatracker.la \
 	$(top_builddir)/src/gallium/auxiliary/libgalliumvl_stub.la \
 	$(top_builddir)/src/gallium/auxiliary/libgallium.la \
-	$(top_builddir)/src/compiler/nir/libnir.la \
-	$(top_builddir)/src/util/libmesautil.la $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_4) $(am__DEPENDENCIES_12) $(am__append_20) \
-	$(am__DEPENDENCIES_13)
+	$(top_builddir)/src/compiler/glsl/libglsl.la \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_4) \
+	$(am__DEPENDENCIES_12) $(am__append_20) $(am__DEPENDENCIES_13)
 am__libxatracker_la_SOURCES_DIST = target.c
 @HAVE_GALLIUM_STATIC_TARGETS_TRUE@am__objects_1 =  \
 @HAVE_GALLIUM_STATIC_TARGETS_TRUE@	libxatracker_la-target.lo
@@ -371,6 +370,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -383,6 +383,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -715,13 +716,12 @@ libxatracker_la_LIBADD =  \
 	$(top_builddir)/src/gallium/state_trackers/xa/libxatracker.la \
 	$(top_builddir)/src/gallium/auxiliary/libgalliumvl_stub.la \
 	$(top_builddir)/src/gallium/auxiliary/libgallium.la \
-	$(top_builddir)/src/compiler/nir/libnir.la \
-	$(top_builddir)/src/util/libmesautil.la $(LIBDRM_LIBS) \
+	$(top_builddir)/src/compiler/glsl/libglsl.la $(LIBDRM_LIBS) \
 	$(GALLIUM_COMMON_LIB_DEPS) $(am__append_19) $(am__append_20) \
 	$(am__append_21)
 libxatracker_la_LDFLAGS = -no-undefined -version-number \
 	$(XA_MAJOR):$(XA_MINOR):$(XA_PATCH) $(GC_SECTIONS) \
-	$(LD_NO_UNDEFINED) $(am__append_5) $(am__append_22)
+	$(am__append_5) $(am__append_22)
 EXTRA_libxatracker_la_DEPENDENCIES = xa.sym
 EXTRA_DIST = xa.sym meson.build
 @HAVE_GALLIUM_STATIC_TARGETS_TRUE@TARGET_DRIVERS = $(am__append_6) \
@@ -736,6 +736,9 @@ EXTRA_DIST = xa.sym meson.build
 @HAVE_GALLIUM_STATIC_TARGETS_TRUE@	$(am__append_11) \
 @HAVE_GALLIUM_STATIC_TARGETS_TRUE@	$(am__append_14) \
 @HAVE_GALLIUM_STATIC_TARGETS_TRUE@	$(am__append_17)
+@HAVE_GALLIUM_NOUVEAU_TRUE@@HAVE_GALLIUM_STATIC_TARGETS_TRUE@TARGET_COMPILER_LIB_DEPS = \
+@HAVE_GALLIUM_NOUVEAU_TRUE@@HAVE_GALLIUM_STATIC_TARGETS_TRUE@	$(top_builddir)/src/compiler/nir/libnir.la
+
 @HAVE_GALLIUM_STATIC_TARGETS_TRUE@libxatracker_la_CPPFLAGS = $(TARGET_CPPFLAGS)
 all: all-am
 

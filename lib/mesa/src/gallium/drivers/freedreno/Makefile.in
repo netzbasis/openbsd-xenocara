@@ -102,12 +102,12 @@ am__objects_2 = a2xx/disasm-a2xx.lo a2xx/fd2_blend.lo \
 	a2xx/fd2_query.lo a2xx/fd2_rasterizer.lo a2xx/fd2_resource.lo \
 	a2xx/fd2_screen.lo a2xx/fd2_texture.lo a2xx/fd2_util.lo \
 	a2xx/fd2_zsa.lo a2xx/ir2.lo a2xx/ir2_assemble.lo \
-	a2xx/ir2_cp.lo a2xx/ir2_nir.lo a2xx/ir2_nir_lower_scalar.lo \
-	a2xx/ir2_ra.lo
+	a2xx/ir2_cp.lo a2xx/ir2_nir.lo a2xx/ir2_ra.lo
 am__objects_3 = a3xx/fd3_blend.lo a3xx/fd3_context.lo a3xx/fd3_draw.lo \
 	a3xx/fd3_emit.lo a3xx/fd3_format.lo a3xx/fd3_gmem.lo \
 	a3xx/fd3_program.lo a3xx/fd3_query.lo a3xx/fd3_rasterizer.lo \
-	a3xx/fd3_screen.lo a3xx/fd3_texture.lo a3xx/fd3_zsa.lo
+	a3xx/fd3_resource.lo a3xx/fd3_screen.lo a3xx/fd3_texture.lo \
+	a3xx/fd3_zsa.lo
 am__objects_4 = a4xx/fd4_blend.lo a4xx/fd4_context.lo a4xx/fd4_draw.lo \
 	a4xx/fd4_emit.lo a4xx/fd4_format.lo a4xx/fd4_gmem.lo \
 	a4xx/fd4_program.lo a4xx/fd4_query.lo a4xx/fd4_rasterizer.lo \
@@ -119,11 +119,11 @@ am__objects_5 = a5xx/fd5_blend.lo a5xx/fd5_blitter.lo \
 	a5xx/fd5_query.lo a5xx/fd5_rasterizer.lo a5xx/fd5_resource.lo \
 	a5xx/fd5_screen.lo a5xx/fd5_texture.lo a5xx/fd5_zsa.lo
 am__objects_6 = a6xx/fd6_blend.lo a6xx/fd6_blitter.lo \
-	a6xx/fd6_context.lo a6xx/fd6_draw.lo a6xx/fd6_emit.lo \
-	a6xx/fd6_format.lo a6xx/fd6_gmem.lo a6xx/fd6_image.lo \
-	a6xx/fd6_program.lo a6xx/fd6_query.lo a6xx/fd6_rasterizer.lo \
-	a6xx/fd6_resource.lo a6xx/fd6_screen.lo a6xx/fd6_texture.lo \
-	a6xx/fd6_zsa.lo
+	a6xx/fd6_compute.lo a6xx/fd6_context.lo a6xx/fd6_draw.lo \
+	a6xx/fd6_emit.lo a6xx/fd6_format.lo a6xx/fd6_gmem.lo \
+	a6xx/fd6_image.lo a6xx/fd6_perfcntr.lo a6xx/fd6_program.lo \
+	a6xx/fd6_query.lo a6xx/fd6_rasterizer.lo a6xx/fd6_resource.lo \
+	a6xx/fd6_screen.lo a6xx/fd6_texture.lo a6xx/fd6_zsa.lo
 am__objects_7 = ir3/ir3_cache.lo ir3/ir3_gallium.lo
 am_libfreedreno_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
@@ -230,6 +230,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -242,6 +243,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -573,7 +575,6 @@ a2xx_SOURCES := \
 	a2xx/ir2_assemble.c \
 	a2xx/ir2_cp.c \
 	a2xx/ir2_nir.c \
-	a2xx/ir2_nir_lower_scalar.c \
 	a2xx/ir2_private.h \
 	a2xx/ir2_ra.c
 
@@ -596,6 +597,8 @@ a3xx_SOURCES := \
 	a3xx/fd3_query.h \
 	a3xx/fd3_rasterizer.c \
 	a3xx/fd3_rasterizer.h \
+	a3xx/fd3_resource.c \
+	a3xx/fd3_resource.h \
 	a3xx/fd3_screen.c \
 	a3xx/fd3_screen.h \
 	a3xx/fd3_texture.c \
@@ -669,6 +672,8 @@ a6xx_SOURCES := \
 	a6xx/fd6_blend.h \
 	a6xx/fd6_blitter.c \
 	a6xx/fd6_blitter.h \
+	a6xx/fd6_compute.c \
+	a6xx/fd6_compute.h \
 	a6xx/fd6_context.c \
 	a6xx/fd6_context.h \
 	a6xx/fd6_draw.c \
@@ -681,6 +686,7 @@ a6xx_SOURCES := \
 	a6xx/fd6_gmem.h \
 	a6xx/fd6_image.c \
 	a6xx/fd6_image.h \
+	a6xx/fd6_perfcntr.c \
 	a6xx/fd6_program.c \
 	a6xx/fd6_program.h \
 	a6xx/fd6_query.c \
@@ -768,7 +774,7 @@ GALLIUM_PIPE_LOADER_WINSYS_LIBS =  \
 	$(am__append_3) $(am__append_4)
 AM_CFLAGS = \
 	-Wno-packed-bitfield-compat \
-	-I$(top_srcdir)/include/drm-uapi \
+	-I$(top_srcdir)/include \
 	-I$(top_srcdir)/src/gallium/drivers/freedreno/ir3 \
 	-I$(top_srcdir)/src/freedreno \
 	-I$(top_srcdir)/src/freedreno/registers \
@@ -871,8 +877,6 @@ a2xx/ir2_assemble.lo: a2xx/$(am__dirstamp) \
 	a2xx/$(DEPDIR)/$(am__dirstamp)
 a2xx/ir2_cp.lo: a2xx/$(am__dirstamp) a2xx/$(DEPDIR)/$(am__dirstamp)
 a2xx/ir2_nir.lo: a2xx/$(am__dirstamp) a2xx/$(DEPDIR)/$(am__dirstamp)
-a2xx/ir2_nir_lower_scalar.lo: a2xx/$(am__dirstamp) \
-	a2xx/$(DEPDIR)/$(am__dirstamp)
 a2xx/ir2_ra.lo: a2xx/$(am__dirstamp) a2xx/$(DEPDIR)/$(am__dirstamp)
 a3xx/$(am__dirstamp):
 	@$(MKDIR_P) a3xx
@@ -892,6 +896,8 @@ a3xx/fd3_program.lo: a3xx/$(am__dirstamp) \
 	a3xx/$(DEPDIR)/$(am__dirstamp)
 a3xx/fd3_query.lo: a3xx/$(am__dirstamp) a3xx/$(DEPDIR)/$(am__dirstamp)
 a3xx/fd3_rasterizer.lo: a3xx/$(am__dirstamp) \
+	a3xx/$(DEPDIR)/$(am__dirstamp)
+a3xx/fd3_resource.lo: a3xx/$(am__dirstamp) \
 	a3xx/$(DEPDIR)/$(am__dirstamp)
 a3xx/fd3_screen.lo: a3xx/$(am__dirstamp) \
 	a3xx/$(DEPDIR)/$(am__dirstamp)
@@ -964,6 +970,8 @@ a6xx/$(DEPDIR)/$(am__dirstamp):
 a6xx/fd6_blend.lo: a6xx/$(am__dirstamp) a6xx/$(DEPDIR)/$(am__dirstamp)
 a6xx/fd6_blitter.lo: a6xx/$(am__dirstamp) \
 	a6xx/$(DEPDIR)/$(am__dirstamp)
+a6xx/fd6_compute.lo: a6xx/$(am__dirstamp) \
+	a6xx/$(DEPDIR)/$(am__dirstamp)
 a6xx/fd6_context.lo: a6xx/$(am__dirstamp) \
 	a6xx/$(DEPDIR)/$(am__dirstamp)
 a6xx/fd6_draw.lo: a6xx/$(am__dirstamp) a6xx/$(DEPDIR)/$(am__dirstamp)
@@ -972,6 +980,8 @@ a6xx/fd6_format.lo: a6xx/$(am__dirstamp) \
 	a6xx/$(DEPDIR)/$(am__dirstamp)
 a6xx/fd6_gmem.lo: a6xx/$(am__dirstamp) a6xx/$(DEPDIR)/$(am__dirstamp)
 a6xx/fd6_image.lo: a6xx/$(am__dirstamp) a6xx/$(DEPDIR)/$(am__dirstamp)
+a6xx/fd6_perfcntr.lo: a6xx/$(am__dirstamp) \
+	a6xx/$(DEPDIR)/$(am__dirstamp)
 a6xx/fd6_program.lo: a6xx/$(am__dirstamp) \
 	a6xx/$(DEPDIR)/$(am__dirstamp)
 a6xx/fd6_query.lo: a6xx/$(am__dirstamp) a6xx/$(DEPDIR)/$(am__dirstamp)
@@ -1050,7 +1060,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@a2xx/$(DEPDIR)/ir2_assemble.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a2xx/$(DEPDIR)/ir2_cp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a2xx/$(DEPDIR)/ir2_nir.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@a2xx/$(DEPDIR)/ir2_nir_lower_scalar.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a2xx/$(DEPDIR)/ir2_ra.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a3xx/$(DEPDIR)/fd3_blend.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a3xx/$(DEPDIR)/fd3_context.Plo@am__quote@
@@ -1061,6 +1070,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@a3xx/$(DEPDIR)/fd3_program.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a3xx/$(DEPDIR)/fd3_query.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a3xx/$(DEPDIR)/fd3_rasterizer.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@a3xx/$(DEPDIR)/fd3_resource.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a3xx/$(DEPDIR)/fd3_screen.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a3xx/$(DEPDIR)/fd3_texture.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a3xx/$(DEPDIR)/fd3_zsa.Plo@am__quote@
@@ -1095,12 +1105,14 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@a5xx/$(DEPDIR)/fd5_zsa.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_blend.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_blitter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_compute.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_context.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_draw.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_emit.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_format.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_gmem.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_image.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_perfcntr.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_program.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_query.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@a6xx/$(DEPDIR)/fd6_rasterizer.Plo@am__quote@

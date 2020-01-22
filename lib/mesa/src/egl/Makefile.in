@@ -113,7 +113,7 @@ DIST_COMMON = $(egl_HEADERS) $(srcdir)/Makefile.am \
 
 
 #TODO: glvnd symbol check
-@USE_LIBGLVND_FALSE@am__append_17 = egl-symbols-check
+@USE_LIBGLVND_FALSE@am__append_17 = egl-symbols.txt
 subdir = src/egl
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_compile_flag.m4 \
@@ -162,18 +162,22 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgconfigdir)" \
 	"$(DESTDIR)$(vendorjsondir)" "$(DESTDIR)$(egldir)"
 LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
-@USE_LIBGLVND_FALSE@libEGL_la_DEPENDENCIES = libEGL_common.la \
+@USE_LIBGLVND_FALSE@libEGL@EGL_LIB_SUFFIX@_la_DEPENDENCIES =  \
+@USE_LIBGLVND_FALSE@	libEGL_common.la \
 @USE_LIBGLVND_FALSE@	$(top_builddir)/src/mapi/shared-glapi/libglapi.la
-am_libEGL_la_OBJECTS =
-libEGL_la_OBJECTS = $(am_libEGL_la_OBJECTS)
+am_libEGL@EGL_LIB_SUFFIX@_la_OBJECTS =
+libEGL@EGL_LIB_SUFFIX@_la_OBJECTS =  \
+	$(am_libEGL@EGL_LIB_SUFFIX@_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-libEGL_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(libEGL_la_LDFLAGS) $(LDFLAGS) -o $@
-@USE_LIBGLVND_FALSE@am_libEGL_la_rpath = -rpath $(libdir)
+libEGL@EGL_LIB_SUFFIX@_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(AM_CFLAGS) $(CFLAGS) $(libEGL@EGL_LIB_SUFFIX@_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+@USE_LIBGLVND_FALSE@am_libEGL@EGL_LIB_SUFFIX@_la_rpath = -rpath \
+@USE_LIBGLVND_FALSE@	$(libdir)
 am__DEPENDENCIES_1 =
 @HAVE_PLATFORM_X11_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1)
 @HAVE_PLATFORM_WAYLAND_TRUE@am__DEPENDENCIES_3 =  \
@@ -197,23 +201,23 @@ am__libEGL_common_la_SOURCES_DIST = main/eglapi.c main/eglapi.h \
 	main/eglcurrent.c main/eglcurrent.h main/egldefines.h \
 	main/egldevice.c main/egldevice.h main/egldisplay.c \
 	main/egldisplay.h main/egldriver.c main/egldriver.h \
-	main/eglfallbacks.c main/eglglobals.c main/eglglobals.h \
-	main/eglimage.c main/eglimage.h main/egllog.c main/egllog.h \
-	main/eglsurface.c main/eglsurface.h main/eglsync.c \
-	main/eglsync.h main/eglentrypoint.h main/egltypedefs.h \
+	main/eglglobals.c main/eglglobals.h main/eglimage.c \
+	main/eglimage.h main/egllog.c main/egllog.h main/eglsurface.c \
+	main/eglsurface.h main/eglsync.c main/eglsync.h \
+	main/eglentrypoint.h main/egltypedefs.h \
 	drivers/dri2/egl_dri2.c drivers/dri2/egl_dri2.h \
 	drivers/dri2/egl_dri2_fallbacks.h drivers/dri2/platform_x11.c \
 	drivers/dri2/platform_wayland.c drivers/dri2/platform_drm.c \
 	drivers/dri2/platform_surfaceless.c \
-	drivers/dri2/platform_android.c \
+	drivers/dri2/platform_device.c drivers/dri2/platform_android.c \
 	drivers/dri2/platform_x11_dri3.c \
 	drivers/dri2/platform_x11_dri3.h
 am__dirstamp = $(am__leading_dot)dirstamp
 am__objects_1 = main/eglapi.lo main/eglarray.lo main/eglconfig.lo \
 	main/eglcontext.lo main/eglcurrent.lo main/egldevice.lo \
-	main/egldisplay.lo main/egldriver.lo main/eglfallbacks.lo \
-	main/eglglobals.lo main/eglimage.lo main/egllog.lo \
-	main/eglsurface.lo main/eglsync.lo
+	main/egldisplay.lo main/egldriver.lo main/eglglobals.lo \
+	main/eglimage.lo main/egllog.lo main/eglsurface.lo \
+	main/eglsync.lo
 am__objects_2 = drivers/dri2/egl_dri2.lo
 @HAVE_PLATFORM_X11_TRUE@am__objects_3 = drivers/dri2/platform_x11.lo
 @HAVE_PLATFORM_WAYLAND_TRUE@am__objects_4 =  \
@@ -223,7 +227,8 @@ am__objects_2 = drivers/dri2/egl_dri2.lo
 @HAVE_PLATFORM_ANDROID_TRUE@am__objects_7 =  \
 @HAVE_PLATFORM_ANDROID_TRUE@	drivers/dri2/platform_android.lo
 am__objects_8 = $(am__objects_3) $(am__objects_4) $(am__objects_5) \
-	$(am__objects_6) $(am__objects_7)
+	$(am__objects_6) drivers/dri2/platform_device.lo \
+	$(am__objects_7)
 @HAVE_DRI3_TRUE@@HAVE_PLATFORM_X11_TRUE@am__objects_9 = drivers/dri2/platform_x11_dri3.lo
 am__objects_10 = $(am__objects_9)
 am_libEGL_common_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
@@ -281,9 +286,10 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libEGL_la_SOURCES) $(libEGL_common_la_SOURCES) \
-	$(nodist_libEGL_common_la_SOURCES) $(libEGL_mesa_la_SOURCES)
-DIST_SOURCES = $(libEGL_la_SOURCES) \
+SOURCES = $(libEGL@EGL_LIB_SUFFIX@_la_SOURCES) \
+	$(libEGL_common_la_SOURCES) $(nodist_libEGL_common_la_SOURCES) \
+	$(libEGL_mesa_la_SOURCES)
+DIST_SOURCES = $(libEGL@EGL_LIB_SUFFIX@_la_SOURCES) \
 	$(am__libEGL_common_la_SOURCES_DIST) \
 	$(am__libEGL_mesa_la_SOURCES_DIST)
 am__can_run_installinfo = \
@@ -353,6 +359,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -365,6 +372,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -639,7 +647,6 @@ LIBEGL_C_FILES := \
 	main/egldisplay.h \
 	main/egldriver.c \
 	main/egldriver.h \
-	main/eglfallbacks.c \
 	main/eglglobals.c \
 	main/eglglobals.h \
 	main/eglimage.c \
@@ -660,10 +667,10 @@ dri2_backend_core_FILES := \
 
 MKDIR_GEN = $(AM_V_at)$(MKDIR_P) $(@D)
 BUILT_SOURCES = g_egldispatchstubs.c g_egldispatchstubs.h
-AM_CFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/drm-uapi \
-	-I$(top_srcdir)/src/mapi -I$(top_srcdir)/src/egl/main \
-	-I$(top_srcdir)/src/gbm/main -I$(top_srcdir)/src $(DEFINES) \
-	$(VISIBILITY_CFLAGS) $(LIBDRM_CFLAGS) $(EGL_CFLAGS) \
+AM_CFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/src/mapi \
+	-I$(top_srcdir)/src/egl/main -I$(top_srcdir)/src/gbm/main \
+	-I$(top_srcdir)/src $(DEFINES) $(VISIBILITY_CFLAGS) \
+	$(LIBDRM_CFLAGS) $(EGL_CFLAGS) \
 	-D_EGL_NATIVE_PLATFORM=$(EGL_NATIVE_PLATFORM) $(am__append_1) \
 	$(am__append_6) $(am__append_13) -I$(top_srcdir)/src/loader \
 	-I$(top_builddir)/src/egl/drivers/dri2 \
@@ -687,7 +694,8 @@ libEGL_common_la_LIBADD = $(top_builddir)/src/util/libmesautil.la \
 	$(top_builddir)/src/util/libxmlconfig.la $(DLOPEN_LIBS) \
 	$(LIBDRM_LIBS) $(CLOCK_LIB)
 dri2_backend_FILES = $(am__append_3) $(am__append_8) $(am__append_11) \
-	$(am__append_12) $(am__append_15)
+	$(am__append_12) drivers/dri2/platform_device.c \
+	$(am__append_15)
 dri2_backend_GENERATED_FILES = $(am__append_9)
 dri3_backend_FILES = $(am__append_4)
 WL_DMABUF_XML = $(WAYLAND_PROTOCOLS_DATADIR)/unstable/linux-dmabuf/linux-dmabuf-unstable-v1.xml
@@ -710,7 +718,7 @@ CLEANFILES = \
 
 @USE_LIBGLVND_TRUE@vendorjsondir = @LIBGLVND_DATADIR@/glvnd/egl_vendor.d
 @USE_LIBGLVND_TRUE@vendorjson_DATA = main/50_mesa.json
-@USE_LIBGLVND_FALSE@lib_LTLIBRARIES = libEGL.la
+@USE_LIBGLVND_FALSE@lib_LTLIBRARIES = libEGL@EGL_LIB_SUFFIX@.la
 @USE_LIBGLVND_TRUE@lib_LTLIBRARIES = libEGL_mesa.la
 @USE_LIBGLVND_TRUE@libEGL_mesa_la_SOURCES = \
 @USE_LIBGLVND_TRUE@	main/eglglvnd.c \
@@ -730,14 +738,14 @@ CLEANFILES = \
 @USE_LIBGLVND_TRUE@	$(GC_SECTIONS) \
 @USE_LIBGLVND_TRUE@	$(LD_NO_UNDEFINED)
 
-@USE_LIBGLVND_FALSE@libEGL_la_SOURCES = 
-@USE_LIBGLVND_FALSE@libEGL_la_LIBADD = \
+@USE_LIBGLVND_FALSE@libEGL@EGL_LIB_SUFFIX@_la_SOURCES = 
+@USE_LIBGLVND_FALSE@libEGL@EGL_LIB_SUFFIX@_la_LIBADD = \
 @USE_LIBGLVND_FALSE@	libEGL_common.la \
 @USE_LIBGLVND_FALSE@	$(top_builddir)/src/mapi/shared-glapi/libglapi.la
 
-@USE_LIBGLVND_FALSE@libEGL_la_LDFLAGS = \
+@USE_LIBGLVND_FALSE@libEGL@EGL_LIB_SUFFIX@_la_LDFLAGS = \
 @USE_LIBGLVND_FALSE@	-no-undefined \
-@USE_LIBGLVND_FALSE@	-version-number 1:0 \
+@USE_LIBGLVND_FALSE@	-version-number 1:1 \
 @USE_LIBGLVND_FALSE@	$(BSYMBOLIC) \
 @USE_LIBGLVND_FALSE@	$(GC_SECTIONS) \
 @USE_LIBGLVND_FALSE@	$(LD_NO_UNDEFINED)
@@ -754,7 +762,7 @@ egl_HEADERS = \
 	$(top_srcdir)/include/EGL/eglmesaext.h \
 	$(top_srcdir)/include/EGL/eglplatform.h
 
-TESTS = egl-entrypoint-check $(am__append_17)
+TESTS = egl-entrypoint-check.py $(am__append_17)
 EXTRA_DIST = \
 	$(TESTS) \
 	SConscript \
@@ -846,8 +854,8 @@ clean-noinstLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
-libEGL.la: $(libEGL_la_OBJECTS) $(libEGL_la_DEPENDENCIES) $(EXTRA_libEGL_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libEGL_la_LINK) $(am_libEGL_la_rpath) $(libEGL_la_OBJECTS) $(libEGL_la_LIBADD) $(LIBS)
+libEGL@EGL_LIB_SUFFIX@.la: $(libEGL@EGL_LIB_SUFFIX@_la_OBJECTS) $(libEGL@EGL_LIB_SUFFIX@_la_DEPENDENCIES) $(EXTRA_libEGL@EGL_LIB_SUFFIX@_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(libEGL@EGL_LIB_SUFFIX@_la_LINK) $(am_libEGL@EGL_LIB_SUFFIX@_la_rpath) $(libEGL@EGL_LIB_SUFFIX@_la_OBJECTS) $(libEGL@EGL_LIB_SUFFIX@_la_LIBADD) $(LIBS)
 main/$(am__dirstamp):
 	@$(MKDIR_P) main
 	@: > main/$(am__dirstamp)
@@ -865,8 +873,6 @@ main/egldevice.lo: main/$(am__dirstamp) main/$(DEPDIR)/$(am__dirstamp)
 main/egldisplay.lo: main/$(am__dirstamp) \
 	main/$(DEPDIR)/$(am__dirstamp)
 main/egldriver.lo: main/$(am__dirstamp) main/$(DEPDIR)/$(am__dirstamp)
-main/eglfallbacks.lo: main/$(am__dirstamp) \
-	main/$(DEPDIR)/$(am__dirstamp)
 main/eglglobals.lo: main/$(am__dirstamp) \
 	main/$(DEPDIR)/$(am__dirstamp)
 main/eglimage.lo: main/$(am__dirstamp) main/$(DEPDIR)/$(am__dirstamp)
@@ -889,6 +895,8 @@ drivers/dri2/platform_wayland.lo: drivers/dri2/$(am__dirstamp) \
 drivers/dri2/platform_drm.lo: drivers/dri2/$(am__dirstamp) \
 	drivers/dri2/$(DEPDIR)/$(am__dirstamp)
 drivers/dri2/platform_surfaceless.lo: drivers/dri2/$(am__dirstamp) \
+	drivers/dri2/$(DEPDIR)/$(am__dirstamp)
+drivers/dri2/platform_device.lo: drivers/dri2/$(am__dirstamp) \
 	drivers/dri2/$(DEPDIR)/$(am__dirstamp)
 drivers/dri2/platform_android.lo: drivers/dri2/$(am__dirstamp) \
 	drivers/dri2/$(DEPDIR)/$(am__dirstamp)
@@ -919,6 +927,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@drivers/dri2/$(DEPDIR)/egl_dri2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@drivers/dri2/$(DEPDIR)/linux-dmabuf-unstable-v1-protocol.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@drivers/dri2/$(DEPDIR)/platform_android.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@drivers/dri2/$(DEPDIR)/platform_device.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@drivers/dri2/$(DEPDIR)/platform_drm.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@drivers/dri2/$(DEPDIR)/platform_surfaceless.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@drivers/dri2/$(DEPDIR)/platform_wayland.Plo@am__quote@
@@ -933,7 +942,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@main/$(DEPDIR)/egldispatchstubs.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@main/$(DEPDIR)/egldisplay.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@main/$(DEPDIR)/egldriver.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@main/$(DEPDIR)/eglfallbacks.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@main/$(DEPDIR)/eglglobals.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@main/$(DEPDIR)/eglglvnd.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@main/$(DEPDIR)/eglimage.Plo@am__quote@

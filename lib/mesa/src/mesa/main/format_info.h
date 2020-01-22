@@ -28,7 +28,7 @@
   * manually or commit it into version control.
   */
 
-static const struct gl_format_info format_info[MESA_FORMAT_COUNT] =
+static const struct mesa_format_info format_info[MESA_FORMAT_COUNT] =
 {
 
    {
@@ -3835,6 +3835,48 @@ static const struct gl_format_info format_info[MESA_FORMAT_COUNT] =
       .LuminanceBits = 0, .IntensityBits = 0, .DepthBits = 0, .StencilBits = 0,
       .IsSRGBFormat = 1,
       .BlockWidth = 6, .BlockHeight = 6, .BlockDepth = 6,
+      .BytesPerBlock = 16,
+      .Swizzle = { 0, 1, 2, 3 },
+      .ArrayFormat = 0,
+   },
+   {
+      .Name = MESA_FORMAT_ATC_RGB,
+      .StrName = "MESA_FORMAT_ATC_RGB",
+      .Layout = MESA_FORMAT_LAYOUT_ATC,
+      .BaseFormat = GL_RGB,
+      .DataType = GL_UNSIGNED_NORMALIZED,
+      .RedBits = 8, .GreenBits = 8, .BlueBits = 8, .AlphaBits = 0,
+      .LuminanceBits = 0, .IntensityBits = 0, .DepthBits = 0, .StencilBits = 0,
+      .IsSRGBFormat = 0,
+      .BlockWidth = 4, .BlockHeight = 4, .BlockDepth = 1,
+      .BytesPerBlock = 8,
+      .Swizzle = { 0, 1, 2, 5 },
+      .ArrayFormat = 0,
+   },
+   {
+      .Name = MESA_FORMAT_ATC_RGBA_EXPLICIT,
+      .StrName = "MESA_FORMAT_ATC_RGBA_EXPLICIT",
+      .Layout = MESA_FORMAT_LAYOUT_ATC,
+      .BaseFormat = GL_RGBA,
+      .DataType = GL_UNSIGNED_NORMALIZED,
+      .RedBits = 8, .GreenBits = 8, .BlueBits = 8, .AlphaBits = 8,
+      .LuminanceBits = 0, .IntensityBits = 0, .DepthBits = 0, .StencilBits = 0,
+      .IsSRGBFormat = 0,
+      .BlockWidth = 4, .BlockHeight = 4, .BlockDepth = 1,
+      .BytesPerBlock = 16,
+      .Swizzle = { 0, 1, 2, 3 },
+      .ArrayFormat = 0,
+   },
+   {
+      .Name = MESA_FORMAT_ATC_RGBA_INTERPOLATED,
+      .StrName = "MESA_FORMAT_ATC_RGBA_INTERPOLATED",
+      .Layout = MESA_FORMAT_LAYOUT_ATC,
+      .BaseFormat = GL_RGBA,
+      .DataType = GL_UNSIGNED_NORMALIZED,
+      .RedBits = 8, .GreenBits = 8, .BlueBits = 8, .AlphaBits = 8,
+      .LuminanceBits = 0, .IntensityBits = 0, .DepthBits = 0, .StencilBits = 0,
+      .IsSRGBFormat = 0,
+      .BlockWidth = 4, .BlockHeight = 4, .BlockDepth = 1,
       .BytesPerBlock = 16,
       .Swizzle = { 0, 1, 2, 3 },
       .ArrayFormat = 0,

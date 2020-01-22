@@ -1,17 +1,27 @@
-/Makefile.am/1.7/Thu May 23 05:33:19 2019//
-/Makefile.bsd-wrapper/1.28/Wed Aug 28 08:01:48 2019//
-/Makefile.in/1.15/Thu May 23 05:33:19 2019//
-/SConstruct/1.4/Tue Jan 29 11:52:04 2019//
-/VERSION/1.10/Mon Jul  1 08:36:47 2019//
-/aclocal.m4/1.6/Tue Feb 19 04:24:00 2019//
-/autogen.sh/1.1.1.1/Sun Nov 22 02:36:58 2015//
-/common.py/1.6/Tue Jan 29 11:52:04 2019//
-/configure/1.25/Sat Dec  7 03:10:09 2019//
-/configure.ac/1.23/Sat Dec  7 03:09:41 2019//
-/install-gallium-links.mk/1.1.1.3/Sun Dec 11 08:25:41 2016//
-/install-lib-links.mk/1.1.1.1/Sun Nov 22 02:36:48 2015//
-/meson.build/1.1.1.5/Mon Jul  1 07:44:02 2019/-ko/
-/meson_options.txt/1.1.1.2/Thu May 23 04:22:54 2019/-ko/
+/.dir-locals.el/1.1.1.1/Wed Jan 22 02:07:15 2020/-ko/
+/.editorconfig/1.1.1.1/Wed Jan 22 02:07:15 2020/-ko/
+/.mailmap/1.1.1.1/Wed Jan 22 02:07:15 2020/-ko/
+/.travis.yml/1.1.1.1/Wed Jan 22 02:07:15 2020/-ko/
+/Android.common.mk/1.1.1.1/Wed Jan 22 02:07:15 2020/-ko/
+/Android.mk/1.1.1.1/Wed Jan 22 02:07:16 2020/-ko/
+/CleanSpec.mk/1.1.1.1/Wed Jan 22 02:07:16 2020/-ko/
+/Makefile.am/1.9/Wed Jan 22 03:02:59 2020//
+/Makefile.bsd-wrapper/1.29/Wed Jan 22 02:49:17 2020//
+/Makefile.in/1.17/Wed Jan 22 03:02:59 2020//
+/README.rst/1.1.1.1/Wed Jan 22 02:07:16 2020/-ko/
+/REVIEWERS/1.1.1.1/Wed Jan 22 02:07:16 2020/-ko/
+/SConstruct/1.5/Wed Jan 22 02:49:17 2020//
+/VERSION/1.11/Wed Jan 22 02:49:17 2020//
+/aclocal.m4/1.8/Wed Jan 22 03:02:59 2020//
+/appveyor.yml/1.1.1.1/Wed Jan 22 02:07:16 2020/-ko/
+/autogen.sh/1.3/Wed Jan 22 03:02:59 2020//
+/common.py/1.7/Wed Jan 22 02:49:17 2020//
+/configure/1.27/Wed Jan 22 03:02:59 2020//
+/configure.ac/1.25/Wed Jan 22 03:02:59 2020//
+/install-gallium-links.mk/1.3/Wed Jan 22 03:03:00 2020//
+/install-lib-links.mk/1.3/Wed Jan 22 03:03:00 2020//
+/meson.build/1.2/Wed Jan 22 02:49:18 2020/-ko/
+/meson_options.txt/1.1.1.3/Wed Jan 22 02:07:16 2020/-ko/
 D/bin////
 D/build-support////
 D/docs////
@@ -19,4 +29,5 @@ D/doxygen////
 D/include////
 D/m4////
 D/scons////
+D/scripts////
 D/src////

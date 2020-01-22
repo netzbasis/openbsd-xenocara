@@ -83,8 +83,8 @@ DIST_COMMON = $(am__configure_deps) $(noinst_HEADERS) \
 	$(top_srcdir)/src/gbm/main/gbm.pc.in \
 	$(top_srcdir)/src/mapi/es1api/glesv1_cm.pc.in \
 	$(top_srcdir)/src/mapi/es2api/glesv2.pc.in bin/ar-lib \
-	bin/compile bin/config.guess bin/config.sub bin/depcomp \
-	bin/install-sh bin/ltmain.sh bin/missing
+	bin/compile bin/config.guess bin/config.sub bin/install-sh \
+	bin/ltmain.sh bin/missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_compile_flag.m4 \
 	$(top_srcdir)/m4/ax_check_gnu_make.m4 \
@@ -236,6 +236,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -248,6 +249,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@

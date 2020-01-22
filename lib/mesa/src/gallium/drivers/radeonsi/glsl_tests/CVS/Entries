@@ -1,0 +1,22 @@
+/HOW_TO_RUN/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/Makefile/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/amdgcn_glslc.c/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/bitcount.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/bitfield_extract.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/bitfield_insert.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/div.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/exp2.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/fma.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/fract.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/frexp.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/ldexp.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/lit.cfg/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/log2.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/minmax.f32.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/minmax.f64.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/minmax.i32.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/minmax.u32.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/pack_unpack_half.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/pow.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+/sqrt.glsl/1.1.1.1/Wed Jan 22 02:10:08 2020/-ko/
+D

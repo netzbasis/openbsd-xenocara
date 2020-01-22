@@ -9,30 +9,22 @@ MKDIR_GEN = $(AM_V_at)$(MKDIR_P) $(@D)
 PYTHON_GEN = $(AM_V_GEN)$(PYTHON) $(PYTHON_FLAGS)
 
 EXTRA_DIST = \
+	overlay-layer/README \
+	overlay-layer/meson.build \
+	overlay-layer/overlay.cpp \
+	overlay-layer/overlay_params.c \
+	overlay-layer/overlay_params.h \
+	overlay-layer/overlay.frag \
+	overlay-layer/overlay.vert \
+	overlay-layer/VkLayer_MESA_overlay.json \
 	util/gen_enum_to_str.py \
 	util/meson.build \
 	wsi/meson.build \
 	meson.build
 
-VULKAN_UTIL_SOURCES = \
-	$(VULKAN_UTIL_FILES) \
-	$(VULKAN_UTIL_GENERATED_FILES)
-
-if REGEN_SOURCES
-util/vk_enum_to_str.c util/vk_enum_to_str.h: util/gen_enum_to_str.py \
-		$(vulkan_api_xml)
-	$(MKDIR_GEN)
-	$(PYTHON_GEN) $(srcdir)/util/gen_enum_to_str.py \
-	    --xml $(vulkan_api_xml) \
-	    --outdir $(top_builddir)/src/vulkan/util
-endif
-
-libvulkan_util_la_SOURCES = $(VULKAN_UTIL_SOURCES)
-
 AM_CPPFLAGS = \
 	$(DEFINES) \
 	-I$(top_srcdir)/include \
-	-I$(top_srcdir)/include/drm-uapi \
 	-I$(top_srcdir)/src \
 	-I$(top_srcdir)/src/vulkan/util \
 	-I$(top_srcdir)/src/gallium/auxiliary \
@@ -111,6 +103,21 @@ VULKAN_WSI_GENERATED_SOURCES += \
 	$(VULKAN_WSI_WAYLAND_GENERATED_FILES)
 
 endif
+
+VULKAN_UTIL_SOURCES = \
+	$(VULKAN_UTIL_FILES) \
+	$(VULKAN_UTIL_GENERATED_FILES)
+
+if REGEN_SOURCES
+util/vk_enum_to_str.c util/vk_enum_to_str.h: util/gen_enum_to_str.py \
+		$(vulkan_api_xml)
+	$(MKDIR_GEN)
+	$(PYTHON_GEN) $(srcdir)/util/gen_enum_to_str.py \
+	    --xml $(vulkan_api_xml) \
+	    --outdir $(top_builddir)/src/vulkan/util
+endif
+
+libvulkan_util_la_SOURCES = $(VULKAN_UTIL_SOURCES)
 
 nodist_libvulkan_wsi_la_SOURCES = $(VULKAN_WSI_GENERATED_SOURCES)
 

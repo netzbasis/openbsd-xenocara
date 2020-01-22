@@ -61,8 +61,7 @@ AM_LDFLAGS = \
 	-module \
 	-no-undefined \
 	-avoid-version \
-	$(GC_SECTIONS) \
-	$(LD_NO_UNDEFINED)
+	$(GC_SECTIONS)
 
 if HAVE_LD_VERSION_SCRIPT
 AM_LDFLAGS += \

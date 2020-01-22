@@ -48,7 +48,7 @@
             data.d[c] = -op[0]->value.d[c];
             break;
          case GLSL_TYPE_UINT64:
-            data.u64[c] = -op[0]->value.u64[c];
+            data.u64[c] = -((int64_t) op[0]->value.u64[c]);
             break;
          case GLSL_TYPE_INT64:
             data.i64[c] = -op[0]->value.i64[c];

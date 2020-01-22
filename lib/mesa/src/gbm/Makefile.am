@@ -20,7 +20,7 @@ libgbm_la_SOURCES = \
 
 libgbm_la_LDFLAGS = \
 	-no-undefined \
-	-version-info 1:0 \
+	-version-info 0:4 \
 	$(GC_SECTIONS) \
 	$(LD_NO_UNDEFINED)
 
@@ -51,6 +51,6 @@ libgbm_la_LIBADD += \
 endif
 
 TESTS = gbm-symbols-check
-EXTRA_DIST = gbm-symbols-check meson.build
+EXTRA_DIST = gbm-symbols.txt meson.build
 
 include $(top_srcdir)/install-lib-links.mk

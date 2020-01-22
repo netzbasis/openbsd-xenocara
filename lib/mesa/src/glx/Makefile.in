@@ -127,7 +127,7 @@ target_triplet = @target@
 @USE_LIBGLVND_TRUE@	glxglvnddispatchfuncs.h
 
 @USE_LIBGLVND_FALSE@am__append_14 = \
-@USE_LIBGLVND_FALSE@	-DGL_LIB_NAME=\"lib@GL_LIB@.so.1\"
+@USE_LIBGLVND_FALSE@	-DGL_LIB_NAME=\"lib@GL_LIB@.so\"
 
 @HAVE_WINDOWSDRI_TRUE@am__append_15 = -lgdi32 -lopengl32 -Wl,--disable-stdcall-fixup
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
@@ -376,6 +376,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -388,6 +389,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -674,7 +676,7 @@ libglx_la_LIBADD = $(top_builddir)/src/loader/libloader.la \
 	$(top_builddir)/src/util/libmesautil.la \
 	$(top_builddir)/src/util/libxmlconfig.la $(am__append_5) \
 	$(am__append_8) $(am__append_11)
-@USE_LIBGLVND_FALSE@GL_LIB_VERSION = 1:2
+@USE_LIBGLVND_FALSE@GL_LIB_VERSION = 17:1
 @USE_LIBGLVND_TRUE@GL_LIB_VERSION = 0
 
 # Push the libdrm furhter up, as due to libtool bug we might end up relinking

@@ -2,8 +2,11 @@ D/amdgpu////
 D/etnaviv////
 D/freedreno////
 D/i915////
+D/iris////
 D/kmsro////
+D/lima////
 D/nouveau////
+D/panfrost////
 D/radeon////
 D/svga////
 D/sw////

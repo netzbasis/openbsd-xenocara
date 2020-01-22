@@ -80,7 +80,7 @@ vulkan/intel_icd.@host_cpu@.json :
 	$(MKDIR_GEN)
 	@echo -e "{" > $@
 	@echo -e "    \"ICD\": {" >> $@
-	@echo -e "        \"api_version\": \"1.1.96\"," >> $@
+	@echo -e "        \"api_version\": \"1.1.102\"," >> $@
 	@echo -e "        \"library_path\": \"${libdir}/libvulkan_intel.so\"" >> $@
 	@echo -e "    }," >> $@
 	@echo -e "    \"file_format_version\": \"1.0.0\"" >> $@
@@ -128,7 +128,7 @@ VULKAN_CFLAGS = \
 VULKAN_CPPFLAGS = \
 	-I$(top_srcdir)/src/compiler \
 	-I$(top_srcdir)/src/intel/compiler \
-	-I$(top_srcdir)/include/drm-uapi \
+	-I$(top_srcdir)/include \
 	-I$(top_builddir)/src/intel/vulkan \
 	-I$(top_srcdir)/src/intel/vulkan \
 	-I$(top_srcdir)/src/vulkan/wsi \
@@ -177,6 +177,7 @@ VULKAN_LIB_DEPS = \
 	$(top_builddir)/src/vulkan/libvulkan_wsi.la \
 	$(top_builddir)/src/compiler/nir/libnir.la \
 	$(top_builddir)/src/util/libmesautil.la \
+	$(top_builddir)/src/util/libxmlconfig.la \
 	$(LIBDRM_LIBS) \
 	$(PTHREAD_LIBS) \
 	$(DLOPEN_LIBS) \

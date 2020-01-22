@@ -209,6 +209,7 @@ am__libmesaswr_la_SOURCES_DIST = swr_clear.cpp swr_context.cpp \
 	rasterizer/jitter/streamout_jit.cpp \
 	rasterizer/jitter/streamout_jit.h \
 	rasterizer/jitter/shader_lib/DebugOutput.cpp \
+	rasterizer/jitter/shader_lib/Scatter.cpp \
 	rasterizer/jitter/functionpasses/passes.h \
 	rasterizer/jitter/functionpasses/lower_x86.cpp swr_loader.cpp \
 	rasterizer/common/formats.cpp rasterizer/common/formats.h \
@@ -259,6 +260,7 @@ am__objects_2 = rasterizer/jitter/libmesaswr_la-blend_jit.lo \
 	rasterizer/jitter/libmesaswr_la-JitManager.lo \
 	rasterizer/jitter/libmesaswr_la-streamout_jit.lo \
 	rasterizer/jitter/shader_lib/libmesaswr_la-DebugOutput.lo \
+	rasterizer/jitter/shader_lib/libmesaswr_la-Scatter.lo \
 	rasterizer/jitter/functionpasses/libmesaswr_la-lower_x86.lo
 am__objects_3 = libmesaswr_la-swr_loader.lo
 am__objects_4 = rasterizer/common/libmesaswr_la-formats.lo \
@@ -986,6 +988,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -998,6 +1001,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -1391,6 +1395,7 @@ JITTER_CXX_SOURCES := \
 	rasterizer/jitter/streamout_jit.cpp \
 	rasterizer/jitter/streamout_jit.h \
 	rasterizer/jitter/shader_lib/DebugOutput.cpp \
+    rasterizer/jitter/shader_lib/Scatter.cpp \
 	rasterizer/jitter/functionpasses/passes.h \
 	rasterizer/jitter/functionpasses/lower_x86.cpp
 
@@ -1754,6 +1759,9 @@ rasterizer/jitter/shader_lib/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) rasterizer/jitter/shader_lib/$(DEPDIR)
 	@: > rasterizer/jitter/shader_lib/$(DEPDIR)/$(am__dirstamp)
 rasterizer/jitter/shader_lib/libmesaswr_la-DebugOutput.lo:  \
+	rasterizer/jitter/shader_lib/$(am__dirstamp) \
+	rasterizer/jitter/shader_lib/$(DEPDIR)/$(am__dirstamp)
+rasterizer/jitter/shader_lib/libmesaswr_la-Scatter.lo:  \
 	rasterizer/jitter/shader_lib/$(am__dirstamp) \
 	rasterizer/jitter/shader_lib/$(DEPDIR)/$(am__dirstamp)
 rasterizer/jitter/functionpasses/$(am__dirstamp):
@@ -2487,6 +2495,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@rasterizer/jitter/$(DEPDIR)/libmesaswr_la-streamout_jit.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@rasterizer/jitter/functionpasses/$(DEPDIR)/libmesaswr_la-lower_x86.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@rasterizer/jitter/shader_lib/$(DEPDIR)/libmesaswr_la-DebugOutput.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@rasterizer/jitter/shader_lib/$(DEPDIR)/libmesaswr_la-Scatter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@rasterizer/memory/$(DEPDIR)/libswrAVX2_la-ClearTile.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@rasterizer/memory/$(DEPDIR)/libswrAVX2_la-InitMemory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@rasterizer/memory/$(DEPDIR)/libswrAVX2_la-LoadTile.Plo@am__quote@
@@ -2707,6 +2716,13 @@ rasterizer/jitter/shader_lib/libmesaswr_la-DebugOutput.lo: rasterizer/jitter/sha
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='rasterizer/jitter/shader_lib/DebugOutput.cpp' object='rasterizer/jitter/shader_lib/libmesaswr_la-DebugOutput.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmesaswr_la_CXXFLAGS) $(CXXFLAGS) -c -o rasterizer/jitter/shader_lib/libmesaswr_la-DebugOutput.lo `test -f 'rasterizer/jitter/shader_lib/DebugOutput.cpp' || echo '$(srcdir)/'`rasterizer/jitter/shader_lib/DebugOutput.cpp
+
+rasterizer/jitter/shader_lib/libmesaswr_la-Scatter.lo: rasterizer/jitter/shader_lib/Scatter.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmesaswr_la_CXXFLAGS) $(CXXFLAGS) -MT rasterizer/jitter/shader_lib/libmesaswr_la-Scatter.lo -MD -MP -MF rasterizer/jitter/shader_lib/$(DEPDIR)/libmesaswr_la-Scatter.Tpo -c -o rasterizer/jitter/shader_lib/libmesaswr_la-Scatter.lo `test -f 'rasterizer/jitter/shader_lib/Scatter.cpp' || echo '$(srcdir)/'`rasterizer/jitter/shader_lib/Scatter.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) rasterizer/jitter/shader_lib/$(DEPDIR)/libmesaswr_la-Scatter.Tpo rasterizer/jitter/shader_lib/$(DEPDIR)/libmesaswr_la-Scatter.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='rasterizer/jitter/shader_lib/Scatter.cpp' object='rasterizer/jitter/shader_lib/libmesaswr_la-Scatter.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmesaswr_la_CXXFLAGS) $(CXXFLAGS) -c -o rasterizer/jitter/shader_lib/libmesaswr_la-Scatter.lo `test -f 'rasterizer/jitter/shader_lib/Scatter.cpp' || echo '$(srcdir)/'`rasterizer/jitter/shader_lib/Scatter.cpp
 
 rasterizer/jitter/functionpasses/libmesaswr_la-lower_x86.lo: rasterizer/jitter/functionpasses/lower_x86.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmesaswr_la_CXXFLAGS) $(CXXFLAGS) -MT rasterizer/jitter/functionpasses/libmesaswr_la-lower_x86.lo -MD -MP -MF rasterizer/jitter/functionpasses/$(DEPDIR)/libmesaswr_la-lower_x86.Tpo -c -o rasterizer/jitter/functionpasses/libmesaswr_la-lower_x86.lo `test -f 'rasterizer/jitter/functionpasses/lower_x86.cpp' || echo '$(srcdir)/'`rasterizer/jitter/functionpasses/lower_x86.cpp

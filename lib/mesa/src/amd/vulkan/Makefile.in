@@ -180,14 +180,15 @@ LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
 libvulkan_common_la_LIBADD =
 am__libvulkan_common_la_SOURCES_DIST = radv_entrypoints.c \
 	radv_entrypoints.h radv_extensions.c radv_extensions.h \
-	vk_format_table.c radv_cmd_buffer.c radv_cs.h radv_debug.c \
-	radv_debug.h radv_device.c radv_descriptor_set.c \
-	radv_descriptor_set.h radv_formats.c radv_image.c radv_meta.c \
-	radv_meta.h radv_meta_blit.c radv_meta_blit2d.c \
-	radv_meta_buffer.c radv_meta_bufimage.c radv_meta_clear.c \
-	radv_meta_copy.c radv_meta_decompress.c radv_meta_fast_clear.c \
-	radv_meta_fmask_expand.c radv_meta_resolve.c \
-	radv_meta_resolve_cs.c radv_meta_resolve_fs.c \
+	vk_format_table.c gfx10_format_table.h radv_cmd_buffer.c \
+	radv_cs.h radv_debug.c radv_debug.h radv_device.c \
+	radv_descriptor_set.c radv_descriptor_set.h radv_formats.c \
+	radv_image.c radv_meta.c radv_meta.h radv_meta_blit.c \
+	radv_meta_blit2d.c radv_meta_buffer.c radv_meta_bufimage.c \
+	radv_meta_clear.c radv_meta_copy.c radv_meta_decompress.c \
+	radv_meta_fast_clear.c radv_meta_fmask_expand.c \
+	radv_meta_resolve.c radv_meta_resolve_cs.c \
+	radv_meta_resolve_fs.c radv_nir_lower_ycbcr_textures.c \
 	radv_nir_to_llvm.c radv_llvm_helper.cpp radv_pass.c \
 	radv_pipeline.c radv_pipeline_cache.c radv_private.h \
 	radv_radeon_winsys.h radv_shader.c radv_shader_info.c \
@@ -215,11 +216,11 @@ am__objects_3 = radv_cmd_buffer.lo radv_debug.lo radv_device.lo \
 	radv_meta_copy.lo radv_meta_decompress.lo \
 	radv_meta_fast_clear.lo radv_meta_fmask_expand.lo \
 	radv_meta_resolve.lo radv_meta_resolve_cs.lo \
-	radv_meta_resolve_fs.lo radv_nir_to_llvm.lo \
-	radv_llvm_helper.lo radv_pass.lo radv_pipeline.lo \
-	radv_pipeline_cache.lo radv_shader.lo radv_shader_info.lo \
-	radv_query.lo radv_util.lo radv_wsi.lo si_cmd_buffer.lo \
-	$(am__objects_2)
+	radv_meta_resolve_fs.lo radv_nir_lower_ycbcr_textures.lo \
+	radv_nir_to_llvm.lo radv_llvm_helper.lo radv_pass.lo \
+	radv_pipeline.lo radv_pipeline_cache.lo radv_shader.lo \
+	radv_shader_info.lo radv_query.lo radv_util.lo radv_wsi.lo \
+	si_cmd_buffer.lo $(am__objects_2)
 am__objects_4 = radv_wsi_display.lo
 @HAVE_PLATFORM_DRM_TRUE@am__objects_5 = $(am__objects_4)
 am__objects_6 = radv_wsi_x11.lo
@@ -249,7 +250,8 @@ am__DEPENDENCIES_6 = libvulkan_common.la \
 	$(top_builddir)/src/amd/common/libamd_common.la \
 	$(top_builddir)/src/amd/addrlib/libamdgpu_addrlib.la \
 	$(top_builddir)/src/compiler/nir/libnir.la \
-	$(top_builddir)/src/util/libmesautil.la $(am__DEPENDENCIES_1) \
+	$(top_builddir)/src/util/libmesautil.la \
+	$(top_builddir)/src/util/libxmlconfig.la $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -382,6 +384,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -394,6 +397,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -685,6 +689,7 @@ VULKAN_FILES := \
 	radv_meta_resolve.c \
 	radv_meta_resolve_cs.c \
 	radv_meta_resolve_fs.c \
+	radv_nir_lower_ycbcr_textures.c \
 	radv_nir_to_llvm.c \
 	radv_llvm_helper.cpp \
 	radv_pass.c \
@@ -721,7 +726,8 @@ VULKAN_GENERATED_FILES := \
 	radv_entrypoints.h \
 	radv_extensions.c \
 	radv_extensions.h \
-	vk_format_table.c
+	vk_format_table.c \
+	gfx10_format_table.h
 
 noinst_HEADERS = \
 	$(top_srcdir)/include/vulkan/vk_platform.h \
@@ -762,7 +768,8 @@ VULKAN_LIB_DEPS = libvulkan_common.la \
 	$(top_builddir)/src/amd/common/libamd_common.la \
 	$(top_builddir)/src/amd/addrlib/libamdgpu_addrlib.la \
 	$(top_builddir)/src/compiler/nir/libnir.la \
-	$(top_builddir)/src/util/libmesautil.la $(LLVM_LIBS) \
+	$(top_builddir)/src/util/libmesautil.la \
+	$(top_builddir)/src/util/libxmlconfig.la $(LLVM_LIBS) \
 	$(LIBELF_LIBS) $(PTHREAD_LIBS) $(AMDGPU_LIBS) $(LIBDRM_LIBS) \
 	$(PTHREAD_LIBS) $(DLOPEN_LIBS) -lm $(am__append_4) \
 	$(am__append_7) $(am__append_10) $(am__append_13)
@@ -930,6 +937,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/radv_meta_resolve.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/radv_meta_resolve_cs.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/radv_meta_resolve_fs.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/radv_nir_lower_ycbcr_textures.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/radv_nir_to_llvm.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/radv_pass.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/radv_pipeline.Plo@am__quote@
@@ -1279,6 +1287,14 @@ uninstall-am: uninstall-icdconfDATA uninstall-libLTLIBRARIES
 @REGEN_SOURCES_TRUE@                   vk_format_layout.csv
 @REGEN_SOURCES_TRUE@	$(PYTHON) $(srcdir)/vk_format_table.py $(srcdir)/vk_format_layout.csv > $@
 
+@REGEN_SOURCES_TRUE@gfx10_format_table.h: gfx10_format_table.py \
+@REGEN_SOURCES_TRUE@                      vk_format_layout.csv \
+@REGEN_SOURCES_TRUE@                      $(srcdir)/../registers/gfx10-rsrc.json
+@REGEN_SOURCES_TRUE@	$(PYTHON) $(srcdir)/gfx10_format_table.py \
+@REGEN_SOURCES_TRUE@	    $(srcdir)/vk_format_layout.csv \
+@REGEN_SOURCES_TRUE@	    $(srcdir)/../registers/gfx10-rsrc.json \
+@REGEN_SOURCES_TRUE@	    > $@
+
 @REGEN_SOURCES_TRUE@dev_icd.json : radv_extensions.py radv_icd.py
 @REGEN_SOURCES_TRUE@	$(AM_V_GEN)$(PYTHON) $(srcdir)/radv_icd.py \
 @REGEN_SOURCES_TRUE@		--lib-path="${abs_top_builddir}/${LIB_DIR}" --out $@
@@ -1289,7 +1305,7 @@ uninstall-am: uninstall-icdconfDATA uninstall-libLTLIBRARIES
 @REGEN_SOURCES_FALSE@radeon_icd.@host_cpu@.json :
 @REGEN_SOURCES_FALSE@	@echo -e "{" > $@
 @REGEN_SOURCES_FALSE@	@echo -e "    \"ICD\": {" >> $@
-@REGEN_SOURCES_FALSE@	@echo -e "        \"api_version\": \"1.1.70\"," >> $@
+@REGEN_SOURCES_FALSE@	@echo -e "        \"api_version\": \"1.1.107\"," >> $@
 @REGEN_SOURCES_FALSE@	@echo -e "        \"library_path\": \"${libdir}/libvulkan_radeon.so\"" >> $@
 @REGEN_SOURCES_FALSE@	@echo -e "    }," >> $@
 @REGEN_SOURCES_FALSE@	@echo -e "    \"file_format_version\": \"1.0.0\"" >> $@

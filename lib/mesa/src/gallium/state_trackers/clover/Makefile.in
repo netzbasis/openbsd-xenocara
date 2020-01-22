@@ -90,7 +90,7 @@ am__v_lt_1 =
 libclllvm_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(libclllvm_la_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-libclover_la_DEPENDENCIES = libcltgsi.la libclllvm.la
+libclover_la_DEPENDENCIES = libclllvm.la
 am__objects_2 = api/libclover_la-context.lo api/libclover_la-device.lo \
 	api/libclover_la-dispatch.lo api/libclover_la-event.lo \
 	api/libclover_la-interop.lo api/libclover_la-kernel.lo \
@@ -108,13 +108,6 @@ am_libclover_la_OBJECTS = $(am__objects_2)
 libclover_la_OBJECTS = $(am_libclover_la_OBJECTS)
 libclover_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(libclover_la_CXXFLAGS) \
-	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-libcltgsi_la_LIBADD =
-am__objects_3 = tgsi/libcltgsi_la-compiler.lo
-am_libcltgsi_la_OBJECTS = $(am__objects_3)
-libcltgsi_la_OBJECTS = $(am_libcltgsi_la_OBJECTS)
-libcltgsi_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(libcltgsi_la_CXXFLAGS) \
 	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -168,10 +161,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libclllvm_la_SOURCES) $(libclover_la_SOURCES) \
-	$(libcltgsi_la_SOURCES)
-DIST_SOURCES = $(libclllvm_la_SOURCES) $(libclover_la_SOURCES) \
-	$(libcltgsi_la_SOURCES)
+SOURCES = $(libclllvm_la_SOURCES) $(libclover_la_SOURCES)
+DIST_SOURCES = $(libclllvm_la_SOURCES) $(libclover_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -179,14 +170,19 @@ am__can_run_installinfo = \
   esac
 am__cl_HEADERS_DIST = $(top_srcdir)/include/CL/cl.h \
 	$(top_srcdir)/include/CL/cl.hpp \
+	$(top_srcdir)/include/CL/cl2.hpp \
 	$(top_srcdir)/include/CL/cl_d3d10.h \
 	$(top_srcdir)/include/CL/cl_d3d11.h \
 	$(top_srcdir)/include/CL/cl_dx9_media_sharing.h \
+	$(top_srcdir)/include/CL/cl_dx9_media_sharing_intel.h \
 	$(top_srcdir)/include/CL/cl_egl.h \
 	$(top_srcdir)/include/CL/cl_ext.h \
+	$(top_srcdir)/include/CL/cl_ext_intel.h \
 	$(top_srcdir)/include/CL/cl_gl.h \
 	$(top_srcdir)/include/CL/cl_gl_ext.h \
 	$(top_srcdir)/include/CL/cl_platform.h \
+	$(top_srcdir)/include/CL/cl_va_api_media_sharing_intel.h \
+	$(top_srcdir)/include/CL/cl_version.h \
 	$(top_srcdir)/include/CL/opencl.h
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -273,6 +269,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -285,6 +282,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -606,10 +604,6 @@ LLVM_SOURCES := \
 	llvm/metadata.hpp \
 	llvm/util.hpp
 
-TGSI_SOURCES := \
-	tgsi/compiler.cpp \
-	tgsi/invocation.hpp
-
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/src \
 	-I$(top_srcdir)/src -I$(top_srcdir)/src/gallium/include \
 	-I$(top_srcdir)/src/gallium/drivers \
@@ -620,23 +614,22 @@ AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/src \
 @HAVE_CLOVER_ICD_FALSE@cl_HEADERS = \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl.h \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl.hpp \
+@HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl2.hpp \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_d3d10.h \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_d3d11.h \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_dx9_media_sharing.h \
+@HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_dx9_media_sharing_intel.h \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_egl.h \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_ext.h \
+@HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_ext_intel.h \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_gl.h \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_gl_ext.h \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_platform.h \
+@HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_va_api_media_sharing_intel.h \
+@HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/cl_version.h \
 @HAVE_CLOVER_ICD_FALSE@	$(top_srcdir)/include/CL/opencl.h
 
-noinst_LTLIBRARIES = libclover.la libcltgsi.la libclllvm.la
-libcltgsi_la_CXXFLAGS = \
-	$(CXX11_CXXFLAGS) \
-	$(CLOVER_STD_OVERRIDE) \
-	$(VISIBILITY_CXXFLAGS)
-
-libcltgsi_la_SOURCES = $(TGSI_SOURCES)
+noinst_LTLIBRARIES = libclover.la libclllvm.la
 libclllvm_la_CXXFLAGS = \
 	$(CXX11_CXXFLAGS) \
 	$(VISIBILITY_CXXFLAGS) \
@@ -655,7 +648,7 @@ libclover_la_CXXFLAGS = \
 	$(VISIBILITY_CXXFLAGS)
 
 libclover_la_LIBADD = \
-	libcltgsi.la libclllvm.la
+	libclllvm.la
 
 libclover_la_SOURCES = $(CPP_SOURCES)
 EXTRA_DIST = Doxyfile meson.build
@@ -791,16 +784,6 @@ core/libclover_la-timestamp.lo: core/$(am__dirstamp) \
 	core/$(DEPDIR)/$(am__dirstamp)
 libclover.la: $(libclover_la_OBJECTS) $(libclover_la_DEPENDENCIES) $(EXTRA_libclover_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(libclover_la_LINK)  $(libclover_la_OBJECTS) $(libclover_la_LIBADD) $(LIBS)
-tgsi/$(am__dirstamp):
-	@$(MKDIR_P) tgsi
-	@: > tgsi/$(am__dirstamp)
-tgsi/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) tgsi/$(DEPDIR)
-	@: > tgsi/$(DEPDIR)/$(am__dirstamp)
-tgsi/libcltgsi_la-compiler.lo: tgsi/$(am__dirstamp) \
-	tgsi/$(DEPDIR)/$(am__dirstamp)
-libcltgsi.la: $(libcltgsi_la_OBJECTS) $(libcltgsi_la_DEPENDENCIES) $(EXTRA_libcltgsi_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(libcltgsi_la_LINK)  $(libcltgsi_la_OBJECTS) $(libcltgsi_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -812,8 +795,6 @@ mostlyclean-compile:
 	-rm -f llvm/*.lo
 	-rm -f llvm/codegen/*.$(OBJEXT)
 	-rm -f llvm/codegen/*.lo
-	-rm -f tgsi/*.$(OBJEXT)
-	-rm -f tgsi/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -847,7 +828,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@llvm/codegen/$(DEPDIR)/libclllvm_la-bitcode.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@llvm/codegen/$(DEPDIR)/libclllvm_la-common.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@llvm/codegen/$(DEPDIR)/libclllvm_la-native.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@tgsi/$(DEPDIR)/libcltgsi_la-compiler.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1076,13 +1056,6 @@ core/libclover_la-timestamp.lo: core/timestamp.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libclover_la_CXXFLAGS) $(CXXFLAGS) -c -o core/libclover_la-timestamp.lo `test -f 'core/timestamp.cpp' || echo '$(srcdir)/'`core/timestamp.cpp
 
-tgsi/libcltgsi_la-compiler.lo: tgsi/compiler.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcltgsi_la_CXXFLAGS) $(CXXFLAGS) -MT tgsi/libcltgsi_la-compiler.lo -MD -MP -MF tgsi/$(DEPDIR)/libcltgsi_la-compiler.Tpo -c -o tgsi/libcltgsi_la-compiler.lo `test -f 'tgsi/compiler.cpp' || echo '$(srcdir)/'`tgsi/compiler.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) tgsi/$(DEPDIR)/libcltgsi_la-compiler.Tpo tgsi/$(DEPDIR)/libcltgsi_la-compiler.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='tgsi/compiler.cpp' object='tgsi/libcltgsi_la-compiler.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libcltgsi_la_CXXFLAGS) $(CXXFLAGS) -c -o tgsi/libcltgsi_la-compiler.lo `test -f 'tgsi/compiler.cpp' || echo '$(srcdir)/'`tgsi/compiler.cpp
-
 mostlyclean-libtool:
 	-rm -f *.lo
 
@@ -1092,7 +1065,6 @@ clean-libtool:
 	-rm -rf core/.libs core/_libs
 	-rm -rf llvm/.libs llvm/_libs
 	-rm -rf llvm/codegen/.libs llvm/codegen/_libs
-	-rm -rf tgsi/.libs tgsi/_libs
 install-clHEADERS: $(cl_HEADERS)
 	@$(NORMAL_INSTALL)
 	@list='$(cl_HEADERS)'; test -n "$(cldir)" || list=; \
@@ -1252,8 +1224,6 @@ distclean-generic:
 	-rm -f llvm/$(am__dirstamp)
 	-rm -f llvm/codegen/$(DEPDIR)/$(am__dirstamp)
 	-rm -f llvm/codegen/$(am__dirstamp)
-	-rm -f tgsi/$(DEPDIR)/$(am__dirstamp)
-	-rm -f tgsi/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -1264,7 +1234,7 @@ clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf api/$(DEPDIR) core/$(DEPDIR) llvm/$(DEPDIR) llvm/codegen/$(DEPDIR) tgsi/$(DEPDIR)
+	-rm -rf api/$(DEPDIR) core/$(DEPDIR) llvm/$(DEPDIR) llvm/codegen/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1310,7 +1280,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf api/$(DEPDIR) core/$(DEPDIR) llvm/$(DEPDIR) llvm/codegen/$(DEPDIR) tgsi/$(DEPDIR)
+	-rm -rf api/$(DEPDIR) core/$(DEPDIR) llvm/$(DEPDIR) llvm/codegen/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

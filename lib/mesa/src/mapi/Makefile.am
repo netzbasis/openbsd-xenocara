@@ -33,8 +33,8 @@ pkgconfig_DATA =
 EXTRA_DIST = \
 	new/genCommon.py \
 	new/gen_gldispatch_mapi.py \
-	es1api/ABI-check \
-	es2api/ABI-check \
+	es1api/gles1-symbols.txt \
+	es2api/gles2-symbols.txt \
 	mapi_abi.py \
 	glapi/SConscript \
 	glapi/registry/gl.xml \
@@ -94,6 +94,7 @@ shared_glapi_libglapi_la_LIBADD = \
 	$(SELINUX_LIBS)
 shared_glapi_libglapi_la_LDFLAGS = \
 	-no-undefined \
+	-version-number 0:2 \
 	$(GC_SECTIONS) \
 	$(LD_NO_UNDEFINED)
 
@@ -177,6 +178,8 @@ glapi_test_LDADD = \
 endif
 endif
 
+if USE_LIBGLVND
+else
 if HAVE_OPENGL_ES1
 TESTS += es1api/ABI-check
 
@@ -191,25 +194,26 @@ GLES_include_HEADERS = \
 	$(top_srcdir)/include/GLES/glext.h \
 	$(top_srcdir)/include/GLES/glplatform.h
 
-lib_LTLIBRARIES += es1api/libGLESv1_CM.la
+lib_LTLIBRARIES += es1api/libGLESv1_CM@GLES_LIB_SUFFIX@.la
 
-es1api_libGLESv1_CM_la_SOURCES = entry.c es1api/glapi_mapi_tmp.h
-es1api_libGLESv1_CM_la_CFLAGS = \
+es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_SOURCES = entry.c es1api/glapi_mapi_tmp.h
+es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_CFLAGS = \
 	$(AM_CFLAGS) \
 	$(VISIBILITY_CFLAGS)
-es1api_libGLESv1_CM_la_CPPFLAGS = \
+es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	-DMAPI_MODE_BRIDGE \
 	-DMAPI_ABI_HEADER=\"es1api/glapi_mapi_tmp.h\"
-es1api_libGLESv1_CM_la_LIBADD = $(GLESv1_CM_LIB_DEPS)
-es1api_libGLESv1_CM_la_LDFLAGS = \
+es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_LIBADD = $(GLESv1_CM_LIB_DEPS)
+es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_LDFLAGS = \
 	-no-undefined \
-	-version-number 1:1 \
+	-version-number 2:0 \
 	$(GC_SECTIONS) \
 	$(LD_NO_UNDEFINED)
 
-es1api_libGLESv1_CM_la_LIBADD += shared-glapi/libglapi.la
-endif
+es1api_libGLESv1_CM@GLES_LIB_SUFFIX@_la_LIBADD += shared-glapi/libglapi.la
+endif # HAVE_OPENGL_ES1
+endif # USE_LIBGLVND
 
 if REGEN_SOURCES
 es1api/glapi_mapi_tmp.h: $(glapi_gen_mapi_deps)
@@ -217,6 +221,8 @@ es1api/glapi_mapi_tmp.h: $(glapi_gen_mapi_deps)
 	$(glapi_gen_mapi) glesv1 $(glapi_gen_gl_xml) > $@
 endif
 
+if USE_LIBGLVND
+else
 if HAVE_OPENGL_ES2
 TESTS += es2api/ABI-check
 
@@ -237,25 +243,26 @@ GLES3_include_HEADERS = \
 	$(top_srcdir)/include/GLES3/gl3ext.h \
 	$(top_srcdir)/include/GLES3/gl3platform.h
 
-lib_LTLIBRARIES += es2api/libGLESv2.la
+lib_LTLIBRARIES += es2api/libGLESv2@GLES_LIB_SUFFIX@.la
 
-es2api_libGLESv2_la_SOURCES = entry.c es2api/glapi_mapi_tmp.h
-es2api_libGLESv2_la_CFLAGS = \
+es2api_libGLESv2@GLES_LIB_SUFFIX@_la_SOURCES = entry.c es2api/glapi_mapi_tmp.h
+es2api_libGLESv2@GLES_LIB_SUFFIX@_la_CFLAGS = \
 	$(AM_CFLAGS) \
 	$(VISIBILITY_CFLAGS)
-es2api_libGLESv2_la_CPPFLAGS = \
+es2api_libGLESv2@GLES_LIB_SUFFIX@_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	-DMAPI_MODE_BRIDGE \
 	-DMAPI_ABI_HEADER=\"es2api/glapi_mapi_tmp.h\"
-es2api_libGLESv2_la_LIBADD = $(GLESv2_LIB_DEPS)
-es2api_libGLESv2_la_LDFLAGS = \
+es2api_libGLESv2@GLES_LIB_SUFFIX@_la_LIBADD = $(GLESv2_LIB_DEPS)
+es2api_libGLESv2@GLES_LIB_SUFFIX@_la_LDFLAGS = \
 	-no-undefined \
-	-version-number 2 \
+	-version-number 2:0 \
 	$(GC_SECTIONS) \
 	$(LD_NO_UNDEFINED)
 
-es2api_libGLESv2_la_LIBADD += shared-glapi/libglapi.la
-endif
+es2api_libGLESv2@GLES_LIB_SUFFIX@_la_LIBADD += shared-glapi/libglapi.la
+endif # HAVE_OPENGL_ES2
+endif # USE_LIBGLVND
 
 if REGEN_SOURCES
 es2api/glapi_mapi_tmp.h: $(glapi_gen_mapi_deps)

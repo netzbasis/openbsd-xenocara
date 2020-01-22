@@ -231,6 +231,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -243,6 +244,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -540,18 +542,20 @@ vulkan_api_xml = $(top_srcdir)/src/vulkan/registry/vk.xml
 MKDIR_GEN = $(AM_V_at)$(MKDIR_P) $(@D)
 PYTHON_GEN = $(AM_V_GEN)$(PYTHON) $(PYTHON_FLAGS)
 EXTRA_DIST = \
+	overlay-layer/README \
+	overlay-layer/meson.build \
+	overlay-layer/overlay.cpp \
+	overlay-layer/overlay_params.c \
+	overlay-layer/overlay_params.h \
+	overlay-layer/overlay.frag \
+	overlay-layer/overlay.vert \
+	overlay-layer/VkLayer_MESA_overlay.json \
 	util/gen_enum_to_str.py \
 	util/meson.build \
 	wsi/meson.build \
 	meson.build
 
-VULKAN_UTIL_SOURCES = \
-	$(VULKAN_UTIL_FILES) \
-	$(VULKAN_UTIL_GENERATED_FILES)
-
-libvulkan_util_la_SOURCES = $(VULKAN_UTIL_SOURCES)
-AM_CPPFLAGS = $(DEFINES) -I$(top_srcdir)/include \
-	-I$(top_srcdir)/include/drm-uapi -I$(top_srcdir)/src \
+AM_CPPFLAGS = $(DEFINES) -I$(top_srcdir)/include -I$(top_srcdir)/src \
 	-I$(top_srcdir)/src/vulkan/util \
 	-I$(top_srcdir)/src/gallium/auxiliary \
 	-I$(top_srcdir)/src/gallium/include $(am__append_1) \
@@ -569,6 +573,11 @@ CLEANFILES = \
 
 WL_DRM_XML = $(top_srcdir)/src/egl/wayland/wayland-drm/wayland-drm.xml
 WL_DMABUF_XML = $(WAYLAND_PROTOCOLS_DATADIR)/unstable/linux-dmabuf/linux-dmabuf-unstable-v1.xml
+VULKAN_UTIL_SOURCES = \
+	$(VULKAN_UTIL_FILES) \
+	$(VULKAN_UTIL_GENERATED_FILES)
+
+libvulkan_util_la_SOURCES = $(VULKAN_UTIL_SOURCES)
 nodist_libvulkan_wsi_la_SOURCES = $(VULKAN_WSI_GENERATED_SOURCES)
 libvulkan_wsi_la_SOURCES = $(VULKAN_WSI_SOURCES)
 all: all-am
@@ -925,13 +934,6 @@ uninstall-am:
 	tags uninstall uninstall-am
 
 
-@REGEN_SOURCES_TRUE@util/vk_enum_to_str.c util/vk_enum_to_str.h: util/gen_enum_to_str.py \
-@REGEN_SOURCES_TRUE@		$(vulkan_api_xml)
-@REGEN_SOURCES_TRUE@	$(MKDIR_GEN)
-@REGEN_SOURCES_TRUE@	$(PYTHON_GEN) $(srcdir)/util/gen_enum_to_str.py \
-@REGEN_SOURCES_TRUE@	    --xml $(vulkan_api_xml) \
-@REGEN_SOURCES_TRUE@	    --outdir $(top_builddir)/src/vulkan/util
-
 wsi/wayland-drm-protocol.c : $(WL_DRM_XML)
 	$(MKDIR_GEN)
 	$(AM_V_GEN)$(WAYLAND_SCANNER) $(SCANNER_ARG) $< $@
@@ -951,6 +953,13 @@ wsi/linux-dmabuf-unstable-v1-client-protocol.h : $(WL_DMABUF_XML)
 @HAVE_PLATFORM_WAYLAND_TRUE@wsi/linux-dmabuf-unstable-v1-protocol.lo: wsi/linux-dmabuf-unstable-v1-client-protocol.h
 @HAVE_PLATFORM_WAYLAND_TRUE@wsi/wayland-drm-protocol.lo: wsi/wayland-drm-client-protocol.h
 @HAVE_PLATFORM_WAYLAND_TRUE@wsi/wsi_common_wayland.lo: wsi/linux-dmabuf-unstable-v1-client-protocol.h wsi/wayland-drm-client-protocol.h
+
+@REGEN_SOURCES_TRUE@util/vk_enum_to_str.c util/vk_enum_to_str.h: util/gen_enum_to_str.py \
+@REGEN_SOURCES_TRUE@		$(vulkan_api_xml)
+@REGEN_SOURCES_TRUE@	$(MKDIR_GEN)
+@REGEN_SOURCES_TRUE@	$(PYTHON_GEN) $(srcdir)/util/gen_enum_to_str.py \
+@REGEN_SOURCES_TRUE@	    --xml $(vulkan_api_xml) \
+@REGEN_SOURCES_TRUE@	    --outdir $(top_builddir)/src/vulkan/util
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

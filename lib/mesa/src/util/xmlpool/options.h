@@ -36,8 +36,8 @@
  * all the translations. The result (options.h) is included by
  * xmlpool.h which in turn can be included by drivers.
  *
- * The macros used to describe otions in this file are defined in
- * ../xmlpool.h.
+ * The macros used to describe options in this file are defined in
+ * src/util/xmlpool.h.
  */
 
 /* This is needed for xgettext to extract translatable strings.
@@ -116,6 +116,11 @@ DRI_CONF_OPT_BEGIN_B(disable_blend_func_extended, def) \
         DRI_CONF_DESC(nl,"Disable dual source blending") \
         DRI_CONF_DESC(fr,"Disable dual source blending") \
         DRI_CONF_DESC(sv,"Disable dual source blending") \
+DRI_CONF_OPT_END
+
+#define DRI_CONF_DISABLE_ARB_GPU_SHADER5(def) \
+DRI_CONF_OPT_BEGIN_B(disable_arb_gpu_shader5, def) \
+        DRI_CONF_DESC(en,"Disable GL_ARB_gpu_shader5") \
 DRI_CONF_OPT_END
 
 #define DRI_CONF_DUAL_COLOR_BLEND_BY_LOCATION(def) \
@@ -248,6 +253,17 @@ DRI_CONF_OPT_BEGIN_B(allow_glsl_layout_qualifier_on_function_parameters, def) \
         DRI_CONF_DESC(nl,"Allow layout qualifiers on function parameters.") \
         DRI_CONF_DESC(fr,"Allow layout qualifiers on function parameters.") \
         DRI_CONF_DESC(sv,"Allow layout qualifiers on function parameters.") \
+DRI_CONF_OPT_END
+
+#define DRI_CONF_FORCE_GL_VENDOR(def) \
+DRI_CONF_OPT_BEGIN(force_gl_vendor, string, def) \
+        DRI_CONF_DESC(en,"Allow GPU vendor to be overridden.") \
+        DRI_CONF_DESC(ca,"Allow GPU vendor to be overridden.") \
+        DRI_CONF_DESC(de,"Allow GPU vendor to be overridden.") \
+        DRI_CONF_DESC(es,"Allow GPU vendor to be overridden.") \
+        DRI_CONF_DESC(nl,"Allow GPU vendor to be overridden.") \
+        DRI_CONF_DESC(fr,"Allow GPU vendor to be overridden.") \
+        DRI_CONF_DESC(sv,"Allow GPU vendor to be overridden.") \
 DRI_CONF_OPT_END
 
 #define DRI_CONF_FORCE_COMPAT_PROFILE(def) \
@@ -427,6 +443,28 @@ DRI_CONF_OPT_BEGIN_B(adaptive_sync,def) \
         DRI_CONF_DESC(sv,"Adapt the monitor sync to the application performance (when possible)") \
 DRI_CONF_OPT_END
 
+#define DRI_CONF_VK_X11_OVERRIDE_MIN_IMAGE_COUNT(def) \
+DRI_CONF_OPT_BEGIN_V(vk_x11_override_min_image_count, int, def, "0:999") \
+        DRI_CONF_DESC(en,"Override the VkSurfaceCapabilitiesKHR::minImageCount (0 = no override)") \
+        DRI_CONF_DESC(ca,"Override the VkSurfaceCapabilitiesKHR::minImageCount (0 = no override)") \
+        DRI_CONF_DESC(de,"Override the VkSurfaceCapabilitiesKHR::minImageCount (0 = no override)") \
+        DRI_CONF_DESC(es,"Override the VkSurfaceCapabilitiesKHR::minImageCount (0 = no override)") \
+        DRI_CONF_DESC(nl,"Override the VkSurfaceCapabilitiesKHR::minImageCount (0 = no override)") \
+        DRI_CONF_DESC(fr,"Override the VkSurfaceCapabilitiesKHR::minImageCount (0 = no override)") \
+        DRI_CONF_DESC(sv,"Override the VkSurfaceCapabilitiesKHR::minImageCount (0 = no override)") \
+DRI_CONF_OPT_END
+
+#define DRI_CONF_VK_X11_STRICT_IMAGE_COUNT(def) \
+DRI_CONF_OPT_BEGIN_B(vk_x11_strict_image_count, def) \
+        DRI_CONF_DESC(en,"Force the X11 WSI to create exactly the number of image specified by the application in VkSwapchainCreateInfoKHR::minImageCount") \
+        DRI_CONF_DESC(ca,"Force the X11 WSI to create exactly the number of image specified by the application in VkSwapchainCreateInfoKHR::minImageCount") \
+        DRI_CONF_DESC(de,"Force the X11 WSI to create exactly the number of image specified by the application in VkSwapchainCreateInfoKHR::minImageCount") \
+        DRI_CONF_DESC(es,"Force the X11 WSI to create exactly the number of image specified by the application in VkSwapchainCreateInfoKHR::minImageCount") \
+        DRI_CONF_DESC(nl,"Force the X11 WSI to create exactly the number of image specified by the application in VkSwapchainCreateInfoKHR::minImageCount") \
+        DRI_CONF_DESC(fr,"Force the X11 WSI to create exactly the number of image specified by the application in VkSwapchainCreateInfoKHR::minImageCount") \
+        DRI_CONF_DESC(sv,"Force the X11 WSI to create exactly the number of image specified by the application in VkSwapchainCreateInfoKHR::minImageCount") \
+DRI_CONF_OPT_END
+
 #define DRI_CONF_MESA_GLTHREAD(def) \
 DRI_CONF_OPT_BEGIN_B(mesa_glthread, def) \
         DRI_CONF_DESC(en,"Enable offloading GL driver work to a separate thread") \
@@ -528,6 +566,17 @@ DRI_CONF_DESC(es,"Allow exposure of visuals and fbconfigs with rgb10a2 formats")
 DRI_CONF_DESC(nl,"Allow exposure of visuals and fbconfigs with rgb10a2 formats") \
 DRI_CONF_DESC(fr,"Allow exposure of visuals and fbconfigs with rgb10a2 formats") \
 DRI_CONF_DESC(sv,"Allow exposure of visuals and fbconfigs with rgb10a2 formats") \
+DRI_CONF_OPT_END
+
+#define DRI_CONF_ALLOW_RGB565_CONFIGS(def) \
+DRI_CONF_OPT_BEGIN_B(allow_rgb565_configs, def) \
+DRI_CONF_DESC(en,"Allow exposure of visuals and fbconfigs with rgb565 formats") \
+DRI_CONF_DESC(ca,"Allow exposure of visuals and fbconfigs with rgb565 formats") \
+DRI_CONF_DESC(de,"Allow exposure of visuals and fbconfigs with rgb565 formats") \
+DRI_CONF_DESC(es,"Allow exposure of visuals and fbconfigs with rgb565 formats") \
+DRI_CONF_DESC(nl,"Allow exposure of visuals and fbconfigs with rgb565 formats") \
+DRI_CONF_DESC(fr,"Allow exposure of visuals and fbconfigs with rgb565 formats") \
+DRI_CONF_DESC(sv,"Allow exposure of visuals and fbconfigs with rgb565 formats") \
 DRI_CONF_OPT_END
 
 /**
@@ -645,6 +694,28 @@ DRI_CONF_OPT_BEGIN(csmt_force, int, def) \
         DRI_CONF_DESC(sv,"If set to 1, force gallium nine CSMT. If set to 0, disable it. By default (-1) CSMT is enabled on known thread-safe drivers.") \
 DRI_CONF_OPT_END
 
+#define DRI_CONF_NINE_DYNAMICTEXTUREWORKAROUND(def) \
+DRI_CONF_OPT_BEGIN_B(dynamic_texture_workaround, def) \
+        DRI_CONF_DESC(en,"If set to true, use a ram intermediate buffer for dynamic textures. Increases ram usage, which can cause out of memory issues, but can fix glitches for some games.") \
+        DRI_CONF_DESC(ca,"If set to true, use a ram intermediate buffer for dynamic textures. Increases ram usage, which can cause out of memory issues, but can fix glitches for some games.") \
+        DRI_CONF_DESC(de,"If set to true, use a ram intermediate buffer for dynamic textures. Increases ram usage, which can cause out of memory issues, but can fix glitches for some games.") \
+        DRI_CONF_DESC(es,"If set to true, use a ram intermediate buffer for dynamic textures. Increases ram usage, which can cause out of memory issues, but can fix glitches for some games.") \
+        DRI_CONF_DESC(nl,"If set to true, use a ram intermediate buffer for dynamic textures. Increases ram usage, which can cause out of memory issues, but can fix glitches for some games.") \
+        DRI_CONF_DESC(fr,"If set to true, use a ram intermediate buffer for dynamic textures. Increases ram usage, which can cause out of memory issues, but can fix glitches for some games.") \
+        DRI_CONF_DESC(sv,"If set to true, use a ram intermediate buffer for dynamic textures. Increases ram usage, which can cause out of memory issues, but can fix glitches for some games.") \
+DRI_CONF_OPT_END
+
+#define DRI_CONF_NINE_SHADERINLINECONSTANTS(def) \
+DRI_CONF_OPT_BEGIN_B(shader_inline_constants, def) \
+        DRI_CONF_DESC(en,"If set to true, recompile shaders with integer or boolean constants when the values are known. Can cause stutter, but can increase slightly performance.") \
+        DRI_CONF_DESC(ca,"If set to true, recompile shaders with integer or boolean constants when the values are known. Can cause stutter, but can increase slightly performance.") \
+        DRI_CONF_DESC(de,"If set to true, recompile shaders with integer or boolean constants when the values are known. Can cause stutter, but can increase slightly performance.") \
+        DRI_CONF_DESC(es,"If set to true, recompile shaders with integer or boolean constants when the values are known. Can cause stutter, but can increase slightly performance.") \
+        DRI_CONF_DESC(nl,"If set to true, recompile shaders with integer or boolean constants when the values are known. Can cause stutter, but can increase slightly performance.") \
+        DRI_CONF_DESC(fr,"If set to true, recompile shaders with integer or boolean constants when the values are known. Can cause stutter, but can increase slightly performance.") \
+        DRI_CONF_DESC(sv,"If set to true, recompile shaders with integer or boolean constants when the values are known. Can cause stutter, but can increase slightly performance.") \
+DRI_CONF_OPT_END
+
 /**
  * \brief radeonsi specific configuration options
  */
@@ -687,3 +758,44 @@ DRI_CONF_OPT_BEGIN_B(radeonsi_zerovram, def) \
         DRI_CONF_DESC(en,"Zero all vram allocations") \
 DRI_CONF_OPT_END
 
+#define DRI_CONF_V3D_NONMSAA_TEXTURE_SIZE_LIMIT(def) \
+DRI_CONF_OPT_BEGIN_B(v3d_nonmsaa_texture_size_limit, def) \
+        DRI_CONF_DESC(en,"Report the non-MSAA-only texture size limit") \
+DRI_CONF_OPT_END
+
+/**
+ * \brief virgl specific configuration options
+ */
+
+#define DRI_CONF_GLES_EMULATE_BGRA(def) \
+DRI_CONF_OPT_BEGIN_B(gles_emulate_bgra, def) \
+        DRI_CONF_DESC(en,"On GLES emulate BGRA formats by using a swizzled RGBA format") \
+        DRI_CONF_DESC(ca,"On GLES emulate BGRA formats by using a swizzled RGBA format") \
+        DRI_CONF_DESC(de,"On GLES emulate BGRA formats by using a swizzled RGBA format") \
+        DRI_CONF_DESC(es,"On GLES emulate BGRA formats by using a swizzled RGBA format") \
+        DRI_CONF_DESC(nl,"On GLES emulate BGRA formats by using a swizzled RGBA format") \
+        DRI_CONF_DESC(fr,"On GLES emulate BGRA formats by using a swizzled RGBA format") \
+        DRI_CONF_DESC(sv,"On GLES emulate BGRA formats by using a swizzled RGBA format") \
+DRI_CONF_OPT_END
+
+#define DRI_CONF_GLES_APPLY_BGRA_DEST_SWIZZLE(def) \
+DRI_CONF_OPT_BEGIN_B(gles_apply_bgra_dest_swizzle, def) \
+        DRI_CONF_DESC(en,"When the BGRA formats are emulated by using swizzled RGBA formats on GLES apply the swizzle when writing") \
+        DRI_CONF_DESC(ca,"When the BGRA formats are emulated by using swizzled RGBA formats on GLES apply the swizzle when writing") \
+        DRI_CONF_DESC(de,"When the BGRA formats are emulated by using swizzled RGBA formats on GLES apply the swizzle when writing") \
+        DRI_CONF_DESC(es,"When the BGRA formats are emulated by using swizzled RGBA formats on GLES apply the swizzle when writing") \
+        DRI_CONF_DESC(nl,"When the BGRA formats are emulated by using swizzled RGBA formats on GLES apply the swizzle when writing") \
+        DRI_CONF_DESC(fr,"When the BGRA formats are emulated by using swizzled RGBA formats on GLES apply the swizzle when writing") \
+        DRI_CONF_DESC(sv,"When the BGRA formats are emulated by using swizzled RGBA formats on GLES apply the swizzle when writing") \
+DRI_CONF_OPT_END
+
+#define DRI_CONF_GLES_SAMPLES_PASSED_VALUE(def, minimum, maximum) \
+DRI_CONF_OPT_BEGIN_V(gles_samples_passed_value, def, minimum, maximum) \
+        DRI_CONF_DESC(en,"GL_SAMPLES_PASSED value when emulated by GL_ANY_SAMPLES_PASSED") \
+        DRI_CONF_DESC(ca,"GL_SAMPLES_PASSED value when emulated by GL_ANY_SAMPLES_PASSED") \
+        DRI_CONF_DESC(de,"GL_SAMPLES_PASSED value when emulated by GL_ANY_SAMPLES_PASSED") \
+        DRI_CONF_DESC(es,"GL_SAMPLES_PASSED value when emulated by GL_ANY_SAMPLES_PASSED") \
+        DRI_CONF_DESC(nl,"GL_SAMPLES_PASSED value when emulated by GL_ANY_SAMPLES_PASSED") \
+        DRI_CONF_DESC(fr,"GL_SAMPLES_PASSED value when emulated by GL_ANY_SAMPLES_PASSED") \
+        DRI_CONF_DESC(sv,"GL_SAMPLES_PASSED value when emulated by GL_ANY_SAMPLES_PASSED") \
+DRI_CONF_OPT_END

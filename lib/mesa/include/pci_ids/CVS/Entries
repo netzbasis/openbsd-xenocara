@@ -1,11 +1,11 @@
 /i810_pci_ids.h/1.1.1.1/Sun Nov 22 02:37:18 2015//
 /i915_pci_ids.h/1.1.1.1/Sun Nov 22 02:37:18 2015//
-/i965_pci_ids.h/1.8/Sat Aug 24 02:12:17 2019//
+/i965_pci_ids.h/1.9/Wed Jan 22 02:49:19 2020//
 /r200_pci_ids.h/1.1.1.1/Sun Nov 22 02:37:18 2015//
 /r300_pci_ids.h/1.1.1.1/Sun Nov 22 02:37:18 2015//
 /r600_pci_ids.h/1.1.1.1/Sun Nov 22 02:37:18 2015//
 /radeon_pci_ids.h/1.1.1.1/Sun Nov 22 02:37:18 2015//
-/radeonsi_pci_ids.h/1.6/Tue Jan 29 11:52:05 2019//
+/radeonsi_pci_ids.h/1.7/Wed Jan 22 02:49:19 2020//
 /virtio_gpu_pci_ids.h/1.1.1.1/Sun May 29 10:12:25 2016/-ko/
 /vmwgfx_pci_ids.h/1.1.1.1/Sun Nov 22 02:37:18 2015//
 D

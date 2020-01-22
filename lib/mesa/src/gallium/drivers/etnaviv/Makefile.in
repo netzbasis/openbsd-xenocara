@@ -113,8 +113,9 @@ CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libetnaviv_la_LIBADD =
 am__objects_1 = etnaviv_asm.lo etnaviv_blend.lo etnaviv_blt.lo \
-	etnaviv_clear_blit.lo etnaviv_compiler.lo etnaviv_context.lo \
-	etnaviv_disasm.lo etnaviv_emit.lo etnaviv_fence.lo \
+	etnaviv_clear_blit.lo etnaviv_compiler_nir.lo \
+	etnaviv_compiler_tgsi.lo etnaviv_context.lo etnaviv_disasm.lo \
+	etnaviv_emit.lo etnaviv_etc2.lo etnaviv_fence.lo \
 	etnaviv_format.lo etnaviv_query.lo etnaviv_query_hw.lo \
 	etnaviv_query_sw.lo etnaviv_query_pm.lo etnaviv_rasterizer.lo \
 	etnaviv_resource.lo etnaviv_rs.lo etnaviv_screen.lo \
@@ -240,6 +241,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -252,6 +254,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -526,8 +529,10 @@ C_SOURCES := \
 	etnaviv_blt.h \
 	etnaviv_clear_blit.c \
 	etnaviv_clear_blit.h \
-	etnaviv_compiler.c \
 	etnaviv_compiler.h \
+	etnaviv_compiler_nir.c \
+	etnaviv_compiler_nir_emit.h \
+	etnaviv_compiler_tgsi.c \
 	etnaviv_context.c \
 	etnaviv_context.h \
 	etnaviv_debug.h \
@@ -535,6 +540,8 @@ C_SOURCES := \
 	etnaviv_disasm.h \
 	etnaviv_emit.c \
 	etnaviv_emit.h \
+	etnaviv_etc2.c \
+	etnaviv_etc2.h \
 	etnaviv_fence.c \
 	etnaviv_fence.h \
 	etnaviv_format.c \
@@ -729,11 +736,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_blend.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_blt.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_clear_blit.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_compiler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_compiler_cmdline.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_compiler_nir.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_compiler_tgsi.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_context.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_disasm.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_emit.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_etc2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_fence.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_format.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/etnaviv_query.Plo@am__quote@

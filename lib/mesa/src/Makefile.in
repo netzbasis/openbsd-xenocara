@@ -200,11 +200,9 @@ am__installdirs = "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(gldir)" \
 DATA = $(pkgconfig_DATA)
 am__gl_HEADERS_DIST = $(top_srcdir)/include/GL/gl.h \
 	$(top_srcdir)/include/GL/glext.h \
-	$(top_srcdir)/include/GL/glcorearb.h \
-	$(top_srcdir)/include/GL/gl_mangle.h
+	$(top_srcdir)/include/GL/glcorearb.h
 am__glx_HEADERS_DIST = $(top_srcdir)/include/GL/glx.h \
-	$(top_srcdir)/include/GL/glxext.h \
-	$(top_srcdir)/include/GL/glx_mangle.h
+	$(top_srcdir)/include/GL/glxext.h
 am__osmesa_HEADERS_DIST = $(top_srcdir)/include/GL/osmesa.h
 HEADERS = $(gl_HEADERS) $(glx_HEADERS) $(osmesa_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
@@ -296,6 +294,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -308,6 +307,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -567,7 +567,12 @@ top_srcdir = @top_srcdir@
 BUILT_SOURCES = git_sha1.h
 CLEANFILES = $(BUILT_SOURCES)
 EXTRA_DIST = meson.build vulkan/registry/vk.xml getopt hgl SConscript \
-	$(top_srcdir)/include/GL/mesa_glinterop.h
+	$(top_srcdir)/include/GL/mesa_glinterop.h imgui/imconfig.h \
+	imgui/imgui.cpp imgui/imgui.h imgui/imgui_draw.cpp \
+	imgui/imgui_internal.h imgui/imgui_memory_editor.h \
+	imgui/imgui_widgets.cpp imgui/imstb_rectpack.h \
+	imgui/imstb_textedit.h imgui/imstb_truetype.h imgui/README \
+	imgui/LICENSE.txt imgui/meson.build
 
 # include only conditionally ?
 SUBDIRS = . gtest util mapi/glapi/gen mapi compiler $(am__append_1) \
@@ -579,16 +584,14 @@ SUBDIRS = . gtest util mapi/glapi/gen mapi compiler $(am__append_1) \
 @HAVE_OPENGL_TRUE@gl_HEADERS = \
 @HAVE_OPENGL_TRUE@  $(top_srcdir)/include/GL/gl.h \
 @HAVE_OPENGL_TRUE@  $(top_srcdir)/include/GL/glext.h \
-@HAVE_OPENGL_TRUE@  $(top_srcdir)/include/GL/glcorearb.h \
-@HAVE_OPENGL_TRUE@  $(top_srcdir)/include/GL/gl_mangle.h
+@HAVE_OPENGL_TRUE@  $(top_srcdir)/include/GL/glcorearb.h
 
 
 # TODO: When building with glvnd, glvnd itself should be providing gl.pc and the headers
 @HAVE_GLX_TRUE@glxdir = $(includedir)/GL
 @HAVE_GLX_TRUE@glx_HEADERS = \
 @HAVE_GLX_TRUE@  $(top_srcdir)/include/GL/glx.h \
-@HAVE_GLX_TRUE@  $(top_srcdir)/include/GL/glxext.h \
-@HAVE_GLX_TRUE@  $(top_srcdir)/include/GL/glx_mangle.h
+@HAVE_GLX_TRUE@  $(top_srcdir)/include/GL/glxext.h
 
 @HAVE_GLX_TRUE@pkgconfigdir = $(libdir)/pkgconfig
 @HAVE_GLX_TRUE@pkgconfig_DATA = mesa/gl.pc

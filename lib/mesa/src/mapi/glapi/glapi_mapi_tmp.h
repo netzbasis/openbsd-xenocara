@@ -2,13 +2,8 @@
 
 #ifndef _GLAPI_TMP_H_
 #define _GLAPI_TMP_H_
-#ifdef USE_MGL_NAMESPACE
-#define GLAPI_PREFIX(func)  mgl##func
-#define GLAPI_PREFIX_STR(func)  "mgl"#func
-#else
 #define GLAPI_PREFIX(func)  gl##func
 #define GLAPI_PREFIX_STR(func)  "gl"#func
-#endif /* USE_MGL_NAMESPACE */
 
 typedef int GLclampx;
 #endif /* _GLAPI_TMP_H_ */

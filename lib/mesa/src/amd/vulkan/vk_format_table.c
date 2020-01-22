@@ -54,6 +54,10 @@ vk_format_undefined_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -98,6 +102,10 @@ vk_format_r4g4_unorm_pack8_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R4G4_UNORM_PACK8, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -142,6 +150,10 @@ vk_format_r4g4b4a4_unorm_pack16_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R4G4B4A4_UNORM_PACK16, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -186,6 +198,10 @@ vk_format_b4g4r4a4_unorm_pack16_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B4G4R4A4_UNORM_PACK16, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -230,6 +246,10 @@ vk_format_r5g6b5_unorm_pack16_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R5G6B5_UNORM_PACK16, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -274,6 +294,10 @@ vk_format_b5g6r5_unorm_pack16_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B5G6R5_UNORM_PACK16, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -318,6 +342,10 @@ vk_format_r5g5b5a1_unorm_pack16_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R5G5B5A1_UNORM_PACK16, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -362,6 +390,10 @@ vk_format_b5g5r5a1_unorm_pack16_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B5G5R5A1_UNORM_PACK16, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -406,6 +438,10 @@ vk_format_a1r5g5b5_unorm_pack16_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A1R5G5B5_UNORM_PACK16, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -432,6 +468,10 @@ vk_format_r8_unorm_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -458,6 +498,10 @@ vk_format_r8_snorm_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -484,6 +528,10 @@ vk_format_r8_uscaled_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -510,6 +558,10 @@ vk_format_r8_sscaled_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -536,6 +588,10 @@ vk_format_r8_uint_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -562,6 +618,10 @@ vk_format_r8_sint_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -588,6 +648,10 @@ vk_format_r8_srgb_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_SRGB, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -632,6 +696,10 @@ vk_format_r8g8_unorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -676,6 +744,10 @@ vk_format_r8g8_snorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -720,6 +792,10 @@ vk_format_r8g8_uscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -764,6 +840,10 @@ vk_format_r8g8_sscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -808,6 +888,10 @@ vk_format_r8g8_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -852,6 +936,10 @@ vk_format_r8g8_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -896,6 +984,10 @@ vk_format_r8g8_srgb_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8_SRGB, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -940,6 +1032,10 @@ vk_format_r8g8b8_unorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -984,6 +1080,10 @@ vk_format_r8g8b8_snorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1028,6 +1128,10 @@ vk_format_r8g8b8_uscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1072,6 +1176,10 @@ vk_format_r8g8b8_sscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1116,6 +1224,10 @@ vk_format_r8g8b8_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1160,6 +1272,10 @@ vk_format_r8g8b8_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1204,6 +1320,10 @@ vk_format_r8g8b8_srgb_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8_SRGB, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1248,6 +1368,10 @@ vk_format_b8g8r8_unorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1292,6 +1416,10 @@ vk_format_b8g8r8_snorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1336,6 +1464,10 @@ vk_format_b8g8r8_uscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1380,6 +1512,10 @@ vk_format_b8g8r8_sscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1424,6 +1560,10 @@ vk_format_b8g8r8_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1468,6 +1608,10 @@ vk_format_b8g8r8_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1512,6 +1656,10 @@ vk_format_b8g8r8_srgb_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8_SRGB, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1556,6 +1704,10 @@ vk_format_r8g8b8a8_unorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8A8_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1600,6 +1752,10 @@ vk_format_r8g8b8a8_snorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8A8_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1644,6 +1800,10 @@ vk_format_r8g8b8a8_uscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8A8_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1688,6 +1848,10 @@ vk_format_r8g8b8a8_sscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8A8_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1732,6 +1896,10 @@ vk_format_r8g8b8a8_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8A8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1776,6 +1944,10 @@ vk_format_r8g8b8a8_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8A8_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1820,6 +1992,10 @@ vk_format_r8g8b8a8_srgb_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8G8B8A8_SRGB, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1864,6 +2040,10 @@ vk_format_b8g8r8a8_unorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1908,6 +2088,10 @@ vk_format_b8g8r8a8_snorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8A8_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1952,6 +2136,10 @@ vk_format_b8g8r8a8_uscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8A8_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -1996,6 +2184,10 @@ vk_format_b8g8r8a8_sscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8A8_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2040,6 +2232,10 @@ vk_format_b8g8r8a8_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8A8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2084,6 +2280,10 @@ vk_format_b8g8r8a8_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8A8_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2128,6 +2328,10 @@ vk_format_b8g8r8a8_srgb_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8A8_SRGB, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2172,6 +2376,10 @@ vk_format_a8b8g8r8_unorm_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A8B8G8R8_UNORM_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2216,6 +2424,10 @@ vk_format_a8b8g8r8_snorm_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A8B8G8R8_SNORM_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2260,6 +2472,10 @@ vk_format_a8b8g8r8_uscaled_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A8B8G8R8_USCALED_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2304,6 +2520,10 @@ vk_format_a8b8g8r8_sscaled_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A8B8G8R8_SSCALED_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2348,6 +2568,10 @@ vk_format_a8b8g8r8_uint_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A8B8G8R8_UINT_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2392,6 +2616,10 @@ vk_format_a8b8g8r8_sint_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A8B8G8R8_SINT_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2436,6 +2664,10 @@ vk_format_a8b8g8r8_srgb_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A8B8G8R8_SRGB_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2480,6 +2712,10 @@ vk_format_a2r10g10b10_unorm_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2R10G10B10_UNORM_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2524,6 +2760,10 @@ vk_format_a2r10g10b10_snorm_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2R10G10B10_SNORM_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2568,6 +2808,10 @@ vk_format_a2r10g10b10_uscaled_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2R10G10B10_USCALED_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2612,6 +2856,10 @@ vk_format_a2r10g10b10_sscaled_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2R10G10B10_SSCALED_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2656,6 +2904,10 @@ vk_format_a2r10g10b10_uint_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2R10G10B10_UINT_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2700,6 +2952,10 @@ vk_format_a2r10g10b10_sint_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2R10G10B10_SINT_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2744,6 +3000,10 @@ vk_format_a2b10g10r10_unorm_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2B10G10R10_UNORM_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2788,6 +3048,10 @@ vk_format_a2b10g10r10_snorm_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2B10G10R10_SNORM_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2832,6 +3096,10 @@ vk_format_a2b10g10r10_uscaled_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2B10G10R10_USCALED_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2876,6 +3144,10 @@ vk_format_a2b10g10r10_sscaled_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2B10G10R10_SSCALED_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2920,6 +3192,10 @@ vk_format_a2b10g10r10_uint_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2B10G10R10_UINT_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2964,6 +3240,10 @@ vk_format_a2b10g10r10_sint_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_A2B10G10R10_SINT_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -2990,6 +3270,10 @@ vk_format_r16_unorm_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3016,6 +3300,10 @@ vk_format_r16_snorm_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3042,6 +3330,10 @@ vk_format_r16_uscaled_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3068,6 +3360,10 @@ vk_format_r16_sscaled_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3094,6 +3390,10 @@ vk_format_r16_uint_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3120,6 +3420,10 @@ vk_format_r16_sint_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3146,6 +3450,10 @@ vk_format_r16_sfloat_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3190,6 +3498,10 @@ vk_format_r16g16_unorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3234,6 +3546,10 @@ vk_format_r16g16_snorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3278,6 +3594,10 @@ vk_format_r16g16_uscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3322,6 +3642,10 @@ vk_format_r16g16_sscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3366,6 +3690,10 @@ vk_format_r16g16_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3410,6 +3738,10 @@ vk_format_r16g16_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3454,6 +3786,10 @@ vk_format_r16g16_sfloat_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3498,6 +3834,10 @@ vk_format_r16g16b16_unorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3542,6 +3882,10 @@ vk_format_r16g16b16_snorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3586,6 +3930,10 @@ vk_format_r16g16b16_uscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3630,6 +3978,10 @@ vk_format_r16g16b16_sscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3674,6 +4026,10 @@ vk_format_r16g16b16_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3718,6 +4074,10 @@ vk_format_r16g16b16_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3762,6 +4122,10 @@ vk_format_r16g16b16_sfloat_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3806,6 +4170,10 @@ vk_format_r16g16b16a16_unorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16A16_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3850,6 +4218,10 @@ vk_format_r16g16b16a16_snorm_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16A16_SNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3894,6 +4266,10 @@ vk_format_r16g16b16a16_uscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16A16_USCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3938,6 +4314,10 @@ vk_format_r16g16b16a16_sscaled_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16A16_SSCALED, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -3982,6 +4362,10 @@ vk_format_r16g16b16a16_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16A16_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4026,6 +4410,10 @@ vk_format_r16g16b16a16_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16A16_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4070,6 +4458,10 @@ vk_format_r16g16b16a16_sfloat_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16G16B16A16_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4096,6 +4488,10 @@ vk_format_r32_uint_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4122,6 +4518,10 @@ vk_format_r32_sint_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4148,6 +4548,10 @@ vk_format_r32_sfloat_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4192,6 +4596,10 @@ vk_format_r32g32_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32G32_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4236,6 +4644,10 @@ vk_format_r32g32_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32G32_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4280,6 +4692,10 @@ vk_format_r32g32_sfloat_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32G32_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4324,6 +4740,10 @@ vk_format_r32g32b32_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32G32B32_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4368,6 +4788,10 @@ vk_format_r32g32b32_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32G32B32_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4412,6 +4836,10 @@ vk_format_r32g32b32_sfloat_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32G32B32_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4456,6 +4884,10 @@ vk_format_r32g32b32a32_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32G32B32A32_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4500,6 +4932,10 @@ vk_format_r32g32b32a32_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32G32B32A32_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4544,6 +4980,10 @@ vk_format_r32g32b32a32_sfloat_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R32G32B32A32_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4570,6 +5010,10 @@ vk_format_r64_uint_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4596,6 +5040,10 @@ vk_format_r64_sint_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4622,6 +5070,10 @@ vk_format_r64_sfloat_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4666,6 +5118,10 @@ vk_format_r64g64_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64G64_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4710,6 +5166,10 @@ vk_format_r64g64_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64G64_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4754,6 +5214,10 @@ vk_format_r64g64_sfloat_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64G64_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4798,6 +5262,10 @@ vk_format_r64g64b64_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64G64B64_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4842,6 +5310,10 @@ vk_format_r64g64b64_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64G64B64_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4886,6 +5358,10 @@ vk_format_r64g64b64_sfloat_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64G64B64_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4930,6 +5406,10 @@ vk_format_r64g64b64a64_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64G64B64A64_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -4974,6 +5454,10 @@ vk_format_r64g64b64a64_sint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64G64B64A64_SINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5018,6 +5502,10 @@ vk_format_r64g64b64a64_sfloat_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R64G64B64A64_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5044,6 +5532,10 @@ vk_format_b10g11r11_ufloat_pack32_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B10G11R11_UFLOAT_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5070,6 +5562,10 @@ vk_format_e5b9g9r9_ufloat_pack32_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_E5B9G9R9_UFLOAT_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5096,6 +5592,10 @@ vk_format_d16_unorm_description = {
       VK_SWIZZLE_NONE	/* ignored */
    },
    VK_FORMAT_COLORSPACE_ZS,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_D16_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5140,6 +5640,10 @@ vk_format_x8_d24_unorm_pack32_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_ZS,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_X8_D24_UNORM_PACK32, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5166,6 +5670,10 @@ vk_format_d32_sfloat_description = {
       VK_SWIZZLE_NONE	/* ignored */
    },
    VK_FORMAT_COLORSPACE_ZS,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_D32_SFLOAT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5192,6 +5700,10 @@ vk_format_s8_uint_description = {
       VK_SWIZZLE_NONE	/* ignored */
    },
    VK_FORMAT_COLORSPACE_ZS,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_S8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5236,6 +5748,10 @@ vk_format_d16_unorm_s8_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_ZS,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_D16_UNORM_S8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5280,6 +5796,10 @@ vk_format_d24_unorm_s8_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_ZS,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_D24_UNORM_S8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5324,6 +5844,406 @@ vk_format_d32_sfloat_s8_uint_description = {
    },
 #endif
    VK_FORMAT_COLORSPACE_ZS,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
+};
+
+static const struct vk_format_description
+vk_format_g8b8g8r8_422_unorm_description = {
+   VK_FORMAT_G8B8G8R8_422_UNORM,
+   "VK_FORMAT_G8B8G8R8_422_UNORM",
+   "g8b8g8r8_422_unorm",
+   {2, 1, 32},	/* block */
+   VK_FORMAT_LAYOUT_SUBSAMPLED,
+   4,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+#ifdef PIPE_ARCH_BIG_ENDIAN
+   {
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 24},	/* x = x */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 16},	/* y = y */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 8},	/* z = z */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 0}	/* w = w */
+   },
+#else
+   {
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 0},	/* x = x */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 8},	/* y = y */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 16},	/* z = z */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 24}	/* w = w */
+   },
+#endif
+#ifdef PIPE_ARCH_BIG_ENDIAN
+   {
+      VK_SWIZZLE_Z,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_X,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+#else
+   {
+      VK_SWIZZLE_Z,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_X,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+#endif
+   VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_G8B8G8R8_422_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
+};
+
+static const struct vk_format_description
+vk_format_b8g8r8g8_422_unorm_description = {
+   VK_FORMAT_B8G8R8G8_422_UNORM,
+   "VK_FORMAT_B8G8R8G8_422_UNORM",
+   "b8g8r8g8_422_unorm",
+   {2, 1, 32},	/* block */
+   VK_FORMAT_LAYOUT_SUBSAMPLED,
+   4,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+#ifdef PIPE_ARCH_BIG_ENDIAN
+   {
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 24},	/* x = x */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 16},	/* y = y */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 8},	/* z = z */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 0}	/* w = w */
+   },
+#else
+   {
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 0},	/* x = x */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 8},	/* y = y */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 16},	/* z = z */
+      {VK_FORMAT_TYPE_UNSIGNED, true, false, false, 8, 24}	/* w = w */
+   },
+#endif
+#ifdef PIPE_ARCH_BIG_ENDIAN
+   {
+      VK_SWIZZLE_Z,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_X,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+#else
+   {
+      VK_SWIZZLE_Z,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_X,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+#endif
+   VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_B8G8R8G8_422_UNORM, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
+};
+
+static const struct vk_format_description
+vk_format_g8_b8_r8_3plane_420_unorm_description = {
+   VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM,
+   "VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM",
+   "g8_b8_r8_3plane_420_unorm",
+   {1, 1, 8},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 8, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   3,	/* plane_count */
+   2,	/* width_divisor */
+   2,	/* height_divisor */
+   {VK_FORMAT_R8_UNORM, VK_FORMAT_R8_UNORM, VK_FORMAT_R8_UNORM},
+};
+
+static const struct vk_format_description
+vk_format_g8_b8r8_2plane_420_unorm_description = {
+   VK_FORMAT_G8_B8R8_2PLANE_420_UNORM,
+   "VK_FORMAT_G8_B8R8_2PLANE_420_UNORM",
+   "g8_b8r8_2plane_420_unorm",
+   {1, 1, 8},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 8, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   2,	/* plane_count */
+   2,	/* width_divisor */
+   2,	/* height_divisor */
+   {VK_FORMAT_R8_UNORM, VK_FORMAT_R8G8_UNORM, VK_FORMAT_UNDEFINED},
+};
+
+static const struct vk_format_description
+vk_format_g8_b8_r8_3plane_422_unorm_description = {
+   VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM,
+   "VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM",
+   "g8_b8_r8_3plane_422_unorm",
+   {1, 1, 8},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 8, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   3,	/* plane_count */
+   2,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_UNORM, VK_FORMAT_R8_UNORM, VK_FORMAT_R8_UNORM},
+};
+
+static const struct vk_format_description
+vk_format_g8_b8r8_2plane_422_unorm_description = {
+   VK_FORMAT_G8_B8R8_2PLANE_422_UNORM,
+   "VK_FORMAT_G8_B8R8_2PLANE_422_UNORM",
+   "g8_b8r8_2plane_422_unorm",
+   {1, 1, 8},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 8, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   2,	/* plane_count */
+   2,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_UNORM, VK_FORMAT_R8G8_UNORM, VK_FORMAT_UNDEFINED},
+};
+
+static const struct vk_format_description
+vk_format_g8_b8_r8_3plane_444_unorm_description = {
+   VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM,
+   "VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM",
+   "g8_b8_r8_3plane_444_unorm",
+   {1, 1, 8},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 8, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   3,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R8_UNORM, VK_FORMAT_R8_UNORM, VK_FORMAT_R8_UNORM},
+};
+
+static const struct vk_format_description
+vk_format_g16_b16_r16_3plane_420_unorm_description = {
+   VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM,
+   "VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM",
+   "g16_b16_r16_3plane_420_unorm",
+   {1, 1, 16},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 16, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   3,	/* plane_count */
+   2,	/* width_divisor */
+   2,	/* height_divisor */
+   {VK_FORMAT_R16_UNORM, VK_FORMAT_R16_UNORM, VK_FORMAT_R16_UNORM},
+};
+
+static const struct vk_format_description
+vk_format_g16_b16r16_2plane_420_unorm_description = {
+   VK_FORMAT_G16_B16R16_2PLANE_420_UNORM,
+   "VK_FORMAT_G16_B16R16_2PLANE_420_UNORM",
+   "g16_b16r16_2plane_420_unorm",
+   {1, 1, 16},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 16, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   2,	/* plane_count */
+   2,	/* width_divisor */
+   2,	/* height_divisor */
+   {VK_FORMAT_R16_UNORM, VK_FORMAT_R16G16_UNORM, VK_FORMAT_UNDEFINED},
+};
+
+static const struct vk_format_description
+vk_format_g16_b16_r16_3plane_422_unorm_description = {
+   VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM,
+   "VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM",
+   "g16_b16_r16_3plane_422_unorm",
+   {1, 1, 16},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 16, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   3,	/* plane_count */
+   2,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_UNORM, VK_FORMAT_R16_UNORM, VK_FORMAT_R16_UNORM},
+};
+
+static const struct vk_format_description
+vk_format_g16_b16r16_2plane_422_unorm_description = {
+   VK_FORMAT_G16_B16R16_2PLANE_422_UNORM,
+   "VK_FORMAT_G16_B16R16_2PLANE_422_UNORM",
+   "g16_b16r16_2plane_422_unorm",
+   {1, 1, 16},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 16, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   2,	/* plane_count */
+   2,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_UNORM, VK_FORMAT_R16G16_UNORM, VK_FORMAT_UNDEFINED},
+};
+
+static const struct vk_format_description
+vk_format_g16_b16_r16_3plane_444_unorm_description = {
+   VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM,
+   "VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM",
+   "g16_b16_r16_3plane_444_unorm",
+   {1, 1, 16},	/* block */
+   VK_FORMAT_LAYOUT_MULTIPLANE,
+   1,	/* nr_channels */
+   false,	/* is_array */
+   false,	/* is_bitmask */
+   false,	/* is_mixed */
+   {
+      {VK_FORMAT_TYPE_VOID, false, false, false, 16, 0},	/* x = x */
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0}
+   },
+   {
+      VK_SWIZZLE_X,	/* r */
+      VK_SWIZZLE_Y,	/* g */
+      VK_SWIZZLE_Z,	/* b */
+      VK_SWIZZLE_1	/* a */
+   },
+   VK_FORMAT_COLORSPACE_RGB,
+   3,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_R16_UNORM, VK_FORMAT_R16_UNORM, VK_FORMAT_R16_UNORM},
 };
 
 static const struct vk_format_description
@@ -5350,6 +6270,10 @@ vk_format_bc1_rgb_unorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC1_RGB_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5376,6 +6300,10 @@ vk_format_bc1_rgb_srgb_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC1_RGB_SRGB_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5402,6 +6330,10 @@ vk_format_bc1_rgba_unorm_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC1_RGBA_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5428,6 +6360,10 @@ vk_format_bc1_rgba_srgb_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC1_RGBA_SRGB_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5454,6 +6390,10 @@ vk_format_bc2_unorm_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC2_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5480,6 +6420,10 @@ vk_format_bc2_srgb_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC2_SRGB_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5506,6 +6450,10 @@ vk_format_bc3_unorm_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC3_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5532,6 +6480,10 @@ vk_format_bc3_srgb_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC3_SRGB_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5558,6 +6510,10 @@ vk_format_bc4_unorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC4_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5584,6 +6540,10 @@ vk_format_bc4_snorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC4_SNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5610,6 +6570,10 @@ vk_format_bc5_unorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC5_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5636,6 +6600,10 @@ vk_format_bc5_snorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC5_SNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5662,6 +6630,10 @@ vk_format_bc6h_ufloat_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC6H_UFLOAT_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5688,6 +6660,10 @@ vk_format_bc6h_sfloat_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC6H_SFLOAT_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5714,6 +6690,10 @@ vk_format_bc7_unorm_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC7_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5740,6 +6720,10 @@ vk_format_bc7_srgb_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_BC7_SRGB_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5766,6 +6750,10 @@ vk_format_etc2_r8g8b8_unorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_ETC2_R8G8B8_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5792,6 +6780,10 @@ vk_format_etc2_r8g8b8_srgb_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_ETC2_R8G8B8_SRGB_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5818,6 +6810,10 @@ vk_format_etc2_r8g8b8a1_unorm_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5844,6 +6840,10 @@ vk_format_etc2_r8g8b8a1_srgb_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5870,6 +6870,10 @@ vk_format_etc2_r8g8b8a8_unorm_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5896,6 +6900,10 @@ vk_format_etc2_r8g8b8a8_srgb_block_description = {
       VK_SWIZZLE_W	/* a */
    },
    VK_FORMAT_COLORSPACE_SRGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5922,6 +6930,10 @@ vk_format_eac_r11_unorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_EAC_R11_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5948,6 +6960,10 @@ vk_format_eac_r11_snorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_EAC_R11_SNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -5974,6 +6990,10 @@ vk_format_eac_r11g11_unorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_EAC_R11G11_UNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 static const struct vk_format_description
@@ -6000,6 +7020,10 @@ vk_format_eac_r11g11_snorm_block_description = {
       VK_SWIZZLE_1	/* a */
    },
    VK_FORMAT_COLORSPACE_RGB,
+   1,	/* plane_count */
+   1,	/* width_divisor */
+   1,	/* height_divisor */
+   {VK_FORMAT_EAC_R11G11_SNORM_BLOCK, VK_FORMAT_UNDEFINED, VK_FORMAT_UNDEFINED},
 };
 
 const struct vk_format_description *
@@ -6268,6 +7292,30 @@ vk_format_description(VkFormat format)
       return &vk_format_d24_unorm_s8_uint_description;
    case VK_FORMAT_D32_SFLOAT_S8_UINT:
       return &vk_format_d32_sfloat_s8_uint_description;
+   case VK_FORMAT_G8B8G8R8_422_UNORM:
+      return &vk_format_g8b8g8r8_422_unorm_description;
+   case VK_FORMAT_B8G8R8G8_422_UNORM:
+      return &vk_format_b8g8r8g8_422_unorm_description;
+   case VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM:
+      return &vk_format_g8_b8_r8_3plane_420_unorm_description;
+   case VK_FORMAT_G8_B8R8_2PLANE_420_UNORM:
+      return &vk_format_g8_b8r8_2plane_420_unorm_description;
+   case VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM:
+      return &vk_format_g8_b8_r8_3plane_422_unorm_description;
+   case VK_FORMAT_G8_B8R8_2PLANE_422_UNORM:
+      return &vk_format_g8_b8r8_2plane_422_unorm_description;
+   case VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM:
+      return &vk_format_g8_b8_r8_3plane_444_unorm_description;
+   case VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM:
+      return &vk_format_g16_b16_r16_3plane_420_unorm_description;
+   case VK_FORMAT_G16_B16R16_2PLANE_420_UNORM:
+      return &vk_format_g16_b16r16_2plane_420_unorm_description;
+   case VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM:
+      return &vk_format_g16_b16_r16_3plane_422_unorm_description;
+   case VK_FORMAT_G16_B16R16_2PLANE_422_UNORM:
+      return &vk_format_g16_b16r16_2plane_422_unorm_description;
+   case VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM:
+      return &vk_format_g16_b16_r16_3plane_444_unorm_description;
    case VK_FORMAT_BC1_RGB_UNORM_BLOCK:
       return &vk_format_bc1_rgb_unorm_block_description;
    case VK_FORMAT_BC1_RGB_SRGB_BLOCK:

@@ -114,22 +114,25 @@ libradeonsi_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 am__objects_1 =
 am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_2 = $(am__objects_1) cik_sdma.lo si_blit.lo si_buffer.lo \
-	si_clear.lo si_compute.lo si_compute_blit.lo si_cp_dma.lo \
-	si_debug.lo si_descriptors.lo si_dma.lo si_dma_cs.lo \
-	si_fence.lo si_get.lo si_gfx_cs.lo si_gpu_load.lo si_pipe.lo \
-	si_pm4.lo si_perfcounter.lo si_query.lo si_shader.lo \
-	si_shader_nir.lo si_shader_tgsi_alu.lo si_shader_tgsi_mem.lo \
-	si_shader_tgsi_setup.lo si_shaderlib_tgsi.lo si_state.lo \
-	si_state_binning.lo si_state_draw.lo si_state_msaa.lo \
-	si_state_shaders.lo si_state_streamout.lo si_state_viewport.lo \
-	si_test_dma.lo si_test_dma_perf.lo si_texture.lo si_uvd.lo \
+am__objects_2 = $(am__objects_1) cik_sdma.lo gfx10_query.lo \
+	gfx10_shader_ngg.lo si_blit.lo si_buffer.lo si_clear.lo \
+	si_compute.lo si_compute_prim_discard.lo si_compute_blit.lo \
+	si_cp_dma.lo si_debug.lo si_descriptors.lo si_dma.lo \
+	si_dma_cs.lo si_fence.lo si_get.lo si_gfx_cs.lo si_gpu_load.lo \
+	si_pipe.lo si_pm4.lo si_perfcounter.lo si_query.lo \
+	si_shader.lo si_shader_nir.lo si_shader_tgsi_alu.lo \
+	si_shader_tgsi_mem.lo si_shader_tgsi_setup.lo \
+	si_shaderlib_tgsi.lo si_state.lo si_state_binning.lo \
+	si_state_draw.lo si_state_msaa.lo si_state_shaders.lo \
+	si_state_streamout.lo si_state_viewport.lo si_test_dma.lo \
+	si_test_dma_perf.lo si_texture.lo si_uvd.lo \
 	../radeon/radeon_uvd.lo ../radeon/radeon_vcn_dec_jpeg.lo \
 	../radeon/radeon_vcn_dec.lo ../radeon/radeon_vcn_enc_1_2.lo \
-	../radeon/radeon_vcn_enc.lo ../radeon/radeon_uvd_enc_1_1.lo \
-	../radeon/radeon_uvd_enc.lo ../radeon/radeon_vce_40_2_2.lo \
-	../radeon/radeon_vce_50.lo ../radeon/radeon_vce_52.lo \
-	../radeon/radeon_vce.lo ../radeon/radeon_video.lo
+	../radeon/radeon_vcn_enc_2_0.lo ../radeon/radeon_vcn_enc.lo \
+	../radeon/radeon_uvd_enc_1_1.lo ../radeon/radeon_uvd_enc.lo \
+	../radeon/radeon_vce_40_2_2.lo ../radeon/radeon_vce_50.lo \
+	../radeon/radeon_vce_52.lo ../radeon/radeon_vce.lo \
+	../radeon/radeon_video.lo
 am_libradeonsi_la_OBJECTS = $(am__objects_2)
 libradeonsi_la_OBJECTS = $(am_libradeonsi_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -237,6 +240,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -249,6 +253,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -506,22 +511,25 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 GENERATED_SOURCES := \
+	gfx10_format_table.h \
 	si_driinfo.h
 
 C_SOURCES := \
 	$(GENERATED_SOURCES) \
 	cik_sdma.c \
 	driinfo_radeonsi.h \
+	gfx10_query.c \
+	gfx10_shader_ngg.c \
 	si_blit.c \
 	si_buffer.c \
 	si_build_pm4.h \
 	si_clear.c \
 	si_compute.c \
+	si_compute_prim_discard.c \
 	si_compute.h \
 	si_compute_blit.c \
 	si_cp_dma.c \
 	si_debug.c \
-	si_debug_options.h \
 	si_descriptors.c \
 	si_dma.c \
 	si_dma_cs.c \
@@ -563,6 +571,7 @@ C_SOURCES := \
 	../radeon/radeon_vcn_dec.c \
 	../radeon/radeon_vcn_dec.h \
 	../radeon/radeon_vcn_enc_1_2.c \
+	../radeon/radeon_vcn_enc_2_0.c \
 	../radeon/radeon_vcn_enc.c \
 	../radeon/radeon_vcn_enc.h \
 	../radeon/radeon_uvd_enc_1_1.c \
@@ -730,6 +739,8 @@ clean-noinstLTLIBRARIES:
 	../radeon/$(DEPDIR)/$(am__dirstamp)
 ../radeon/radeon_vcn_enc_1_2.lo: ../radeon/$(am__dirstamp) \
 	../radeon/$(DEPDIR)/$(am__dirstamp)
+../radeon/radeon_vcn_enc_2_0.lo: ../radeon/$(am__dirstamp) \
+	../radeon/$(DEPDIR)/$(am__dirstamp)
 ../radeon/radeon_vcn_enc.lo: ../radeon/$(am__dirstamp) \
 	../radeon/$(DEPDIR)/$(am__dirstamp)
 ../radeon/radeon_uvd_enc_1_1.lo: ../radeon/$(am__dirstamp) \
@@ -768,13 +779,17 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@../radeon/$(DEPDIR)/radeon_vcn_dec_jpeg.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../radeon/$(DEPDIR)/radeon_vcn_enc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../radeon/$(DEPDIR)/radeon_vcn_enc_1_2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@../radeon/$(DEPDIR)/radeon_vcn_enc_2_0.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@../radeon/$(DEPDIR)/radeon_video.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cik_sdma.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gfx10_query.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gfx10_shader_ngg.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/si_blit.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/si_buffer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/si_clear.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/si_compute.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/si_compute_blit.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/si_compute_prim_discard.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/si_cp_dma.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/si_debug.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/si_descriptors.Plo@am__quote@
@@ -1063,6 +1078,12 @@ uninstall-am:
 
 @REGEN_SOURCES_TRUE@si_driinfo.h: $(MERGE_DRIINFO) $(GEN_DRIINFO_INPUTS)
 @REGEN_SOURCES_TRUE@	$(PYTHON_GEN) $(MERGE_DRIINFO) $(GEN_DRIINFO_INPUTS) > $@ || ($(RM) $@; false)
+
+@REGEN_SOURCES_TRUE@gfx10_format_table.h: $(srcdir)/gfx10_format_table.py $(top_srcdir)/src/gallium/auxiliary/util/u_format.csv $(top_srcdir)/src/amd/registers/gfx10-rsrc.json
+@REGEN_SOURCES_TRUE@	$(PYTHON_GEN) $(srcdir)/gfx10_format_table.py \
+@REGEN_SOURCES_TRUE@	    $(top_srcdir)/src/gallium/auxiliary/util/u_format.csv \
+@REGEN_SOURCES_TRUE@	    $(top_srcdir)/src/amd/registers/gfx10-rsrc.json \
+@REGEN_SOURCES_TRUE@	    > $@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

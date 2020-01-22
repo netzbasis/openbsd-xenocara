@@ -84,6 +84,7 @@ const VkExtensionProperties radv_instance_extensions[RADV_INSTANCE_EXTENSION_COU
    {"VK_KHR_get_physical_device_properties2", 1},
    {"VK_KHR_get_surface_capabilities2", 1},
    {"VK_KHR_surface", 25},
+   {"VK_KHR_surface_protected_capabilities", 1},
    {"VK_KHR_wayland_surface", 6},
    {"VK_KHR_xcb_surface", 6},
    {"VK_KHR_xlib_surface", 6},
@@ -100,6 +101,7 @@ const VkExtensionProperties radv_device_extensions[RADV_DEVICE_EXTENSION_COUNT] 
    {"VK_KHR_bind_memory2", 1},
    {"VK_KHR_create_renderpass2", 1},
    {"VK_KHR_dedicated_allocation", 1},
+   {"VK_KHR_depth_stencil_resolve", 1},
    {"VK_KHR_descriptor_update_template", 1},
    {"VK_KHR_device_group", 1},
    {"VK_KHR_draw_indirect_count", 1},
@@ -112,45 +114,69 @@ const VkExtensionProperties radv_device_extensions[RADV_DEVICE_EXTENSION_COUNT] 
    {"VK_KHR_external_semaphore_fd", 1},
    {"VK_KHR_get_memory_requirements2", 1},
    {"VK_KHR_image_format_list", 1},
+   {"VK_KHR_imageless_framebuffer", 1},
    {"VK_KHR_incremental_present", 1},
    {"VK_KHR_maintenance1", 1},
    {"VK_KHR_maintenance2", 1},
    {"VK_KHR_maintenance3", 1},
+   {"VK_KHR_pipeline_executable_properties", 1},
    {"VK_KHR_push_descriptor", 1},
    {"VK_KHR_relaxed_block_layout", 1},
    {"VK_KHR_sampler_mirror_clamp_to_edge", 1},
+   {"VK_KHR_sampler_ycbcr_conversion", 1},
+   {"VK_KHR_shader_atomic_int64", 1},
    {"VK_KHR_shader_draw_parameters", 1},
+   {"VK_KHR_shader_float16_int8", 1},
    {"VK_KHR_storage_buffer_storage_class", 1},
    {"VK_KHR_swapchain", 68},
+   {"VK_KHR_uniform_buffer_standard_layout", 1},
    {"VK_KHR_variable_pointers", 1},
    {"VK_KHR_multiview", 1},
+   {"VK_KHR_8bit_storage", 1},
+   {"VK_EXT_buffer_device_address", 1},
    {"VK_EXT_calibrated_timestamps", 1},
    {"VK_EXT_conditional_rendering", 1},
    {"VK_EXT_conservative_rasterization", 1},
    {"VK_EXT_display_control", 1},
+   {"VK_EXT_depth_clip_enable", 1},
    {"VK_EXT_depth_range_unrestricted", 1},
    {"VK_EXT_descriptor_indexing", 2},
    {"VK_EXT_discard_rectangles", 1},
    {"VK_EXT_external_memory_dma_buf", 1},
    {"VK_EXT_external_memory_host", 1},
    {"VK_EXT_global_priority", 1},
+   {"VK_EXT_host_query_reset", 1},
+   {"VK_EXT_index_type_uint8", 1},
+   {"VK_EXT_inline_uniform_block", 1},
    {"VK_EXT_memory_budget", 1},
    {"VK_EXT_memory_priority", 1},
    {"VK_EXT_pci_bus_info", 2},
+   {"VK_EXT_pipeline_creation_feedback", 1},
+   {"VK_EXT_post_depth_coverage", 1},
+   {"VK_EXT_queue_family_foreign", 1},
+   {"VK_EXT_sample_locations", 1},
    {"VK_EXT_sampler_filter_minmax", 1},
    {"VK_EXT_scalar_block_layout", 1},
    {"VK_EXT_shader_viewport_index_layer", 1},
    {"VK_EXT_shader_stencil_export", 1},
+   {"VK_EXT_shader_subgroup_ballot", 1},
+   {"VK_EXT_shader_subgroup_vote", 1},
    {"VK_EXT_transform_feedback", 1},
    {"VK_EXT_vertex_attribute_divisor", 3},
+   {"VK_EXT_ycbcr_image_arrays", 1},
+   {"VK_AMD_buffer_marker", 1},
    {"VK_AMD_draw_indirect_count", 1},
    {"VK_AMD_gcn_shader", 1},
+   {"VK_AMD_gpu_shader_half_float", 1},
+   {"VK_AMD_gpu_shader_int16", 1},
    {"VK_AMD_rasterization_order", 1},
+   {"VK_AMD_shader_ballot", 1},
    {"VK_AMD_shader_core_properties", 1},
    {"VK_AMD_shader_info", 1},
    {"VK_AMD_shader_trinary_minmax", 1},
    {"VK_GOOGLE_decorate_string", 1},
    {"VK_GOOGLE_hlsl_functionality1", 1},
+   {"VK_NV_compute_shader_derivatives", 1},
 };
 
 const struct radv_instance_extension_table radv_supported_instance_extensions = {
@@ -162,6 +188,7 @@ const struct radv_instance_extension_table radv_supported_instance_extensions = 
    .KHR_get_physical_device_properties2 = true,
    .KHR_get_surface_capabilities2 = RADV_HAS_SURFACE,
    .KHR_surface = RADV_HAS_SURFACE,
+   .KHR_surface_protected_capabilities = RADV_HAS_SURFACE,
    .KHR_wayland_surface = VK_USE_PLATFORM_WAYLAND_KHR,
    .KHR_xcb_surface = VK_USE_PLATFORM_XCB_KHR,
    .KHR_xlib_surface = VK_USE_PLATFORM_XLIB_KHR,
@@ -181,6 +208,7 @@ void radv_fill_device_extension_table(const struct radv_physical_device *device,
    table->KHR_bind_memory2 = true;
    table->KHR_create_renderpass2 = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->KHR_dedicated_allocation = true;
+   table->KHR_depth_stencil_resolve = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->KHR_descriptor_update_template = true;
    table->KHR_device_group = true && (instance->enabled_extensions.KHR_device_group_creation || instance->apiVersion >= VK_API_VERSION_1_1);
    table->KHR_draw_indirect_count = true;
@@ -193,58 +221,85 @@ void radv_fill_device_extension_table(const struct radv_physical_device *device,
    table->KHR_external_semaphore_fd = device->rad_info.has_syncobj && (instance->enabled_extensions.KHR_external_semaphore_capabilities || instance->apiVersion >= VK_API_VERSION_1_1);
    table->KHR_get_memory_requirements2 = true;
    table->KHR_image_format_list = true;
+   table->KHR_imageless_framebuffer = true;
    table->KHR_incremental_present = RADV_HAS_SURFACE && instance->enabled_extensions.KHR_surface;
    table->KHR_maintenance1 = true;
    table->KHR_maintenance2 = true;
    table->KHR_maintenance3 = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->KHR_pipeline_executable_properties = true;
    table->KHR_push_descriptor = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->KHR_relaxed_block_layout = true;
    table->KHR_sampler_mirror_clamp_to_edge = true;
+   table->KHR_sampler_ycbcr_conversion = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->KHR_shader_atomic_int64 = HAVE_LLVM >= 0x0900 && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->KHR_shader_draw_parameters = true;
+   table->KHR_shader_float16_int8 = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->KHR_storage_buffer_storage_class = true;
    table->KHR_swapchain = RADV_HAS_SURFACE && instance->enabled_extensions.KHR_surface;
+   table->KHR_uniform_buffer_standard_layout = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->KHR_variable_pointers = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->KHR_multiview = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->KHR_8bit_storage = device->rad_info.chip_class >= GFX8 && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->EXT_buffer_device_address = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_calibrated_timestamps = true;
    table->EXT_conditional_rendering = true;
    table->EXT_conservative_rasterization = device->rad_info.chip_class >= GFX9 && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
-   table->EXT_display_control = VK_USE_PLATFORM_DISPLAY_KHR && instance->enabled_extensions.KHR_surface && instance->enabled_extensions.EXT_display_surface_counter;
+   table->EXT_display_control = VK_USE_PLATFORM_DISPLAY_KHR && instance->enabled_extensions.EXT_display_surface_counter && instance->enabled_extensions.KHR_surface;
+   table->EXT_depth_clip_enable = true;
    table->EXT_depth_range_unrestricted = true;
-   table->EXT_descriptor_indexing = false && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->EXT_descriptor_indexing = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_discard_rectangles = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_external_memory_dma_buf = true && (instance->enabled_extensions.KHR_external_memory_capabilities || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_external_memory_host = device->rad_info.has_userptr && (instance->enabled_extensions.KHR_external_memory_capabilities || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_global_priority = device->rad_info.has_ctx_priority;
+   table->EXT_host_query_reset = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->EXT_index_type_uint8 = device->rad_info.chip_class >= GFX8;
+   table->EXT_inline_uniform_block = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_memory_budget = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_memory_priority = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_pci_bus_info = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
-   table->EXT_sampler_filter_minmax = device->rad_info.chip_class >= CIK && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
-   table->EXT_scalar_block_layout = device->rad_info.chip_class >= CIK && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->EXT_pipeline_creation_feedback = true;
+   table->EXT_post_depth_coverage = device->rad_info.chip_class >= GFX10;
+   table->EXT_queue_family_foreign = true && (instance->enabled_extensions.KHR_external_memory_capabilities || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->EXT_sample_locations = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->EXT_sampler_filter_minmax = device->rad_info.chip_class >= GFX7 && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->EXT_scalar_block_layout = device->rad_info.chip_class >= GFX7 && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_shader_viewport_index_layer = true;
    table->EXT_shader_stencil_export = true;
+   table->EXT_shader_subgroup_ballot = true;
+   table->EXT_shader_subgroup_vote = true;
    table->EXT_transform_feedback = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->EXT_vertex_attribute_divisor = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->EXT_ycbcr_image_arrays = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
+   table->AMD_buffer_marker = true;
    table->AMD_draw_indirect_count = true;
    table->AMD_gcn_shader = true;
+   table->AMD_gpu_shader_half_float = device->rad_info.chip_class >= GFX9 && HAVE_LLVM >= 0x0800;
+   table->AMD_gpu_shader_int16 = device->rad_info.chip_class >= GFX9;
    table->AMD_rasterization_order = device->has_out_of_order_rast;
+   table->AMD_shader_ballot = device->use_shader_ballot;
    table->AMD_shader_core_properties = true && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
    table->AMD_shader_info = true;
    table->AMD_shader_trinary_minmax = true;
    table->GOOGLE_decorate_string = true;
    table->GOOGLE_hlsl_functionality1 = true;
+   table->NV_compute_shader_derivatives = device->rad_info.chip_class >= GFX8 && (instance->enabled_extensions.KHR_get_physical_device_properties2 || instance->apiVersion >= VK_API_VERSION_1_1);
 }
 
 VkResult radv_EnumerateInstanceVersion(
     uint32_t*                                   pApiVersion)
 {
-    *pApiVersion = VK_MAKE_VERSION(1, 1, 90);
+    *pApiVersion = VK_MAKE_VERSION(1, 1, 107);
     return VK_SUCCESS;
 }
 
 uint32_t
 radv_physical_device_api_version(struct radv_physical_device *dev)
 {
-    if (!ANDROID && dev->rad_info.has_syncobj_wait_for_submit)
-        return VK_MAKE_VERSION(1, 1, 90);
-    return VK_MAKE_VERSION(1, 0, 68);
+    uint32_t override = vk_get_version_override();
+    uint32_t version = VK_MAKE_VERSION(1, 0, 68);
+    if (dev->rad_info.has_syncobj_wait_for_submit)
+        version = VK_MAKE_VERSION(1, 1, 107);
+
+    return override ? MIN2(override, version) : version;
 }

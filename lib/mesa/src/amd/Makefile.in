@@ -148,6 +148,7 @@ am__objects_1 =  \
 	addrlib/src/core/addrlib_libamdgpu_addrlib_la-addrobject.lo \
 	addrlib/src/core/addrlib_libamdgpu_addrlib_la-coord.lo \
 	addrlib/src/gfx9/addrlib_libamdgpu_addrlib_la-gfx9addrlib.lo \
+	addrlib/src/gfx10/addrlib_libamdgpu_addrlib_la-gfx10addrlib.lo \
 	addrlib/src/r800/addrlib_libamdgpu_addrlib_la-ciaddrlib.lo \
 	addrlib/src/r800/addrlib_libamdgpu_addrlib_la-egbaddrlib.lo \
 	addrlib/src/r800/addrlib_libamdgpu_addrlib_la-siaddrlib.lo
@@ -168,17 +169,21 @@ am__common_libamd_common_la_SOURCES_DIST = common/ac_gpu_info.c \
 	common/ac_gpu_info.h common/ac_surface.c common/ac_surface.h \
 	common/ac_binary.c common/ac_binary.h common/ac_exp_param.h \
 	common/ac_llvm_build.c common/ac_llvm_build.h \
+	common/ac_llvm_cull.c common/ac_llvm_cull.h \
 	common/ac_llvm_helper.cpp common/ac_llvm_util.c \
-	common/ac_llvm_util.h common/ac_shader_abi.h \
-	common/ac_shader_util.c common/ac_shader_util.h \
-	common/ac_debug.c common/ac_debug.h common/sid_tables.h \
+	common/ac_llvm_util.h common/ac_rtld.c common/ac_rtld.h \
+	common/ac_shader_abi.h common/ac_shader_util.c \
+	common/ac_shader_util.h common/ac_debug.c common/ac_debug.h \
+	common/amdgfxregs.h common/sid_tables.h \
 	common/ac_nir_to_llvm.c common/ac_nir_to_llvm.h
 am__objects_2 = common/common_libamd_common_la-ac_gpu_info.lo \
 	common/common_libamd_common_la-ac_surface.lo
 am__objects_3 = common/common_libamd_common_la-ac_binary.lo \
 	common/common_libamd_common_la-ac_llvm_build.lo \
+	common/common_libamd_common_la-ac_llvm_cull.lo \
 	common/common_libamd_common_la-ac_llvm_helper.lo \
 	common/common_libamd_common_la-ac_llvm_util.lo \
+	common/common_libamd_common_la-ac_rtld.lo \
 	common/common_libamd_common_la-ac_shader_util.lo
 am__objects_4 = common/common_libamd_common_la-ac_debug.lo
 am__objects_5 =
@@ -311,6 +316,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -323,6 +329,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -580,7 +587,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 COMMON_HEADER_FILES = \
-	common/gfx9d.h \
 	common/sid.h \
 	common/amd_family.h \
 	common/amd_kernel_code_t.h
@@ -605,6 +611,10 @@ ADDRLIB_FILES = \
 	addrlib/src/core/coord.h \
 	addrlib/src/gfx9/gfx9addrlib.cpp \
 	addrlib/src/gfx9/gfx9addrlib.h \
+	addrlib/src/gfx10/gfx10addrlib.cpp \
+	addrlib/src/gfx10/gfx10addrlib.h \
+	addrlib/src/gfx10/gfx10SwizzlePattern.h \
+	addrlib/src/chip/gfx10/gfx10_gb_reg.h \
 	addrlib/src/chip/gfx9/gfx9_gb_reg.h \
 	addrlib/src/chip/r800/si_gb_reg.h \
 	addrlib/src/r800/ciaddrlib.cpp \
@@ -620,9 +630,13 @@ AMD_COMPILER_FILES = \
 	common/ac_exp_param.h \
 	common/ac_llvm_build.c \
 	common/ac_llvm_build.h \
+	common/ac_llvm_cull.c \
+	common/ac_llvm_cull.h \
 	common/ac_llvm_helper.cpp \
 	common/ac_llvm_util.c \
 	common/ac_llvm_util.h \
+	common/ac_rtld.c \
+	common/ac_rtld.h \
 	common/ac_shader_abi.h \
 	common/ac_shader_util.c \
 	common/ac_shader_util.h
@@ -642,6 +656,7 @@ AMD_DEBUG_FILES = \
 	common/ac_debug.h
 
 AMD_GENERATED_FILES = \
+	common/amdgfxregs.h \
 	common/sid_tables.h
 
 noinst_LTLIBRARIES = $(ADDRLIB_LIBS) $(am__append_1)
@@ -655,6 +670,7 @@ addrlib_libamdgpu_addrlib_la_CPPFLAGS = \
 	-I$(srcdir)/addrlib/src \
 	-I$(srcdir)/addrlib/src/core \
 	-I$(srcdir)/addrlib/src/chip/gfx9 \
+	-I$(srcdir)/addrlib/src/chip/gfx10 \
 	-I$(srcdir)/addrlib/src/chip/r800
 
 addrlib_libamdgpu_addrlib_la_CXXFLAGS = \
@@ -798,6 +814,15 @@ addrlib/src/gfx9/$(DEPDIR)/$(am__dirstamp):
 addrlib/src/gfx9/addrlib_libamdgpu_addrlib_la-gfx9addrlib.lo:  \
 	addrlib/src/gfx9/$(am__dirstamp) \
 	addrlib/src/gfx9/$(DEPDIR)/$(am__dirstamp)
+addrlib/src/gfx10/$(am__dirstamp):
+	@$(MKDIR_P) addrlib/src/gfx10
+	@: > addrlib/src/gfx10/$(am__dirstamp)
+addrlib/src/gfx10/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) addrlib/src/gfx10/$(DEPDIR)
+	@: > addrlib/src/gfx10/$(DEPDIR)/$(am__dirstamp)
+addrlib/src/gfx10/addrlib_libamdgpu_addrlib_la-gfx10addrlib.lo:  \
+	addrlib/src/gfx10/$(am__dirstamp) \
+	addrlib/src/gfx10/$(DEPDIR)/$(am__dirstamp)
 addrlib/src/r800/$(am__dirstamp):
 	@$(MKDIR_P) addrlib/src/r800
 	@: > addrlib/src/r800/$(am__dirstamp)
@@ -832,10 +857,14 @@ common/common_libamd_common_la-ac_binary.lo: common/$(am__dirstamp) \
 	common/$(DEPDIR)/$(am__dirstamp)
 common/common_libamd_common_la-ac_llvm_build.lo:  \
 	common/$(am__dirstamp) common/$(DEPDIR)/$(am__dirstamp)
+common/common_libamd_common_la-ac_llvm_cull.lo:  \
+	common/$(am__dirstamp) common/$(DEPDIR)/$(am__dirstamp)
 common/common_libamd_common_la-ac_llvm_helper.lo:  \
 	common/$(am__dirstamp) common/$(DEPDIR)/$(am__dirstamp)
 common/common_libamd_common_la-ac_llvm_util.lo:  \
 	common/$(am__dirstamp) common/$(DEPDIR)/$(am__dirstamp)
+common/common_libamd_common_la-ac_rtld.lo: common/$(am__dirstamp) \
+	common/$(DEPDIR)/$(am__dirstamp)
 common/common_libamd_common_la-ac_shader_util.lo:  \
 	common/$(am__dirstamp) common/$(DEPDIR)/$(am__dirstamp)
 common/common_libamd_common_la-ac_debug.lo: common/$(am__dirstamp) \
@@ -851,6 +880,8 @@ mostlyclean-compile:
 	-rm -f addrlib/src/*.lo
 	-rm -f addrlib/src/core/*.$(OBJEXT)
 	-rm -f addrlib/src/core/*.lo
+	-rm -f addrlib/src/gfx10/*.$(OBJEXT)
+	-rm -f addrlib/src/gfx10/*.lo
 	-rm -f addrlib/src/gfx9/*.$(OBJEXT)
 	-rm -f addrlib/src/gfx9/*.lo
 	-rm -f addrlib/src/r800/*.$(OBJEXT)
@@ -868,6 +899,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@addrlib/src/core/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-addrlib2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@addrlib/src/core/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-addrobject.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@addrlib/src/core/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-coord.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@addrlib/src/gfx10/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-gfx10addrlib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@addrlib/src/gfx9/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-gfx9addrlib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@addrlib/src/r800/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-ciaddrlib.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@addrlib/src/r800/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-egbaddrlib.Plo@am__quote@
@@ -876,9 +908,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_debug.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_gpu_info.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_llvm_build.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_llvm_cull.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_llvm_helper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_llvm_util.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_nir_to_llvm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_rtld.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_shader_util.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@common/$(DEPDIR)/common_libamd_common_la-ac_surface.Plo@am__quote@
 
@@ -934,12 +968,26 @@ common/common_libamd_common_la-ac_llvm_build.lo: common/ac_llvm_build.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(common_libamd_common_la_CPPFLAGS) $(CPPFLAGS) $(common_libamd_common_la_CFLAGS) $(CFLAGS) -c -o common/common_libamd_common_la-ac_llvm_build.lo `test -f 'common/ac_llvm_build.c' || echo '$(srcdir)/'`common/ac_llvm_build.c
 
+common/common_libamd_common_la-ac_llvm_cull.lo: common/ac_llvm_cull.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(common_libamd_common_la_CPPFLAGS) $(CPPFLAGS) $(common_libamd_common_la_CFLAGS) $(CFLAGS) -MT common/common_libamd_common_la-ac_llvm_cull.lo -MD -MP -MF common/$(DEPDIR)/common_libamd_common_la-ac_llvm_cull.Tpo -c -o common/common_libamd_common_la-ac_llvm_cull.lo `test -f 'common/ac_llvm_cull.c' || echo '$(srcdir)/'`common/ac_llvm_cull.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) common/$(DEPDIR)/common_libamd_common_la-ac_llvm_cull.Tpo common/$(DEPDIR)/common_libamd_common_la-ac_llvm_cull.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='common/ac_llvm_cull.c' object='common/common_libamd_common_la-ac_llvm_cull.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(common_libamd_common_la_CPPFLAGS) $(CPPFLAGS) $(common_libamd_common_la_CFLAGS) $(CFLAGS) -c -o common/common_libamd_common_la-ac_llvm_cull.lo `test -f 'common/ac_llvm_cull.c' || echo '$(srcdir)/'`common/ac_llvm_cull.c
+
 common/common_libamd_common_la-ac_llvm_util.lo: common/ac_llvm_util.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(common_libamd_common_la_CPPFLAGS) $(CPPFLAGS) $(common_libamd_common_la_CFLAGS) $(CFLAGS) -MT common/common_libamd_common_la-ac_llvm_util.lo -MD -MP -MF common/$(DEPDIR)/common_libamd_common_la-ac_llvm_util.Tpo -c -o common/common_libamd_common_la-ac_llvm_util.lo `test -f 'common/ac_llvm_util.c' || echo '$(srcdir)/'`common/ac_llvm_util.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) common/$(DEPDIR)/common_libamd_common_la-ac_llvm_util.Tpo common/$(DEPDIR)/common_libamd_common_la-ac_llvm_util.Plo
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='common/ac_llvm_util.c' object='common/common_libamd_common_la-ac_llvm_util.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(common_libamd_common_la_CPPFLAGS) $(CPPFLAGS) $(common_libamd_common_la_CFLAGS) $(CFLAGS) -c -o common/common_libamd_common_la-ac_llvm_util.lo `test -f 'common/ac_llvm_util.c' || echo '$(srcdir)/'`common/ac_llvm_util.c
+
+common/common_libamd_common_la-ac_rtld.lo: common/ac_rtld.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(common_libamd_common_la_CPPFLAGS) $(CPPFLAGS) $(common_libamd_common_la_CFLAGS) $(CFLAGS) -MT common/common_libamd_common_la-ac_rtld.lo -MD -MP -MF common/$(DEPDIR)/common_libamd_common_la-ac_rtld.Tpo -c -o common/common_libamd_common_la-ac_rtld.lo `test -f 'common/ac_rtld.c' || echo '$(srcdir)/'`common/ac_rtld.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) common/$(DEPDIR)/common_libamd_common_la-ac_rtld.Tpo common/$(DEPDIR)/common_libamd_common_la-ac_rtld.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='common/ac_rtld.c' object='common/common_libamd_common_la-ac_rtld.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(common_libamd_common_la_CPPFLAGS) $(CPPFLAGS) $(common_libamd_common_la_CFLAGS) $(CFLAGS) -c -o common/common_libamd_common_la-ac_rtld.lo `test -f 'common/ac_rtld.c' || echo '$(srcdir)/'`common/ac_rtld.c
 
 common/common_libamd_common_la-ac_shader_util.lo: common/ac_shader_util.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(common_libamd_common_la_CPPFLAGS) $(CPPFLAGS) $(common_libamd_common_la_CFLAGS) $(CFLAGS) -MT common/common_libamd_common_la-ac_shader_util.lo -MD -MP -MF common/$(DEPDIR)/common_libamd_common_la-ac_shader_util.Tpo -c -o common/common_libamd_common_la-ac_shader_util.lo `test -f 'common/ac_shader_util.c' || echo '$(srcdir)/'`common/ac_shader_util.c
@@ -1042,6 +1090,13 @@ addrlib/src/gfx9/addrlib_libamdgpu_addrlib_la-gfx9addrlib.lo: addrlib/src/gfx9/g
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(addrlib_libamdgpu_addrlib_la_CPPFLAGS) $(CPPFLAGS) $(addrlib_libamdgpu_addrlib_la_CXXFLAGS) $(CXXFLAGS) -c -o addrlib/src/gfx9/addrlib_libamdgpu_addrlib_la-gfx9addrlib.lo `test -f 'addrlib/src/gfx9/gfx9addrlib.cpp' || echo '$(srcdir)/'`addrlib/src/gfx9/gfx9addrlib.cpp
 
+addrlib/src/gfx10/addrlib_libamdgpu_addrlib_la-gfx10addrlib.lo: addrlib/src/gfx10/gfx10addrlib.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(addrlib_libamdgpu_addrlib_la_CPPFLAGS) $(CPPFLAGS) $(addrlib_libamdgpu_addrlib_la_CXXFLAGS) $(CXXFLAGS) -MT addrlib/src/gfx10/addrlib_libamdgpu_addrlib_la-gfx10addrlib.lo -MD -MP -MF addrlib/src/gfx10/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-gfx10addrlib.Tpo -c -o addrlib/src/gfx10/addrlib_libamdgpu_addrlib_la-gfx10addrlib.lo `test -f 'addrlib/src/gfx10/gfx10addrlib.cpp' || echo '$(srcdir)/'`addrlib/src/gfx10/gfx10addrlib.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) addrlib/src/gfx10/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-gfx10addrlib.Tpo addrlib/src/gfx10/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-gfx10addrlib.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='addrlib/src/gfx10/gfx10addrlib.cpp' object='addrlib/src/gfx10/addrlib_libamdgpu_addrlib_la-gfx10addrlib.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(addrlib_libamdgpu_addrlib_la_CPPFLAGS) $(CPPFLAGS) $(addrlib_libamdgpu_addrlib_la_CXXFLAGS) $(CXXFLAGS) -c -o addrlib/src/gfx10/addrlib_libamdgpu_addrlib_la-gfx10addrlib.lo `test -f 'addrlib/src/gfx10/gfx10addrlib.cpp' || echo '$(srcdir)/'`addrlib/src/gfx10/gfx10addrlib.cpp
+
 addrlib/src/r800/addrlib_libamdgpu_addrlib_la-ciaddrlib.lo: addrlib/src/r800/ciaddrlib.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(addrlib_libamdgpu_addrlib_la_CPPFLAGS) $(CPPFLAGS) $(addrlib_libamdgpu_addrlib_la_CXXFLAGS) $(CXXFLAGS) -MT addrlib/src/r800/addrlib_libamdgpu_addrlib_la-ciaddrlib.lo -MD -MP -MF addrlib/src/r800/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-ciaddrlib.Tpo -c -o addrlib/src/r800/addrlib_libamdgpu_addrlib_la-ciaddrlib.lo `test -f 'addrlib/src/r800/ciaddrlib.cpp' || echo '$(srcdir)/'`addrlib/src/r800/ciaddrlib.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) addrlib/src/r800/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-ciaddrlib.Tpo addrlib/src/r800/$(DEPDIR)/addrlib_libamdgpu_addrlib_la-ciaddrlib.Plo
@@ -1078,6 +1133,7 @@ clean-libtool:
 	-rm -rf addrlib/.libs addrlib/_libs
 	-rm -rf addrlib/src/.libs addrlib/src/_libs
 	-rm -rf addrlib/src/core/.libs addrlib/src/core/_libs
+	-rm -rf addrlib/src/gfx10/.libs addrlib/src/gfx10/_libs
 	-rm -rf addrlib/src/gfx9/.libs addrlib/src/gfx9/_libs
 	-rm -rf addrlib/src/r800/.libs addrlib/src/r800/_libs
 	-rm -rf common/.libs common/_libs
@@ -1215,6 +1271,8 @@ distclean-generic:
 	-rm -f addrlib/src/$(am__dirstamp)
 	-rm -f addrlib/src/core/$(DEPDIR)/$(am__dirstamp)
 	-rm -f addrlib/src/core/$(am__dirstamp)
+	-rm -f addrlib/src/gfx10/$(DEPDIR)/$(am__dirstamp)
+	-rm -f addrlib/src/gfx10/$(am__dirstamp)
 	-rm -f addrlib/src/gfx9/$(DEPDIR)/$(am__dirstamp)
 	-rm -f addrlib/src/gfx9/$(am__dirstamp)
 	-rm -f addrlib/src/r800/$(DEPDIR)/$(am__dirstamp)
@@ -1232,7 +1290,7 @@ clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf addrlib/src/$(DEPDIR) addrlib/src/core/$(DEPDIR) addrlib/src/gfx9/$(DEPDIR) addrlib/src/r800/$(DEPDIR) common/$(DEPDIR)
+	-rm -rf addrlib/src/$(DEPDIR) addrlib/src/core/$(DEPDIR) addrlib/src/gfx10/$(DEPDIR) addrlib/src/gfx9/$(DEPDIR) addrlib/src/r800/$(DEPDIR) common/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1278,7 +1336,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf addrlib/src/$(DEPDIR) addrlib/src/core/$(DEPDIR) addrlib/src/gfx9/$(DEPDIR) addrlib/src/r800/$(DEPDIR) common/$(DEPDIR)
+	-rm -rf addrlib/src/$(DEPDIR) addrlib/src/core/$(DEPDIR) addrlib/src/gfx10/$(DEPDIR) addrlib/src/gfx9/$(DEPDIR) addrlib/src/r800/$(DEPDIR) common/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -1314,9 +1372,19 @@ uninstall-am:
 	tags uninstall uninstall-am
 
 
-@REGEN_SOURCES_TRUE@common/sid_tables.h: $(srcdir)/common/sid_tables.py $(srcdir)/common/sid.h $(srcdir)/common/gfx9d.h
+@REGEN_SOURCES_TRUE@common/sid_tables.h: $(srcdir)/common/sid_tables.py $(srcdir)/common/sid.h $(srcdir)/registers/amdgfxregs.json  $(srcdir)/registers/pkt3.json $(srcdir)/registers/gfx10.json $(srcdir)/registers/gfx10-rsrc.json
 @REGEN_SOURCES_TRUE@	$(AM_V_at)$(MKDIR_P) $(@D)
-@REGEN_SOURCES_TRUE@	$(AM_V_GEN) $(PYTHON) $(srcdir)/common/sid_tables.py $(srcdir)/common/sid.h $(srcdir)/common/gfx9d.h > $@
+@REGEN_SOURCES_TRUE@	$(AM_V_GEN) $(PYTHON) $(srcdir)/common/sid_tables.py  $(srcdir)/common/sid.h \
+@REGEN_SOURCES_TRUE@	    $(srcdir)/registers/amdgfxregs.json $(srcdir)/registers/pkt3.json \
+@REGEN_SOURCES_TRUE@	    $(srcdir)/registers/gfx10.json $(srcdir)/registers/gfx10-rsrc.json \
+@REGEN_SOURCES_TRUE@	    > $@
+
+@REGEN_SOURCES_TRUE@common/amdgfxregs.h: $(srcdir)/registers/makeregheader.py $(srcdir)/registers/amdgfxregs.json $(srcdir)/registers/pkt3.json $(srcdir)/registers/gfx10.json $(srcdir)/registers/gfx10-rsrc.json
+@REGEN_SOURCES_TRUE@	$(AM_V_at)$(MKDIR_P) $(@D)
+@REGEN_SOURCES_TRUE@	$(AM_V_GEN) $(PYTHON) $(srcdir)/registers/makeregheader.py \
+@REGEN_SOURCES_TRUE@	    $(srcdir)/registers/amdgfxregs.json $(srcdir)/registers/pkt3.json \
+@REGEN_SOURCES_TRUE@	    $(srcdir)/registers/gfx10.json $(srcdir)/registers/gfx10-rsrc.json \
+@REGEN_SOURCES_TRUE@	    --sort address --guard AMDGFXREGS_H > $@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

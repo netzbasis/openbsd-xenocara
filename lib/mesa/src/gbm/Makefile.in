@@ -251,6 +251,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGL_CFLAGS = @EGL_CFLAGS@
 EGL_LIB_DEPS = @EGL_LIB_DEPS@
+EGL_LIB_SUFFIX = @EGL_LIB_SUFFIX@
 EGL_NATIVE_PLATFORM = @EGL_NATIVE_PLATFORM@
 EGREP = @EGREP@
 ETNAVIV_CFLAGS = @ETNAVIV_CFLAGS@
@@ -263,6 +264,7 @@ GALLIUM_PIPE_LOADER_DEFINES = @GALLIUM_PIPE_LOADER_DEFINES@
 GBM_PC_LIB_PRIV = @GBM_PC_LIB_PRIV@
 GBM_PC_REQ_PRIV = @GBM_PC_REQ_PRIV@
 GC_SECTIONS = @GC_SECTIONS@
+GLES_LIB_SUFFIX = @GLES_LIB_SUFFIX@
 GLESv1_CM_LIB_DEPS = @GLESv1_CM_LIB_DEPS@
 GLESv1_CM_PC_LIB_PRIV = @GLESv1_CM_PC_LIB_PRIV@
 GLESv2_LIB_DEPS = @GLESv2_LIB_DEPS@
@@ -541,7 +543,7 @@ include_HEADERS = main/gbm.h
 libgbm_la_SOURCES = $(gbm_core_FILES) $(am__append_3)
 libgbm_la_LDFLAGS = \
 	-no-undefined \
-	-version-info 1:0 \
+	-version-info 0:4 \
 	$(GC_SECTIONS) \
 	$(LD_NO_UNDEFINED)
 
@@ -550,7 +552,7 @@ libgbm_la_LIBADD = $(top_builddir)/src/loader/libloader.la \
 	$(top_builddir)/src/util/libxmlconfig.la $(DLOPEN_LIBS) \
 	$(am__append_2) $(am__append_5)
 TESTS = gbm-symbols-check
-EXTRA_DIST = gbm-symbols-check meson.build
+EXTRA_DIST = gbm-symbols.txt meson.build
 all: all-am
 
 .SUFFIXES:

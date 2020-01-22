@@ -1,7 +1,8 @@
-/Makefile.am/1.1.1.2/Tue Jan 29 10:57:53 2019//
-/Makefile.in/1.13/Tue Jan 29 11:52:20 2019//
+/Android.mk/1.1.1.1/Wed Jan 22 02:10:52 2020/-ko/
+/Makefile.am/1.3/Wed Jan 22 03:03:03 2020//
+/Makefile.in/1.15/Wed Jan 22 03:03:03 2020//
 /Makefile.sources/1.1.1.1/Sun Nov 22 02:41:49 2015//
-/kms_dri_sw_winsys.c/1.1.1.5/Mon Jul  1 08:13:24 2019//
+/kms_dri_sw_winsys.c/1.1.1.6/Wed Jan 22 02:10:52 2020//
 /kms_dri_sw_winsys.h/1.1.1.1/Sun Nov 22 02:41:48 2015//
 /meson.build/1.1.1.1/Tue Jan 29 10:57:53 2019/-ko/
 D
