@@ -9,9 +9,9 @@
 /xwayland-glamor.c/1.7/Thu Dec 12 06:05:19 2019//
 /xwayland-input.c/1.8/Thu Dec 12 06:05:19 2019//
 /xwayland-output.c/1.8/Thu Dec 12 06:05:19 2019//
-/xwayland-present.c/1.1/Sat Jul 27 07:57:21 2019//
+/xwayland-present.c/1.2/Sun Jan 26 13:48:56 2020//
 /xwayland-shm.c/1.5/Sat Jul 27 07:57:21 2019//
 /xwayland-vidmode.c/1.1/Sun May 29 12:02:39 2016//
-/xwayland.c/1.7/Thu Dec 12 06:05:19 2019//
+/xwayland.c/1.8/Sun Jan 26 13:48:56 2020//
 /xwayland.h/1.7/Thu Dec 12 06:05:19 2019//
 D

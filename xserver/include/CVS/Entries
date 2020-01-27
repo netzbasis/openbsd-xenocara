@@ -14,7 +14,7 @@
 /dbus-core.h/1.2/Wed Sep 16 19:10:25 2015//
 /displaymode.h/1.1/Sun May 29 12:02:39 2016//
 /dix-config-apple-verbatim.h/1.1/Sun Sep  6 19:44:36 2009//
-/dix-config.h.in/1.26/Thu Dec 12 06:05:20 2019//
+/dix-config.h.in/1.27/Sun Jan 26 13:48:56 2020//
 /dix.h/1.16/Sat Jul 27 07:57:22 2019//
 /dixaccess.h/1.3/Sun Jun 10 13:21:30 2012//
 /dixevents.h/1.6/Fri Jun  7 17:28:54 2013//
@@ -22,7 +22,7 @@
 /dixfontstr.h/1.4/Fri Dec  8 15:02:01 2017//
 /dixgrabs.h/1.9/Wed Sep 16 19:10:25 2015//
 /dixstruct.h/1.15/Sat Jul 27 07:57:22 2019//
-/do-not-use-config.h.in/1.34/Thu Dec 12 06:05:20 2019//
+/do-not-use-config.h.in/1.35/Sun Jan 26 13:48:56 2020//
 /eventconvert.h/1.4/Fri Jun  7 17:28:54 2013//
 /events.h/1.4/Sat Jul 27 07:57:22 2019//
 /eventstr.h/1.10/Sat Jul 27 07:57:22 2019//
@@ -45,7 +45,7 @@
 /nonsdk_extinit.h/1.1/Sun May 29 12:02:39 2016//
 /opaque.h/1.8/Sun May 29 12:02:39 2016//
 /optionstr.h/1.1/Sun Jun 10 13:21:30 2012//
-/os.h/1.19/Sat Jul 27 07:57:22 2019//
+/os.h/1.20/Sun Jan 26 13:48:56 2020//
 /pixmap.h/1.11/Sat Jul 27 07:57:22 2019//
 /pixmapstr.h/1.8/Sat Jul 27 07:57:22 2019//
 /privates.h/1.11/Sat Jul 27 07:57:23 2019//

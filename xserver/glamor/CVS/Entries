@@ -1,7 +1,7 @@
 /Makefile.am/1.5/Sat Jul 27 07:57:10 2019//
 /Makefile.in/1.7/Sat Jul 27 07:57:10 2019//
-/glamor.c/1.8/Sat Jul 27 07:57:10 2019//
-/glamor.h/1.6/Sat Jul 27 07:57:10 2019//
+/glamor.c/1.9/Sun Jan 26 13:48:55 2020//
+/glamor.h/1.7/Sun Jan 26 13:48:55 2020//
 /glamor_addtraps.c/1.2/Sun May 29 12:02:36 2016//
 /glamor_composite_glyphs.c/1.3/Fri Dec  8 15:02:00 2017//
 /glamor_compositerects.c/1.3/Tue Aug  9 18:59:51 2016//
@@ -10,7 +10,7 @@
 /glamor_core.c/1.5/Sat Jul 27 07:57:10 2019//
 /glamor_dash.c/1.4/Fri Dec  8 15:02:00 2017//
 /glamor_debug.h/1.2/Sat Jul 27 07:57:10 2019//
-/glamor_egl.c/1.8/Thu Dec 12 06:05:19 2019//
+/glamor_egl.c/1.9/Sun Jan 26 13:48:55 2020//
 /glamor_egl.h/1.3/Thu Dec 12 06:05:19 2019//
 /glamor_egl_ext.h/1.1/Sat Jul 27 07:57:10 2019//
 /glamor_egl_stubs.c/1.5/Sat Jul 27 07:57:10 2019//

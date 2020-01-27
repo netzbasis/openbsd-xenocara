@@ -25,10 +25,10 @@
 /xf86Globals.c/1.14/Sat Jul 27 07:57:14 2019//
 /xf86Helper.c/1.14/Sat Jul 27 07:57:14 2019//
 /xf86InPriv.h/1.5/Sat Sep 27 17:53:01 2014//
-/xf86Init.c/1.29/Thu Dec 12 06:05:19 2019//
+/xf86Init.c/1.30/Sun Jan 26 13:48:55 2020//
 /xf86MatchDrivers.h/1.1/Sat Jul 27 07:57:14 2019//
 /xf86Mode.c/1.14/Sat Jul 27 07:57:14 2019//
-/xf86Module.h/1.14/Sat Jul 27 07:57:14 2019//
+/xf86Module.h/1.15/Sun Jan 26 13:48:55 2020//
 /xf86Opt.h/1.7/Sat Sep 27 17:53:01 2014//
 /xf86Option.c/1.10/Sat Jul 27 07:57:14 2019//
 /xf86Optionstr.h/1.2/Sat Sep 27 17:53:01 2014//
