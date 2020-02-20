@@ -67,7 +67,7 @@
 /set.c/1.6/Wed Jan 22 02:49:50 2020//
 /set.h/1.1.1.4/Wed Jan 22 02:13:08 2020//
 /simple_list.h/1.1.1.1/Sun Nov 22 02:41:34 2015//
-/simple_mtx.h/1.1.1.2/Wed Jan 22 02:13:08 2020/-ko/
+/simple_mtx.h/1.2/Thu Feb 20 02:55:46 2020/-ko/
 /slab.c/1.6/Wed Jan 22 02:49:50 2020/-ko/
 /slab.h/1.1.1.2/Thu May 23 04:38:15 2019/-ko/
 /string_buffer.c/1.1.1.2/Wed Jan 22 02:13:08 2020/-ko/
@@ -93,7 +93,7 @@
 /u_process.c/1.1.1.3/Wed Jan 22 02:13:08 2020/-ko/
 /u_process.h/1.1.1.1/Tue Jan 29 10:47:44 2019/-ko/
 /u_queue.c/1.7/Wed Jan 22 02:49:50 2020/-ko/
-/u_queue.h/1.7/Wed Jan 22 02:49:50 2020/-ko/
+/u_queue.h/1.8/Thu Feb 20 02:55:46 2020/-ko/
 /u_string.h/1.7/Wed Jan 22 02:49:50 2020/-ko/
 /u_thread.h/1.7/Wed Jan 22 02:49:50 2020/-ko/
 /u_vector.c/1.4/Tue Jan 29 11:52:31 2019/-ko/
