@@ -158,6 +158,20 @@ __sync_val_compare_and_swap_4(uint32_t *ptr, uint32_t oldval, uint32_t newval)
 }
 #endif /* MISSING_32BIT_ATOMICS */
 
+#ifdef __clang__
+#pragma redefine_extname __sync_add_and_fetch_8_c __sync_add_and_fetch_8
+#pragma redefine_extname __sync_sub_and_fetch_8_c __sync_sub_and_fetch_8
+#pragma redefine_extname __sync_fetch_and_add_8_c __sync_fetch_and_add_8
+#pragma redefine_extname __sync_fetch_and_sub_8_c __sync_fetch_and_sub_8
+#pragma redefine_extname __sync_val_compare_and_swap_8_c \
+    __sync_val_compare_and_swap_8
+#define __sync_add_and_fetch_8 __sync_add_and_fetch_8_c
+#define __sync_sub_and_fetch_8 __sync_sub_and_fetch_8_c
+#define __sync_fetch_and_add_8 __sync_fetch_and_add_8_c
+#define __sync_fetch_and_sub_8 __sync_fetch_and_sub_8_c
+#define __sync_val_compare_and_swap_8 __sync_val_compare_and_swap_8_c
+#endif
+
 WEAK uint64_t
 __sync_add_and_fetch_8(uint64_t *ptr, uint64_t val)
 {
@@ -184,7 +198,32 @@ __sync_sub_and_fetch_8(uint64_t *ptr, uint64_t val)
    return r;
 }
 
-#ifdef USE_GCC_ATOMIC_BUILTINS
+WEAK uint64_t
+__sync_fetch_and_add_8(uint64_t *ptr, uint64_t val)
+{
+   uint64_t r;
+
+   pthread_mutex_lock(&sync_mutex);
+   r = *ptr;
+   *ptr += val;
+   pthread_mutex_unlock(&sync_mutex);
+
+   return r;
+}
+
+WEAK uint64_t
+__sync_fetch_and_sub_8(uint64_t *ptr, uint64_t val)
+{
+   uint64_t r;
+
+   pthread_mutex_lock(&sync_mutex);
+   r = *ptr;
+   *ptr -= val;
+   pthread_mutex_unlock(&sync_mutex);
+
+   return r;
+}
+
 WEAK uint64_t
 __sync_val_compare_and_swap_8(uint64_t *ptr, uint64_t oldval, uint64_t newval)
 {
@@ -198,6 +237,5 @@ __sync_val_compare_and_swap_8(uint64_t *ptr, uint64_t oldval, uint64_t newval)
 
    return r;
 }
-#endif /* USE_GCC_ATOMIC_BUILTINS */
 
 #endif
