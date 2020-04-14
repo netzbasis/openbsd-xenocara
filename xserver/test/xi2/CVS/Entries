@@ -1,14 +1,14 @@
-/protocol-common.c/1.9/Sat Jul 27 07:57:26 2019//
-/protocol-common.h/1.6/Sat Jul 27 07:57:26 2019//
+/protocol-common.c/1.10/Mon Apr 13 08:07:00 2020//
+/protocol-common.h/1.7/Mon Apr 13 08:07:00 2020//
 /protocol-eventconvert.c/1.6/Sat Jul 27 07:57:26 2019//
-/protocol-xigetclientpointer.c/1.5/Sat Jul 27 07:57:26 2019//
-/protocol-xigetselectedevents.c/1.5/Sat Jul 27 07:57:26 2019//
-/protocol-xipassivegrabdevice.c/1.7/Sat Jul 27 07:57:26 2019//
-/protocol-xiquerydevice.c/1.6/Sat Jul 27 07:57:26 2019//
-/protocol-xiquerypointer.c/1.7/Sat Jul 27 07:57:26 2019//
-/protocol-xiqueryversion.c/1.7/Sat Jul 27 07:57:26 2019//
-/protocol-xiselectevents.c/1.5/Sat Jul 27 07:57:26 2019//
-/protocol-xisetclientpointer.c/1.5/Sat Jul 27 07:57:26 2019//
-/protocol-xiwarppointer.c/1.6/Sat Jul 27 07:57:26 2019//
+/protocol-xigetclientpointer.c/1.6/Mon Apr 13 08:07:00 2020//
+/protocol-xigetselectedevents.c/1.6/Mon Apr 13 08:07:00 2020//
+/protocol-xipassivegrabdevice.c/1.8/Mon Apr 13 08:07:00 2020//
+/protocol-xiquerydevice.c/1.7/Mon Apr 13 08:07:00 2020//
+/protocol-xiquerypointer.c/1.8/Mon Apr 13 08:07:00 2020//
+/protocol-xiqueryversion.c/1.8/Mon Apr 13 08:07:00 2020//
+/protocol-xiselectevents.c/1.6/Mon Apr 13 08:07:00 2020//
+/protocol-xisetclientpointer.c/1.6/Mon Apr 13 08:07:00 2020//
+/protocol-xiwarppointer.c/1.7/Mon Apr 13 08:07:00 2020//
 /xi2.c/1.3/Sat Jul 27 07:57:26 2019//
 D
