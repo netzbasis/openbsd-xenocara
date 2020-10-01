@@ -92,7 +92,7 @@ enum etna_immediate_contents {
    ETNA_IMMEDIATE_TEXRECT_SCALE_X,
    ETNA_IMMEDIATE_TEXRECT_SCALE_Y,
    ETNA_IMMEDIATE_UBO0_ADDR,
-   ETNA_IMMEDIATE_UBOMAX_ADDR = ETNA_IMMEDIATE_UBO0_ADDR + 255,
+   ETNA_IMMEDIATE_UBOMAX_ADDR = ETNA_IMMEDIATE_UBO0_ADDR + ETNA_MAX_CONST_BUF - 1,
 };
 
 struct etna_shader_uniform_info {
@@ -164,7 +164,7 @@ struct etna_context {
    uint32_t active_sampler_views;
    uint32_t dirty_sampler_views;
    struct pipe_sampler_view *sampler_view[PIPE_MAX_SAMPLERS];
-   struct pipe_constant_buffer constant_buffer[PIPE_SHADER_TYPES];
+   struct pipe_constant_buffer constant_buffer[PIPE_SHADER_TYPES][ETNA_MAX_CONST_BUF];
    struct etna_vertexbuf_state vertex_buffer;
    struct etna_index_buffer index_buffer;
    struct etna_shader_state shader;
@@ -190,6 +190,16 @@ struct etna_context {
 
    struct etna_bo *dummy_rt;
    struct etna_reloc dummy_rt_reloc;
+
+   /* Dummy texture descriptor (if needed) */
+   struct etna_bo *dummy_desc_bo;
+   struct etna_reloc DUMMY_DESC_ADDR;
+
+   /* set of resources used by currently-unsubmitted renders */
+   struct set *used_resources_read;
+   struct set *used_resources_write;
+
+   mtx_t lock;
 };
 
 static inline struct etna_context *

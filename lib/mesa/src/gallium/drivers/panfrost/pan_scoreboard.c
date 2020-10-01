@@ -30,7 +30,7 @@
 /*
  * Within a batch (panfrost_job), there are various types of Mali jobs:
  *
- *  - SET_VALUE: initializes tiler
+ *  - WRITE_VALUE: generic write primitive, used to zero tiler field
  *  - VERTEX: runs a vertex shader
  *  - TILER: runs tiling and sets up a fragment shader
  *  - FRAGMENT: runs fragment shaders and writes out
@@ -100,17 +100,6 @@
  *
  */
 
-/* Accessor to set the next job field */
-
-static void
-panfrost_set_job_next(struct mali_job_descriptor_header *first, mali_ptr next)
-{
-        if (first->job_descriptor_size)
-                first->next_job_64 = (u64) (uintptr_t) next;
-        else
-                first->next_job_32 = (u32) (uintptr_t) next;
-}
-
 /* Coerce a panfrost_transfer to a header */
 
 static inline struct mali_job_descriptor_header *
@@ -121,11 +110,11 @@ job_descriptor_header(struct panfrost_transfer t)
 
 static void
 panfrost_assign_index(
-        struct panfrost_job *job,
+        struct panfrost_batch *batch,
         struct panfrost_transfer transfer)
 {
         /* Assign the index */
-        unsigned index = ++job->job_index;
+        unsigned index = ++batch->job_index;
         job_descriptor_header(transfer)->job_index = index;
 }
 
@@ -157,7 +146,7 @@ panfrost_add_dependency(
 
 static void
 panfrost_scoreboard_queue_job_internal(
-        struct panfrost_job *batch,
+        struct panfrost_batch *batch,
         struct panfrost_transfer job)
 {
         panfrost_assign_index(batch, job);
@@ -174,7 +163,7 @@ panfrost_scoreboard_queue_job_internal(
 
 void
 panfrost_scoreboard_queue_compute_job(
-        struct panfrost_job *batch,
+        struct panfrost_batch *batch,
         struct panfrost_transfer job)
 {
         panfrost_scoreboard_queue_job_internal(batch, job);
@@ -192,7 +181,7 @@ panfrost_scoreboard_queue_compute_job(
 
 void
 panfrost_scoreboard_queue_vertex_job(
-        struct panfrost_job *batch,
+        struct panfrost_batch *batch,
         struct panfrost_transfer vertex,
         bool requires_tiling)
 {
@@ -207,7 +196,7 @@ panfrost_scoreboard_queue_vertex_job(
 
 void
 panfrost_scoreboard_queue_tiler_job(
-        struct panfrost_job *batch,
+        struct panfrost_batch *batch,
         struct panfrost_transfer tiler)
 {
         panfrost_scoreboard_queue_compute_job(batch, tiler);
@@ -226,7 +215,7 @@ panfrost_scoreboard_queue_tiler_job(
 
 void
 panfrost_scoreboard_queue_fused_job(
-        struct panfrost_job *batch,
+        struct panfrost_batch *batch,
         struct panfrost_transfer vertex,
         struct panfrost_transfer tiler)
 {
@@ -240,7 +229,7 @@ panfrost_scoreboard_queue_fused_job(
 
 void
 panfrost_scoreboard_queue_fused_job_prepend(
-        struct panfrost_job *batch,
+        struct panfrost_batch *batch,
         struct panfrost_transfer vertex,
         struct panfrost_transfer tiler)
 {
@@ -267,33 +256,34 @@ panfrost_scoreboard_queue_fused_job_prepend(
         batch->first_tiler = tiler;
 }
 
-/* Generates a set value job, used below as part of TILER job scheduling. */
+/* Generates a write value job, used to initialize the tiler structures. */
 
 static struct panfrost_transfer
-panfrost_set_value_job(struct panfrost_context *ctx, mali_ptr polygon_list)
+panfrost_write_value_job(struct panfrost_batch *batch, mali_ptr polygon_list)
 {
         struct mali_job_descriptor_header job = {
-                .job_type = JOB_TYPE_SET_VALUE,
+                .job_type = JOB_TYPE_WRITE_VALUE,
                 .job_descriptor_size = 1,
         };
 
-        struct mali_payload_set_value payload = {
-                .out = polygon_list,
-                .unknown = 0x3,
+        struct mali_payload_write_value payload = {
+                .address = polygon_list,
+                .value_descriptor = MALI_WRITE_VALUE_ZERO,
         };
 
-        struct panfrost_transfer transfer = panfrost_allocate_transient(ctx, sizeof(job) + sizeof(payload));
+        struct panfrost_transfer transfer = panfrost_allocate_transient(batch, sizeof(job) + sizeof(payload));
         memcpy(transfer.cpu, &job, sizeof(job));
         memcpy(transfer.cpu + sizeof(job), &payload, sizeof(payload));
 
         return transfer;
 }
 
-/* If there are any tiler jobs, there needs to be a corresponding set value job
- * linked to the first vertex job feeding into tiling. */
+/* If there are any tiler jobs, we need to initialize the tiler by writing
+ * zeroes to a magic tiler structure. We do so via a WRITE_VALUE job linked to
+ * the first vertex job feeding into tiling. */
 
 static void
-panfrost_scoreboard_set_value(struct panfrost_job *batch)
+panfrost_scoreboard_initialize_tiler(struct panfrost_batch *batch)
 {
         /* Check if we even need tiling */
         if (!batch->last_tiler.gpu)
@@ -302,11 +292,11 @@ panfrost_scoreboard_set_value(struct panfrost_job *batch)
         /* Okay, we do. Let's generate it. We'll need the job's polygon list
          * regardless of size. */
 
-        struct panfrost_context *ctx = batch->ctx;
-        mali_ptr polygon_list = panfrost_job_get_polygon_list(batch, 0);
+        mali_ptr polygon_list = panfrost_batch_get_polygon_list(batch,
+                MALI_TILER_MINIMUM_HEADER_SIZE);
 
         struct panfrost_transfer job =
-                panfrost_set_value_job(ctx, polygon_list);
+                panfrost_write_value_job(batch, polygon_list);
 
         /* Queue it */
         panfrost_scoreboard_queue_compute_job(batch, job);
@@ -346,10 +336,10 @@ panfrost_scoreboard_set_value(struct panfrost_job *batch)
                 mali_ptr, count))
 
 void
-panfrost_scoreboard_link_batch(struct panfrost_job *batch)
+panfrost_scoreboard_link_batch(struct panfrost_batch *batch)
 {
         /* Finalize the batch */
-        panfrost_scoreboard_set_value(batch);
+        panfrost_scoreboard_initialize_tiler(batch);
 
         /* Let no_incoming represent the set S described. */
 
@@ -372,7 +362,7 @@ panfrost_scoreboard_link_batch(struct panfrost_job *batch)
          * Proposition: Given a node N of type T, no more than one other node
          * depends on N.
          *
-         * If type is SET_VALUE: The only dependency added against us is from
+         * If type is WRITE_VALUE: The only dependency added against us is from
          * the first tiler job, so there is 1 dependent.
          *
          * If type is VERTEX: If there is a tiler node, that tiler node depends
@@ -414,12 +404,12 @@ panfrost_scoreboard_link_batch(struct panfrost_job *batch)
 
                 if (dep_1) {
                         assert(!dependents[dep_1 - 1]);
-                        dependents[dep_1 - 1] = i;
+                        dependents[dep_1 - 1] = i + 1;
                 }
 
                 if (dep_2) {
                         assert(!dependents[dep_2 - 1]);
-                        dependents[dep_2 - 1] = i;
+                        dependents[dep_2 - 1] = i + 1;
                 }
         }
 
@@ -451,7 +441,7 @@ panfrost_scoreboard_link_batch(struct panfrost_job *batch)
 
                 if (tail) {
                         /* Link us to the last node */
-                        panfrost_set_job_next(tail, addr);
+                        tail->next_job = addr;
                 } else {
                         /* We are the first/last node */
                         batch->first_job.cpu = (uint8_t *) n;
@@ -461,9 +451,11 @@ panfrost_scoreboard_link_batch(struct panfrost_job *batch)
                 tail = n;
 
                 /* Grab the dependent, if there is one */
-                unsigned node_m = dependents[node_n];
+                unsigned node_m_1 = dependents[node_n];
 
-                if (node_m) {
+                if (node_m_1) {
+                        unsigned node_m = node_m_1 - 1;
+
                         struct mali_job_descriptor_header *m =
                                 DESCRIPTOR_FOR_NODE(node_m);
 

@@ -1,4 +1,4 @@
-/Makefile/1.42/Fri Apr 26 09:51:57 2019//
+/Makefile/1.44/Fri Aug 28 05:54:00 2020//
 D/fontconfig////
 D/freetype////
 D/libGLU////
@@ -36,7 +36,6 @@ D/libdrm////
 D/libepoxy////
 D/libfontenc////
 D/libpciaccess////
-D/libtxc_dxtn////
 D/libxcb////
 D/libxkbfile////
 D/libxkbui////

@@ -28,6 +28,7 @@
 #include "util/u_debug.h"
 #include "intel/blorp/blorp.h"
 #include "intel/dev/gen_debug.h"
+#include "intel/common/gen_l3_config.h"
 #include "intel/compiler/brw_compiler.h"
 #include "iris_batch.h"
 #include "iris_binder.h"
@@ -51,6 +52,11 @@ struct blorp_params;
 enum iris_param_domain {
    BRW_PARAM_DOMAIN_BUILTIN = 0,
    BRW_PARAM_DOMAIN_IMAGE,
+};
+
+enum {
+   DRI_CONF_BO_REUSE_DISABLED,
+   DRI_CONF_BO_REUSE_ALL
 };
 
 #define BRW_PARAM(domain, val)   (BRW_PARAM_DOMAIN_##domain << 24 | (val))
@@ -105,6 +111,7 @@ enum iris_param_domain {
 #define IRIS_DIRTY_FS                       (1ull << 32)
 #define IRIS_DIRTY_CS                       (1ull << 33)
 #define IRIS_DIRTY_URB                      (1ull << 34)
+#define IRIS_SHIFT_FOR_DIRTY_CONSTANTS      35
 #define IRIS_DIRTY_CONSTANTS_VS             (1ull << 35)
 #define IRIS_DIRTY_CONSTANTS_TCS            (1ull << 36)
 #define IRIS_DIRTY_CONSTANTS_TES            (1ull << 37)
@@ -128,6 +135,9 @@ enum iris_param_domain {
 #define IRIS_DIRTY_RENDER_RESOLVES_AND_FLUSHES  (1ull << 55)
 #define IRIS_DIRTY_COMPUTE_RESOLVES_AND_FLUSHES (1ull << 56)
 #define IRIS_DIRTY_VF_STATISTICS            (1ull << 57)
+#define IRIS_DIRTY_PMA_FIX                  (1ull << 58)
+#define IRIS_DIRTY_DEPTH_BOUNDS             (1ull << 59)
+#define IRIS_DIRTY_RENDER_BUFFER            (1ull << 60)
 
 #define IRIS_ALL_DIRTY_FOR_COMPUTE (IRIS_DIRTY_CS | \
                                     IRIS_DIRTY_SAMPLER_STATES_CS | \
@@ -143,7 +153,8 @@ enum iris_param_domain {
                                  IRIS_DIRTY_BINDINGS_TES | \
                                  IRIS_DIRTY_BINDINGS_GS  | \
                                  IRIS_DIRTY_BINDINGS_FS  | \
-                                 IRIS_DIRTY_BINDINGS_CS)
+                                 IRIS_DIRTY_BINDINGS_CS  | \
+                                 IRIS_DIRTY_RENDER_BUFFER)
 
 /**
  * Non-orthogonal state (NOS) dependency flags.
@@ -163,6 +174,78 @@ enum iris_nos_dep {
 
    IRIS_NOS_COUNT,
 };
+
+/** @{
+ *
+ * Program cache keys for state based recompiles.
+ */
+
+struct iris_base_prog_key {
+   unsigned program_string_id;
+};
+
+struct iris_vue_prog_key {
+   struct iris_base_prog_key base;
+
+   unsigned nr_userclip_plane_consts:4;
+};
+
+struct iris_vs_prog_key {
+   struct iris_vue_prog_key vue;
+};
+
+struct iris_tcs_prog_key {
+   struct iris_vue_prog_key vue;
+
+   uint16_t tes_primitive_mode;
+
+   uint8_t input_vertices;
+
+   bool quads_workaround;
+
+   /** A bitfield of per-patch outputs written. */
+   uint32_t patch_outputs_written;
+
+   /** A bitfield of per-vertex outputs written. */
+   uint64_t outputs_written;
+};
+
+struct iris_tes_prog_key {
+   struct iris_vue_prog_key vue;
+
+   /** A bitfield of per-patch inputs read. */
+   uint32_t patch_inputs_read;
+
+   /** A bitfield of per-vertex inputs read. */
+   uint64_t inputs_read;
+};
+
+struct iris_gs_prog_key {
+   struct iris_vue_prog_key vue;
+};
+
+struct iris_fs_prog_key {
+   struct iris_base_prog_key base;
+
+   unsigned nr_color_regions:5;
+   bool flat_shade:1;
+   bool alpha_test_replicate_alpha:1;
+   bool alpha_to_coverage:1;
+   bool clamp_fragment_color:1;
+   bool persample_interp:1;
+   bool multisample_fbo:1;
+   bool force_dual_color_blend:1;
+   bool coherent_fb_fetch:1;
+
+   uint8_t color_outputs_valid;
+   uint64_t input_slots_valid;
+};
+
+struct iris_cs_prog_key {
+   struct iris_base_prog_key base;
+};
+
+/** @} */
 
 struct iris_depth_stencil_alpha_state;
 
@@ -214,6 +297,8 @@ enum pipe_control_flags
    PIPE_CONTROL_STATE_CACHE_INVALIDATE          = (1 << 22),
    PIPE_CONTROL_STALL_AT_SCOREBOARD             = (1 << 23),
    PIPE_CONTROL_DEPTH_CACHE_FLUSH               = (1 << 24),
+   PIPE_CONTROL_TILE_CACHE_FLUSH                = (1 << 25),
+   PIPE_CONTROL_FLUSH_HDC                       = (1 << 26),
 };
 
 #define PIPE_CONTROL_CACHE_FLUSH_BITS \
@@ -273,6 +358,8 @@ struct iris_uncompiled_shader {
 
    /** Should we use ALT mode for math?  Useful for ARB programs. */
    bool use_alt_mode;
+
+   bool needs_edge_flag;
 
    /** Constant data scraped from the shader by nir_opt_large_constants */
    struct pipe_resource *const_data;
@@ -408,14 +495,8 @@ struct iris_stream_output_target {
  */
 struct iris_vtable {
    void (*destroy_state)(struct iris_context *ice);
-   void (*init_render_context)(struct iris_screen *screen,
-                               struct iris_batch *batch,
-                               struct iris_vtable *vtbl,
-                               struct pipe_debug_callback *dbg);
-   void (*init_compute_context)(struct iris_screen *screen,
-                                struct iris_batch *batch,
-                                struct iris_vtable *vtbl,
-                                struct pipe_debug_callback *dbg);
+   void (*init_render_context)(struct iris_batch *batch);
+   void (*init_compute_context)(struct iris_batch *batch);
    void (*upload_render_state)(struct iris_context *ice,
                                struct iris_batch *batch,
                                const struct pipe_draw_info *draw);
@@ -425,8 +506,7 @@ struct iris_vtable {
                                 struct iris_batch *batch,
                                 const struct pipe_grid_info *grid);
    void (*rebind_buffer)(struct iris_context *ice,
-                         struct iris_resource *res,
-                         uint64_t old_address);
+                         struct iris_resource *res);
    void (*resolve_conditional_render)(struct iris_context *ice);
    void (*load_register_reg32)(struct iris_batch *batch, uint32_t dst,
                                uint32_t src);
@@ -475,23 +555,22 @@ struct iris_vtable {
    void (*populate_vs_key)(const struct iris_context *ice,
                            const struct shader_info *info,
                            gl_shader_stage last_stage,
-                           struct brw_vs_prog_key *key);
+                           struct iris_vs_prog_key *key);
    void (*populate_tcs_key)(const struct iris_context *ice,
-                            struct brw_tcs_prog_key *key);
+                            struct iris_tcs_prog_key *key);
    void (*populate_tes_key)(const struct iris_context *ice,
                             const struct shader_info *info,
                             gl_shader_stage last_stage,
-                            struct brw_tes_prog_key *key);
+                            struct iris_tes_prog_key *key);
    void (*populate_gs_key)(const struct iris_context *ice,
                            const struct shader_info *info,
                            gl_shader_stage last_stage,
-                           struct brw_gs_prog_key *key);
+                           struct iris_gs_prog_key *key);
    void (*populate_fs_key)(const struct iris_context *ice,
                            const struct shader_info *info,
-                           struct brw_wm_prog_key *key);
+                           struct iris_fs_prog_key *key);
    void (*populate_cs_key)(const struct iris_context *ice,
-                           struct brw_cs_prog_key *key);
-   uint32_t (*mocs)(const struct iris_bo *bo);
+                           struct iris_cs_prog_key *key);
    void (*lost_genx_state)(struct iris_context *ice, struct iris_batch *batch);
 };
 
@@ -545,12 +624,18 @@ struct iris_context {
       } params;
 
       /**
+       * Are the above values the ones stored in the draw_params buffer?
+       * If so, we can compare them against new values to see if anything
+       * changed.  If not, we need to assume they changed.
+       */
+      bool params_valid;
+
+      /**
        * Resource and offset that stores draw_parameters from the indirect
        * buffer or to the buffer that stures the previous values for non
        * indirect draws.
        */
-      struct pipe_resource *draw_params_res;
-      uint32_t draw_params_offset;
+      struct iris_state_ref draw_params;
 
       struct {
          /**
@@ -571,10 +656,7 @@ struct iris_context {
        * contains parameters that are not present in the indirect buffer as
        * drawid and is_indexed_draw. They will go in their own vertex element.
        */
-      struct pipe_resource *derived_draw_params_res;
-      uint32_t derived_draw_params_offset;
-
-      bool is_indirect;
+      struct iris_state_ref derived_draw_params;
    } draw;
 
    struct {
@@ -585,13 +667,8 @@ struct iris_context {
       struct u_upload_mgr *uploader;
       struct hash_table *cache;
 
-      unsigned urb_size;
-
       /** Is a GS or TES outputting points or lines? */
       bool output_topology_is_points_or_lines;
-
-      /* Track last VS URB entry size */
-      unsigned last_vs_entry_size;
 
       /**
        * Scratch buffers for various sizes and stages.
@@ -653,6 +730,8 @@ struct iris_context {
        * self-dependencies from resources bound for sampling and rendering.
        */
       enum isl_aux_usage draw_aux_usage[BRW_MAX_DRAW_BUFFERS];
+
+      enum gen_urb_deref_block_size urb_deref_block_size;
 
       /** Bitfield of whether color blending is enabled for RT[i] */
       uint8_t blend_enables;
@@ -758,6 +837,7 @@ void iris_init_blit_functions(struct pipe_context *ctx);
 void iris_init_clear_functions(struct pipe_context *ctx);
 void iris_init_program_functions(struct pipe_context *ctx);
 void iris_init_resource_functions(struct pipe_context *ctx);
+void iris_init_perfquery_functions(struct pipe_context *ctx);
 void iris_update_compiled_shaders(struct iris_context *ice);
 void iris_update_compiled_compute_shader(struct iris_context *ice);
 void iris_fill_cs_push_const_buffer(struct brw_cs_prog_data *cs_prog_data,
@@ -766,6 +846,7 @@ void iris_fill_cs_push_const_buffer(struct brw_cs_prog_data *cs_prog_data,
 
 /* iris_blit.c */
 void iris_blorp_surf_for_resource(struct iris_vtable *vtbl,
+                                  struct isl_device *isl_dev,
                                   struct blorp_surf *surf,
                                   struct pipe_resource *p_res,
                                   enum isl_aux_usage aux_usage,
@@ -795,6 +876,11 @@ void iris_emit_pipe_control_write(struct iris_batch *batch,
                                   uint64_t imm);
 void iris_emit_end_of_pipe_sync(struct iris_batch *batch,
                                 const char *reason, uint32_t flags);
+void iris_flush_all_caches(struct iris_batch *batch);
+
+#define iris_handle_always_flush_cache(batch) \
+   if (unlikely(batch->screen->driconf.always_flush_cache)) \
+      iris_flush_all_caches(batch);
 
 void iris_init_flush_functions(struct pipe_context *ctx);
 
@@ -936,6 +1022,9 @@ void gen9_toggle_preemption(struct iris_context *ice,
 #  include "iris_genx_protos.h"
 #  undef genX
 #  define genX(x) gen11_##x
+#  include "iris_genx_protos.h"
+#  undef genX
+#  define genX(x) gen12_##x
 #  include "iris_genx_protos.h"
 #  undef genX
 #endif

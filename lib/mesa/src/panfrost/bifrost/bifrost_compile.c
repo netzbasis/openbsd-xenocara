@@ -57,7 +57,7 @@ optimize_nir(nir_shader *nir)
                 NIR_PASS(progress, nir, nir_opt_constant_folding);
 
                 NIR_PASS(progress, nir, nir_lower_vars_to_ssa);
-                NIR_PASS(progress, nir, nir_lower_alu_to_scalar, NULL);
+                NIR_PASS(progress, nir, nir_lower_alu_to_scalar, NULL, NULL);
                 NIR_PASS(progress, nir, nir_opt_if, true);
 
         } while (progress);
@@ -117,7 +117,7 @@ emit_load_const(struct compiler_context *ctx, nir_load_const_instr *instr)
         nir_ssa_def def = instr->def;
 
         float *v = ralloc_array(NULL, float, 1);
-        nir_const_load_to_arr(v, instr, f32);
+        nir_const_value_to_array(v, instr->value, instr->def.num_components, f32);
         _mesa_hash_table_u64_insert(ctx->ssa_constants, def.index + 1, v);
 }
 
@@ -1041,11 +1041,11 @@ bifrost_compile_shader_nir(nir_shader *nir, struct bifrost_program *program)
                 }
         } while (progress);
 
-        schedule_program(ctx);
+        bifrost_schedule_program(ctx);
 
 #ifdef BI_DEBUG
         nir_print_shader(nir, stdout);
-        disassemble_bifrost(program->compiled.data, program->compiled.size, false);
+        disassemble_bifrost(stdout, program->compiled.data, program->compiled.size, false);
 #endif
         return 0;
 }

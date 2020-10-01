@@ -221,10 +221,11 @@ __fge64(uint64_t a, uint64_t b)
 uint64_t
 __fsat64(uint64_t __a)
 {
-   if (__flt64(__a, 0ul))
+   /* fsat(NaN) should be zero. */
+   if (__is_nan(__a) || __flt64_nonnan(__a, 0ul))
       return 0ul;
 
-   if (__fge64(__a, 0x3FF0000000000000ul /* 1.0 */))
+   if (!__flt64_nonnan(__a, 0x3FF0000000000000ul /* 1.0 */))
       return 0x3FF0000000000000ul;
 
    return __a;
@@ -437,23 +438,25 @@ __roundAndPackFloat64(uint zSign,
          }
          return __packFloat64(zSign, 0x7FF, 0u, 0u);
       }
-      if (zExp < 0) {
-         __shift64ExtraRightJamming(
-            zFrac0, zFrac1, zFrac2, -zExp, zFrac0, zFrac1, zFrac2);
-         zExp = 0;
-         if (roundNearestEven) {
-            increment = zFrac2 < 0u;
+   }
+
+   if (zExp < 0) {
+      __shift64ExtraRightJamming(
+         zFrac0, zFrac1, zFrac2, -zExp, zFrac0, zFrac1, zFrac2);
+      zExp = 0;
+      if (roundNearestEven) {
+         increment = zFrac2 < 0u;
+      } else {
+         if (zSign != 0u) {
+            increment = (FLOAT_ROUNDING_MODE == FLOAT_ROUND_DOWN) &&
+               (zFrac2 != 0u);
          } else {
-            if (zSign != 0u) {
-               increment = (FLOAT_ROUNDING_MODE == FLOAT_ROUND_DOWN) &&
-                  (zFrac2 != 0u);
-            } else {
-               increment = (FLOAT_ROUNDING_MODE == FLOAT_ROUND_UP) &&
-                  (zFrac2 != 0u);
-            }
+            increment = (FLOAT_ROUNDING_MODE == FLOAT_ROUND_UP) &&
+               (zFrac2 != 0u);
          }
       }
    }
+
    if (increment) {
       __add64(zFrac0, zFrac1, 0u, 1u, zFrac0, zFrac1);
       zFrac1 &= ~((zFrac2 + uint(zFrac2 == 0u)) & uint(roundNearestEven));
@@ -1299,43 +1302,35 @@ __fp64_to_fp32(uint64_t __a)
 float
 __uint64_to_fp32(uint64_t __a)
 {
-   uint zFrac = 0u;
    uvec2 aFrac = unpackUint2x32(__a);
-   int shiftCount = __countLeadingZeros32(mix(aFrac.y, aFrac.x, aFrac.y == 0u));
-   shiftCount -= mix(40, 8, aFrac.y == 0u);
+   int shiftCount = mix(__countLeadingZeros32(aFrac.y) - 33,
+                        __countLeadingZeros32(aFrac.x) - 1,
+                        aFrac.y == 0u);
 
-   if (0 <= shiftCount) {
+   if (0 <= shiftCount)
       __shortShift64Left(aFrac.y, aFrac.x, shiftCount, aFrac.y, aFrac.x);
-      bool is_zero = (aFrac.y | aFrac.x) == 0u;
-      return mix(__packFloat32(0u, 0x95 - shiftCount, aFrac.x), 0, is_zero);
-   }
+   else
+      __shift64RightJamming(aFrac.y, aFrac.x, -shiftCount, aFrac.y, aFrac.x);
 
-   shiftCount += 7;
-   __shift64RightJamming(aFrac.y, aFrac.x, -shiftCount, aFrac.y, aFrac.x);
-   zFrac = mix(aFrac.x<<shiftCount, aFrac.x, shiftCount < 0);
-   return __roundAndPackFloat32(0u, 0x9C - shiftCount, zFrac);
+   return __roundAndPackFloat32(0u, 0x9C - shiftCount, aFrac.x);
 }
 
 float
 __int64_to_fp32(int64_t __a)
 {
-   uint zFrac = 0u;
    uint aSign = uint(__a < 0);
    uint64_t absA = mix(uint64_t(__a), uint64_t(-__a), __a < 0);
    uvec2 aFrac = unpackUint2x32(absA);
-   int shiftCount = __countLeadingZeros32(mix(aFrac.y, aFrac.x, aFrac.y == 0u));
-   shiftCount -= mix(40, 8, aFrac.y == 0u);
+   int shiftCount = mix(__countLeadingZeros32(aFrac.y) - 33,
+                        __countLeadingZeros32(aFrac.x) - 1,
+                        aFrac.y == 0u);
 
-   if (0 <= shiftCount) {
+   if (0 <= shiftCount)
       __shortShift64Left(aFrac.y, aFrac.x, shiftCount, aFrac.y, aFrac.x);
-      bool is_zero = (aFrac.y | aFrac.x) == 0u;
-      return mix(__packFloat32(aSign, 0x95 - shiftCount, aFrac.x), 0, absA == 0u);
-   }
+   else
+      __shift64RightJamming(aFrac.y, aFrac.x, -shiftCount, aFrac.y, aFrac.x);
 
-   shiftCount += 7;
-   __shift64RightJamming(aFrac.y, aFrac.x, -shiftCount, aFrac.y, aFrac.x);
-   zFrac = mix(aFrac.x<<shiftCount, aFrac.x, shiftCount < 0);
-   return __roundAndPackFloat32(aSign, 0x9C - shiftCount, zFrac);
+   return __roundAndPackFloat32(aSign, 0x9C - shiftCount, aFrac.x);
 }
 
 /* Returns the result of converting the single-precision floating-point value

@@ -34,6 +34,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "main/macros.h"
+#include <string.h>
+#include <vulkan/vulkan.h>
 #include "amd_family.h"
 
 struct radeon_info;
@@ -45,7 +47,9 @@ struct radeon_surf;
 enum radeon_bo_domain { /* bitfield */
 	RADEON_DOMAIN_GTT  = 2,
 	RADEON_DOMAIN_VRAM = 4,
-	RADEON_DOMAIN_VRAM_GTT = RADEON_DOMAIN_VRAM | RADEON_DOMAIN_GTT
+	RADEON_DOMAIN_VRAM_GTT = RADEON_DOMAIN_VRAM | RADEON_DOMAIN_GTT,
+	RADEON_DOMAIN_GDS = 8,
+	RADEON_DOMAIN_OA = 16,
 };
 
 enum radeon_bo_flag { /* bitfield */
@@ -65,15 +69,6 @@ enum radeon_bo_usage { /* bitfield */
 	RADEON_USAGE_READ = 2,
 	RADEON_USAGE_WRITE = 4,
 	RADEON_USAGE_READWRITE = RADEON_USAGE_READ | RADEON_USAGE_WRITE
-};
-
-enum ring_type {
-	RING_GFX = 0,
-	RING_COMPUTE,
-	RING_DMA,
-	RING_UVD,
-	RING_VCE,
-	RING_LAST,
 };
 
 enum radeon_ctx_priority {
@@ -151,6 +146,7 @@ struct radeon_bo_metadata {
 		struct {
 			/* surface flags */
 			unsigned swizzle_mode:5;
+			bool scanout;
 		} gfx9;
 	} u;
 
@@ -162,8 +158,8 @@ struct radeon_bo_metadata {
 	uint32_t                metadata[64];
 };
 
-uint32_t syncobj_handle;
 struct radeon_winsys_fence;
+struct radeon_winsys_ctx;
 
 struct radeon_winsys_bo {
 	uint64_t va;
@@ -242,7 +238,7 @@ struct radeon_winsys {
 	struct radeon_winsys_bo *(*buffer_from_fd)(struct radeon_winsys *ws,
 						   int fd,
 						   unsigned priority,
-						   unsigned *stride, unsigned *offset);
+						   uint64_t *alloc_size);
 
 	bool (*buffer_get_fd)(struct radeon_winsys *ws,
 			      struct radeon_winsys_bo *bo,
@@ -258,8 +254,9 @@ struct radeon_winsys {
 	void (*buffer_virtual_bind)(struct radeon_winsys_bo *parent,
 	                            uint64_t offset, uint64_t size,
 	                            struct radeon_winsys_bo *bo, uint64_t bo_offset);
-	struct radeon_winsys_ctx *(*ctx_create)(struct radeon_winsys *ws,
-						enum radeon_ctx_priority priority);
+	VkResult (*ctx_create)(struct radeon_winsys *ws,
+	                       enum radeon_ctx_priority priority,
+	                       struct radeon_winsys_ctx **ctx);
 	void (*ctx_destroy)(struct radeon_winsys_ctx *ctx);
 
 	bool (*ctx_wait_idle)(struct radeon_winsys_ctx *ctx,

@@ -70,7 +70,7 @@
 #include "util/u_upload_mgr.h"
 #include "pipe/p_shader_tokens.h"
 #include "util/u_tile.h"
-#include "util/u_format.h"
+#include "util/format/u_format.h"
 #include "util/u_surface.h"
 #include "util/u_sampler.h"
 #include "util/u_math.h"
@@ -157,6 +157,9 @@ st_NewTextureObject(struct gl_context * ctx, GLuint name, GLenum target)
    if (!obj)
       return NULL;
 
+   obj->level_override = -1;
+   obj->layer_override = -1;
+
    /* Pre-allocate a sampler views container to save a branch in the
     * fast path.
     */
@@ -223,6 +226,18 @@ st_FreeTextureImageBuffer(struct gl_context *ctx,
    st_texture_release_all_sampler_views(st, stObj);
 }
 
+bool
+st_astc_format_fallback(const struct st_context *st, mesa_format format)
+{
+   if (!_mesa_is_format_astc_2d(format))
+      return false;
+
+   if (format == MESA_FORMAT_RGBA_ASTC_5x5 ||
+       format == MESA_FORMAT_SRGB8_ALPHA8_ASTC_5x5)
+      return !st->has_astc_5x5_ldr;
+
+   return !st->has_astc_2d_ldr;
+}
 
 bool
 st_compressed_format_fallback(struct st_context *st, mesa_format format)
@@ -233,8 +248,8 @@ st_compressed_format_fallback(struct st_context *st, mesa_format format)
    if (_mesa_is_format_etc2(format))
       return !st->has_etc2;
 
-   if (_mesa_is_format_astc_2d(format))
-      return !st->has_astc_2d_ldr;
+   if (st_astc_format_fallback(st, format))
+      return true;
 
    return false;
 }
@@ -510,6 +525,17 @@ allocate_full_mipmap(const struct st_texture_object *stObj,
    if (stImage->base.Level > 0 || stObj->base.GenerateMipmap)
       return TRUE;
 
+   /* If the application has explicitly called glTextureParameter to set
+    * GL_TEXTURE_MAX_LEVEL, such that (max - base) > 0, then they're trying
+    * to communicate that they will have multiple miplevels.
+    *
+    * Core Mesa will initialize MaxLevel to value much larger than
+    * MAX_TEXTURE_LEVELS, so we check that to see if it's been set at all.
+    */
+   if (stObj->base.MaxLevel < MAX_TEXTURE_LEVELS &&
+       stObj->base.MaxLevel - stObj->base.BaseLevel > 0)
+      return TRUE;
+
    if (stImage->base._BaseFormat == GL_DEPTH_COMPONENT ||
        stImage->base._BaseFormat == GL_DEPTH_STENCIL_EXT)
       /* depth/stencil textures are seldom mipmapped */
@@ -754,8 +780,8 @@ prep_teximage(struct gl_context *ctx, struct gl_texture_image *texImage,
 
       assert(!st_texture_image(texImage)->pt);
       _mesa_clear_texture_object(ctx, texObj, texImage);
-      stObj->layer_override = 0;
-      stObj->level_override = 0;
+      stObj->layer_override = -1;
+      stObj->level_override = -1;
       pipe_resource_reference(&stObj->pt, NULL);
 
       /* oops, need to init this image again */
@@ -1230,7 +1256,7 @@ try_pbo_upload_common(struct gl_context *ctx,
                         CSO_BIT_DEPTH_STENCIL_ALPHA |
                         CSO_BIT_RASTERIZER |
                         CSO_BIT_STREAM_OUTPUTS |
-                        CSO_BIT_PAUSE_QUERIES |
+                        (st->active_queries ? CSO_BIT_PAUSE_QUERIES : 0) |
                         CSO_BIT_SAMPLE_MASK |
                         CSO_BIT_MIN_SAMPLES |
                         CSO_BIT_RENDER_CONDITION |
@@ -1485,7 +1511,7 @@ st_TexSubImage(struct gl_context *ctx, GLuint dims,
       }
 
       util_throttle_memory_usage(pipe, &st->throttle,
-                                 width * height * depth *
+                                 (uint64_t) width * height * depth *
                                  util_format_get_blocksize(dst->format));
 
       u_box_3d(xoffset, yoffset, zoffset + dstz, width, height, depth, &box);
@@ -1594,7 +1620,7 @@ st_TexSubImage(struct gl_context *ctx, GLuint dims,
    }
 
    util_throttle_memory_usage(pipe, &st->throttle,
-                              width * height * depth *
+                              (uint64_t) width * height * depth *
                               util_format_get_blocksize(src_templ.format));
    throttled = true;
 
@@ -1690,7 +1716,7 @@ st_TexSubImage(struct gl_context *ctx, GLuint dims,
 fallback:
    if (!throttled) {
       util_throttle_memory_usage(pipe, &st->throttle,
-                                 width * height * depth *
+                                 (uint64_t) width * height * depth *
                                  _mesa_get_format_bytes(texImage->TexFormat));
    }
    _mesa_store_texsubimage(ctx, dims, texImage, xoffset, yoffset, zoffset,
@@ -2043,6 +2069,8 @@ st_GetTexSubImage(struct gl_context * ctx,
       case PIPE_FORMAT_ASTC_12x10:
       case PIPE_FORMAT_ASTC_12x12:
       case PIPE_FORMAT_BPTC_RGBA_UNORM:
+      case PIPE_FORMAT_FXT1_RGB:
+      case PIPE_FORMAT_FXT1_RGBA:
          dst_glformat = GL_RGBA8;
          break;
       case PIPE_FORMAT_RGTC1_SNORM:
@@ -2087,7 +2115,8 @@ st_GetTexSubImage(struct gl_context * ctx,
       }
 
       dst_format = st_choose_format(st, dst_glformat, format, type,
-                                    pipe_target, 0, 0, bind, FALSE);
+                                    pipe_target, 0, 0, bind,
+                                    false, false);
 
       if (dst_format == PIPE_FORMAT_NONE) {
          /* unable to get an rgba format!?! */

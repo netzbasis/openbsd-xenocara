@@ -32,14 +32,13 @@
 extern "C" {
 #endif
 
-int type_size_scalar(const struct glsl_type *type, bool bindless);
 int type_size_vec4(const struct glsl_type *type, bool bindless);
 int type_size_dvec4(const struct glsl_type *type, bool bindless);
 
 static inline int
 type_size_scalar_bytes(const struct glsl_type *type, bool bindless)
 {
-   return type_size_scalar(type, bindless) * 4;
+   return glsl_count_dword_slots(type, bindless) * 4;
 }
 
 static inline int
@@ -102,6 +101,7 @@ brw_nir_link_shaders(const struct brw_compiler *compiler,
 
 bool brw_nir_lower_cs_intrinsics(nir_shader *nir,
                                  unsigned dispatch_width);
+void brw_nir_lower_alpha_to_coverage(nir_shader *shader);
 void brw_nir_lower_legacy_clipping(nir_shader *nir,
                                    int nr_userclip_plane_consts,
                                    struct brw_stage_prog_data *prog_data);
@@ -127,11 +127,14 @@ void brw_nir_rewrite_image_intrinsic(nir_intrinsic_instr *intrin,
 void brw_nir_rewrite_bindless_image_intrinsic(nir_intrinsic_instr *intrin,
                                               nir_ssa_def *handle);
 
-bool brw_nir_lower_mem_access_bit_sizes(nir_shader *shader);
+bool brw_nir_lower_mem_access_bit_sizes(nir_shader *shader,
+                                        const struct gen_device_info *devinfo);
 
 void brw_postprocess_nir(nir_shader *nir,
                          const struct brw_compiler *compiler,
                          bool is_scalar);
+
+bool brw_nir_clamp_image_1d_2d_array_sizes(nir_shader *shader);
 
 bool brw_nir_apply_attribute_workarounds(nir_shader *nir,
                                          const uint8_t *attrib_wa_flags);
@@ -147,6 +150,7 @@ void brw_nir_apply_key(nir_shader *nir,
                        bool is_scalar);
 
 enum brw_conditional_mod brw_cmod_for_nir_comparison(nir_op op);
+uint32_t brw_aop_for_nir_intrinsic(const nir_intrinsic_instr *atomic);
 enum brw_reg_type brw_type_for_nir_type(const struct gen_device_info *devinfo,
                                         nir_alu_type type);
 

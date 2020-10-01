@@ -34,28 +34,29 @@
 #define X86_ENTRY_SIZE 64
 
 __asm__(".text\n"
-        ".balign " U_STRINGIFY(X86_ENTRY_SIZE) "\n"
+        ".balign 32\n"
         "x86_entry_start:");
 
 #define STUB_ASM_ENTRY(func)        \
    ".globl " func "\n"              \
    ".type " func ", @function\n"    \
-   ".balign " U_STRINGIFY(X86_ENTRY_SIZE) "\n" \
+   ".balign 32\n"                   \
    func ":"
 
 #define STUB_ASM_CODE(slot)         \
-   "push %ebx\n\t"                  \
-   "call 1f\n"                      \
+   "call 1f\n\t"                    \
    "1:\n\t"                         \
-   "popl %ebx\n\t"                  \
-   "addl $_GLOBAL_OFFSET_TABLE_+[.-1b], %ebx\n\t" \
-   "movl " ENTRY_CURRENT_TABLE "@GOT(%ebx), %eax\n\t" \
+   "popl %ecx\n\t"                  \
+   "addl $_GLOBAL_OFFSET_TABLE_+[.-1b], %ecx\n\t" \
+   "movl " ENTRY_CURRENT_TABLE "@GOT(%ecx), %eax\n\t" \
    "mov (%eax), %eax\n\t"           \
    "testl %eax, %eax\n\t"           \
    "jne 1f\n\t"                     \
-   "call " ENTRY_CURRENT_TABLE_GET "@PLT\n" \
+   "push %ebx\n\t"                  \
+   "movl %ecx, %ebx\n\t"            \
+   "call " ENTRY_CURRENT_TABLE_GET "@PLT\n\t" \
+   "popl %ebx\n\t"                  \
    "1:\n\t"                         \
-   "pop %ebx\n\t"                   \
    "jmp *(4 * " slot ")(%eax)"
 
 #define MAPI_TMP_STUB_ASM_GCC
@@ -63,7 +64,7 @@ __asm__(".text\n"
 
 #ifndef MAPI_MODE_BRIDGE
 
-__asm__(".balign " U_STRINGIFY(X86_ENTRY_SIZE) "\n"
+__asm__(".balign 32\n"
         "x86_entry_end:");
 
 #include <string.h>

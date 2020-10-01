@@ -3,8 +3,8 @@
 /intrin.h/1.4/Tue Jan 29 11:52:16 2019/-ko/
 /isa.hpp/1.1.1.3/Wed Jan 22 02:10:20 2020/-ko/
 /os.cpp/1.4/Tue Jan 29 11:52:16 2019/-ko/
-/os.h/1.7/Wed Jan 22 02:49:31 2020/-ko/
-/rdtsc_buckets.cpp/1.1.1.2/Tue Jan 29 11:02:25 2019/-ko/
+/os.h/1.9/Tue Sep 22 02:09:08 2020/-ko/
+/rdtsc_buckets.cpp/1.1.1.4/Tue Sep 22 01:32:16 2020/-ko/
 /rdtsc_buckets.h/1.1.1.3/Wed Jan 22 02:10:20 2020/-ko/
 /rdtsc_buckets_shared.h/1.1.1.2/Tue Jan 29 11:02:24 2019/-ko/
 /simd16intrin.h/1.7/Wed Jan 22 02:49:31 2020/-ko/
@@ -31,5 +31,5 @@
 /simdlib_interface.hpp/1.5/Wed Jan 22 02:49:31 2020/-ko/
 /simdlib_types.hpp/1.5/Wed Jan 22 02:49:31 2020/-ko/
 /swr_assert.cpp/1.6/Tue Jan 29 11:52:16 2019/-ko/
-/swr_assert.h/1.7/Wed Jan 22 02:49:31 2020/-ko/
+/swr_assert.h/1.9/Tue Sep 22 02:09:08 2020/-ko/
 D

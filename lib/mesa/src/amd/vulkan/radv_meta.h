@@ -169,11 +169,11 @@ void radv_meta_clear_image_cs(struct radv_cmd_buffer *cmd_buffer,
 
 void radv_decompress_depth_image_inplace(struct radv_cmd_buffer *cmd_buffer,
 					 struct radv_image *image,
-					 VkImageSubresourceRange *subresourceRange,
+					 const VkImageSubresourceRange *subresourceRange,
 					 struct radv_sample_locations_state *sample_locs);
 void radv_resummarize_depth_image_inplace(struct radv_cmd_buffer *cmd_buffer,
 					  struct radv_image *image,
-					  VkImageSubresourceRange *subresourceRange,
+					  const VkImageSubresourceRange *subresourceRange,
 					  struct radv_sample_locations_state *sample_locs);
 void radv_fast_clear_flush_image_inplace(struct radv_cmd_buffer *cmd_buffer,
 					 struct radv_image *image,
@@ -221,7 +221,7 @@ uint32_t radv_clear_dcc(struct radv_cmd_buffer *cmd_buffer,
 			struct radv_image *image,
 			const VkImageSubresourceRange *range, uint32_t value);
 uint32_t radv_clear_htile(struct radv_cmd_buffer *cmd_buffer,
-			  struct radv_image *image,
+			  const struct radv_image *image,
 			  const VkImageSubresourceRange *range, uint32_t value);
 
 /**

@@ -110,6 +110,10 @@ static void meta_decompress_cleanup(struct gl_context *ctx,
                                     struct decompress_state *decompress);
 static void meta_drawpix_cleanup(struct gl_context *ctx,
                                  struct drawpix_state *drawpix);
+static void meta_drawtex_cleanup(struct gl_context *ctx,
+                                 struct drawtex_state *drawtex);
+static void meta_bitmap_cleanup(struct gl_context *ctx,
+                                struct bitmap_state *bitmap);
 
 void
 _mesa_meta_framebuffer_texture_image(struct gl_context *ctx,
@@ -429,6 +433,9 @@ _mesa_meta_free(struct gl_context *ctx)
    cleanup_temp_texture(ctx, &ctx->Meta->TempTex);
    meta_decompress_cleanup(ctx, &ctx->Meta->Decompress);
    meta_drawpix_cleanup(ctx, &ctx->Meta->DrawPix);
+   meta_drawtex_cleanup(ctx, &ctx->Meta->DrawTex);
+   meta_bitmap_cleanup(ctx, &ctx->Meta->Bitmap);
+
    if (old_context)
       _mesa_make_current(old_context, old_context->WinSysDrawBuffer, old_context->WinSysReadBuffer);
    else
@@ -1970,6 +1977,30 @@ meta_drawpix_cleanup(struct gl_context *ctx, struct drawpix_state *drawpix)
    }
 }
 
+static void
+meta_drawtex_cleanup(struct gl_context *ctx, struct drawtex_state *drawtex)
+{
+   if (drawtex->VAO != 0) {
+      _mesa_DeleteVertexArrays(1, &drawtex->VAO);
+      drawtex->VAO = 0;
+
+      _mesa_reference_buffer_object(ctx, &drawtex->buf_obj, NULL);
+   }
+}
+
+static void
+meta_bitmap_cleanup(struct gl_context *ctx, struct bitmap_state *bitmap)
+{
+   if (bitmap->VAO != 0) {
+      _mesa_DeleteVertexArrays(1, &bitmap->VAO);
+      bitmap->VAO = 0;
+
+      _mesa_reference_buffer_object(ctx, &bitmap->buf_obj, NULL);
+
+      cleanup_temp_texture(ctx, &bitmap->Tex);
+   }
+}
+
 /**
  * When the glDrawPixels() image size is greater than the max rectangle
  * texture size we use this function to break the glDrawPixels() image
@@ -2993,6 +3024,7 @@ meta_decompress_cleanup(struct gl_context *ctx,
    }
 
    _mesa_reference_sampler_object(ctx, &decompress->samp_obj, NULL);
+   _mesa_meta_blit_shader_table_cleanup(ctx, &decompress->shaders);
 
    memset(decompress, 0, sizeof(*decompress));
 }

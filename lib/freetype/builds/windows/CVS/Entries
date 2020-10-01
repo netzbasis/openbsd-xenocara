@@ -1,16 +1,16 @@
-/detect.mk/1.8/Tue Sep 10 19:13:56 2019//
-/ftdebug.c/1.7/Tue Sep 10 19:13:56 2019//
-/w32-bcc.mk/1.6/Tue Sep 10 19:13:56 2019//
-/w32-bccd.mk/1.6/Tue Sep 10 19:13:56 2019//
-/w32-dev.mk/1.6/Tue Sep 10 19:13:56 2019//
-/w32-gcc.mk/1.6/Tue Sep 10 19:13:56 2019//
-/w32-icc.mk/1.6/Tue Sep 10 19:13:56 2019//
-/w32-intl.mk/1.6/Tue Sep 10 19:13:56 2019//
-/w32-lcc.mk/1.6/Tue Sep 10 19:13:56 2019//
-/w32-mingw32.mk/1.6/Tue Sep 10 19:13:56 2019//
-/w32-vcc.mk/1.6/Tue Sep 10 19:13:56 2019//
-/w32-wat.mk/1.6/Tue Sep 10 19:13:56 2019//
-/win32-def.mk/1.7/Tue Sep 10 19:13:56 2019//
+/detect.mk/1.9/Sat Jun 27 09:06:09 2020//
+/ftdebug.c/1.8/Sat Jun 27 09:06:09 2020//
+/w32-bcc.mk/1.7/Sat Jun 27 09:06:09 2020//
+/w32-bccd.mk/1.7/Sat Jun 27 09:06:09 2020//
+/w32-dev.mk/1.7/Sat Jun 27 09:06:09 2020//
+/w32-gcc.mk/1.7/Sat Jun 27 09:06:09 2020//
+/w32-icc.mk/1.7/Sat Jun 27 09:06:09 2020//
+/w32-intl.mk/1.7/Sat Jun 27 09:06:09 2020//
+/w32-lcc.mk/1.7/Sat Jun 27 09:06:09 2020//
+/w32-mingw32.mk/1.7/Sat Jun 27 09:06:09 2020//
+/w32-vcc.mk/1.7/Sat Jun 27 09:06:09 2020//
+/w32-wat.mk/1.7/Sat Jun 27 09:06:09 2020//
+/win32-def.mk/1.8/Sat Jun 27 09:06:09 2020//
 D/vc2010////
 D/visualc////
 D/visualce////

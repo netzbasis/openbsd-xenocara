@@ -44,6 +44,7 @@
 
 #include "drm-uapi/i915_drm.h"
 
+#include "common/gen_aux_map.h"
 #include "intel/common/gen_gem.h"
 #include "util/hash_table.h"
 #include "util/set.h"
@@ -149,20 +150,13 @@ decode_get_bo(void *v_batch, bool ppgtt, uint64_t address)
 }
 
 static unsigned
-decode_get_state_size(void *v_batch, uint32_t offset_from_base)
+decode_get_state_size(void *v_batch,
+                      uint64_t address,
+                      UNUSED uint64_t base_address)
 {
    struct iris_batch *batch = v_batch;
-
-   /* The decoder gives us offsets from a base address, which is not great.
-    * Binding tables are relative to surface state base address, and other
-    * state is relative to dynamic state base address.  These could alias,
-    * but in practice it's unlikely because surface offsets are always in
-    * the [0, 64K) range, and we assign dynamic state addresses starting at
-    * the top of the 4GB range.  We should fix this but it's likely good
-    * enough for now.
-    */
    unsigned size = (uintptr_t)
-      _mesa_hash_table_u64_search(batch->state_sizes, offset_from_base);
+      _mesa_hash_table_u64_search(batch->state_sizes, address);
 
    return size;
 }
@@ -187,7 +181,6 @@ iris_init_batch(struct iris_batch *batch,
                 struct hash_table_u64 *state_sizes,
                 struct iris_batch *all_batches,
                 enum iris_batch_name name,
-                uint8_t engine,
                 int priority)
 {
    batch->screen = screen;
@@ -196,11 +189,6 @@ iris_init_batch(struct iris_batch *batch,
    batch->reset = reset;
    batch->state_sizes = state_sizes;
    batch->name = name;
-
-   /* engine should be one of I915_EXEC_RENDER, I915_EXEC_BLT, etc. */
-   assert((engine & ~I915_EXEC_RING_MASK) == 0);
-   assert(util_bitcount(engine) == 1);
-   batch->engine = engine;
 
    batch->hw_ctx_id = iris_create_hw_context(screen->bufmgr);
    assert(batch->hw_ctx_id);
@@ -262,6 +250,20 @@ find_validation_entry(struct iris_batch *batch, struct iris_bo *bo)
    }
 
    return NULL;
+}
+
+static void
+ensure_exec_obj_space(struct iris_batch *batch, uint32_t count)
+{
+   while (batch->exec_count + count > batch->exec_array_size) {
+      batch->exec_array_size *= 2;
+      batch->exec_bos =
+         realloc(batch->exec_bos,
+                 batch->exec_array_size * sizeof(batch->exec_bos[0]));
+      batch->validation_list =
+         realloc(batch->validation_list,
+                 batch->exec_array_size * sizeof(batch->validation_list[0]));
+   }
 }
 
 /**
@@ -330,15 +332,7 @@ iris_use_pinned_bo(struct iris_batch *batch,
    /* Now, take a reference and add it to the validation list. */
    iris_bo_reference(bo);
 
-   if (batch->exec_count == batch->exec_array_size) {
-      batch->exec_array_size *= 2;
-      batch->exec_bos =
-         realloc(batch->exec_bos,
-                 batch->exec_array_size * sizeof(batch->exec_bos[0]));
-      batch->validation_list =
-         realloc(batch->validation_list,
-                 batch->exec_array_size * sizeof(batch->validation_list[0]));
-   }
+   ensure_exec_obj_space(batch, 1);
 
    batch->validation_list[batch->exec_count] =
       (struct drm_i915_gem_exec_object2) {
@@ -376,6 +370,7 @@ iris_batch_reset(struct iris_batch *batch)
 
    iris_bo_unreference(batch->bo);
    batch->primary_batch_size = 0;
+   batch->total_chained_batch_size = 0;
    batch->contains_draw = false;
    batch->decoder.surface_base = batch->last_surface_base_address;
 
@@ -436,27 +431,60 @@ iris_batch_maybe_flush(struct iris_batch *batch, unsigned estimate)
    }
 }
 
+static void
+record_batch_sizes(struct iris_batch *batch)
+{
+   unsigned batch_size = iris_batch_bytes_used(batch);
+
+   VG(VALGRIND_CHECK_MEM_IS_DEFINED(batch->map, batch_size));
+
+   if (batch->bo == batch->exec_bos[0])
+      batch->primary_batch_size = batch_size;
+
+   batch->total_chained_batch_size += batch_size;
+}
+
 void
 iris_chain_to_new_batch(struct iris_batch *batch)
 {
-   /* We only support chaining a single time. */
-   assert(batch->bo == batch->exec_bos[0]);
-
-   VG(void *map = batch->map);
    uint32_t *cmd = batch->map_next;
    uint64_t *addr = batch->map_next + 4;
    batch->map_next += 12;
 
+   record_batch_sizes(batch);
+
    /* No longer held by batch->bo, still held by validation list */
    iris_bo_unreference(batch->bo);
-   batch->primary_batch_size = iris_batch_bytes_used(batch);
    create_batch(batch);
 
    /* Emit MI_BATCH_BUFFER_START to chain to another batch. */
    *cmd = (0x31 << 23) | (1 << 8) | (3 - 2);
    *addr = batch->bo->gtt_offset;
+}
 
-   VG(VALGRIND_CHECK_MEM_IS_DEFINED(map, batch->primary_batch_size));
+static void
+add_aux_map_bos_to_batch(struct iris_batch *batch)
+{
+   void *aux_map_ctx = iris_bufmgr_get_aux_map_context(batch->screen->bufmgr);
+   if (!aux_map_ctx)
+      return;
+
+   uint32_t count = gen_aux_map_get_num_buffers(aux_map_ctx);
+   ensure_exec_obj_space(batch, count);
+   gen_aux_map_fill_bos(aux_map_ctx,
+                        (void**)&batch->exec_bos[batch->exec_count], count);
+   for (uint32_t i = 0; i < count; i++) {
+      struct iris_bo *bo = batch->exec_bos[batch->exec_count];
+      iris_bo_reference(bo);
+      batch->validation_list[batch->exec_count] =
+         (struct drm_i915_gem_exec_object2) {
+            .handle = bo->gem_handle,
+            .offset = bo->gtt_offset,
+            .flags = bo->kflags,
+         };
+      batch->aperture_space += bo->size;
+      batch->exec_count++;
+   }
 }
 
 /**
@@ -465,16 +493,16 @@ iris_chain_to_new_batch(struct iris_batch *batch)
 static void
 iris_finish_batch(struct iris_batch *batch)
 {
+   add_aux_map_bos_to_batch(batch);
+
    /* Emit MI_BATCH_BUFFER_END to finish our batch. */
    uint32_t *map = batch->map_next;
 
    map[0] = (0xA << 23);
 
    batch->map_next += 4;
-   VG(VALGRIND_CHECK_MEM_IS_DEFINED(batch->map, iris_batch_bytes_used(batch)));
 
-   if (batch->bo == batch->exec_bos[0])
-      batch->primary_batch_size = iris_batch_bytes_used(batch);
+   record_batch_sizes(batch);
 }
 
 /**
@@ -559,7 +587,7 @@ submit_batch(struct iris_batch *batch)
       .batch_start_offset = 0,
       /* This must be QWord aligned. */
       .batch_len = ALIGN(batch->primary_batch_size, 8),
-      .flags = batch->engine |
+      .flags = I915_EXEC_RENDER |
                I915_EXEC_NO_RELOC |
                I915_EXEC_BATCH_FIRST |
                I915_EXEC_HANDLE_LUT,
@@ -622,17 +650,11 @@ _iris_batch_flush(struct iris_batch *batch, const char *file, int line)
 
    if (unlikely(INTEL_DEBUG &
                 (DEBUG_BATCH | DEBUG_SUBMIT | DEBUG_PIPE_CONTROL))) {
-      int bytes_for_commands = iris_batch_bytes_used(batch);
-      int second_bytes = 0;
-      if (batch->bo != batch->exec_bos[0]) {
-         second_bytes = bytes_for_commands;
-         bytes_for_commands += batch->primary_batch_size;
-      }
-      fprintf(stderr, "%19s:%-3d: %s batch [%u] flush with %5d+%5db (%0.1f%%) "
+      fprintf(stderr, "%19s:%-3d: %s batch [%u] flush with %5db (%0.1f%%) "
               "(cmds), %4d BOs (%0.1fMb aperture)\n",
               file, line, batch_name_to_string(batch->name), batch->hw_ctx_id,
-              batch->primary_batch_size, second_bytes,
-              100.0f * bytes_for_commands / BATCH_SZ,
+              batch->total_chained_batch_size,
+              100.0f * batch->total_chained_batch_size / BATCH_SZ,
               batch->exec_count,
               (float) batch->aperture_space / (1024 * 1024));
 

@@ -85,7 +85,6 @@ ADDR_HANDLE amdgpu_addr_create(const struct radeon_info *info,
 
 	if (addrCreateInput.chipFamily >= FAMILY_AI) {
 		addrCreateInput.chipEngine = CIASICIDGFXENGINE_ARCTICISLAND;
-		regValue.blockVarSizeLog2 = 0;
 	} else {
 		regValue.noOfBanks = amdinfo->mc_arb_ramcfg & 0x3;
 		regValue.noOfRanks = (amdinfo->mc_arb_ramcfg & 0x4) >> 2;
@@ -205,6 +204,17 @@ static int gfx6_compute_level(ADDR_HANDLE addrlib,
 		unsigned alignment = 256 / (AddrSurfInfoIn->bpp / 8);
 
 		AddrSurfInfoIn->width = align(AddrSurfInfoIn->width, alignment);
+	}
+
+	/* addrlib assumes the bytes/pixel is a divisor of 64, which is not
+	 * true for r32g32b32 formats. */
+	if (AddrSurfInfoIn->bpp == 96) {
+		assert(config->info.levels == 1);
+		assert(AddrSurfInfoIn->tileMode == ADDR_TM_LINEAR_ALIGNED);
+
+		/* The least common multiple of 64 bytes and 12 bytes/pixel is
+		 * 192 bytes, or 16 pixels. */
+		AddrSurfInfoIn->width = align(AddrSurfInfoIn->width, 16);
 	}
 
 	if (config->is_3d)
@@ -338,11 +348,12 @@ static int gfx6_compute_level(ADDR_HANDLE addrlib,
 		}
 	}
 
-	/* TC-compatible HTILE. */
+	/* HTILE. */
 	if (!is_stencil &&
 	    AddrSurfInfoIn->flags.depth &&
 	    surf_level->mode == RADEON_SURF_MODE_2D &&
-	    level == 0) {
+	    level == 0 &&
+	    !(surf->flags & RADEON_SURF_NO_HTILE)) {
 		AddrHtileIn->flags.tcCompatible = AddrSurfInfoOut->tcCompatible;
 		AddrHtileIn->pitch = AddrSurfInfoOut->pitch;
 		AddrHtileIn->height = AddrSurfInfoOut->height;
@@ -488,7 +499,8 @@ static void ac_compute_cmask(const struct radeon_info *info,
 	unsigned num_pipes = info->num_tile_pipes;
 	unsigned cl_width, cl_height;
 
-	if (surf->flags & RADEON_SURF_Z_OR_SBUFFER)
+	if (surf->flags & RADEON_SURF_Z_OR_SBUFFER ||
+	    (config->info.samples >= 2 && !surf->fmask_size))
 		return;
 
 	assert(info->chip_class <= GFX8);
@@ -843,7 +855,8 @@ static int gfx6_compute_surface(ADDR_HANDLE addrlib,
 	}
 
 	/* Compute FMASK. */
-	if (config->info.samples >= 2 && AddrSurfInfoIn.flags.color) {
+	if (config->info.samples >= 2 && AddrSurfInfoIn.flags.color &&
+	    info->has_graphics && !(surf->flags & RADEON_SURF_NO_FMASK)) {
 		ADDR_COMPUTE_FMASK_INFO_INPUT fin = {0};
 		ADDR_COMPUTE_FMASK_INFO_OUTPUT fout = {0};
 		ADDR_TILEINFO fmask_tile_info = {};
@@ -958,6 +971,7 @@ static int gfx6_compute_surface(ADDR_HANDLE addrlib,
 /* This is only called when expecting a tiled layout. */
 static int
 gfx9_get_preferred_swizzle_mode(ADDR_HANDLE addrlib,
+				struct radeon_surf *surf,
 				ADDR2_COMPUTE_SURFACE_INFO_INPUT *in,
 				bool is_fmask, AddrSwizzleMode *swizzle_mode)
 {
@@ -987,6 +1001,19 @@ gfx9_get_preferred_swizzle_mode(ADDR_HANDLE addrlib,
 		sin.flags.display = 0;
 		sin.flags.color = 0;
 		sin.flags.fmask = 1;
+	}
+
+	if (surf->flags & RADEON_SURF_FORCE_MICRO_TILE_MODE) {
+		sin.forbiddenBlock.linear = 1;
+
+		if (surf->micro_tile_mode == RADEON_MICRO_MODE_DISPLAY)
+			sin.preferredSwSet.sw_D = 1;
+		else if (surf->micro_tile_mode == RADEON_MICRO_MODE_THIN)
+			sin.preferredSwSet.sw_S = 1;
+		else if (surf->micro_tile_mode == RADEON_MICRO_MODE_DEPTH)
+			sin.preferredSwSet.sw_Z = 1;
+		else if (surf->micro_tile_mode == RADEON_MICRO_MODE_ROTATED)
+			sin.preferredSwSet.sw_R = 1;
 	}
 
 	ret = Addr2GetPreferredSurfaceSetting(addrlib, &sin, &sout);
@@ -1049,12 +1076,17 @@ static int gfx9_compute_miptree(ADDR_HANDLE addrlib,
 	surf->surf_alignment = out.baseAlign;
 
 	if (in->swizzleMode == ADDR_SW_LINEAR) {
-		for (unsigned i = 0; i < in->numMipLevels; i++)
+		for (unsigned i = 0; i < in->numMipLevels; i++) {
 			surf->u.gfx9.offset[i] = mip_info[i].offset;
+			surf->u.gfx9.pitch[i] = mip_info[i].pitch;
+		}
 	}
 
 	if (in->flags.depth) {
 		assert(in->swizzleMode != ADDR_SW_LINEAR);
+
+		if (surf->flags & RADEON_SURF_NO_HTILE)
+			return 0;
 
 		/* HTILE */
 		ADDR2_COMPUTE_HTILE_INFO_INPUT hin = {0};
@@ -1082,7 +1114,10 @@ static int gfx9_compute_miptree(ADDR_HANDLE addrlib,
 		surf->htile_size = hout.htileBytes;
 		surf->htile_slice_size = hout.sliceSize;
 		surf->htile_alignment = hout.baseAlign;
-	} else {
+		return 0;
+	}
+
+	{
 		/* Compute tile swizzle for the color surface.
 		 * All *_X and *_T modes can use the swizzle.
 		 */
@@ -1285,14 +1320,15 @@ static int gfx9_compute_miptree(ADDR_HANDLE addrlib,
 		}
 
 		/* FMASK */
-		if (in->numSamples > 1) {
+		if (in->numSamples > 1 && info->has_graphics &&
+		    !(surf->flags & RADEON_SURF_NO_FMASK)) {
 			ADDR2_COMPUTE_FMASK_INFO_INPUT fin = {0};
 			ADDR2_COMPUTE_FMASK_INFO_OUTPUT fout = {0};
 
 			fin.size = sizeof(ADDR2_COMPUTE_FMASK_INFO_INPUT);
 			fout.size = sizeof(ADDR2_COMPUTE_FMASK_INFO_OUTPUT);
 
-			ret = gfx9_get_preferred_swizzle_mode(addrlib, in,
+			ret = gfx9_get_preferred_swizzle_mode(addrlib, surf, in,
 							      true, &fin.swizzleMode);
 			if (ret != ADDR_OK)
 				return ret;
@@ -1343,7 +1379,9 @@ static int gfx9_compute_miptree(ADDR_HANDLE addrlib,
 
 		/* CMASK -- on GFX10 only for FMASK */
 		if (in->swizzleMode != ADDR_SW_LINEAR &&
-		    (info->chip_class <= GFX9 || in->numSamples > 1)) {
+		    in->resourceType == ADDR_RSRC_TEX_2D &&
+		    ((info->chip_class <= GFX9 && in->numSamples == 1) ||
+		     (surf->fmask_size && in->numSamples >= 2))) {
 			ADDR2_COMPUTE_CMASK_INFO_INPUT cin = {0};
 			ADDR2_COMPUTE_CMASK_INFO_OUTPUT cout = {0};
 
@@ -1512,7 +1550,7 @@ static int gfx9_compute_surface(ADDR_HANDLE addrlib,
 			break;
 		}
 
-		r = gfx9_get_preferred_swizzle_mode(addrlib, &AddrSurfInfoIn,
+		r = gfx9_get_preferred_swizzle_mode(addrlib, surf, &AddrSurfInfoIn,
 						    false, &AddrSurfInfoIn.swizzleMode);
 		if (r)
 			return r;
@@ -1551,7 +1589,7 @@ static int gfx9_compute_surface(ADDR_HANDLE addrlib,
 		AddrSurfInfoIn.format = ADDR_FMT_8;
 
 		if (!AddrSurfInfoIn.flags.depth) {
-			r = gfx9_get_preferred_swizzle_mode(addrlib, &AddrSurfInfoIn,
+			r = gfx9_get_preferred_swizzle_mode(addrlib, surf, &AddrSurfInfoIn,
 							    false, &AddrSurfInfoIn.swizzleMode);
 			if (r)
 				goto error;
@@ -1588,11 +1626,9 @@ static int gfx9_compute_surface(ADDR_HANDLE addrlib,
 		case ADDR_SW_256B_S:
 		case ADDR_SW_4KB_S:
 		case ADDR_SW_64KB_S:
-		case ADDR_SW_VAR_S:
 		case ADDR_SW_64KB_S_T:
 		case ADDR_SW_4KB_S_X:
 		case ADDR_SW_64KB_S_X:
-		case ADDR_SW_VAR_S_X:
 			surf->micro_tile_mode = RADEON_MICRO_MODE_THIN;
 			break;
 
@@ -1601,11 +1637,9 @@ static int gfx9_compute_surface(ADDR_HANDLE addrlib,
 		case ADDR_SW_256B_D:
 		case ADDR_SW_4KB_D:
 		case ADDR_SW_64KB_D:
-		case ADDR_SW_VAR_D:
 		case ADDR_SW_64KB_D_T:
 		case ADDR_SW_4KB_D_X:
 		case ADDR_SW_64KB_D_X:
-		case ADDR_SW_VAR_D_X:
 			surf->micro_tile_mode = RADEON_MICRO_MODE_DISPLAY;
 			break;
 
@@ -1613,7 +1647,6 @@ static int gfx9_compute_surface(ADDR_HANDLE addrlib,
 		case ADDR_SW_256B_R:
 		case ADDR_SW_4KB_R:
 		case ADDR_SW_64KB_R:
-		case ADDR_SW_VAR_R:
 		case ADDR_SW_64KB_R_T:
 		case ADDR_SW_4KB_R_X:
 		case ADDR_SW_64KB_R_X:
@@ -1630,7 +1663,6 @@ static int gfx9_compute_surface(ADDR_HANDLE addrlib,
 		/* Z = depth. */
 		case ADDR_SW_4KB_Z:
 		case ADDR_SW_64KB_Z:
-		case ADDR_SW_VAR_Z:
 		case ADDR_SW_64KB_Z_T:
 		case ADDR_SW_4KB_Z_X:
 		case ADDR_SW_64KB_Z_X:
@@ -1662,7 +1694,61 @@ int ac_compute_surface(ADDR_HANDLE addrlib, const struct radeon_info *info,
 		return r;
 
 	if (info->chip_class >= GFX9)
-		return gfx9_compute_surface(addrlib, info, config, mode, surf);
+		r = gfx9_compute_surface(addrlib, info, config, mode, surf);
 	else
-		return gfx6_compute_surface(addrlib, info, config, mode, surf);
+		r = gfx6_compute_surface(addrlib, info, config, mode, surf);
+
+	if (r)
+		return r;
+
+	/* Determine the memory layout of multiple allocations in one buffer. */
+	surf->total_size = surf->surf_size;
+
+	if (surf->htile_size) {
+		surf->htile_offset = align64(surf->total_size, surf->htile_alignment);
+		surf->total_size = surf->htile_offset + surf->htile_size;
+	}
+
+	if (surf->fmask_size) {
+		assert(config->info.samples >= 2);
+		surf->fmask_offset = align64(surf->total_size, surf->fmask_alignment);
+		surf->total_size = surf->fmask_offset + surf->fmask_size;
+	}
+
+	/* Single-sample CMASK is in a separate buffer. */
+	if (surf->cmask_size && config->info.samples >= 2) {
+		surf->cmask_offset = align64(surf->total_size, surf->cmask_alignment);
+		surf->total_size = surf->cmask_offset + surf->cmask_size;
+	}
+
+	if (surf->dcc_size &&
+	    (info->use_display_dcc_unaligned ||
+	     info->use_display_dcc_with_retile_blit ||
+	     !(surf->flags & RADEON_SURF_SCANOUT))) {
+		surf->dcc_offset = align64(surf->total_size, surf->dcc_alignment);
+		surf->total_size = surf->dcc_offset + surf->dcc_size;
+
+		if (info->chip_class >= GFX9 &&
+		    surf->u.gfx9.dcc_retile_num_elements) {
+			/* Add space for the displayable DCC buffer. */
+			surf->display_dcc_offset =
+				align64(surf->total_size, surf->u.gfx9.display_dcc_alignment);
+			surf->total_size = surf->display_dcc_offset +
+					   surf->u.gfx9.display_dcc_size;
+
+			/* Add space for the DCC retile buffer. (16-bit or 32-bit elements) */
+			surf->dcc_retile_map_offset =
+				align64(surf->total_size, info->tcc_cache_line_size);
+
+			if (surf->u.gfx9.dcc_retile_use_uint16) {
+				surf->total_size = surf->dcc_retile_map_offset +
+						   surf->u.gfx9.dcc_retile_num_elements * 2;
+			} else {
+				surf->total_size = surf->dcc_retile_map_offset +
+						   surf->u.gfx9.dcc_retile_num_elements * 4;
+			}
+		}
+	}
+
+	return 0;
 }

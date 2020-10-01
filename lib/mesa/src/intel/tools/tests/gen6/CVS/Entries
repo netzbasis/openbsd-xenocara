@@ -62,8 +62,8 @@
 /sendc.expected/1.1.1.1/Wed Jan 22 02:11:50 2020/-ko/
 /shl.asm/1.1.1.1/Wed Jan 22 02:11:50 2020/-ko/
 /shl.expected/1.1.1.1/Wed Jan 22 02:11:50 2020/-ko/
-/shr.asm/1.1.1.1/Wed Jan 22 02:11:50 2020/-ko/
-/shr.expected/1.1.1.1/Wed Jan 22 02:11:50 2020/-ko/
+/shr.asm/1.1.1.3/Tue Sep 22 01:34:06 2020/-ko/
+/shr.expected/1.1.1.3/Tue Sep 22 01:34:06 2020/-ko/
 /while.asm/1.1.1.1/Wed Jan 22 02:11:50 2020/-ko/
 /while.expected/1.1.1.1/Wed Jan 22 02:11:50 2020/-ko/
 /xor.asm/1.1.1.1/Wed Jan 22 02:11:50 2020/-ko/

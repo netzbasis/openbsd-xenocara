@@ -171,7 +171,6 @@
 ./usr/X11R6/include/libdrm
 ./usr/X11R6/include/libdrm/nouveau
 ./usr/X11R6/include/libdrm/nouveau/nvif
-./usr/X11R6/include/libsync.h
 ./usr/X11R6/include/pixman-1
 ./usr/X11R6/include/pixman-1/pixman-version.h
 ./usr/X11R6/include/pixman-1/pixman.h
@@ -391,9 +390,6 @@
 ./usr/X11R6/lib/libxkbfile.a
 ./usr/X11R6/lib/libxkbfile.la
 ./usr/X11R6/lib/libxkbfile.so.6.0
-./usr/X11R6/lib/libxkbui.a
-./usr/X11R6/lib/libxkbui.la
-./usr/X11R6/lib/libxkbui.so.5.0
 ./usr/X11R6/lib/locate
 ./usr/X11R6/lib/locate/xorg.db
 ./usr/X11R6/lib/pkgconfig/pixman-1.pc

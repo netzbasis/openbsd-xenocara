@@ -39,7 +39,7 @@
 #include "tgsi/tgsi_dump.h"
 #include "util/u_math.h"
 #include "util/u_prim.h"
-#include "util/u_format.h"
+#include "util/format/u_format.h"
 #include "util/u_draw.h"
 
 
@@ -191,7 +191,7 @@ boolean draw_pt_init( struct draw_context *draw )
    if (!draw->pt.middle.general)
       return FALSE;
 
-#if HAVE_LLVM
+#ifdef LLVM_AVAILABLE
    if (draw->llvm)
       draw->pt.middle.llvm = draw_pt_fetch_pipeline_or_emit_llvm( draw );
 #endif
@@ -485,6 +485,7 @@ draw_vbo(struct draw_context *draw,
    draw->pt.user.min_index = info->min_index;
    draw->pt.user.max_index = info->max_index;
    draw->pt.user.eltSize = info->index_size ? draw->pt.user.eltSizeIB : 0;
+   draw->pt.user.drawid = info->drawid;
 
    if (0)
       debug_printf("draw_vbo(mode=%u start=%u count=%u):\n",
@@ -522,7 +523,7 @@ draw_vbo(struct draw_context *draw,
                                      draw->pt.vertex_element,
                                      draw->pt.nr_vertex_elements,
                                      info);
-#if HAVE_LLVM
+#ifdef LLVM_AVAILABLE
    if (!draw->llvm)
 #endif
    {

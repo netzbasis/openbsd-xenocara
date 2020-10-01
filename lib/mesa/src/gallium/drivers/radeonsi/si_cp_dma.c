@@ -222,7 +222,7 @@ void si_cp_dma_clear_buffer(struct si_context *sctx, struct radeon_cmdbuf *cs,
 	 * so that transfer_map knows it should wait for the GPU when mapping
 	 * that range. */
 	if (sdst)
-		util_range_add(&sdst->valid_buffer_range, offset, offset + size);
+		util_range_add(dst, &sdst->valid_buffer_range, offset, offset + size);
 
 	/* Flush the caches. */
 	if (sdst && !(user_flags & SI_CPDMA_SKIP_GFX_SYNC)) {
@@ -325,7 +325,7 @@ void si_cp_dma_copy_buffer(struct si_context *sctx,
 			/* Mark the buffer range of destination as valid (initialized),
 			 * so that transfer_map knows it should wait for the GPU when mapping
 			 * that range. */
-			util_range_add(&si_resource(dst)->valid_buffer_range, dst_offset,
+			util_range_add(dst, &si_resource(dst)->valid_buffer_range, dst_offset,
 				       dst_offset + size);
 		}
 
@@ -433,12 +433,12 @@ static void cik_prefetch_shader_async(struct si_context *sctx,
 
 static void cik_prefetch_VBO_descriptors(struct si_context *sctx)
 {
-	if (!sctx->vertex_elements || !sctx->vertex_elements->desc_list_byte_size)
+	if (!sctx->vertex_elements || !sctx->vertex_elements->vb_desc_list_alloc_size)
 		return;
 
 	cik_prefetch_TC_L2_async(sctx, &sctx->vb_descriptors_buffer->b.b,
 				 sctx->vb_descriptors_offset,
-				 sctx->vertex_elements->desc_list_byte_size);
+				 sctx->vertex_elements->vb_desc_list_alloc_size);
 }
 
 /**

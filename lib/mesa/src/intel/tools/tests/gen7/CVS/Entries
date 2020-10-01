@@ -54,8 +54,8 @@
 /mad.expected/1.1.1.1/Wed Jan 22 02:11:51 2020/-ko/
 /math.asm/1.1.1.1/Wed Jan 22 02:11:51 2020/-ko/
 /math.expected/1.1.1.1/Wed Jan 22 02:11:51 2020/-ko/
-/mov.asm/1.1.1.1/Wed Jan 22 02:11:51 2020/-ko/
-/mov.expected/1.1.1.1/Wed Jan 22 02:11:51 2020/-ko/
+/mov.asm/1.1.1.3/Tue Sep 22 01:34:06 2020/-ko/
+/mov.expected/1.1.1.3/Tue Sep 22 01:34:06 2020/-ko/
 /mul.asm/1.1.1.1/Wed Jan 22 02:11:51 2020/-ko/
 /mul.expected/1.1.1.1/Wed Jan 22 02:11:51 2020/-ko/
 /not.asm/1.1.1.1/Wed Jan 22 02:11:51 2020/-ko/

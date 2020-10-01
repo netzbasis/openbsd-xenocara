@@ -66,6 +66,9 @@ gen_device_name_to_pci_device_id(const char *name)
       { "cml", 0x9b41 },
       { "cnl", 0x5a52 },
       { "icl", 0x8a52 },
+      { "ehl", 0x4500 },
+      { "jsl", 0x4E71 },
+      { "tgl", 0x9a49 },
    };
 
    for (unsigned i = 0; i < ARRAY_SIZE(name_map); i++) {
@@ -216,7 +219,7 @@ static const struct gen_device_info gen_device_info_snb_gt2 = {
    .must_use_separate_stencil = true,               \
    .has_llc = true,                                 \
    .has_pln = true,                                 \
-   .has_64bit_types = true,                         \
+   .has_64bit_float = true,                         \
    .has_surface_tile_offset = true,                 \
    .timestamp_frequency = 12500000
 
@@ -414,7 +417,8 @@ static const struct gen_device_info gen_device_info_hsw_gt3 = {
    .has_sample_with_hiz = false,                    \
    .has_pln = true,                                 \
    .has_integer_dword_mul = true,                   \
-   .has_64bit_types = true,                         \
+   .has_64bit_float = true,                         \
+   .has_64bit_int = true,                           \
    .supports_simd16_3src = true,                    \
    .has_surface_tile_offset = true,                 \
    .num_thread_per_eu = 7,                          \
@@ -430,7 +434,7 @@ static const struct gen_device_info gen_device_info_bdw_gt1 = {
    .is_broadwell = true,
    .num_slices = 1,
    .num_subslices = { 2, },
-   .num_eu_per_subslice = 8,
+   .num_eu_per_subslice = 6,
    .l3_banks = 2,
    .max_cs_threads = 42,
    .urb = {
@@ -443,7 +447,8 @@ static const struct gen_device_info gen_device_info_bdw_gt1 = {
          [MESA_SHADER_VERTEX]    = 2560,
          [MESA_SHADER_TESS_CTRL] = 504,
          [MESA_SHADER_TESS_EVAL] = 1536,
-         [MESA_SHADER_GEOMETRY]  = 960,
+         /* Reduced from 960, seems to be similar to the bug on Gen9 GT1. */
+         [MESA_SHADER_GEOMETRY]  = 690,
       },
    },
    .simulator_id = 11,
@@ -850,28 +855,28 @@ static const struct gen_device_info gen_device_info_cfl_gt3 = {
    .num_eu_per_subslice = 8,                        \
    .l3_banks = _l3
 
-static const struct gen_device_info gen_device_info_cnl_2x8 = {
+static const struct gen_device_info gen_device_info_cnl_gt0_5 = {
    /* GT0.5 */
    GEN10_FEATURES(1, 1, subslices(2), 2),
    .is_cannonlake = true,
    .simulator_id = 15,
 };
 
-static const struct gen_device_info gen_device_info_cnl_3x8 = {
+static const struct gen_device_info gen_device_info_cnl_gt1 = {
    /* GT1 */
    GEN10_FEATURES(1, 1, subslices(3), 3),
    .is_cannonlake = true,
    .simulator_id = 15,
 };
 
-static const struct gen_device_info gen_device_info_cnl_4x8 = {
+static const struct gen_device_info gen_device_info_cnl_gt1_5 = {
    /* GT 1.5 */
    GEN10_FEATURES(1, 2, subslices(2, 2), 6),
    .is_cannonlake = true,
    .simulator_id = 15,
 };
 
-static const struct gen_device_info gen_device_info_cnl_5x8 = {
+static const struct gen_device_info gen_device_info_cnl_gt2 = {
    /* GT2 */
    GEN10_FEATURES(2, 2, subslices(3, 2), 6),
    .is_cannonlake = true,
@@ -890,7 +895,8 @@ static const struct gen_device_info gen_device_info_cnl_5x8 = {
 #define GEN11_FEATURES(_gt, _slices, _subslices, _l3) \
    GEN8_FEATURES,                                     \
    GEN11_HW_INFO,                                     \
-   .has_64bit_types = false,                          \
+   .has_64bit_float = false,                          \
+   .has_64bit_int = false,                            \
    .has_integer_dword_mul = false,                    \
    .has_sample_with_hiz = false,                      \
    .gt = _gt, .num_slices = _slices, .l3_banks = _l3, \
@@ -909,7 +915,7 @@ static const struct gen_device_info gen_device_info_cnl_5x8 = {
       [MESA_SHADER_GEOMETRY]  = 1032,                 \
    }
 
-static const struct gen_device_info gen_device_info_icl_8x8 = {
+static const struct gen_device_info gen_device_info_icl_gt2 = {
    GEN11_FEATURES(2, 1, subslices(8), 8),
    .urb = {
       .size = 1024,
@@ -918,7 +924,7 @@ static const struct gen_device_info gen_device_info_icl_8x8 = {
    .simulator_id = 19,
 };
 
-static const struct gen_device_info gen_device_info_icl_6x8 = {
+static const struct gen_device_info gen_device_info_icl_gt1_5 = {
    GEN11_FEATURES(1, 1, subslices(6), 6),
    .urb = {
       .size = 768,
@@ -927,7 +933,7 @@ static const struct gen_device_info gen_device_info_icl_6x8 = {
    .simulator_id = 19,
 };
 
-static const struct gen_device_info gen_device_info_icl_4x8 = {
+static const struct gen_device_info gen_device_info_icl_gt1 = {
    GEN11_FEATURES(1, 1, subslices(4), 6),
    .urb = {
       .size = 768,
@@ -936,7 +942,7 @@ static const struct gen_device_info gen_device_info_icl_4x8 = {
    .simulator_id = 19,
 };
 
-static const struct gen_device_info gen_device_info_icl_1x8 = {
+static const struct gen_device_info gen_device_info_icl_gt0_5 = {
    GEN11_FEATURES(1, 1, subslices(1), 6),
    .urb = {
       .size = 768,
@@ -945,8 +951,9 @@ static const struct gen_device_info gen_device_info_icl_1x8 = {
    .simulator_id = 19,
 };
 
-static const struct gen_device_info gen_device_info_ehl_4x8 = {
+static const struct gen_device_info gen_device_info_ehl_7 = {
    GEN11_FEATURES(1, 1, subslices(4), 4),
+   .is_elkhartlake = true,
    .urb = {
       .size = 512,
       .min_entries = {
@@ -964,10 +971,30 @@ static const struct gen_device_info gen_device_info_ehl_4x8 = {
    .simulator_id = 28,
 };
 
-/* FIXME: Verfiy below entries when more information is available for this SKU.
- */
-static const struct gen_device_info gen_device_info_ehl_4x4 = {
+static const struct gen_device_info gen_device_info_ehl_6 = {
    GEN11_FEATURES(1, 1, subslices(4), 4),
+   .is_elkhartlake = true,
+   .urb = {
+      .size = 512,
+      .min_entries = {
+         [MESA_SHADER_VERTEX]    = 64,
+         [MESA_SHADER_TESS_EVAL] = 34,
+      },
+      .max_entries = {
+         [MESA_SHADER_VERTEX]    = 2384,
+         [MESA_SHADER_TESS_CTRL] = 1032,
+         [MESA_SHADER_TESS_EVAL] = 2384,
+         [MESA_SHADER_GEOMETRY]  = 1032,
+      },
+   },
+   .disable_ccs_repack = true,
+   .num_eu_per_subslice = 6,
+   .simulator_id = 28,
+};
+
+static const struct gen_device_info gen_device_info_ehl_5 = {
+   GEN11_FEATURES(1, 1, subslices(4), 4),
+   .is_elkhartlake = true,
    .urb = {
       .size = 512,
       .min_entries = {
@@ -986,10 +1013,9 @@ static const struct gen_device_info gen_device_info_ehl_4x4 = {
    .simulator_id = 28,
 };
 
-/* FIXME: Verfiy below entries when more information is available for this SKU.
- */
-static const struct gen_device_info gen_device_info_ehl_2x4 = {
+static const struct gen_device_info gen_device_info_ehl_4 = {
    GEN11_FEATURES(1, 1, subslices(2), 4),
+   .is_elkhartlake = true,
    .urb = {
       .size = 512,
       .min_entries = {
@@ -1006,6 +1032,54 @@ static const struct gen_device_info gen_device_info_ehl_2x4 = {
    .disable_ccs_repack = true,
    .num_eu_per_subslice =4,
    .simulator_id = 28,
+};
+
+#define GEN12_URB_MIN_MAX_ENTRIES                   \
+   .min_entries = {                                 \
+      [MESA_SHADER_VERTEX]    = 64,                 \
+      [MESA_SHADER_TESS_EVAL] = 34,                 \
+   },                                               \
+   .max_entries = {                                 \
+      [MESA_SHADER_VERTEX]    = 3576,               \
+      [MESA_SHADER_TESS_CTRL] = 1548,               \
+      [MESA_SHADER_TESS_EVAL] = 3576,               \
+      [MESA_SHADER_GEOMETRY]  = 1548,               \
+   }
+
+#define GEN12_HW_INFO                               \
+   .gen = 12,                                       \
+   .has_pln = false,                                \
+   .has_sample_with_hiz = false,                    \
+   .has_aux_map = true,                             \
+   .max_vs_threads = 546,                           \
+   .max_gs_threads = 336,                           \
+   .max_tcs_threads = 336,                          \
+   .max_tes_threads = 546,                          \
+   .max_cs_threads = 112, /* threads per DSS */     \
+   .urb = {                                         \
+      GEN12_URB_MIN_MAX_ENTRIES,                    \
+   }
+
+#define GEN12_FEATURES(_gt, _slices, _dual_subslices, _l3)      \
+   GEN8_FEATURES,                                               \
+   GEN12_HW_INFO,                                               \
+   .has_64bit_float = false,                                    \
+   .has_64bit_int = false,                                      \
+   .has_integer_dword_mul = false,                              \
+   .gt = _gt, .num_slices = _slices, .l3_banks = _l3,           \
+   .simulator_id = 22,                                          \
+   .urb.size = (_gt) == 1 ? 512 : 1024,                         \
+   .num_subslices = _dual_subslices,                            \
+   .num_eu_per_subslice = 16
+
+#define dual_subslices(args...) { args, }
+
+static const struct gen_device_info gen_device_info_tgl_gt1 = {
+   GEN12_FEATURES(1, 1, dual_subslices(2), 8),
+};
+
+static const struct gen_device_info gen_device_info_tgl_gt2 = {
+   GEN12_FEATURES(2, 1, dual_subslices(6), 8),
 };
 
 static void
@@ -1127,6 +1201,17 @@ update_from_topology(struct gen_device_info *devinfo,
       }
    }
 
+   if (devinfo->gen == 12 && devinfo->num_slices == 1) {
+      if (n_subslices >= 6) {
+         assert(n_subslices == 6);
+         devinfo->l3_banks = 8;
+      } else if (n_subslices > 2) {
+         devinfo->l3_banks = 6;
+      } else {
+         devinfo->l3_banks = 4;
+      }
+   }
+
    uint32_t eu_mask_len =
       topology->eu_stride * topology->max_subslices * topology->max_slices;
    assert(sizeof(devinfo->eu_masks) >= eu_mask_len);
@@ -1223,9 +1308,10 @@ gen_get_device_info_from_pci_id(int pci_id,
 {
    switch (pci_id) {
 #undef CHIPSET
-#define CHIPSET(id, family, name) \
+#define CHIPSET(id, family, fam_str, name) \
       case id: *devinfo = gen_device_info_##family; break;
 #include "pci_ids/i965_pci_ids.h"
+#include "pci_ids/iris_pci_ids.h"
    default:
       fprintf(stderr, "Driver does not support the 0x%x PCI ID.\n", pci_id);
       return false;
@@ -1255,11 +1341,13 @@ gen_get_device_info_from_pci_id(int pci_id,
                               * 4; /* effective subslices per slice */
       break;
    case 11:
+   case 12:
       devinfo->max_wm_threads = 128 /* threads-per-PSD */
                               * devinfo->num_slices
                               * 8; /* subslices per slice */
       break;
    default:
+      assert(devinfo->gen < 9);
       break;
    }
 
@@ -1274,8 +1362,9 @@ gen_get_device_name(int devid)
 {
    switch (devid) {
 #undef CHIPSET
-#define CHIPSET(id, family, name) case id: return name;
+#define CHIPSET(id, family, fam_str, name) case id: return name " (" fam_str ")"; break;
 #include "pci_ids/i965_pci_ids.h"
+#include "pci_ids/iris_pci_ids.h"
    default:
       return NULL;
    }
@@ -1369,7 +1458,7 @@ gen_get_device_info_from_fd(int fd, struct gen_device_info *devinfo)
       return false;
 
    if (!getparam(fd, I915_PARAM_REVISION, &devinfo->revision))
-       return false;
+      devinfo->revision = 0;
 
    if (!query_topology(devinfo, fd)) {
       if (devinfo->gen >= 10) {

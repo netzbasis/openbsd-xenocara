@@ -617,8 +617,8 @@ void radv_CmdBlitImage(
 		VkRect2D dest_box;
 		dest_box.offset.x = MIN2(dst_x0, dst_x1);
 		dest_box.offset.y = MIN2(dst_y0, dst_y1);
-		dest_box.extent.width = abs(dst_x1 - dst_x0);
-		dest_box.extent.height = abs(dst_y1 - dst_y0);
+		dest_box.extent.width = dst_x1 - dst_x0;
+		dest_box.extent.height = dst_y1 - dst_y0;
 
 		const unsigned num_layers = dst_end - dst_start;
 		for (unsigned i = 0; i < num_layers; i++) {
@@ -959,7 +959,27 @@ radv_device_init_meta_blit_color(struct radv_device *device, bool on_demand)
 								.preserveAttachmentCount = 0,
 								.pPreserveAttachments = NULL,
 							},
-							.dependencyCount = 0,
+							.dependencyCount = 2,
+							.pDependencies = (VkSubpassDependency[]) {
+								{
+									.srcSubpass = VK_SUBPASS_EXTERNAL,
+									.dstSubpass = 0,
+									.srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+									.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+									.srcAccessMask = 0,
+									.dstAccessMask = 0,
+									.dependencyFlags = 0
+								},
+								{
+									.srcSubpass = 0,
+									.dstSubpass = VK_SUBPASS_EXTERNAL,
+									.srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+									.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+									.srcAccessMask = 0,
+									.dstAccessMask = 0,
+									.dependencyFlags = 0
+								}
+							},
 						}, &device->meta_state.alloc, &device->meta_state.blit.render_pass[key][j]);
 			if (result != VK_SUCCESS)
 				goto fail;
@@ -1019,7 +1039,27 @@ radv_device_init_meta_blit_depth(struct radv_device *device, bool on_demand)
 							       .preserveAttachmentCount = 0,
 							       .pPreserveAttachments = NULL,
 							},
-						        .dependencyCount = 0,
+							.dependencyCount = 2,
+							.pDependencies = (VkSubpassDependency[]) {
+								{
+									.srcSubpass = VK_SUBPASS_EXTERNAL,
+									.dstSubpass = 0,
+									.srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+									.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+									.srcAccessMask = 0,
+									.dstAccessMask = 0,
+									.dependencyFlags = 0
+								},
+								{
+									.srcSubpass = 0,
+									.dstSubpass = VK_SUBPASS_EXTERNAL,
+									.srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+									.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+									.srcAccessMask = 0,
+									.dstAccessMask = 0,
+									.dependencyFlags = 0
+								}
+							},
 						}, &device->meta_state.alloc, &device->meta_state.blit.depth_only_rp[ds_layout]);
 		if (result != VK_SUCCESS)
 			goto fail;
@@ -1076,7 +1116,28 @@ radv_device_init_meta_blit_stencil(struct radv_device *device, bool on_demand)
 							       .preserveAttachmentCount = 0,
 							       .pPreserveAttachments = NULL,
 						       },
-						       .dependencyCount = 0,
+						       .dependencyCount = 2,
+						       .pDependencies = (VkSubpassDependency[]) {
+								{
+									.srcSubpass = VK_SUBPASS_EXTERNAL,
+									.dstSubpass = 0,
+									.srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+									.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+									.srcAccessMask = 0,
+									.dstAccessMask = 0,
+									.dependencyFlags = 0
+								},
+								{
+									.srcSubpass = 0,
+									.dstSubpass = VK_SUBPASS_EXTERNAL,
+									.srcStageMask = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+									.dstStageMask = VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+									.srcAccessMask = 0,
+									.dstAccessMask = 0,
+									.dependencyFlags = 0
+								}
+							},
+
 					 }, &device->meta_state.alloc, &device->meta_state.blit.stencil_only_rp[ds_layout]);
 	}
 	if (result != VK_SUCCESS)

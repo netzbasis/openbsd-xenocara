@@ -225,6 +225,11 @@ DRI_CONF_OPT_BEGIN_B(adaptive_sync,def) \
         DRI_CONF_DESC(en,gettext("Adapt the monitor sync to the application performance (when possible)")) \
 DRI_CONF_OPT_END
 
+#define DRI_CONF_VK_WSI_FORCE_BGRA8_UNORM_FIRST(def) \
+DRI_CONF_OPT_BEGIN_B(vk_wsi_force_bgra8_unorm_first, def) \
+        DRI_CONF_DESC(en,gettext("Force vkGetPhysicalDeviceSurfaceFormatsKHR to return VK_FORMAT_B8G8R8A8_UNORM as the first format")) \
+DRI_CONF_OPT_END
+
 #define DRI_CONF_VK_X11_OVERRIDE_MIN_IMAGE_COUNT(def) \
 DRI_CONF_OPT_BEGIN_V(vk_x11_override_min_image_count, int, def, "0:999") \
         DRI_CONF_DESC(en,gettext("Override the VkSurfaceCapabilitiesKHR::minImageCount (0 = no override)")) \
@@ -279,6 +284,11 @@ DRI_CONF_OPT_BEGIN_B(glsl_zero_init, def) \
         DRI_CONF_DESC(en,gettext("Force uninitialized variables to default to zero")) \
 DRI_CONF_OPT_END
 
+#define DRI_CONF_VS_POSITION_ALWAYS_INVARIANT(def) \
+DRI_CONF_OPT_BEGIN_B(vs_position_always_invariant, def) \
+        DRI_CONF_DESC(en,gettext("Force the vertex shader's gl_Position output to be considered 'invariant'")) \
+DRI_CONF_OPT_END
+
 #define DRI_CONF_ALLOW_RGB10_CONFIGS(def) \
 DRI_CONF_OPT_BEGIN_B(allow_rgb10_configs, def) \
 DRI_CONF_DESC(en,gettext("Allow exposure of visuals and fbconfigs with rgb10a2 formats")) \
@@ -287,6 +297,11 @@ DRI_CONF_OPT_END
 #define DRI_CONF_ALLOW_RGB565_CONFIGS(def) \
 DRI_CONF_OPT_BEGIN_B(allow_rgb565_configs, def) \
 DRI_CONF_DESC(en,gettext("Allow exposure of visuals and fbconfigs with rgb565 formats")) \
+DRI_CONF_OPT_END
+
+#define DRI_CONF_ALLOW_FP16_CONFIGS(def) \
+DRI_CONF_OPT_BEGIN_B(allow_fp16_configs, def) \
+DRI_CONF_DESC(en,gettext("Allow exposure of visuals and fbconfigs with fp16 formats")) \
 DRI_CONF_OPT_END
 
 /**

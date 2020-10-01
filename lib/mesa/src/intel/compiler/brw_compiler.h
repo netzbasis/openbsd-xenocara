@@ -83,10 +83,10 @@ struct brw_compiler {
       uint8_t *ra_reg_to_grf;
 
       /**
-       * ra class for the aligned pairs we use for PLN, which doesn't
+       * ra class for the aligned barycentrics we use for PLN, which doesn't
        * appear in *classes.
        */
-      int aligned_pairs_class;
+      int aligned_bary_class;
    } fs_reg_sets[3];
 
    void (*shader_debug_log)(void *, const char *str, ...) PRINTFLIKE(2, 3);
@@ -119,6 +119,12 @@ struct brw_compiler {
     * whether nir_opt_large_constants will be run.
     */
    bool supports_shader_constants;
+
+   /**
+    * Whether or not the driver wants uniform params to be compacted by the
+    * back-end compiler.
+    */
+   bool compact_params;
 };
 
 /**
@@ -654,6 +660,9 @@ struct brw_stage_prog_data {
 
    unsigned program_size;
 
+   /** Does this program pull from any UBO or other constant buffers? */
+   bool has_ubo_pull;
+
    /**
     * Register where the thread expects to find input data from the URB
     * (typically uniforms, followed by vertex or fragment attributes).
@@ -769,6 +778,11 @@ struct brw_wm_prog_data {
     */
    uint32_t flat_inputs;
 
+   /**
+    * The FS inputs
+    */
+   uint64_t inputs;
+
    /* Mapping of VUE slots to interpolation modes.
     * Used by the Gen4-5 clip/sf/wm stages.
     */
@@ -780,6 +794,14 @@ struct brw_wm_prog_data {
     * For varying slots that are not used by the FS, the value is -1.
     */
    int urb_setup[VARYING_SLOT_MAX];
+
+   /**
+    * Cache structure into the urb_setup array above that contains the
+    * attribute numbers of active varyings out of urb_setup.
+    * The actual count is stored in urb_setup_attribs_count.
+    */
+   uint8_t urb_setup_attribs[VARYING_SLOT_MAX];
+   uint8_t urb_setup_attribs_count;
 };
 
 /** Returns the SIMD width corresponding to a given KSP index
@@ -1223,11 +1245,16 @@ union brw_any_prog_data {
    struct brw_cs_prog_data cs;
 };
 
-#define DEFINE_PROG_DATA_DOWNCAST(stage)                       \
-static inline struct brw_##stage##_prog_data *                 \
-brw_##stage##_prog_data(struct brw_stage_prog_data *prog_data) \
-{                                                              \
-   return (struct brw_##stage##_prog_data *) prog_data;        \
+#define DEFINE_PROG_DATA_DOWNCAST(stage)                                   \
+static inline struct brw_##stage##_prog_data *                             \
+brw_##stage##_prog_data(struct brw_stage_prog_data *prog_data)             \
+{                                                                          \
+   return (struct brw_##stage##_prog_data *) prog_data;                    \
+}                                                                          \
+static inline const struct brw_##stage##_prog_data *                       \
+brw_##stage##_prog_data_const(const struct brw_stage_prog_data *prog_data) \
+{                                                                          \
+   return (const struct brw_##stage##_prog_data *) prog_data;              \
 }
 DEFINE_PROG_DATA_DOWNCAST(vue)
 DEFINE_PROG_DATA_DOWNCAST(vs)
@@ -1319,7 +1346,6 @@ brw_compile_tes(const struct brw_compiler *compiler, void *log_data,
                 const struct brw_vue_map *input_vue_map,
                 struct brw_tes_prog_data *prog_data,
                 struct nir_shader *shader,
-                struct gl_program *prog,
                 int shader_time_index,
                 struct brw_compile_stats *stats,
                 char **error_str);
@@ -1383,7 +1409,6 @@ brw_compile_fs(const struct brw_compiler *compiler, void *log_data,
                const struct brw_wm_prog_key *key,
                struct brw_wm_prog_data *prog_data,
                struct nir_shader *shader,
-               struct gl_program *prog,
                int shader_time_index8,
                int shader_time_index16,
                int shader_time_index32,
@@ -1460,7 +1485,7 @@ brw_stage_has_packed_dispatch(ASSERTED const struct gen_device_info *devinfo,
     * to do a full test run with brw_fs_test_dispatch_packing() hooked up to
     * the NIR front-end before changing this assertion.
     */
-   assert(devinfo->gen <= 11);
+   assert(devinfo->gen <= 12);
 
    switch (stage) {
    case MESA_SHADER_FRAGMENT: {

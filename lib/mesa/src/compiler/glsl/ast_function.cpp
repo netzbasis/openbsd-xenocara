@@ -49,6 +49,13 @@ process_parameters(exec_list *instructions, exec_list *actual_parameters,
       ast->set_is_lhs(true);
       ir_rvalue *result = ast->hir(instructions, state);
 
+      /* Error happened processing function parameter */
+      if (!result) {
+         actual_parameters->push_tail(ir_rvalue::error_value(mem_ctx));
+         count++;
+         continue;
+      }
+
       ir_constant *const constant =
          result->constant_expression_value(mem_ctx);
 
@@ -664,7 +671,6 @@ match_function_by_name(const char *name,
    }
 
    /* Local shader has no exact candidates; check the built-ins. */
-   _mesa_glsl_initialize_builtin_functions();
    sig = _mesa_glsl_find_builtin_function(state, name, actual_parameters);
 
    /* if _mesa_glsl_find_builtin_function failed, fall back to the result

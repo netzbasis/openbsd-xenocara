@@ -99,19 +99,6 @@ enum radeon_transfer_flags {
 
 #define RADEON_SPARSE_PAGE_SIZE (64 * 1024)
 
-enum ring_type {
-    RING_GFX = 0,
-    RING_COMPUTE,
-    RING_DMA,
-    RING_UVD,
-    RING_VCE,
-    RING_UVD_ENC,
-    RING_VCN_DEC,
-    RING_VCN_ENC,
-    RING_VCN_JPEG,
-    RING_LAST,
-};
-
 enum radeon_value_id {
     RADEON_REQUESTED_VRAM_MEMORY,
     RADEON_REQUESTED_GTT_MEMORY,
@@ -233,6 +220,8 @@ struct radeon_bo_metadata {
             unsigned dcc_offset_256B:24;
             unsigned dcc_pitch_max:14;   /* (mip chain pitch - 1) for DCN */
             unsigned dcc_independent_64B:1;
+
+            bool scanout;
         } gfx9;
     } u;
 
@@ -378,12 +367,10 @@ struct radeon_winsys {
      * \param ws        The winsys this function is called from.
      * \param whandle   A winsys handle pointer as was received from a state
      *                  tracker.
-     * \param stride    The returned buffer stride in bytes.
      */
     struct pb_buffer *(*buffer_from_handle)(struct radeon_winsys *ws,
                                             struct winsys_handle *whandle,
-                                            unsigned vm_alignment,
-                                            unsigned *stride, unsigned *offset);
+                                            unsigned vm_alignment);
 
     /**
      * Get a winsys buffer from a user pointer. The resulting buffer can't
@@ -414,13 +401,10 @@ struct radeon_winsys {
      * \param ws        The winsys instance for which the handle is to be valid
      * \param buf       A winsys buffer object to get the handle from.
      * \param whandle   A winsys handle pointer.
-     * \param stride    A stride of the buffer in bytes, for texturing.
      * \return          true on success.
      */
     bool (*buffer_get_handle)(struct radeon_winsys *ws,
                               struct pb_buffer *buf,
-                              unsigned stride, unsigned offset,
-                              unsigned slice_size,
                               struct winsys_handle *whandle);
 
     /**
@@ -464,6 +448,14 @@ struct radeon_winsys {
      * Query the initial placement of the buffer from the kernel driver.
      */
     enum radeon_bo_domain (*buffer_get_initial_domain)(struct pb_buffer *buf);
+
+   /**
+    * Query the flags used for creation of this buffer.
+    *
+    * Note that for imported buffer this may be lossy since not all flags
+    * are passed 1:1.
+    */
+   enum radeon_bo_flag (*buffer_get_flags)(struct pb_buffer *buf);
 
     /**************************************************************************
      * Command submission.

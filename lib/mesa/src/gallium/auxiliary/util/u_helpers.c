@@ -52,6 +52,8 @@ void util_set_vertex_buffers_mask(struct pipe_vertex_buffer *dst,
 
    dst += start_slot;
 
+   *enabled_buffers &= ~u_bit_consecutive(start_slot, count);
+
    if (src) {
       for (i = 0; i < count; i++) {
          if (src[i].buffer.resource)
@@ -66,15 +68,12 @@ void util_set_vertex_buffers_mask(struct pipe_vertex_buffer *dst,
       /* Copy over the other members of pipe_vertex_buffer. */
       memcpy(dst, src, count * sizeof(struct pipe_vertex_buffer));
 
-      *enabled_buffers &= ~(((1ull << count) - 1) << start_slot);
       *enabled_buffers |= bitmask << start_slot;
    }
    else {
       /* Unreference the buffers. */
       for (i = 0; i < count; i++)
          pipe_vertex_buffer_unreference(&dst[i]);
-
-      *enabled_buffers &= ~(((1ull << count) - 1) << start_slot);
    }
 }
 
@@ -145,12 +144,12 @@ bool
 util_upload_index_buffer(struct pipe_context *pipe,
                          const struct pipe_draw_info *info,
                          struct pipe_resource **out_buffer,
-                         unsigned *out_offset)
+                         unsigned *out_offset, unsigned alignment)
 {
    unsigned start_offset = info->start * info->index_size;
 
    u_upload_data(pipe->stream_uploader, start_offset,
-                 info->count * info->index_size, 4,
+                 info->count * info->index_size, alignment,
                  (char*)info->index.user + start_offset,
                  out_offset, out_buffer);
    u_upload_unmap(pipe->stream_uploader);

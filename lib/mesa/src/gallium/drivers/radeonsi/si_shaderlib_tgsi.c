@@ -665,6 +665,108 @@ void *si_clear_render_target_shader_1d_array(struct pipe_context *ctx)
 	return ctx->create_compute_state(ctx, &state);
 }
 
+void *si_clear_12bytes_buffer_shader(struct pipe_context *ctx)
+{
+	static const char text[] =
+		"COMP\n"
+		"PROPERTY CS_FIXED_BLOCK_WIDTH 64\n"
+		"PROPERTY CS_FIXED_BLOCK_HEIGHT 1\n"
+		"PROPERTY CS_FIXED_BLOCK_DEPTH 1\n"
+		"DCL SV[0], THREAD_ID\n"
+		"DCL SV[1], BLOCK_ID\n"
+		"DCL BUFFER[0]\n"
+		"DCL CONST[0][0..0]\n" // 0:xyzw
+		"DCL TEMP[0..0]\n"
+		"IMM[0] UINT32 {64, 1, 12, 0}\n"
+		"UMAD TEMP[0].x, SV[1].xyzz, IMM[0].xyyy, SV[0].xyzz\n"
+		"UMUL TEMP[0].x, TEMP[0].xyzz, IMM[0].zzzz\n" //12 bytes
+		"STORE BUFFER[0].xyz, TEMP[0].xxxx, CONST[0][0].xyzw\n"
+		"END\n";
+
+	struct tgsi_token tokens[1024];
+	struct pipe_compute_state state = {0};
+
+	if (!tgsi_text_translate(text, tokens, ARRAY_SIZE(tokens))) {
+		assert(false);
+		return NULL;
+	}
+
+	state.ir_type = PIPE_SHADER_IR_TGSI;
+	state.prog = tokens;
+
+	return ctx->create_compute_state(ctx, &state);
+}
+
+
+/* Load samples from the image, and copy them to the same image. This looks like
+ * a no-op, but it's not. Loads use FMASK, while stores don't, so samples are
+ * reordered to match expanded FMASK.
+ *
+ * After the shader finishes, FMASK should be cleared to identity.
+ */
+void *si_create_fmask_expand_cs(struct pipe_context *ctx, unsigned num_samples,
+				bool is_array)
+{
+	enum tgsi_texture_type target = is_array ? TGSI_TEXTURE_2D_ARRAY_MSAA :
+						   TGSI_TEXTURE_2D_MSAA;
+	struct ureg_program *ureg = ureg_create(PIPE_SHADER_COMPUTE);
+	if (!ureg)
+		return NULL;
+
+	ureg_property(ureg, TGSI_PROPERTY_CS_FIXED_BLOCK_WIDTH, 8);
+	ureg_property(ureg, TGSI_PROPERTY_CS_FIXED_BLOCK_HEIGHT, 8);
+	ureg_property(ureg, TGSI_PROPERTY_CS_FIXED_BLOCK_DEPTH, 1);
+
+	/* Compute the image coordinates. */
+	struct ureg_src image = ureg_DECL_image(ureg, 0, target, 0, true, false);
+	struct ureg_src tid = ureg_DECL_system_value(ureg, TGSI_SEMANTIC_THREAD_ID, 0);
+	struct ureg_src blk = ureg_DECL_system_value(ureg, TGSI_SEMANTIC_BLOCK_ID, 0);
+	struct ureg_dst coord = ureg_writemask(ureg_DECL_temporary(ureg),
+					       TGSI_WRITEMASK_XYZW);
+	ureg_UMAD(ureg, ureg_writemask(coord, TGSI_WRITEMASK_XY),
+		  ureg_swizzle(blk, 0, 1, 1, 1), ureg_imm2u(ureg, 8, 8),
+		  ureg_swizzle(tid, 0, 1, 1, 1));
+	if (is_array) {
+		ureg_MOV(ureg, ureg_writemask(coord, TGSI_WRITEMASK_Z),
+			 ureg_scalar(blk, TGSI_SWIZZLE_Z));
+	}
+
+	/* Load samples, resolving FMASK. */
+	struct ureg_dst sample[8];
+	assert(num_samples <= ARRAY_SIZE(sample));
+
+	for (unsigned i = 0; i < num_samples; i++) {
+		sample[i] = ureg_DECL_temporary(ureg);
+
+		ureg_MOV(ureg, ureg_writemask(coord, TGSI_WRITEMASK_W),
+			 ureg_imm1u(ureg, i));
+
+		struct ureg_src srcs[] = {image, ureg_src(coord)};
+		ureg_memory_insn(ureg, TGSI_OPCODE_LOAD, &sample[i], 1, srcs, 2,
+				 TGSI_MEMORY_RESTRICT, target, 0);
+	}
+
+	/* Store samples, ignoring FMASK. */
+	for (unsigned i = 0; i < num_samples; i++) {
+		ureg_MOV(ureg, ureg_writemask(coord, TGSI_WRITEMASK_W),
+			 ureg_imm1u(ureg, i));
+
+		struct ureg_dst dst_image = ureg_dst(image);
+		struct ureg_src srcs[] = {ureg_src(coord), ureg_src(sample[i])};
+		ureg_memory_insn(ureg, TGSI_OPCODE_STORE, &dst_image, 1, srcs, 2,
+				 TGSI_MEMORY_RESTRICT, target, 0);
+	}
+	ureg_END(ureg);
+
+	struct pipe_compute_state state = {};
+	state.ir_type = PIPE_SHADER_IR_TGSI;
+	state.prog = ureg_get_tokens(ureg, NULL);
+
+	void *cs = ctx->create_compute_state(ctx, &state);
+	ureg_destroy(ureg);
+	return cs;
+}
+
 /* Create the compute shader that is used to collect the results of gfx10+
  * shader queries.
  *

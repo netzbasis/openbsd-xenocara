@@ -49,6 +49,7 @@ static const nir_shader_compiler_options bifrost_nir_options = {
         .lower_isign = true,
         .lower_fsign = true,
         .lower_ffract = true,
+        .lower_fdph = true,
         .lower_pack_half_2x16 = true,
         .lower_pack_unorm_2x16 = true,
         .lower_pack_snorm_2x16 = true,
@@ -63,7 +64,6 @@ static const nir_shader_compiler_options bifrost_nir_options = {
         .lower_extract_word = true,
         .lower_all_io_to_temps = true,
         .lower_all_io_to_elements = true,
-        .vertex_id_zero_based = true,
 };
 
 #endif

@@ -1,10 +1,10 @@
-/detect.mk/1.9/Tue Sep 10 19:13:55 2019//
-/exports.mk/1.9/Tue Sep 10 19:13:55 2019//
-/freetype.mk/1.12/Tue Sep 10 19:13:55 2019//
-/link_dos.mk/1.6/Tue Sep 10 19:13:55 2019//
-/link_std.mk/1.6/Tue Sep 10 19:13:55 2019//
-/modules.mk/1.8/Tue Sep 10 19:13:55 2019//
-/toplevel.mk/1.17/Tue Sep 10 19:13:55 2019//
+/detect.mk/1.10/Sat Jun 27 09:06:08 2020//
+/exports.mk/1.10/Sat Jun 27 09:06:08 2020//
+/freetype.mk/1.13/Sat Jun 27 09:06:08 2020//
+/link_dos.mk/1.7/Sat Jun 27 09:06:08 2020//
+/link_std.mk/1.7/Sat Jun 27 09:06:08 2020//
+/modules.mk/1.9/Sat Jun 27 09:06:08 2020//
+/toplevel.mk/1.18/Sat Jun 27 09:06:08 2020//
 D/amiga////
 D/ansi////
 D/atari////

@@ -43,6 +43,7 @@ enum panfrost_memory_layout {
 struct panfrost_slice {
         unsigned offset;
         unsigned stride;
+        unsigned size0;
 
         /* If there is a header preceding each slice, how big is
          * that header?  Used for AFBC */
@@ -56,12 +57,6 @@ struct panfrost_slice {
         /* Has anything been written to this slice? */
         bool initialized;
 };
-
-void
-panfrost_bo_reference(struct panfrost_bo *bo);
-
-void
-panfrost_bo_unreference(struct pipe_screen *screen, struct panfrost_bo *bo);
 
 struct panfrost_resource {
         struct pipe_resource base;
@@ -88,6 +83,8 @@ struct panfrost_resource {
 
         /* Is transaciton elimination enabled? */
         bool checksummed;
+
+        enum pipe_format internal_format;
 };
 
 static inline struct panfrost_resource *
@@ -140,6 +137,9 @@ panfrost_blit(struct pipe_context *pipe,
 void
 panfrost_blit_wallpaper(struct panfrost_context *ctx,
                         struct pipe_box *box);
+
+void
+panfrost_resource_reset_damage(struct panfrost_resource *pres);
 
 void
 panfrost_resource_set_damage_region(struct pipe_screen *screen,

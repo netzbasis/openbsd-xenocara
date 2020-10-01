@@ -1252,10 +1252,13 @@ builtin_variable_generator::generate_fs_special_vars()
       add_input(VARYING_SLOT_POS, vec4_t, frag_coord_precision, "gl_FragCoord");
    }
 
-   if (this->state->ctx->Const.GLSLFrontFacingIsSysVal)
-      add_system_value(SYSTEM_VALUE_FRONT_FACE, bool_t, "gl_FrontFacing");
-   else
-      add_input(VARYING_SLOT_FACE, bool_t, "gl_FrontFacing");
+   if (this->state->ctx->Const.GLSLFrontFacingIsSysVal) {
+      var = add_system_value(SYSTEM_VALUE_FRONT_FACE, bool_t, "gl_FrontFacing");
+      var->data.interpolation = INTERP_MODE_FLAT;
+   } else {
+      var = add_input(VARYING_SLOT_FACE, bool_t, "gl_FrontFacing");
+      var->data.interpolation = INTERP_MODE_FLAT;
+   }
 
    if (state->is_version(120, 100)) {
       if (this->state->ctx->Const.GLSLPointCoordIsSysVal)
@@ -1435,6 +1438,9 @@ builtin_variable_generator::add_varying(int slot, const glsl_type *type,
 void
 builtin_variable_generator::generate_varyings()
 {
+   struct gl_shader_compiler_options *options =
+      &state->ctx->Const.ShaderCompilerOptions[state->stage];
+
    /* gl_Position and gl_PointSize are not visible from fragment shaders. */
    if (state->stage != MESA_SHADER_FRAGMENT) {
       add_varying(VARYING_SLOT_POS, vec4_t, GLSL_PRECISION_HIGH, "gl_Position");
@@ -1526,6 +1532,9 @@ builtin_variable_generator::generate_varyings()
          var->data.sample = fields[i].sample;
          var->data.patch = fields[i].patch;
          var->init_interface_type(per_vertex_out_type);
+
+         var->data.invariant = fields[i].location == VARYING_SLOT_POS &&
+                               options->PositionAlwaysInvariant;
       }
    }
 }

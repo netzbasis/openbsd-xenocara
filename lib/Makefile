@@ -1,4 +1,4 @@
-# $OpenBSD: Makefile,v 1.42 2019/04/26 09:51:57 matthieu Exp $
+# $OpenBSD: Makefile,v 1.44 2020/08/28 05:54:00 jsg Exp $
 
 .include <bsd.xconf.mk>
 
@@ -40,7 +40,7 @@ SUBDIR= freetype fontconfig libxtrans libXau libXdmcp ${XCB_LIBS}\
 	libICE libSM libXt \
 	libXmu libXpm libXaw libXfixes libXcomposite \
 	libXdamage libXcursor libXfont2  \
-	libXi libXinerama libxkbfile libxkbui \
+	libXi libXinerama libxkbfile \
 	libXrandr libXpresent libXRes libXScrnSaver \
 	libXtst libXv libXvMC libXxf86dga libXxf86vm \
 	libpciaccess pixman
@@ -52,7 +52,7 @@ SUBDIR+= libxshmfence
 .if ${XENOCARA_BUILD_GL:L} == "yes"
 SUBDIR+= libdrm
 SUBDIR+= mesa
-SUBDIR+= libGLU libGLw libtxc_dxtn
+SUBDIR+= libGLU libGLw
 SUBDIR+= libepoxy
 .endif
 

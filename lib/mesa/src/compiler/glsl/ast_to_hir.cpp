@@ -1689,8 +1689,11 @@ ast_expression::do_hir(exec_list *instructions,
 
       /* Break out if operand types were not parsed successfully. */
       if ((op[0]->type == glsl_type::error_type ||
-           op[1]->type == glsl_type::error_type))
+           op[1]->type == glsl_type::error_type)) {
+         type = glsl_type::error_type;
+         error_emitted = true;
          break;
+      }
 
       type = arithmetic_result_type(op[0], op[1],
                                     (this->oper == ast_mul_assign),
@@ -2131,7 +2134,7 @@ ast_expression::do_hir(exec_list *instructions,
    }
    }
    type = NULL; /* use result->type, not type. */
-   assert(result != NULL || !needs_rvalue);
+   assert(error_emitted || (result != NULL || !needs_rvalue));
 
    if (result && result->type->is_error() && !error_emitted)
       _mesa_glsl_error(& loc, state, "type mismatch");
@@ -5195,7 +5198,8 @@ ast_declarator_list::hir(exec_list *instructions,
       apply_layout_qualifier_to_variable(&this->type->qualifier, var, state,
                                          &loc);
 
-      if ((var->data.mode == ir_var_auto || var->data.mode == ir_var_temporary)
+      if ((var->data.mode == ir_var_auto || var->data.mode == ir_var_temporary
+           || var->data.mode == ir_var_shader_out)
           && (var->type->is_numeric() || var->type->is_boolean())
           && state->zero_init) {
          const ir_constant_data data = { { 0 } };
@@ -6015,6 +6019,19 @@ ast_function::hir(exec_list *instructions,
                        name);
    }
 
+   /* Get the precision for the return type */
+   unsigned return_precision;
+
+   if (state->es_shader) {
+      YYLTYPE loc = this->get_location();
+      return_precision =
+         select_gles_precision(this->return_type->qualifier.precision,
+                               return_type,
+                               state,
+                               &loc);
+   } else {
+      return_precision = GLSL_PRECISION_NONE;
+   }
 
    /* Create an ir_function if one doesn't already exist. */
    f = state->symbols->get_function(name);
@@ -6043,7 +6060,6 @@ ast_function::hir(exec_list *instructions,
     */
    if (state->es_shader) {
       /* Local shader has no exact candidates; check the built-ins. */
-      _mesa_glsl_initialize_builtin_functions();
       if (state->language_version >= 300 &&
           _mesa_glsl_has_builtin_function(state, name)) {
          YYLTYPE loc = this->get_location();
@@ -6084,6 +6100,13 @@ ast_function::hir(exec_list *instructions,
 
             _mesa_glsl_error(&loc, state, "function `%s' return type doesn't "
                              "match prototype", name);
+         }
+
+         if (sig->return_precision != return_precision) {
+            YYLTYPE loc = this->get_location();
+
+            _mesa_glsl_error(&loc, state, "function `%s' return type precision "
+                             "doesn't match prototype", name);
          }
 
          if (sig->is_defined) {
@@ -6130,6 +6153,7 @@ ast_function::hir(exec_list *instructions,
     */
    if (sig == NULL) {
       sig = new(ctx) ir_function_signature(return_type);
+      sig->return_precision = return_precision;
       f->add_signature(sig);
    }
 
@@ -6440,6 +6464,25 @@ ast_jump_statement::hir(exec_list *instructions,
 
    /* Jump instructions do not have r-values.
     */
+   return NULL;
+}
+
+
+ir_rvalue *
+ast_demote_statement::hir(exec_list *instructions,
+                          struct _mesa_glsl_parse_state *state)
+{
+   void *ctx = state;
+
+   if (state->stage != MESA_SHADER_FRAGMENT) {
+      YYLTYPE loc = this->get_location();
+
+      _mesa_glsl_error(& loc, state,
+                       "`demote' may only appear in a fragment shader");
+   }
+
+   instructions->push_tail(new(ctx) ir_demote);
+
    return NULL;
 }
 

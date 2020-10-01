@@ -1,7 +1,10 @@
 D/fast_idiv_by_const////
 D/fast_urem_by_const////
+D/format////
 D/hash_table////
 D/set////
+D/sparse_array////
 D/string_buffer////
 D/timespec////
+D/vector////
 D/vma////

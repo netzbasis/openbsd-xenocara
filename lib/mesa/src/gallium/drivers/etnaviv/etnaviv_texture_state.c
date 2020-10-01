@@ -39,11 +39,56 @@
 
 #include "drm-uapi/drm_fourcc.h"
 
+struct etna_sampler_state {
+   struct pipe_sampler_state base;
+
+   /* sampler offset +4*sampler, interleave when committing state */
+   uint32_t TE_SAMPLER_CONFIG0;
+   uint32_t TE_SAMPLER_CONFIG1;
+   uint32_t TE_SAMPLER_LOD_CONFIG;
+   uint32_t TE_SAMPLER_3D_CONFIG;
+   uint32_t NTE_SAMPLER_BASELOD;
+   unsigned min_lod, max_lod, max_lod_min;
+};
+
+static inline struct etna_sampler_state *
+etna_sampler_state(struct pipe_sampler_state *samp)
+{
+   return (struct etna_sampler_state *)samp;
+}
+
+struct etna_sampler_view {
+   struct pipe_sampler_view base;
+
+   /* sampler offset +4*sampler, interleave when committing state */
+   uint32_t TE_SAMPLER_CONFIG0;
+   uint32_t TE_SAMPLER_CONFIG0_MASK;
+   uint32_t TE_SAMPLER_CONFIG1;
+   uint32_t TE_SAMPLER_3D_CONFIG;
+   uint32_t TE_SAMPLER_SIZE;
+   uint32_t TE_SAMPLER_LOG_SIZE;
+   uint32_t TE_SAMPLER_ASTC0;
+   uint32_t TE_SAMPLER_LINEAR_STRIDE[VIVS_TE_SAMPLER_LINEAR_STRIDE__LEN];
+   struct etna_reloc TE_SAMPLER_LOD_ADDR[VIVS_TE_SAMPLER_LOD_ADDR__LEN];
+   unsigned min_lod, max_lod; /* 5.5 fixp */
+
+   struct etna_sampler_ts ts;
+};
+
+static inline struct etna_sampler_view *
+etna_sampler_view(struct pipe_sampler_view *view)
+{
+   return (struct etna_sampler_view *)view;
+}
+
 static void *
 etna_create_sampler_state_state(struct pipe_context *pipe,
                           const struct pipe_sampler_state *ss)
 {
    struct etna_sampler_state *cs = CALLOC_STRUCT(etna_sampler_state);
+   struct etna_context *ctx = etna_context(pipe);
+   struct etna_screen *screen = ctx->screen;
+   const bool ansio = ss->max_anisotropy > 1;
 
    if (!cs)
       return NULL;
@@ -61,8 +106,8 @@ etna_create_sampler_state_state(struct pipe_context *pipe,
       cs->TE_SAMPLER_CONFIG0 |= VIVS_TE_SAMPLER_CONFIG0_ROUND_UV;
    }
 
-   cs->TE_SAMPLER_CONFIG1 =
-      COND(ss->seamless_cube_map, VIVS_TE_SAMPLER_CONFIG1_SEAMLESS_CUBE_MAP);
+   cs->TE_SAMPLER_CONFIG1 = screen->specs.seamless_cube_map ?
+      COND(ss->seamless_cube_map, VIVS_TE_SAMPLER_CONFIG1_SEAMLESS_CUBE_MAP) : 0;
 
    cs->TE_SAMPLER_LOD_CONFIG =
       COND(ss->lod_bias != 0.0, VIVS_TE_SAMPLER_LOD_CONFIG_BIAS_ENABLE) |
@@ -85,6 +130,10 @@ etna_create_sampler_state_state(struct pipe_context *pipe,
     * the workaround is to set max_lod to at least 1
     */
    cs->max_lod_min = (ss->min_img_filter != ss->mag_img_filter) ? 1 : 0;
+
+   cs->NTE_SAMPLER_BASELOD =
+      COND(ss->compare_mode, VIVS_NTE_SAMPLER_BASELOD_COMPARE_ENABLE) |
+      VIVS_NTE_SAMPLER_BASELOD_COMPARE_FUNC(translate_texture_compare(ss->compare_func));
 
    return cs;
 }
@@ -157,7 +206,7 @@ etna_create_sampler_view_state(struct pipe_context *pctx, struct pipe_resource *
       break;
    }
 
-   if (res->addressing_mode == ETNA_ADDRESSING_MODE_LINEAR) {
+   if (res->layout == ETNA_LAYOUT_LINEAR && !util_format_is_compressed(so->format)) {
       sv->TE_SAMPLER_CONFIG0 |= VIVS_TE_SAMPLER_CONFIG0_ADDRESSING_MODE(TEXTURE_ADDRESSING_MODE_LINEAR);
 
       for (int lod = 0; lod <= res->base.last_level; ++lod)
@@ -183,7 +232,8 @@ etna_create_sampler_view_state(struct pipe_context *pctx, struct pipe_resource *
       VIVS_TE_SAMPLER_LOG_SIZE_WIDTH(etna_log2_fixp55(res->base.width0)) |
       VIVS_TE_SAMPLER_LOG_SIZE_HEIGHT(etna_log2_fixp55(base_height)) |
       COND(util_format_is_srgb(so->format) && !astc, VIVS_TE_SAMPLER_LOG_SIZE_SRGB) |
-      COND(astc, VIVS_TE_SAMPLER_LOG_SIZE_ASTC);
+      COND(astc, VIVS_TE_SAMPLER_LOG_SIZE_ASTC) |
+      COND(texture_use_int_filter(so, false), VIVS_TE_SAMPLER_LOG_SIZE_INT_FILTER);
    sv->TE_SAMPLER_3D_CONFIG =
       VIVS_TE_SAMPLER_3D_CONFIG_DEPTH(base_depth) |
       VIVS_TE_SAMPLER_3D_CONFIG_LOG_DEPTH(etna_log2_fixp55(base_depth));
@@ -362,6 +412,14 @@ etna_emit_texture_state(struct etna_context *ctx)
          if ((1 << x) & active_samplers) {
             struct etna_sampler_view *sv = etna_sampler_view(ctx->sampler_view[x]);
             /*10500*/ EMIT_STATE(NTE_SAMPLER_ASTC0(x), sv->TE_SAMPLER_ASTC0);
+         }
+      }
+   }
+   if (unlikely(ctx->specs.halti >= 1 && (dirty & (ETNA_DIRTY_SAMPLER_VIEWS)))) {
+      for (int x = 0; x < VIVS_TE_SAMPLER__LEN; ++x) {
+         if ((1 << x) & active_samplers) {
+            struct etna_sampler_state *ss = etna_sampler_state(ctx->sampler[x]);
+            /*10700*/ EMIT_STATE(NTE_SAMPLER_BASELOD(x), ss->NTE_SAMPLER_BASELOD);
          }
       }
    }

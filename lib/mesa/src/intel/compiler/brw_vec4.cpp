@@ -633,6 +633,9 @@ set_push_constant_loc(const int nr_uniforms, int *new_uniform_count,
 void
 vec4_visitor::pack_uniform_registers()
 {
+   if (!compiler->compact_params)
+      return;
+
    uint8_t chans_used[this->uniforms];
    int new_loc[this->uniforms];
    int new_chan[this->uniforms];
@@ -2964,7 +2967,6 @@ brw_compile_vs(const struct brw_compiler *compiler, void *log_data,
 
       fs_visitor v(compiler, log_data, mem_ctx, &key->base,
                    &prog_data->base.base,
-                   NULL, /* prog; Only used for TEXTURE_RECTANGLE on gen < 8 */
                    shader, 8, shader_time_index);
       if (!v.run_vs()) {
          if (error_str)

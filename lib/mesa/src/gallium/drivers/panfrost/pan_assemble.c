@@ -25,7 +25,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "pan_bo.h"
 #include "pan_context.h"
+#include "pan_util.h"
 
 #include "compiler/nir/nir.h"
 #include "nir/tgsi_to_nir.h"
@@ -58,21 +60,14 @@ panfrost_shader_compile(
 
         s->info.stage = stage;
 
-        if (stage == MESA_SHADER_FRAGMENT) {
-                /* Inject the alpha test now if we need to */
-
-                if (state->alpha_state.enabled) {
-                        NIR_PASS_V(s, nir_lower_alpha_test, state->alpha_state.func, false);
-                }
-        }
-
         /* Call out to Midgard compiler given the above NIR */
 
         midgard_program program = {
                 .alpha_ref = state->alpha_state.ref_value
         };
 
-        midgard_compile_shader_nir(&ctx->compiler, s, &program, false);
+        midgard_compile_shader_nir(s, &program, false, 0, screen->gpu_id,
+                        pan_debug & PAN_DBG_PRECOMPILE);
 
         /* Prepare the compiled binary for upload */
         int size = program.compiled.size;
@@ -82,9 +77,14 @@ panfrost_shader_compile(
          * I bet someone just thought that would be a cute pun. At least,
          * that's how I'd do it. */
 
-        state->bo = panfrost_drm_create_bo(screen, size, PAN_ALLOCATE_EXECUTE);
-        memcpy(state->bo->cpu, dst, size);
-        meta->shader = state->bo->gpu | program.first_tag;
+        if (size) {
+                state->bo = panfrost_bo_create(screen, size, PAN_BO_EXECUTE);
+                memcpy(state->bo->cpu, dst, size);
+                meta->shader = state->bo->gpu | program.first_tag;
+        } else {
+                /* no shader */
+                meta->shader = 0x0;
+        }
 
         util_dynarray_fini(&program.compiled);
 
@@ -96,10 +96,20 @@ panfrost_shader_compile(
         meta->midgard1.uniform_count = MIN2(program.uniform_count, program.uniform_cutoff);
         meta->midgard1.work_count = program.work_register_count;
 
+        bool vertex_id = s->info.system_values_read & (1 << SYSTEM_VALUE_VERTEX_ID);
+        bool instance_id = s->info.system_values_read & (1 << SYSTEM_VALUE_INSTANCE_ID);
+
         switch (stage) {
         case MESA_SHADER_VERTEX:
                 meta->attribute_count = util_bitcount64(s->info.inputs_read);
                 meta->varying_count = util_bitcount64(s->info.outputs_written);
+
+                if (vertex_id)
+                        meta->attribute_count = MAX2(meta->attribute_count, PAN_VERTEX_ID + 1);
+
+                if (instance_id)
+                        meta->attribute_count = MAX2(meta->attribute_count, PAN_INSTANCE_ID + 1);
+
                 break;
         case MESA_SHADER_FRAGMENT:
                 meta->attribute_count = 0;
@@ -118,6 +128,7 @@ panfrost_shader_compile(
         state->writes_point_size = program.writes_point_size;
         state->reads_point_coord = false;
         state->helper_invocations = s->info.fs.needs_helper_invocations;
+        state->stack_size = program.tls_size;
 
         if (outputs_written)
                 *outputs_written = s->info.outputs_written;
@@ -137,7 +148,7 @@ panfrost_shader_compile(
 
                 /* Default to a vec4 varying */
                 struct mali_attr_meta v = {
-                        .format = MALI_RGBA32F,
+                        .format = program.varying_type[i],
                         .swizzle = default_vec4_swizzle,
                         .unknown1 = 0x2,
                 };
@@ -145,7 +156,10 @@ panfrost_shader_compile(
                 /* Check for special cases, otherwise assume general varying */
 
                 if (location == VARYING_SLOT_POS) {
-                        v.format = MALI_VARYING_POS;
+                        if (stage == MESA_SHADER_FRAGMENT)
+                                state->reads_frag_coord = true;
+                        else
+                                v.format = MALI_VARYING_POS;
                 } else if (location == VARYING_SLOT_PSIZ) {
                         v.format = MALI_R16F;
                         v.swizzle = default_vec1_swizzle;

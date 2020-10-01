@@ -24,13 +24,14 @@ inc_panfrost_hw = include_directories([
 ])
 
 inc_panfrost = include_directories([
-   '.', 'include', 'shared', 'midgard', 'bifrost'
+   '.', 'include', 'shared', 'midgard', 'bifrost', 'encoder'
 ])
 
 subdir('shared')
 subdir('midgard')
 subdir('bifrost')
 subdir('pandecode')
+subdir('encoder')
 
 files_bifrost = files(
   'bifrost/cmdline.c',
@@ -53,5 +54,5 @@ bifrost_compiler = executable(
     libglsl_standalone,
     libpanfrost_bifrost
   ],
-  build_by_default : true
+  build_by_default : with_tools.contains('panfrost')
 )

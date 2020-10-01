@@ -1,16 +1,13 @@
-/Android.gen.mk/1.1.1.1/Wed Jan 22 02:12:15 2020/-ko/
-/Android.libmesa_dricore.mk/1.1.1.1/Wed Jan 22 02:12:15 2020/-ko/
+/Android.gen.mk/1.1.1.3/Tue Sep 22 01:34:30 2020/-ko/
+/Android.libmesa_dricore.mk/1.1.1.2/Wed Aug 26 05:30:01 2020/-ko/
 /Android.libmesa_git_sha1.mk/1.1.1.1/Wed Jan 22 02:12:15 2020/-ko/
-/Android.libmesa_glsl_utils.mk/1.1.1.1/Wed Jan 22 02:12:15 2020/-ko/
+/Android.libmesa_glsl_utils.mk/1.1.1.3/Tue Sep 22 01:34:30 2020/-ko/
 /Android.libmesa_sse41.mk/1.1.1.1/Wed Jan 22 02:12:15 2020/-ko/
-/Android.libmesa_st_mesa.mk/1.1.1.1/Wed Jan 22 02:12:15 2020/-ko/
+/Android.libmesa_st_mesa.mk/1.1.1.2/Wed Aug 26 05:30:01 2020/-ko/
 /Android.mk/1.1.1.1/Wed Jan 22 02:12:15 2020/-ko/
-/Makefile.am/1.12/Wed Jan 22 03:03:05 2020//
-/Makefile.in/1.15/Wed Jan 22 03:03:05 2020//
-/Makefile.sources/1.7/Wed Jan 22 02:49:44 2020//
-/SConscript/1.7/Wed Jan 22 02:49:44 2020//
-/gl.pc.in/1.3/Wed Jan 22 03:03:05 2020//
-/meson.build/1.1.1.2/Wed Jan 22 02:12:15 2020/-ko/
+/Makefile.sources/1.9/Tue Sep 22 02:09:13 2020//
+/SConscript/1.9/Tue Sep 22 02:09:13 2020//
+/meson.build/1.1.1.4/Tue Sep 22 01:34:30 2020/-ko/
 D/drivers////
 D/main////
 D/math////
