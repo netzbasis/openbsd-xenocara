@@ -1,7 +1,10 @@
-/Makefile/1.6/Fri Dec 25 11:54:40 2015//
-/ftconfig.h/1.21/Sat Jun 27 09:06:10 2020//
-/ftheader.h/1.15/Sat Jun 27 09:06:10 2020//
-/ftmodule.h/1.5/Tue Sep 10 19:13:58 2019//
-/ftoption.h/1.24/Sat Jun 27 09:06:10 2020//
+/Makefile/1.7/Wed Nov 11 09:27:29 2020//
+/ftconfig.h/1.22/Wed Nov 11 09:27:29 2020//
+/ftheader.h/1.16/Wed Nov 11 09:27:29 2020//
+/ftmodule.h/1.6/Wed Nov 11 09:27:29 2020//
+/ftoption.h/1.25/Wed Nov 11 09:27:29 2020//
 /ftstdlib.h/1.14/Sat Jun 27 09:06:10 2020//
+/integer-types.h/1.1/Wed Nov 11 09:27:29 2020//
+/mac-support.h/1.1/Wed Nov 11 09:27:29 2020//
+/public-macros.h/1.1/Wed Nov 11 09:27:29 2020//
 D

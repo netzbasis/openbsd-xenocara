@@ -35,7 +35,7 @@
 /r600_state.h/1.8/Sun Jan 13 07:16:48 2019//
 /r600_textured_videofuncs.c/1.8/Sun Jan 13 07:16:48 2019//
 /r6xx_accel.c/1.8/Tue Feb 20 04:49:20 2018//
-/radeon.h/1.22/Sat Oct 26 09:37:25 2019//
+/radeon.h/1.23/Mon Oct 26 13:32:00 2020//
 /radeon_accel.c/1.10/Tue Feb 20 04:49:20 2018//
 /radeon_bo_helper.c/1.7/Fri Mar  8 21:59:56 2019//
 /radeon_bo_helper.h/1.5/Sun Jan 13 07:16:48 2019//
@@ -43,7 +43,7 @@
 /radeon_chipset_gen.h/1.12/Tue Feb 20 04:49:20 2018//
 /radeon_dri2.c/1.15/Sat Oct 26 09:37:25 2019//
 /radeon_dri2.h/1.6/Tue Feb 20 04:49:20 2018//
-/radeon_dri3.c/1.6/Sat Oct 26 09:37:25 2019//
+/radeon_dri3.c/1.7/Mon Dec 21 09:06:14 2020//
 /radeon_drm_queue.c/1.5/Fri Mar  8 21:59:57 2019//
 /radeon_drm_queue.h/1.5/Fri Mar  8 21:59:57 2019//
 /radeon_exa.c/1.13/Sun Jan 13 07:16:48 2019//
